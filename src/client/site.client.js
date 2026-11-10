@@ -24,7 +24,7 @@
     en: {
       systems: 'Systems', engineering: 'Engineering', about: 'About', contact: 'Contact', quote: 'Request a quote', menu: 'Menu', search: 'Search', close: 'Close',
       main_menu: 'Main menu', m_systems: 'Aluminium Systems', m_engineering: 'Engineering & Quality', m_about: 'About Us', m_contact: 'Contact', view_all: 'View all systems',
-      call: 'Call', leadership: 'Leadership', home: 'Home', projects: 'Projects', m_projects: 'Our Projects', get_quote: 'Get a quote',
+      call: 'Call', leadership: 'Leadership', fab_chat: 'Chat with us on WhatsApp', home: 'Home', projects: 'Projects', m_projects: 'Our Projects', get_quote: 'Get a quote',
       proj_eyebrow: 'Our projects', proj_title: 'Iconic projects. Lasting impact.', proj_body: 'A selection of our aluminium and glass work for homes, offices and shops.', view_projects: 'View all projects',
       band_title: 'Let’s build something great together', band_body: 'Get a free consultation and quote today.', contact_us: 'Contact us', quick_links: 'Quick links', follow: 'Follow us', contact_info: 'Contact info',
       search_ph: 'Search, e.g. sliding doors', no_results: 'No results for “{q}”.', popular: 'Popular searches', chips: ['Sliding', 'Windows', 'Doors', 'Folding', 'Glass'],
@@ -54,7 +54,7 @@
     el: {
       systems: 'Συστήματα', engineering: 'Τεχνολογία', about: 'Εταιρεία', contact: 'Επικοινωνία', quote: 'Ζητήστε προσφορά', menu: 'Μενού', search: 'Αναζήτηση', close: 'Κλείσιμο',
       main_menu: 'Κύριο μενού', m_systems: 'Συστήματα αλουμινίου', m_engineering: 'Τεχνολογία & ποιότητα', m_about: 'Η εταιρεία', m_contact: 'Επικοινωνία', view_all: 'Όλα τα συστήματα',
-      call: 'Κλήση', leadership: 'Διοίκηση', home: 'Αρχική', projects: 'Έργα', m_projects: 'Τα έργα μας', get_quote: 'Ζητήστε προσφορά',
+      call: 'Κλήση', leadership: 'Διοίκηση', fab_chat: 'Μιλήστε μαζί μας στο WhatsApp', home: 'Αρχική', projects: 'Έργα', m_projects: 'Τα έργα μας', get_quote: 'Ζητήστε προσφορά',
       proj_eyebrow: 'Τα έργα μας', proj_title: 'Εμβληματικά έργα. Διαρκές αποτύπωμα.', proj_body: 'Επιλογή από τις κατασκευές μας σε αλουμίνιο και γυαλί για σπίτια, γραφεία και καταστήματα.', view_projects: 'Όλα τα έργα',
       band_title: 'Ας φτιάξουμε κάτι σπουδαίο μαζί', band_body: 'Ζητήστε δωρεάν συμβουλή και προσφορά σήμερα.', contact_us: 'Επικοινωνία', quick_links: 'Σύνδεσμοι', follow: 'Ακολουθήστε μας', contact_info: 'Στοιχεία επικοινωνίας',
       search_ph: 'Αναζήτηση, π.χ. συρόμενες πόρτες', no_results: 'Δεν βρέθηκαν αποτελέσματα για «{q}».', popular: 'Δημοφιλείς αναζητήσεις', chips: ['Συρόμενα', 'Παράθυρα', 'Πόρτες', 'Πτυσσόμενα', 'Γυαλί'],
@@ -180,7 +180,7 @@
         </nav>
         <button type="button" class="icon-btn srch-btn" aria-expanded="false" aria-controls="srch" aria-label="${u('search')}">${icon('search')}</button>
         ${langSelect()}
-        <a class="btn btn-accent nav-cta" href="#quote">${u('get_quote')}${icon('arrow')}</a>
+        <a class="btn btn-ghost nav-cta" href="#quote">${u('get_quote')}${icon('arrow')}</a>
         <button type="button" class="burger" id="burger" aria-expanded="false" aria-controls="mnav" aria-label="${u('menu')}"><i><b></b><b></b><b></b></i></button>
       </div>
       <div class="mega" id="mega" hidden><div class="wrap mega-in">
@@ -212,7 +212,7 @@
 
   /* ---------- hero slider (video first if there is one, then photos) ---------- */
   function heroSlides() {
-    const first = S.heroImage || 'img/hero-house.jpg';
+    const first = S.heroImage || 'img/glass-room.jpg';
     const out = [{ img: first, video: S.heroVideo || '' }];
     (S.hero || []).forEach((h) => { if (h && h.img && h.img !== first) out.push({ img: h.img }); });
     return out.slice(0, 6);
@@ -256,9 +256,9 @@
       <div class="wrap cats-head"><p class="eyebrow">${u('systems_eyebrow')}</p></div>
       <div class="wrap cats-wrap">
         <button type="button" class="rail-btn prev" data-rail="-1" aria-label="Previous">${icon('back')}</button>
-        <div class="rail" id="rail">${list
+        <div class="rail rv-kids" id="rail">${list
           .map(
-            (s, i) => `<a class="card" href="#${esc(s.slug)}"><img src="${esc(src(s.image))}" alt="" loading="${i < 6 ? 'eager' : 'lazy'}"><span class="card-n">${esc(t(s.name))}${icon('arrow')}</span></a>`
+            (s, i) => `<a class="card" style="--i:${Math.min(i, 6)}" href="#${esc(s.slug)}"><img src="${esc(src(s.image))}" alt="" loading="${i < 6 ? 'eager' : 'lazy'}"><span class="card-n">${esc(t(s.name))}${icon('arrow')}</span></a>`
           )
           .join('')}</div>
         <button type="button" class="rail-btn next" data-rail="1" aria-label="Next">${icon('arrow')}</button>
@@ -269,20 +269,21 @@
 
   /* ---------- about: image (with video button), text, key points ---------- */
   function about() {
-    const img = S.aboutImage || 'img/house-windows.jpg';
+    const img = S.aboutImage || 'img/alu-profiles.jpg';
     const v = (S.values || []).filter((x) => t(x.title));
+    const stats = (S.stats || []).filter((x) => String(x.value || '').trim());
     return `<section class="about" id="about">
       <div class="about-grid">
-        <figure class="about-media"><img src="${esc(src(img))}" alt="" loading="lazy">${S.heroVideo ? `<button type="button" class="about-play" data-video aria-label="${u('watch')}">${icon('play')}</button>` : ''}</figure>
-        <div class="about-text">
+        <figure class="about-media rv"><img src="${esc(src(img))}" alt="" loading="lazy">${S.heroVideo ? `<button type="button" class="about-play" data-video aria-label="${u('watch')}">${icon('play')}</button>` : ''}</figure>
+        <div class="about-text rv">
           <p class="eyebrow">${u('about_eyebrow')} ${esc(S.company.name)}</p>
           <h2>${esc(t(S.text.introTitle))}</h2>
           <p>${esc(t(S.text.introBody))}</p>
           <a class="btn btn-accent" href="#quote">${u('survey')}${icon('arrow')}</a>
         </div>
-        ${v.length ? `<ul class="about-feats">${v.slice(0, 4).map((x) => `<li>${icon(x.icon)}<span>${esc(t(x.title))}</span></li>`).join('')}</ul>` : ''}
+        ${v.length ? `<ul class="about-feats rv-kids">${v.slice(0, 4).map((x, i) => `<li style="--i:${i}">${icon(x.icon)}<span>${esc(t(x.title))}</span></li>`).join('')}</ul>` : ''}
       </div>
-      <div class="wrap">${founder()}</div>
+      <div class="wrap">${stats.length ? `<ul class="about-stats rv-kids">${stats.map((x, i) => `<li style="--i:${i}"><b data-count="${esc(x.value)}">${esc(x.value)}</b><span>${esc(t(x.label))}</span></li>`).join('')}</ul>` : ''}${founder()}</div>
     </section>`;
   }
 
@@ -290,8 +291,8 @@
     const list = (S.projects || []).filter((p) => p.img);
     if (!list.length) return '';
     return `<section class="projects" id="projects">
-      <div class="wrap proj-head"><div><p class="eyebrow">${u('proj_eyebrow')}</p><h2>${u('proj_title')}</h2></div><button type="button" class="link-sm" data-proj="0">${u('view_projects')}${icon('arrow')}</button></div>
-      <div class="proj-strip">${list.slice(0, 6).map((p, i) => `<button type="button" class="proj" data-proj="${i}" aria-label="${esc(t(p.caption) || u('proj_title'))}"><img src="${esc(src(p.img))}" alt="" loading="lazy">${t(p.caption) ? `<span>${esc(t(p.caption))}</span>` : ''}</button>`).join('')}</div>
+      <div class="wrap proj-head rv"><div><p class="eyebrow">${u('proj_eyebrow')}</p><h2>${u('proj_title')}</h2></div><button type="button" class="link-sm" data-proj="0">${u('view_projects')}${icon('arrow')}</button></div>
+      <div class="proj-strip rv-kids">${list.slice(0, 6).map((p, i) => `<button type="button" class="proj" style="--i:${i}" data-proj="${i}" aria-label="${esc(t(p.caption) || u('proj_title'))}"><img src="${esc(src(p.img))}" alt="" loading="lazy">${t(p.caption) ? `<span>${esc(t(p.caption))}</span>` : ''}</button>`).join('')}</div>
     </section>`;
   }
 
@@ -299,14 +300,14 @@
     const list = (S.testimonials || []).filter((x) => t(x.quote));
     return `<section class="band"><div class="wrap band-grid${list.length ? ' two' : ''}">
       ${list.length ? `<div class="tst" id="tst"><span class="tst-q" aria-hidden="true">“</span><div class="tst-slides">${list.map((x, i) => `<blockquote class="${i ? '' : 'on'}"><p>${esc(t(x.quote))}</p><cite>— ${esc(x.name)}${t(x.role) ? ', ' + esc(t(x.role)) : ''}</cite></blockquote>`).join('')}</div>${list.length > 1 ? `<div class="tst-dots">${list.map((x, i) => `<button type="button" data-tst="${i}" class="${i ? '' : 'on'}" aria-label="${i + 1}"></button>`).join('')}</div>` : ''}</div>` : ''}
-      <div class="band-cta"><span class="band-ic">${icon('handshake')}</span><div><h3>${u('band_title')}</h3><p>${u('band_body')}</p></div><a class="btn btn-accent" href="#quote">${u('contact_us')}${icon('arrow')}</a></div>
+      <div class="band-cta rv"><span class="band-ic">${icon('handshake')}</span><div><h3>${u('band_title')}</h3><p>${u('band_body')}</p></div><a class="btn btn-accent" href="#quote">${u('contact_us')}${icon('arrow')}</a></div>
     </div></section>`;
   }
 
   function founder() {
     const f = S.founder || {};
     if (!String(f.name || '').trim()) return '';
-    return `<div class="founder${f.photo ? '' : ' no-photo'}">
+    return `<div class="founder rv${f.photo ? '' : ' no-photo'}">
       ${f.photo ? `<figure><img src="${esc(src(f.photo))}" alt="${esc(f.name)}" loading="lazy"></figure>` : ''}
       <div>
         <p class="eyebrow">${u('leadership')}</p>
@@ -393,7 +394,7 @@
       </ul></div>
       ${soc ? `<div><h4>${u('follow')}</h4>${soc}</div>` : ''}
     </div><div class="wrap foot-bottom"><span>© ${new Date().getFullYear()} ${esc(c.name)}. ${u('rights')}</span><span>${esc(t(S.text.tagline))}</span></div></footer>
-    ${waLink() ? `<a class="fab" href="${esc(waLink(u('wa_hello', { c: c.name })))}" target="_blank" rel="noopener" aria-label="WhatsApp">${WA_SVG}</a>` : ''}`;
+    ${waLink() ? `<a class="fab" href="${esc(waLink(u('wa_hello', { c: c.name })))}" target="_blank" rel="noopener" aria-label="${esc(u('fab_chat'))}">${WA_SVG}<span class="fab-t" aria-hidden="true">${u('fab_chat')}</span></a>` : ''}`;
   }
 
   /* ---------- system detail page ---------- */
@@ -401,7 +402,7 @@
     const list = sys();
     const i = list.indexOf(s);
     const imgs = [s.image, ...(s.gallery || [])].filter(Boolean);
-    const specs = (s.specs || []).filter((r) => t(r.label));
+    const specs = (s.specs || []).filter((r) => t(r.label) && String(r.value || '').trim());
     const hasCfg = s.kind && s.kind !== 'none';
     const related = [1, 2, 3].map((k) => list[(i + k) % list.length]).filter((x, j, a) => x && x !== s && a.indexOf(x) === j);
     const tabs = [['sp-overview', u('overview')], specs.length ? ['sp-specs', u('specs')] : null, hasCfg ? ['sp-config', u('config')] : null, imgs.length > 1 ? ['sp-gallery', u('gallery')] : null, related.length ? ['sp-related', u('related')] : null].filter(Boolean);
@@ -429,7 +430,7 @@
       <section class="sp-sec" id="sp-overview"><div class="wrap sp-two">
         <div><p class="eyebrow">${u('overview')}</p><h2>${esc(t(s.name))}</h2></div>
         <div><p class="sp-overview">${esc(t(s.overview))}</p>
-          ${(s.features || []).length ? `<div class="feat-grid">${s.features.map((f) => `<div class="feat"><span class="tile">${icon(f.icon)}</span><span>${esc(t(f.title))}</span></div>`).join('')}</div>` : ''}
+          ${(s.features || []).length ? `<div class="feat-grid rv-kids">${s.features.map((f, k) => `<div class="feat" style="--i:${k}"><span class="tile">${icon(f.icon)}</span><span>${esc(t(f.title))}</span></div>`).join('')}</div>` : ''}
         </div>
       </div></section>
       ${specs.length ? `<section class="sp-sec" id="sp-specs"><div class="wrap sp-two">
@@ -437,11 +438,11 @@
         <div><table class="spec-table"><tbody>${specs.map((r) => (String(r.value || '').trim() ? `<tr><th scope="row">${esc(t(r.label))}</th><td>${esc(r.value)}</td></tr>` : `<tr><th scope="row">${esc(t(r.label))}</th><td class="req">${u('on_request')}</td></tr>`)).join('')}</tbody></table>
           <p class="spec-note">${icon('info')}<span>${u('specs_note')}</span></p></div>
       </div></section>` : ''}
-      ${hasCfg ? `<section class="sp-sec" id="sp-config"><div class="wrap"><p class="eyebrow">${u('config')}</p><h2>${u('config')}</h2><div class="cfg" id="cfg"></div></div></section>` : ''}
+      ${hasCfg ? `<section class="sp-sec" id="sp-config"><div class="wrap"><p class="eyebrow">${u('config')}</p><h2>${u('config')}</h2><div class="cfg rv" id="cfg"></div></div></section>` : ''}
       ${imgs.length > 1 ? `<section class="sp-sec" id="sp-gallery"><div class="wrap"><p class="eyebrow">${u('gallery')}</p><h2>${u('gallery')}</h2>
-        <div class="gal n${Math.min(imgs.length, 4)}">${imgs.map((im, k) => `<button type="button" data-zoom="${k}" aria-label="${u('zoom')}"><img src="${esc(src(im))}" alt="${esc(t(s.name))}" loading="lazy"></button>`).join('')}</div></div></section>` : ''}
+        <div class="gal rv-kids n${Math.min(imgs.length, 4)}">${imgs.map((im, k) => `<button type="button" style="--i:${k}" data-zoom="${k}" aria-label="${u('zoom')}"><img src="${esc(src(im))}" alt="${esc(t(s.name))}" loading="lazy"></button>`).join('')}</div></div></section>` : ''}
       ${related.length ? `<section class="sp-sec" id="sp-related"><div class="wrap"><p class="eyebrow">${u('related')}</p><h2>${u('related')}</h2>
-        <div class="rel">${related.map((r) => `<a href="#${esc(r.slug)}"><figure><img src="${esc(src(r.image))}" alt="" loading="lazy"></figure><small>${pad(list.indexOf(r) + 1)}</small><h3>${esc(t(r.name))}</h3></a>`).join('')}</div></div></section>` : ''}
+        <div class="rel rv-kids">${related.map((r, k) => `<a style="--i:${k}" href="#${esc(r.slug)}"><figure><img src="${esc(src(r.image))}" alt="" loading="lazy"></figure><small>${pad(list.indexOf(r) + 1)}</small><h3>${esc(t(r.name))}</h3></a>`).join('')}</div></div></section>` : ''}
       <section class="sp-band"><div class="wrap"><div><h2>${u('cta_title')}</h2><p>${u('cta_body')}</p></div>
         <div class="btns"><button type="button" class="btn btn-accent" data-consult="${esc(s.slug)}">${u('consult')}</button>${S.company.phone ? `<a class="btn btn-ghost" href="${telLink()}">${icon('phone')}${esc(S.company.phone)}</a>` : ''}</div></div></section>
       ${footerMini()}`;
@@ -569,13 +570,73 @@
 
   function render() {
     document.documentElement.lang = lang;
-    $('#app').innerHTML = header() + '<main>' + hero() + featsM() + cats() + about() + projects() + engineering() + band() + quote() + '</main>' + footer();
+    $('#app').innerHTML = header() + '<main>' + hero() + cats() + about() + projects() + engineering() + band() + quote() + '</main>' + footer();
     tstStart();
     hsShow(hsI);
     railArrows();
     syncPanels();
     if (pendingSystem) selectSystem(pendingSystem);
     updateWa();
+    reveal($('#app'), renders++ > 0);
+  }
+
+  // scroll reveal + count-up. Content is visible unless the script turns the effect on.
+  let io = null, renders = 0;
+  if (!reduce && !PREVIEW && 'IntersectionObserver' in window) {
+    document.documentElement.classList.add('rv-on');
+    io = new IntersectionObserver((es) => es.forEach((e) => {
+      if (!e.isIntersecting) return;
+      e.target.classList.add('in');
+      io.unobserve(e.target);
+      countUp(e.target);
+    }), { rootMargin: '0px 0px -8% 0px', threshold: 0.06 });
+  }
+  if (PREVIEW) document.documentElement.classList.add('pv');
+  function reveal(scope, instant) {
+    if (!io || !scope) return;
+    $$('.rv, .rv-kids', scope).forEach((el) => { if (instant) el.classList.add('in', 'now'); else io.observe(el); });
+  }
+  function countUp(scope) {
+    $$('[data-count]', scope).forEach((el) => {
+      const raw = el.dataset.count, m = raw.match(/^(\D*)(\d[\d.,]*)(.*)$/);
+      if (!m || el.dataset.done) return;
+      el.dataset.done = '1';
+      const target = parseFloat(m[2].replace(/,/g, '')), t0 = performance.now();
+      if (!isFinite(target)) return;
+      const step = (now) => {
+        const k = Math.min(1, (now - t0) / 1500), e = 1 - Math.pow(1 - k, 3);
+        el.textContent = k < 1 ? m[1] + Math.round(target * e).toLocaleString('en') + m[3] : raw;
+        if (k < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    });
+  }
+  // configurator: opens itself once when it first scrolls into view
+  function cfgDemo(s) {
+    const box = $('#cfg'), st = CFG[s.slug];
+    if (!box || !st || st.demo || reduce || PREVIEW || st.kind === 'grid' || !('IntersectionObserver' in window)) return;
+    const ob = new IntersectionObserver((es) => {
+      if (!es[0].isIntersecting) return;
+      ob.disconnect();
+      st.demo = true;
+      const to = st.p, t0 = performance.now();
+      st.p = 0;
+      drawCfg(s);
+      const step = (now) => {
+        if (current !== s || st.touched) return;
+        const k = Math.min(1, (now - t0 - 350) / 1700);
+        if (k > 0) {
+          const e = k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+          st.p = to * e;
+          const r = $('#cfg-p');
+          if (r) r.value = Math.round(st.p * 100);
+          drawCfg(s);
+        }
+        if (k < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    }, { threshold: 0.4 });
+    ob.observe(box);
   }
 
   // hero slider: cross-fade, slow zoom, 7 s per slide, video plays only on its own slide
@@ -691,8 +752,17 @@
     if (!h) return;
     h.classList.toggle('solid', scrollY > 40 && !panel);
     h.classList.toggle('open-panel', !!panel);
-    document.documentElement.classList.toggle('past-hero', scrollY > innerHeight * 0.6);
+    const past = scrollY > innerHeight * 0.6;
+    document.documentElement.classList.toggle('past-hero', past);
+    const sl = $('.slides');
+    if (sl && !reduce && innerWidth > 760) sl.style.transform = scrollY < innerHeight ? `translate3d(0,${Math.round(scrollY * 0.14)}px,0)` : '';
+    if (past && !fabSaid && !reduce && !PREVIEW) {
+      fabSaid = true;
+      try { if (sessionStorage.getItem('fab')) return; sessionStorage.setItem('fab', '1'); } catch (e) {}
+      setTimeout(() => { const f = $('.fab'); if (f) { f.classList.add('say'); setTimeout(() => f.classList.remove('say'), 5500); } }, 1400);
+    }
   }
+  let fabSaid = false;
   const locks = new Set();
   function lock(on, who) {
     on ? locks.add(who) : locks.delete(who);
@@ -758,6 +828,8 @@
     else requestAnimationFrame(() => requestAnimationFrame(() => sp.classList.add('open')));
     lock(true, 'sp');
     renderCfg(s);
+    reveal(sp, instant && renders > 1);
+    cfgDemo(s);
     document.title = `${t(s.name)} · ${S.company.name}`;
     sp.setAttribute('tabindex', '-1');
     setTimeout(() => sp.focus({ preventScroll: true }), 50);
@@ -925,6 +997,7 @@
     const set = e.target.closest('[data-set]');
     if (set && current) {
       const st = CFG[current.slug];
+      st.touched = true;
       const k = set.dataset.set, v = set.dataset.v;
       st[k] = k === 'type' ? v : +v;
       if (k === 'type') st.p = 0.55;
@@ -933,7 +1006,7 @@
   });
   document.addEventListener('input', (e) => {
     if (e.target.classList.contains('sq')) { runSearch(e.target.closest('[data-search]')); return; }
-    if (e.target.id === 'cfg-p' && current) { CFG[current.slug].p = e.target.value / 100; drawCfg(current); }
+    if (e.target.id === 'cfg-p' && current) { const st = CFG[current.slug]; st.touched = true; st.p = e.target.value / 100; drawCfg(current); }
     if (e.target.closest('#qform')) updateWa();
   });
   document.addEventListener('focusin', (e) => { if (e.target.classList.contains('sq')) runSearch(e.target.closest('[data-search]')); });

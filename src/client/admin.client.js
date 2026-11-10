@@ -166,7 +166,7 @@
         <div class="fld"><span class="lbl">Gallery</span><div class="thumbs">${(s.gallery || []).map((g, j) => `<div class="thumb"><img src="${esc(src(g))}" alt=""><button type="button" class="x" data-act="del" data-path="${p}.gallery" data-i="${j}" data-now="1" aria-label="Remove">×</button></div>`).join('')}</div>
         <div><button type="button" class="b b-sm" data-act="pick-add" data-path="${p}.gallery">+ Add photo</button></div></div></div>
       <div class="card"><h2>Key features</h2>${list('features', 'feature', 'Feature', (q) => `<div class="row">${sel(q + '.icon', 'Icon', ICONS.map((x) => [x, x]))}</div>${pair(q + '.title', 'Text')}`)}</div>
-      <div class="card"><h2>Technical specifications</h2><p class="hint">Leave a value empty to show “On request”. Only enter values you have checked.</p>
+      <div class="card"><h2>Technical specifications</h2><p class="hint">Rows without a value are hidden on the website, and the whole table is hidden until one row has a value. Only enter values you have checked.</p>
         ${list('specs', 'spec', 'Row', (q) => `${pair(q + '.label', 'Label')}${txt(q + '.value', 'Value (same in both languages)', 'text', 'e.g. 3000 mm')}`)}</div>
       <div class="card"><h2>Configurator</h2>
         <div class="row">${sel(`${p}.kind`, 'Drawing type', KINDS)}${fld('Panel options (comma separated)', `<input type="text" data-path="${p}.configs" data-numlist value="${esc((s.configs || []).join(', '))}" placeholder="2, 3, 4">`)}</div>
@@ -181,7 +181,7 @@
     const v = site.values || [], st = site.stats || [], ts = site.testimonials || [];
     return `<div class="card"><h2>About: key points</h2><p class="hint">The short points with gold icons next to the About text.</p>
         <div class="list">${v.map((x, i) => `<div class="item">${itemHead('values', i, v.length, x.title?.en || 'Item ' + (i + 1))}<div class="row">${sel(`values.${i}.icon`, 'Icon', ICONS.map((k) => [k, k]))}</div>${pair(`values.${i}.title`, 'Title')}${pair(`values.${i}.body`, 'Text', true)}</div>`).join('')}</div>${addBtn('values', 'value', 'Add item')}</div>
-      <div class="card"><h2>Numbers (optional)</h2><p class="hint">Shown in the hero under the buttons, e.g. “15+” Years of experience. Use real numbers only. Hidden when empty.</p>
+      <div class="card"><h2>Numbers (optional)</h2><p class="hint">Shown under the About text and counted up when they scroll into view, e.g. “15+” Years of experience. Use real numbers only. Hidden when empty.</p>
         <div class="list">${st.map((x, i) => `<div class="item">${itemHead('stats', i, st.length, x.value || 'Number ' + (i + 1))}<div class="row">${txt(`stats.${i}.value`, 'Number', 'text', '15+')}${sel(`stats.${i}.icon`, 'Icon', [['', 'none'], ...ICONS.map((k) => [k, k])])}</div>${pair(`stats.${i}.label`, 'Label')}</div>`).join('') || '<p class="empty">No numbers. The section is hidden.</p>'}</div>${addBtn('stats', 'stat', 'Add number')}</div>
       <div class="card"><h2>Client reviews (optional)</h2><p class="hint">Only add real reviews with the client’s permission. Hidden when empty.</p>
         <div class="list">${ts.map((x, i) => `<div class="item">${itemHead('testimonials', i, ts.length, x.name || 'Review ' + (i + 1))}${txt(`testimonials.${i}.name`, 'Client name')}${pair(`testimonials.${i}.role`, 'Role or place (optional)')}${pair(`testimonials.${i}.quote`, 'Review', true)}</div>`).join('') || '<p class="empty">No reviews. The section is hidden.</p>'}</div>${addBtn('testimonials', 'testimonial', 'Add review')}</div>`;
