@@ -218,16 +218,10 @@
 
   /* ---------- about ---------- */
   function about() {
-    const img = S.aboutImage || 'img/lift-slide.jpg';
     return `<section class="about" id="about"><div class="wrap">
-      <div class="about-feature">
-        <figure class="about-img"><img src="${esc(src(img))}" alt="" loading="lazy"></figure>
-        <div class="about-card">
-          <p class="eyebrow">${u('about_eyebrow')}</p>
-          <h2>${esc(t(S.text.introTitle))}</h2>
-          <p>${esc(t(S.text.introBody))}</p>
-          <a class="arrow-link" href="#quote">${u('survey')}${icon('arrow')}</a>
-        </div>
+      <div class="about-card">
+        <div><p class="eyebrow">${u('about_eyebrow')}</p><h2>${esc(t(S.text.introTitle))}</h2></div>
+        <div><p>${esc(t(S.text.introBody))}</p><a class="arrow-link" href="#quote">${u('survey')}${icon('arrow')}</a></div>
       </div>
       ${founder()}
     </div></section>`;

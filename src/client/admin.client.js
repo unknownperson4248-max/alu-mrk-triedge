@@ -106,7 +106,6 @@
         ${pair('founder.role', 'Role, e.g. Founder & Managing Director')}
         ${pair('founder.bio', 'Short bio (2–4 sentences)', true)}
         ${pair('founder.quote', 'Personal message (optional)', true)}</div>
-      <div class="card"><h2>About section photo</h2>${imgPick('aboutImage', 'Photo next to the About text')}</div>
       <div class="card"><h2>Main text</h2>
         ${pair('text.tagline', 'Tagline (footer and browser title)')}
         ${pair('text.introTitle', 'About: title', true)}

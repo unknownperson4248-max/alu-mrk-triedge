@@ -191,7 +191,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 }
 
 /* ---------- system cards (overlap the bottom of the hero) ---------- */
-.cats{position:relative;padding-block:clamp(56px,7vw,96px) clamp(40px,5vw,72px);scroll-margin-top:var(--head)}
+.cats{position:relative;padding-block:clamp(56px,7vw,96px) 16px;scroll-margin-top:var(--head)}
 .cats-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px 32px;margin-bottom:28px}
 .cats-head h2{font:400 clamp(28px,3.4vw,46px)/1.1 var(--display);margin-top:16px;max-width:20ch}
 .cats-arrows{display:flex;gap:8px}
@@ -223,22 +223,15 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
   .card-n{font-size:16px}
 }
 
-/* ---------- about (photo with overlapping card) ---------- */
-.about{padding-block:clamp(24px,4vw,56px) clamp(72px,9vw,128px)}
-.about-feature{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));align-items:end;margin-bottom:64px}
-.about-img{grid-column:1/9;grid-row:1;margin:0;aspect-ratio:16/10;overflow:hidden;background:var(--surface)}
-.about-img img{width:100%;height:100%;object-fit:cover}
-.about-card{grid-column:7/13;grid-row:1;position:relative;z-index:2;margin-bottom:-64px;background:var(--navy);color:var(--on-navy);padding:clamp(30px,3.4vw,52px);display:grid;gap:18px;justify-items:start}
+/* ---------- about ---------- */
+.about{padding-block:8px clamp(72px,9vw,128px)}
+.about-card{position:relative;background:var(--navy);color:var(--on-navy);padding:clamp(32px,4.4vw,72px);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px clamp(32px,5vw,80px);align-items:end}
 .about-card::before{content:"";position:absolute;left:0;top:0;width:60px;height:60px;background:linear-gradient(135deg,var(--accent) 50%,transparent 50%)}
 .about-card .eyebrow{color:var(--accent)}
-.about-card h2{font:400 clamp(26px,2.6vw,38px)/1.15 var(--display)}
-.about-card p{color:var(--on-navy-muted)}
-.about-card .arrow-link{color:#fff}
-@media (max-width:900px){
-  .about-feature{display:block;margin-bottom:0}
-  .about-img{aspect-ratio:4/3}
-  .about-card{margin:-56px 14px 0;padding:30px 24px}
-}
+.about-card h2{font:400 clamp(26px,3vw,44px)/1.15 var(--display);margin-top:16px}
+.about-card p{color:var(--on-navy-muted);font-size:clamp(16px,1.3vw,18px);max-width:52ch}
+.about-card .arrow-link{color:#fff;margin-top:22px}
+@media (max-width:900px){.about-card{grid-template-columns:1fr;padding:34px 24px}}
 .founder{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,7fr);gap:clamp(28px,5vw,80px);align-items:center;margin-top:clamp(64px,8vw,112px)}
 .founder.no-photo{grid-template-columns:1fr}
 .founder figure{margin:0;position:relative;aspect-ratio:4/5;max-width:440px;width:100%;background:var(--surface);overflow:hidden}
