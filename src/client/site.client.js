@@ -262,6 +262,7 @@
           )
           .join('')}</div>
         <button type="button" class="rail-btn next" data-rail="1" aria-label="Next">${icon('arrow')}</button>
+        <div class="rail-prog" aria-hidden="true"><i></i></div>
       </div>
     </section>`;
   }
@@ -648,6 +649,8 @@
   }
 
   // system cards rail
+  let railUpd = null;
+  addEventListener('resize', () => railUpd && railUpd(), { passive: true });
   function railArrows() {
     const r = $('#rail');
     if (!r) return;
@@ -656,7 +659,14 @@
       const [a, b] = $$('[data-rail]');
       if (a) a.disabled = r.scrollLeft <= 2;
       if (b) b.disabled = r.scrollLeft >= max;
+      const bar = $('.rail-prog i');
+      if (bar && r.scrollWidth) {
+        const w = Math.min(100, (r.clientWidth / r.scrollWidth) * 100);
+        bar.style.width = w + '%';
+        bar.style.left = (max > 0 ? (r.scrollLeft / (r.scrollWidth - r.clientWidth)) * (100 - w) : 0) + '%';
+      }
     };
+    railUpd = upd;
     r.addEventListener('scroll', upd, { passive: true });
     upd();
   }
@@ -880,7 +890,7 @@
     if (sb) { hsShow(hsI + +sb.dataset.slide); return; }
     if (e.target.closest('#burger')) { setPanel(panel === 'menu' ? null : 'menu'); return; }
     if (e.target.closest('.mega-btn')) { setPanel(panel === 'mega' ? null : 'mega'); return; }
-    if (e.target.closest('.srch-btn')) { setPanel(panel === 'search' ? null : 'search'); if (panel === 'search') setTimeout(() => { const i = $('#sq-top'); i.focus(); runSearch(i.closest('[data-search]')); }, 30); return; }
+    if (e.target.closest('.srch-btn')) { setPanel(panel === 'search' ? null : 'search'); if (panel === 'search') { const i = $('#sq-top'); i.focus(); runSearch(i.closest('[data-search]')); } return; }
     const acc = e.target.closest('.acc');
     if (acc) { const open = acc.getAttribute('aria-expanded') !== 'true'; acc.setAttribute('aria-expanded', String(open)); $('#' + acc.getAttribute('aria-controls')).classList.toggle('open', open); return; }
     const chip = e.target.closest('[data-chip]');
