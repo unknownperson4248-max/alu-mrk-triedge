@@ -1,0 +1,14 @@
+name = "alu-mrk-triedge"
+main = "src/worker.js"
+compatibility_date = "2025-01-01"
+workers_dev = true
+
+rules = [
+  { type = "Text", globs = ["**/*.html", "**/*.css", "**/*.client.js"], fallthrough = true },
+  { type = "Data", globs = ["**/*.jpg", "**/*.png"], fallthrough = true },
+]
+
+# Website content, uploaded images, quote requests and the admin password hash.
+[[kv_namespaces]]
+binding = "KV"
+id = "ff49aec19dfb4db68a4eaabbc0f35200"

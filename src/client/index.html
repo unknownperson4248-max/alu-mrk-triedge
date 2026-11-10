@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>{{TITLE}}</title>
+<meta name="description" content="{{DESC}}">
+<link rel="canonical" href="{{URL}}">
+<meta property="og:type" content="website">
+<meta property="og:title" content="{{TITLE}}">
+<meta property="og:description" content="{{DESC}}">
+<meta property="og:image" content="{{OG_IMAGE}}">
+<meta property="og:url" content="{{URL}}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0e1b2e">
+<link rel="icon" type="image/png" href="/img/icon-dark.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/site.css?v={{V}}">
+<style id="theme">{{THEME}}</style>
+<script type="application/ld+json">{{LD}}</script>
+</head>
+<body>
+<div id="app"></div>
+<div id="sp" class="sp" hidden></div>
+<div id="lb" class="lb" role="dialog" aria-modal="true" aria-label="Image viewer" hidden>
+  <div class="lb-stage"><img alt=""></div>
+  <p class="lb-cap"></p>
+  <button type="button" class="lb-btn lb-x" aria-label="Close">&times;</button>
+  <button type="button" class="lb-btn lb-pv" aria-label="Previous">&#8249;</button>
+  <button type="button" class="lb-btn lb-nx" aria-label="Next">&#8250;</button>
+</div>
+<noscript><p style="padding:24px;font-family:sans-serif">Please enable JavaScript to view this website.</p></noscript>
+<script>window.SITE={{DATA}};</script>
+<script src="/site.js?v={{V}}" defer></script>
+</body>
+</html>
