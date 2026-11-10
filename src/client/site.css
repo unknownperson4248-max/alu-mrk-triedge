@@ -308,6 +308,7 @@ html[data-tone=dark] .hdr.solid .brand .logo-d,html[data-tone=dark] .hdr.open-pa
 @media (hover:none){.card:hover,.card:hover img{transform:none}}
 .rail-prog{display:none;position:relative;height:2px;margin:16px auto 0;width:96px;border-radius:2px;background:rgba(255,255,255,.18);overflow:hidden}
 .rail-prog i{position:absolute;top:0;bottom:0;left:0;width:30%;border-radius:2px;background:var(--accent);transition:left .15s linear}
+@media (max-width:760px){.rail-prog{display:block}}
 
 /* ---------- about: image (with video button), text, 2×2 key points ---------- */
 .about{position:relative;background:var(--navy-deep);color:var(--on-navy);padding-block:clamp(16px,2vw,32px) clamp(56px,7vw,96px)}
