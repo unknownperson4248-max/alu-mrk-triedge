@@ -42,6 +42,9 @@ export const DEFAULT_SITE = {
     { img: 'img/lift-slide.jpg', caption: T('Sliding system', 'Συρόμενο σύστημα') },
     { img: 'img/folding-interior.jpg', caption: T('Folding doors', 'Πτυσσόμενες πόρτες') },
   ],
+  heroImage: 'img/house-windows.jpg',
+  heroVideo: '',
+  heroText: true,
   stats: [],
   values: [
     { icon: 'ruler', title: T('Measured on site', 'Μέτρηση στον χώρο'), body: T('Every opening is surveyed and measured by our team before production.', 'Κάθε άνοιγμα μετριέται από την ομάδα μας πριν την παραγωγή.') },

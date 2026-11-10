@@ -21,6 +21,7 @@
   const UI = {
     en: {
       systems: 'Systems', engineering: 'Engineering', about: 'About', contact: 'Contact', quote: 'Request a quote', menu: 'Menu',
+      m_systems: 'Aluminium Systems', m_engineering: 'Engineering & Quality', m_about: 'About Us', m_contact: 'Contact', our_systems: 'Our systems',
       hero_eyebrow: 'Aluminium & glass systems · Cyprus', explore_systems: 'Explore systems', scroll: 'Scroll',
       about_eyebrow: 'About us', survey: 'Book a free site survey', systems_eyebrow: 'Aluminium systems', explore: 'Explore system',
       all_systems: 'All systems', system_n: 'System {n} / {t}', overview: 'Overview', features: 'Features', specs: 'Specifications',
@@ -46,6 +47,7 @@
     },
     el: {
       systems: 'Συστήματα', engineering: 'Τεχνολογία', about: 'Εταιρεία', contact: 'Επικοινωνία', quote: 'Ζητήστε προσφορά', menu: 'Μενού',
+      m_systems: 'Συστήματα αλουμινίου', m_engineering: 'Τεχνολογία & ποιότητα', m_about: 'Η εταιρεία', m_contact: 'Επικοινωνία', our_systems: 'Τα συστήματά μας',
       hero_eyebrow: 'Συστήματα αλουμινίου & γυαλιού · Κύπρος', explore_systems: 'Δείτε τα συστήματα', scroll: 'Κύλιση',
       about_eyebrow: 'Η εταιρεία', survey: 'Κλείστε δωρεάν αυτοψία', systems_eyebrow: 'Συστήματα αλουμινίου', explore: 'Δείτε το σύστημα',
       all_systems: 'Όλα τα συστήματα', system_n: 'Σύστημα {n} / {t}', overview: 'Επισκόπηση', features: 'Χαρακτηριστικά', specs: 'Τεχνικά στοιχεία',
@@ -125,6 +127,7 @@
   /* ---------- sections ---------- */
   function header() {
     const c = S.company;
+    const list = sys();
     return `<header class="hdr" id="hdr">
       <div class="wrap nav">
         <a class="brand" href="#top" aria-label="${esc(c.name)}"><img class="logo-l" src="/img/logo-light.png" alt="${esc(c.name)}" width="98" height="46"><img class="logo-d" src="/img/logo-dark.png" alt="" width="98" height="46"></a>
@@ -136,35 +139,31 @@
         <button type="button" class="burger" id="burger" aria-expanded="false" aria-controls="mnav" aria-label="${u('menu')}"><i><b></b><b></b></i></button>
       </div>
     </header>
-    <div class="mnav" id="mnav" aria-hidden="true">
-      <ol>
-        <li><a href="#systems"><small>01</small>${u('systems')}</a></li>
-        <li><a href="#engineering"><small>02</small>${u('engineering')}</a></li>
-        <li><a href="#about"><small>03</small>${u('about')}</a></li>
-        <li><a href="#quote"><small>04</small>${u('quote')}</a></li>
-      </ol>
+    <div class="mnav" id="mnav" aria-hidden="true"><div class="mnav-in">
+      <p class="mnav-label">${u('menu')}</p>
+      <ul class="mnav-main">
+        <li><a href="#systems"><span>${u('m_systems')}</span>${icon('arrow')}</a></li>
+        <li><a href="#engineering"><span>${u('m_engineering')}</span>${icon('arrow')}</a></li>
+        <li><a href="#about"><span>${u('m_about')}</span>${icon('arrow')}</a></li>
+        <li><a href="#quote"><span>${u('m_contact')}</span>${icon('arrow')}</a></li>
+      </ul>
+      ${list.length ? `<p class="mnav-label">${u('our_systems')}</p><ul class="mnav-sys">${list.map((s, i) => `<li><a href="#${esc(s.slug)}"><small>${pad(i + 1)}</small><span>${esc(t(s.name))}</span></a></li>`).join('')}</ul>` : ''}
+      <div class="mnav-cta"><a class="btn btn-accent" href="#quote">${u('quote')}${icon('arrow')}</a>${waLink() ? `<a class="btn btn-wa" href="${esc(waLink(u('wa_hello', { c: c.name })))}" target="_blank" rel="noopener">${WA_SVG.replace('<svg', '<svg class="ic"')}WhatsApp</a>` : ''}</div>
       <div class="mnav-foot">
-        ${c.phone ? `<a href="${telLink()}">${esc(c.phone)}</a>` : ''}
-        ${c.email ? `<a href="mailto:${esc(c.email)}">${esc(c.email)}</a>` : ''}
+        ${c.phone ? `<a href="${telLink()}">${icon('phone')}<span>${esc(c.phone)}</span></a>` : ''}
+        ${c.email ? `<a href="mailto:${esc(c.email)}">${icon('mail')}<span>${esc(c.email)}</span></a>` : ''}
       </div>
-    </div>`;
+    </div></div>`;
   }
 
   function hero() {
-    const slides = (S.hero || []).filter((h) => h.img);
-    return `<section class="hero" id="top">
-      <div class="hero-media">${slides.map((h, i) => `<img src="${esc(src(h.img))}" alt="" ${i ? 'loading="lazy"' : 'fetchpriority="high"'}>`).join('')}</div>
-      <div class="hero-shade"></div><div class="hero-sheen" aria-hidden="true"></div>
-      <div class="wrap hero-in">
-        <p class="eyebrow on-navy">${u('hero_eyebrow')}</p>
-        <h1>${esc(t(S.text.heroTitle))}<span>${esc(t(S.text.heroAccent))}</span></h1>
-        <div class="hero-cta"><a class="btn btn-accent" href="#systems">${u('explore_systems')}${icon('arrow')}</a><a class="btn btn-ghost" href="#quote">${u('quote')}</a></div>
-      </div>
-      <div class="hero-foot"><div class="wrap">
-        <div><div class="hero-cap"><b id="hero-n">01 / ${pad(Math.max(slides.length, 1))}</b><span id="hero-t">${esc(t((slides[0] || {}).caption))}</span></div>
-        <div class="hero-bars" aria-hidden="true">${slides.map(() => '<i></i>').join('')}</div></div>
-        <a class="hero-scroll" href="#about">${u('scroll')}<i aria-hidden="true"></i></a>
-      </div></div>
+    const img = S.heroImage || ((S.hero || [])[0] || {}).img || 'img/house-windows.jpg';
+    const vid = S.heroVideo;
+    const showText = S.heroText !== false;
+    return `<section class="hero" id="top" aria-label="${esc(S.company.name)}">
+      <div class="hero-media"><img class="${vid ? '' : 'drift'}" src="${esc(src(img))}" alt="" fetchpriority="high">${vid && !reduce ? `<video id="hero-video" src="${esc(src(vid))}" muted autoplay loop playsinline preload="auto" aria-hidden="true"></video>` : ''}</div>
+      <div class="hero-shade${showText ? '' : ' light'}"></div>
+      ${showText ? `<div class="wrap hero-in"><h1>${esc(t(S.text.heroTitle))}<span>${esc(t(S.text.heroAccent))}</span></h1><div class="hero-cta"><a class="btn btn-accent" href="#systems">${u('explore_systems')}${icon('arrow')}</a></div></div>` : ''}
     </section>`;
   }
 
@@ -490,30 +489,22 @@
     $('#app').innerHTML = header() + '<main>' + hero() + about() + systemsIndex() + engineering() + why() + testimonials() + quote() + '</main>' + footer();
     if (sxI >= sys().length) sxI = 0;
     if (sxI) sxActivate(sxI, true, true);
-    heroStart();
+    heroVideo();
     onScroll();
     requestAnimationFrame(roller);
     if (pendingSystem) selectSystem(pendingSystem);
     updateWa();
   }
 
-  // hero slideshow
-  let heroTimer = null, heroI = 0;
-  function heroStart() {
-    clearInterval(heroTimer);
-    const imgs = $$('.hero-media img');
-    if (!imgs.length) return;
-    heroShow(Math.min(heroI, imgs.length - 1));
-    if (!reduce && imgs.length > 1) heroTimer = setInterval(() => heroShow((heroI + 1) % imgs.length), 6500);
-  }
-  function heroShow(i) {
-    heroI = i;
-    const slides = (S.hero || []).filter((h) => h.img);
-    $$('.hero-media img').forEach((im, j) => { im.classList.remove('on'); if (j === i) { void im.offsetWidth; im.classList.add('on'); } });
-    $$('.hero-bars i').forEach((b, j) => { b.classList.remove('on'); if (j === i) { void b.offsetWidth; b.classList.add('on'); } });
-    const n = $('#hero-n'), tt = $('#hero-t');
-    if (n) n.textContent = pad(i + 1) + ' / ' + pad(slides.length);
-    if (tt) tt.textContent = t((slides[i] || {}).caption);
+  // hero background video: fade in once it is actually playing
+  function heroVideo() {
+    const v = $('#hero-video');
+    if (!v) return;
+    const on = () => v.classList.add('ready');
+    v.addEventListener('playing', on, { once: true });
+    if (!v.paused && v.readyState > 2) on();
+    const pr = v.play && v.play();
+    if (pr && pr.catch) pr.catch(() => {});
   }
 
   // systems index
@@ -554,7 +545,10 @@
   // header + menu
   function onScroll() {
     const h = $('#hdr');
-    if (h) h.classList.toggle('solid', scrollY > 40 || $('#mnav')?.classList.contains('open'));
+    if (!h) return;
+    const open = !!($('#mnav') && $('#mnav').classList.contains('open'));
+    h.classList.toggle('solid', scrollY > 40 && !open);
+    h.classList.toggle('on-menu', open);
   }
   function setMenu(open) {
     const m = $('#mnav'), b = $('#burger');

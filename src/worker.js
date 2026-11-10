@@ -11,8 +11,8 @@ const enc = new TextEncoder();
 const PBKDF2_ITER = 10000;
 const SESSION_DAYS = 7;
 const MAX_SITE_BYTES = 512 * 1024;
-const MAX_UPLOAD_BYTES = 20 * 1024 * 1024;
-const UPLOAD_TYPES = { 'image/jpeg': '.jpg', 'image/png': '.png', 'image/webp': '.webp', 'application/pdf': '.pdf' };
+const MAX_UPLOAD_BYTES = 24 * 1024 * 1024; // Workers KV values are limited to 25 MiB
+const UPLOAD_TYPES = { 'image/jpeg': '.jpg', 'image/png': '.png', 'image/webp': '.webp', 'application/pdf': '.pdf', 'video/mp4': '.mp4', 'video/webm': '.webm' };
 
 // Short version string for cache-busting the client files.
 const VERSION = (() => {
@@ -68,7 +68,7 @@ function renderIndex(site, url) {
   const t = (o) => (o && (o.en || '')) || '';
   const title = `${site.company.name} · ${t(site.text.tagline)}`;
   const desc = t(site.text.introBody) || t(site.text.introTitle);
-  const ogImg = new URL('/' + String((site.hero[0] || {}).img || 'img/house-windows.jpg').replace(/^\//, ''), url).href;
+  const ogImg = new URL('/' + String(site.heroImage || (site.hero && site.hero[0] && site.hero[0].img) || 'img/house-windows.jpg').replace(/^\//, ''), url).href;
   const ld = {
     '@context': 'https://schema.org',
     '@type': 'HomeAndConstructionBusiness',
@@ -256,10 +256,10 @@ async function handleAdminApi(req, env, url, path) {
   if (path === '/api/admin/media' && method === 'POST') {
     const type = (req.headers.get('content-type') || '').split(';')[0].trim();
     const ext = UPLOAD_TYPES[type];
-    if (!ext) return json({ ok: false, error: 'Only JPG, PNG, WebP or PDF files' }, 415);
+    if (!ext) return json({ ok: false, error: 'Only JPG, PNG, WebP, PDF, MP4 or WebM files' }, 415);
     const buf = await req.arrayBuffer();
     if (!buf.byteLength) return json({ ok: false, error: 'Empty file' }, 400);
-    if (buf.byteLength > MAX_UPLOAD_BYTES) return json({ ok: false, error: 'File is larger than 20 MB' }, 413);
+    if (buf.byteLength > MAX_UPLOAD_BYTES) return json({ ok: false, error: 'File is larger than 24 MB' }, 413);
     const id = crypto.randomUUID().replace(/-/g, '').slice(0, 16) + ext;
     const name = decodeURIComponent(req.headers.get('x-filename') || '').slice(0, 120);
     const meta = { type, name, size: buf.byteLength, ts: Date.now() };
@@ -269,7 +269,7 @@ async function handleAdminApi(req, env, url, path) {
 
   if (path.startsWith('/api/admin/media/') && method === 'DELETE') {
     const id = path.slice('/api/admin/media/'.length);
-    if (!/^[a-z0-9]{16}\.(jpg|png|webp|pdf)$/.test(id)) return json({ ok: false }, 400);
+    if (!/^[a-z0-9]{16}\.(jpg|png|webp|pdf|mp4|webm)$/.test(id)) return json({ ok: false }, 400);
     await env.KV.delete('media:' + id);
     return json({ ok: true });
   }
@@ -334,11 +334,20 @@ export default {
 
       if (path.startsWith('/media/')) {
         const id = path.slice(7);
-        if (/^[a-z0-9]{16}\.(jpg|png|webp|pdf)$/.test(id)) {
+        if (/^[a-z0-9]{16}\.(jpg|png|webp|pdf|mp4|webm)$/.test(id)) {
           const { value, metadata } = await env.KV.getWithMetadata('media:' + id, { type: 'arrayBuffer', cacheTtl: 86400 });
           if (value) {
-            const h = { 'content-type': (metadata && metadata.type) || 'application/octet-stream', 'cache-control': 'public, max-age=31536000, immutable', ...BASE_HEADERS };
+            const h = { 'content-type': (metadata && metadata.type) || 'application/octet-stream', 'cache-control': 'public, max-age=31536000, immutable', 'accept-ranges': 'bytes', ...BASE_HEADERS };
             if (id.endsWith('.pdf')) h['content-disposition'] = `inline; filename="${String((metadata && metadata.name) || 'brochure.pdf').replace(/[^\w.\- ]/g, '')}"`;
+            // Byte ranges: Safari will not play a video without them.
+            const total = value.byteLength;
+            const m = /^bytes=(\d*)-(\d*)$/.exec(req.headers.get('range') || '');
+            if (m && (m[1] !== '' || m[2] !== '')) {
+              let start = m[1] === '' ? Math.max(0, total - +m[2]) : +m[1];
+              let end = m[1] === '' || m[2] === '' ? total - 1 : Math.min(+m[2], total - 1);
+              if (start >= total || start > end) return new Response(null, { status: 416, headers: { 'content-range': `bytes */${total}`, ...BASE_HEADERS } });
+              return new Response(value.slice(start, end + 1), { status: 206, headers: { ...h, 'content-range': `bytes ${start}-${end}/${total}`, 'content-length': String(end - start + 1) } });
+            }
             return new Response(value, { headers: h });
           }
         }

@@ -11,7 +11,7 @@
   let pvMode = innerWidth < 700 ? 'mob' : 'desk';
   let dirty = false, tab = 'design', editIdx = null, quotes = null, quoteCount = 0, previewReady = false;
 
-  const TABS = [['design', 'Colours'], ['company', 'Company & text'], ['hero', 'Hero slides'], ['systems', 'Systems'], ['content', 'Why us & reviews'], ['inbox', 'Quote requests'], ['media', 'Images & files'], ['account', 'Password']];
+  const TABS = [['design', 'Colours'], ['company', 'Company & text'], ['hero', 'Hero'], ['systems', 'Systems'], ['content', 'Why us & reviews'], ['inbox', 'Quote requests'], ['media', 'Images & files'], ['account', 'Password']];
   const ICONS = ['motor', 'remote', 'maximize', 'shield', 'thermo', 'droplet', 'lock', 'sun', 'wind', 'layers', 'ruler', 'sparkle', 'building', 'fold', 'arrowsV', 'arrowsH', 'grid', 'palette', 'key', 'home', 'check'];
   const KINDS = [['slide', 'Sliding panels'], ['vertical', 'Vertical sliding'], ['fold', 'Folding'], ['swing', 'Doors (swing)'], ['window', 'Windows'], ['grid', 'Curtain wall / facade grid'], ['none', 'No configurator']];
   const COLORS = [['navy', 'Navy (dark sections)'], ['accent', 'Accent (buttons, highlights)'], ['bg', 'Background'], ['surface', 'Light panels'], ['ink', 'Text']];
@@ -101,8 +101,6 @@
         <div class="row">${txt('company.socials.facebook', 'Facebook link', 'url', 'https://facebook.com/…')}${txt('company.socials.instagram', 'Instagram link', 'url', 'https://instagram.com/…')}${txt('company.socials.linkedin', 'LinkedIn link', 'url', 'https://linkedin.com/…')}</div>
         <p class="hint">Empty fields are hidden on the website.</p></div>
       <div class="card"><h2>Main text</h2>
-        ${pair('text.heroTitle', 'Hero title (first line)')}
-        ${pair('text.heroAccent', 'Hero title (accent line)')}
         ${pair('text.tagline', 'Tagline (footer and browser title)')}
         ${pair('text.introTitle', 'About: title', true)}
         ${pair('text.introBody', 'About: text', true)}
@@ -110,10 +108,17 @@
         ${pair('text.systemsSub', 'Systems: text', true)}</div>`;
   }
   function vHero() {
-    const h = site.hero;
-    return `<div class="card"><h2>Hero slideshow</h2><p class="hint">Photos that fade one after another at the top of the website.</p>
-      <div class="list">${h.map((s, i) => `<div class="item">${itemHead('hero', i, h.length, 'Slide ' + (i + 1))}${imgPick(`hero.${i}.img`, 'Photo')}${pair(`hero.${i}.caption`, 'Caption')}</div>`).join('') || '<p class="empty">No slides</p>'}</div>
-      ${addBtn('hero', 'hero', 'Add slide')}</div>`;
+    const v = site.heroVideo;
+    return `<div class="card"><h2>Hero background</h2><p class="hint">The full-screen picture at the top of the website. A video plays on a loop without sound. The photo shows while the video loads.</p>
+        <div class="fld"><span class="lbl">Video (live wallpaper)</span>
+          ${v ? `<video class="vprev" src="${esc(src(v))}" muted loop autoplay playsinline></video><div class="pick"><button type="button" class="b b-sm" data-act="upload-video">Replace video</button><button type="button" class="b b-sm b-danger" data-act="clear" data-path="heroVideo">Remove video</button></div>`
+              : `<div><button type="button" class="b b-sm b-pri" data-act="upload-video">Upload video</button></div>`}
+          <small class="muted">MP4, up to 24 MB. Best: 10 to 20 seconds, 1920×1080, no sound.</small></div>
+        ${imgPick('heroImage', 'Photo')}</div>
+      <div class="card"><h2>Hero text</h2>
+        ${check('heroText', 'Show the headline and button on top of the video')}
+        ${pair('text.heroTitle', 'Headline (first line)')}
+        ${pair('text.heroAccent', 'Headline (accent line)')}</div>`;
   }
   function vSystems() {
     if (editIdx != null && site.systems[editIdx]) return vSystemEdit(editIdx);
@@ -180,8 +185,8 @@
       <div class="media">${all.map((m) => mediaTile(m, used.includes(m.path))).join('')}</div></div>`;
   }
   function mediaTile(m, inUse, selectable) {
-    const pdf = /\.pdf$/.test(m.path);
-    const pic = pdf ? '<div class="pdf">PDF</div>' : `<img src="${esc(src(m.path))}" alt="" loading="lazy">`;
+    const pdf = /\.pdf$/.test(m.path), vid = /\.(mp4|webm)$/.test(m.path);
+    const pic = pdf ? '<div class="pdf">PDF</div>' : vid ? `<video class="pdf" src="${esc(src(m.path))}" muted preload="metadata"></video>` : `<img src="${esc(src(m.path))}" alt="" loading="lazy">`;
     return `<div class="m">${selectable ? `<button type="button" class="sel" data-act="choose" data-v="${esc(m.path)}" aria-label="Choose ${esc(m.name || m.path)}">${pic}</button>` : pic}
       <div class="meta"><span title="${esc(m.name || m.path)}">${esc(m.name || m.path)}</span>${m.builtin ? '<em class="tag">built-in</em>' : inUse ? '<em class="tag">in use</em>' : selectable ? '' : `<button type="button" class="b b-sm b-danger" data-act="del-media" data-v="${esc(m.path)}">Delete</button>`}</div></div>`;
   }
@@ -271,6 +276,11 @@
   }
   async function prepFile(file) {
     if (file.type === 'application/pdf') return { blob: file, type: file.type };
+    if (/^video\//.test(file.type)) {
+      if (!/^video\/(mp4|webm)$/.test(file.type)) throw new Error(file.name + ': use an MP4 video.');
+      if (file.size > 24 * 1024 * 1024) throw new Error(file.name + ' is ' + Math.round(file.size / 1048576) + ' MB. The limit is 24 MB. Export it shorter or at a lower quality.');
+      return { blob: file, type: file.type };
+    }
     if (!/^image\//.test(file.type)) throw new Error(file.name + ' is not an image');
     let bmp = null;
     try { bmp = await createImageBitmap(file); } catch (e) {}
@@ -314,7 +324,7 @@
     return new Promise((resolve) => {
       const m = $('#modal');
       const draw = () => {
-        const imgs = [...media.filter((x) => !/\.pdf$/.test(x.path)), ...builtin];
+        const imgs = [...media.filter((x) => /\.(jpg|png|webp)$/.test(x.path)), ...builtin];
         m.innerHTML = `<div class="modal-card" role="dialog" aria-modal="true" aria-label="${esc(title)}"><div class="modal-head"><h2>${esc(title)}</h2><button type="button" class="b b-sm b-pri" data-m="upload">Upload new</button><button type="button" class="b b-sm" data-m="close">Cancel</button></div>
           <div class="media">${imgs.map((x) => mediaTile(x, false, true)).join('')}</div></div>`;
       };
@@ -405,6 +415,12 @@
         const files = await chooseFiles('application/pdf', false);
         const up = await uploadFiles(files);
         if (up[0]) { setP(site, p, up[0]); markDirty(); renderEditor(); }
+        break;
+      }
+      case 'upload-video': {
+        const files = await chooseFiles('video/mp4,video/webm', false);
+        const up = await uploadFiles(files);
+        if (up[0]) { site.heroVideo = up[0]; markDirty(); renderEditor(); }
         break;
       }
       case 'upload': { const files = await chooseFiles('image/*', true); if (files.length) { await uploadFiles(files); renderEditor(); } break; }
