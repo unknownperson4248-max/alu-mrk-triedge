@@ -4,7 +4,8 @@
   let S = window.SITE;
   const PREVIEW = new URLSearchParams(location.search).has('preview');
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const mobile = () => matchMedia('(max-width: 900px)').matches;
+  const mobile = () => matchMedia('(max-width: 1100px)').matches;
+  const canHover = () => matchMedia('(hover: hover) and (pointer: fine)').matches;
 
   let lang = '';
   try { lang = localStorage.getItem('lang') || ''; } catch (e) {}
@@ -17,13 +18,15 @@
   const src = (p) => (!p ? '' : /^https?:\/\//.test(p) ? p : '/' + String(p).replace(/^\//, ''));
   const pad = (n) => String(n).padStart(2, '0');
   const digits = (s) => String(s || '').replace(/\D/g, '');
+  const norm = (s) => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
 
   const UI = {
     en: {
-      systems: 'Systems', engineering: 'Engineering', about: 'About', contact: 'Contact', quote: 'Request a quote', menu: 'Menu',
-      leadership: 'Leadership',
-      m_systems: 'Aluminium Systems', m_engineering: 'Engineering & Quality', m_about: 'About Us', m_contact: 'Contact', our_systems: 'Our systems',
-      hero_eyebrow: 'Aluminium & glass systems · Cyprus', explore_systems: 'Explore systems', scroll: 'Scroll',
+      systems: 'Systems', engineering: 'Engineering', about: 'About', contact: 'Contact', quote: 'Request a quote', menu: 'Menu', search: 'Search', close: 'Close',
+      main_menu: 'Main menu', m_systems: 'Aluminium Systems', m_engineering: 'Engineering & Quality', m_about: 'About Us', m_contact: 'Contact', view_all: 'View all systems',
+      call: 'Call', leadership: 'Leadership',
+      search_ph: 'Search, e.g. sliding doors', no_results: 'No results for “{q}”.', popular: 'Popular searches', chips: ['Sliding', 'Windows', 'Doors', 'Folding', 'Glass'],
+      hero_eyebrow: 'Aluminium & glass systems · Cyprus', explore_systems: 'Explore systems', watch: 'Watch video',
       about_eyebrow: 'About us', survey: 'Book a free site survey', systems_eyebrow: 'Aluminium systems', explore: 'Explore system',
       all_systems: 'All systems', system_n: 'System {n} / {t}', overview: 'Overview', features: 'Features', specs: 'Specifications',
       config: 'Configurator', gallery: 'Gallery', related: 'Related systems', applications: 'Applications',
@@ -43,14 +46,15 @@
       message: 'Message', msg_ph: 'Sizes, number of openings, timeline…', send: 'Send request', sending: 'Sending…',
       sent: 'Thank you. Your request has been sent. We will contact you soon.', send_err: 'Could not send. Please call or message us on WhatsApp.',
       required: 'Please add your name and phone number.', or_wa: 'Send on WhatsApp',
-      address: 'Address', hours: 'Opening hours', rights: 'All rights reserved.', company: 'Company', close: 'Close', zoom: 'Tap to zoom',
+      address: 'Address', hours: 'Opening hours', rights: 'All rights reserved.', company: 'Company', zoom: 'Tap to zoom',
       wa_hello: 'Hello {c}, I would like a quote.', wa_system: 'Hello {c}, I am interested in {s}.',
     },
     el: {
-      systems: 'Συστήματα', engineering: 'Τεχνολογία', about: 'Εταιρεία', contact: 'Επικοινωνία', quote: 'Ζητήστε προσφορά', menu: 'Μενού',
-      leadership: 'Διοίκηση',
-      m_systems: 'Συστήματα αλουμινίου', m_engineering: 'Τεχνολογία & ποιότητα', m_about: 'Η εταιρεία', m_contact: 'Επικοινωνία', our_systems: 'Τα συστήματά μας',
-      hero_eyebrow: 'Συστήματα αλουμινίου & γυαλιού · Κύπρος', explore_systems: 'Δείτε τα συστήματα', scroll: 'Κύλιση',
+      systems: 'Συστήματα', engineering: 'Τεχνολογία', about: 'Εταιρεία', contact: 'Επικοινωνία', quote: 'Ζητήστε προσφορά', menu: 'Μενού', search: 'Αναζήτηση', close: 'Κλείσιμο',
+      main_menu: 'Κύριο μενού', m_systems: 'Συστήματα αλουμινίου', m_engineering: 'Τεχνολογία & ποιότητα', m_about: 'Η εταιρεία', m_contact: 'Επικοινωνία', view_all: 'Όλα τα συστήματα',
+      call: 'Κλήση', leadership: 'Διοίκηση',
+      search_ph: 'Αναζήτηση, π.χ. συρόμενες πόρτες', no_results: 'Δεν βρέθηκαν αποτελέσματα για «{q}».', popular: 'Δημοφιλείς αναζητήσεις', chips: ['Συρόμενα', 'Παράθυρα', 'Πόρτες', 'Πτυσσόμενα', 'Γυαλί'],
+      hero_eyebrow: 'Συστήματα αλουμινίου & γυαλιού · Κύπρος', explore_systems: 'Δείτε τα συστήματα', watch: 'Δείτε το βίντεο',
       about_eyebrow: 'Η εταιρεία', survey: 'Κλείστε δωρεάν αυτοψία', systems_eyebrow: 'Συστήματα αλουμινίου', explore: 'Δείτε το σύστημα',
       all_systems: 'Όλα τα συστήματα', system_n: 'Σύστημα {n} / {t}', overview: 'Επισκόπηση', features: 'Χαρακτηριστικά', specs: 'Τεχνικά στοιχεία',
       config: 'Διαμόρφωση', gallery: 'Φωτογραφίες', related: 'Σχετικά συστήματα', applications: 'Εφαρμογές',
@@ -70,7 +74,7 @@
       message: 'Μήνυμα', msg_ph: 'Διαστάσεις, αριθμός ανοιγμάτων, χρονοδιάγραμμα…', send: 'Αποστολή αιτήματος', sending: 'Αποστολή…',
       sent: 'Ευχαριστούμε. Το αίτημά σας στάλθηκε. Θα επικοινωνήσουμε σύντομα μαζί σας.', send_err: 'Η αποστολή απέτυχε. Καλέστε μας ή στείλτε μήνυμα στο WhatsApp.',
       required: 'Συμπληρώστε όνομα και τηλέφωνο.', or_wa: 'Αποστολή στο WhatsApp',
-      address: 'Διεύθυνση', hours: 'Ωράριο', rights: 'Με επιφύλαξη παντός δικαιώματος.', company: 'Εταιρεία', close: 'Κλείσιμο', zoom: 'Πατήστε για μεγέθυνση',
+      address: 'Διεύθυνση', hours: 'Ωράριο', rights: 'Με επιφύλαξη παντός δικαιώματος.', company: 'Εταιρεία', zoom: 'Πατήστε για μεγέθυνση',
       wa_hello: 'Γεια σας, θα ήθελα μια προσφορά.', wa_system: 'Γεια σας, ενδιαφέρομαι για: {s}.',
     },
   };
@@ -98,6 +102,8 @@
     arrowsV: '<path d="M12 3v18M8 7l4-4 4 4M8 17l4 4 4-4"/>',
     arrowsH: '<path d="M3 12h18M7 8l-4 4 4 4M17 8l4 4-4 4"/>',
     grid: '<rect x="3" y="3" width="18" height="18"/><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/>',
+    window: '<rect x="4" y="3" width="16" height="18"/><path d="M12 3v18M4 12h16"/>',
+    door: '<rect x="6" y="3" width="12" height="18"/><path d="M14.5 12v.5M3 21h18"/>',
     palette: '<path d="M12 3a9 9 0 1 0 0 18c1.2 0 1.8-.9 1.4-1.9-.4-1.1.3-2.1 1.5-2.1H17a4 4 0 0 0 4-4c0-5.5-4-10-9-10z"/><circle cx="7.5" cy="11" r="1.2"/><circle cx="10" cy="7" r="1.2"/><circle cx="15" cy="7.5" r="1.2"/>',
     key: '<circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M17 6l3 3"/>',
     home: '<path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/>',
@@ -108,6 +114,11 @@
     clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
     arrow: '<path d="M4 12h15M13 6l6 6-6 6"/>',
     back: '<path d="M20 12H5M11 6l-6 6 6 6"/>',
+    chev: '<path d="M6 9l6 6 6-6"/>',
+    right: '<path d="M9 6l6 6-6 6"/>',
+    search: '<circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/>',
+    play: '<path d="M9 6.5v11l9-5.5z"/>',
+    file: '<path d="M14 3H6v18h12V7z"/><path d="M14 3v4h4M9 12h6M9 16h6"/>',
     download: '<path d="M12 3v12M7 10l5 5 5-5M4 21h16"/>',
     zoom: '<circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4M11 8v6M8 11h6"/>',
     info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/>',
@@ -116,8 +127,12 @@
     linkedin: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 10v7M8 7v.5M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/>',
   };
   const icon = (n) => `<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">${ICONS[n] || ICONS.sparkle}</svg>`;
-  const WA_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2c0 1.3.9 2.5 1 2.7.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg>';
+  const WA_PATH = 'M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2c0 1.3.9 2.5 1 2.7.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z';
+  const WA_SVG = `<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="${WA_PATH}"/></svg>`;
+  const waIcon = `<svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="stroke:none"><path fill="currentColor" d="${WA_PATH}"/></svg>`;
 
+  const KIND_ICON = { slide: 'arrowsH', vertical: 'arrowsV', window: 'window', swing: 'door', fold: 'fold', grid: 'building', none: 'sparkle' };
+  const sysIcon = (s) => s.icon || (s.motor && s.kind === 'slide' ? 'motor' : KIND_ICON[s.kind] || 'sparkle');
   const sys = () => (S.systems || []).filter((s) => s.visible !== false);
   const bySlug = (sl) => sys().find((s) => s.slug === sl);
   const waLink = (msg) => {
@@ -126,50 +141,95 @@
   };
   const telLink = () => (S.company.phone ? 'tel:+' + digits(S.company.phone).replace(/^00/, '') : '');
 
-  /* ---------- sections ---------- */
+  /* ---------- header, mega menu, search, mobile menu ---------- */
+  const searchBox = (id) => `<div class="sbox">${icon('search')}<input class="sq" id="${id}" type="search" placeholder="${esc(u('search_ph'))}" autocomplete="off" aria-label="${esc(u('search'))}"></div><div class="sres" aria-live="polite"></div>`;
+
   function header() {
-    const c = S.company;
+    const c = S.company, list = sys();
     return `<header class="hdr" id="hdr">
       <div class="wrap nav">
         <a class="brand" href="#top" aria-label="${esc(c.name)}"><img class="logo-l" src="/img/logo-light.png" alt="${esc(c.name)}" width="98" height="46"><img class="logo-d" src="/img/logo-dark.png" alt="" width="98" height="46"></a>
         <nav class="links" aria-label="Main">
-          <a href="#systems">${u('systems')}</a><a href="#engineering">${u('engineering')}</a><a href="#about">${u('about')}</a><a href="#quote">${u('contact')}</a>
+          <button type="button" class="mega-btn" aria-expanded="false" aria-controls="mega">${u('systems')}${icon('chev')}</button>
+          <a href="#engineering">${u('engineering')}</a><a href="#about">${u('about')}</a><a href="#quote">${u('contact')}</a>
         </nav>
+        <button type="button" class="icon-btn srch-btn" aria-expanded="false" aria-controls="srch" aria-label="${u('search')}">${icon('search')}</button>
         <div class="lang" role="group" aria-label="Language"><button type="button" data-lang="en" aria-pressed="${lang === 'en'}">EN</button><button type="button" data-lang="el" aria-pressed="${lang === 'el'}">ΕΛ</button></div>
         <a class="btn btn-accent nav-cta" href="#quote">${u('quote')}</a>
         <button type="button" class="burger" id="burger" aria-expanded="false" aria-controls="mnav" aria-label="${u('menu')}"><i><b></b><b></b></i></button>
       </div>
+      <div class="mega" id="mega" hidden><div class="wrap mega-in">
+        <div class="mega-intro"><p class="eyebrow">${u('systems_eyebrow')}</p><h3>${esc(t(S.text.systemsTitle))}</h3><p>${esc(t(S.text.systemsSub))}</p><a class="arrow-link" href="#systems">${u('view_all')}${icon('arrow')}</a></div>
+        <ul class="mega-grid">${list.map((s, i) => `<li><a href="#${esc(s.slug)}"><img src="${esc(src(s.image))}" alt="" loading="lazy"><span><small>${pad(i + 1)}</small>${esc(t(s.name))}</span></a></li>`).join('')}</ul>
+      </div></div>
+      <div class="srch" id="srch" hidden><div class="wrap srch-in" data-search>${searchBox('sq-top')}</div></div>
     </header>
-    <div class="mnav" id="mnav" aria-hidden="true"><div class="mnav-in">
-      <ul class="mnav-main">
-        <li><a href="#systems"><span>${u('m_systems')}</span>${icon('arrow')}</a></li>
-        <li><a href="#engineering"><span>${u('m_engineering')}</span>${icon('arrow')}</a></li>
-        <li><a href="#about"><span>${u('m_about')}</span>${icon('arrow')}</a></li>
-        <li><a href="#quote"><span>${u('m_contact')}</span>${icon('arrow')}</a></li>
-      </ul>
-    </div></div>`;
+    <div class="mnav" id="mnav" aria-hidden="true">
+      <div class="mnav-search" data-search>${searchBox('sq-menu')}</div>
+      <div class="mnav-nav">
+        <p class="mnav-label">${u('main_menu')}</p>
+        <ul class="mnav-main">
+          <li><button type="button" class="acc" aria-expanded="false" aria-controls="acc-sys"><span>${u('m_systems')}</span>${icon('chev')}</button>
+            <div class="acc-panel" id="acc-sys"><ul>${list.map((s, i) => `<li><a href="#${esc(s.slug)}"><small>${pad(i + 1)}</small>${esc(t(s.name))}</a></li>`).join('')}</ul></div></li>
+          <li><a href="#engineering"><span>${u('m_engineering')}</span>${icon('right')}</a></li>
+          <li><a href="#about"><span>${u('m_about')}</span>${icon('right')}</a></li>
+          <li><a href="#quote"><span>${u('m_contact')}</span>${icon('right')}</a></li>
+        </ul>
+        <div class="mnav-short">
+          ${c.phone ? `<a href="${telLink()}">${icon('phone')}<span>${u('call')}</span></a>` : ''}
+          ${waLink() ? `<a href="${esc(waLink(u('wa_hello', { c: c.name })))}" target="_blank" rel="noopener">${waIcon}<span>WhatsApp</span></a>` : ''}
+          <a href="#quote">${icon('file')}<span>${u('quote')}</span></a>
+        </div>
+      </div>
+    </div>`;
   }
 
+  /* ---------- hero + system cards ---------- */
   function hero() {
     const img = S.heroImage || ((S.hero || [])[0] || {}).img || 'img/house-windows.jpg';
     const vid = S.heroVideo;
     const showText = S.heroText !== false;
-    return `<section class="hero" id="top" aria-label="${esc(S.company.name)}">
+    const stats = (S.stats || []).filter((s) => String(s.value || '').trim());
+    return `<section class="hero${showText ? '' : ' no-text'}" id="top" aria-label="${esc(S.company.name)}">
       <div class="hero-media"><img class="${vid ? '' : 'drift'}" src="${esc(src(img))}" alt="" fetchpriority="high">${vid && !reduce ? `<video id="hero-video" src="${esc(src(vid))}" muted autoplay loop playsinline preload="auto" aria-hidden="true"></video>` : ''}</div>
-      <div class="hero-shade${showText ? '' : ' light'}"></div>
-      ${showText ? `<div class="wrap hero-in"><h1>${esc(t(S.text.heroTitle))}<span>${esc(t(S.text.heroAccent))}</span></h1><div class="hero-cta"><a class="btn btn-accent" href="#systems">${u('explore_systems')}${icon('arrow')}</a></div></div>` : ''}
+      <div class="hero-shade"></div>
+      ${showText ? `<div class="wrap hero-in"><div class="hero-copy">
+        <p class="eyebrow">${u('hero_eyebrow')}</p>
+        <h1>${esc(t(S.text.heroTitle))}<span>${esc(t(S.text.heroAccent))}</span></h1>
+        ${t(S.text.heroSub) ? `<p class="sub">${esc(t(S.text.heroSub))}</p>` : ''}
+        <div class="hero-cta"><a class="btn btn-accent" href="#systems">${u('explore_systems')}${icon('arrow')}</a>${vid ? `<button type="button" class="btn btn-ghost btn-play" data-video>${icon('play')}${u('watch')}</button>` : `<a class="btn btn-ghost" href="#quote">${u('quote')}</a>`}</div>
+        ${stats.length ? `<div class="hero-stats">${stats.map((s) => `<div><b>${esc(s.value)}</b><span>${esc(t(s.label))}</span></div>`).join('')}</div>` : ''}
+      </div></div>` : ''}
     </section>`;
   }
 
+  function cats() {
+    const list = sys();
+    return `<section class="cats" id="systems" aria-label="${u('systems_eyebrow')}">
+      <div class="wrap cats-head"><p class="eyebrow">${u('systems_eyebrow')}</p><div class="cats-arrows"><button type="button" data-rail="-1" aria-label="Previous">${icon('back')}</button><button type="button" data-rail="1" aria-label="Next">${icon('arrow')}</button></div></div>
+      <div class="rail" id="rail">${list
+        .map(
+          (s, i) => `<a class="card" href="#${esc(s.slug)}"><img src="${esc(src(s.image))}" alt="" loading="${i < 4 ? 'eager' : 'lazy'}">
+          <span class="card-b"><span class="card-ic">${icon(sysIcon(s))}</span><span class="card-n"><small>${pad(i + 1)}</small>${esc(t(s.name))}</span><span class="card-go">${icon('arrow')}</span></span></a>`
+        )
+        .join('')}</div>
+    </section>`;
+  }
+
+  /* ---------- about ---------- */
   function about() {
-    const stats = (S.stats || []).filter((s) => s.value);
+    const img = S.aboutImage || 'img/lift-slide.jpg';
     return `<section class="about" id="about"><div class="wrap">
-      <div class="about-grid rv">
-        <div><p class="eyebrow">${u('about_eyebrow')}</p><h2>${esc(t(S.text.introTitle))}</h2></div>
-        <div><p class="lead">${esc(t(S.text.introBody))}</p><a class="arrow-link" href="#quote">${u('survey')}${icon('arrow')}</a></div>
+      <div class="about-feature">
+        <figure class="about-img"><img src="${esc(src(img))}" alt="" loading="lazy"></figure>
+        <div class="about-card">
+          <p class="eyebrow">${u('about_eyebrow')}</p>
+          <h2>${esc(t(S.text.introTitle))}</h2>
+          <p>${esc(t(S.text.introBody))}</p>
+          <a class="arrow-link" href="#quote">${u('survey')}${icon('arrow')}</a>
+        </div>
       </div>
       ${founder()}
-      ${stats.length ? `<div class="stats rv">${stats.map((s) => `<div class="stat"><b>${esc(s.value)}</b><span>${esc(t(s.label))}</span></div>`).join('')}</div>` : ''}
     </div></section>`;
   }
 
@@ -186,45 +246,6 @@
         ${t(f.quote) ? `<blockquote>“${esc(t(f.quote))}”</blockquote>` : ''}
       </div>
     </div>`;
-  }
-
-  function systemsIndex() {
-    const list = sys();
-    const total = pad(list.length);
-    return `<section class="sx" id="systems"><div class="wrap">
-      <div class="sx-head rv">
-        <div><p class="eyebrow">${u('systems_eyebrow')}</p><h2>${esc(t(S.text.systemsTitle))}</h2></div>
-        <p>${esc(t(S.text.systemsSub))}</p>
-      </div>
-      <div class="sx-body">
-        <ol class="sx-list" id="sx-list">
-          <li class="sx-track" aria-hidden="true"><span class="sx-roller"></span></li>
-          ${list
-            .map(
-              (s, i) => `<li class="sx-item${i === 0 ? ' on' : ''}" data-i="${i}">
-              <button type="button" class="sx-btn" data-slug="${esc(s.slug)}"><span class="sx-num">${pad(i + 1)}</span><span class="sx-name">${esc(t(s.name))}</span>${icon('arrow')}</button>
-              <div class="sx-m"><div><div class="sx-m-in">
-                <figure><img src="${esc(src(s.image))}" alt="${esc(t(s.name))}" loading="lazy"></figure>
-                <p>${esc(t(s.short))}</p>
-                <a class="arrow-link" href="#${esc(s.slug)}">${u('explore')}${icon('arrow')}</a>
-              </div></div></div>
-            </li>`
-            )
-            .join('')}
-        </ol>
-        <div class="sx-stage" id="sx-stage" aria-hidden="true">
-          ${list.map((s, i) => `<figure class="sx-pane${i === 0 ? ' on' : ''}" data-i="${i}"><img src="${esc(src(s.image))}" alt="" loading="${i < 2 ? 'eager' : 'lazy'}"></figure>`).join('')}
-          <div class="sx-wipe"></div><div class="sx-frame"></div>
-          <span class="sx-count" id="sx-count">01 / ${total}</span>
-          <div class="sx-cap" id="sx-cap">${sxCap(list[0])}</div>
-        </div>
-      </div>
-    </div></section>`;
-  }
-  function sxCap(s) {
-    if (!s) return '';
-    const tg = [s.motor ? u('motor') : '', ...(s.applications || []).slice(0, 2).map(t)].filter(Boolean);
-    return `<h3>${esc(t(s.name))}</h3><p>${esc(t(s.short))}</p>${tg.length ? `<div class="tags">${tg.map((x) => `<span>${esc(x)}</span>`).join('')}</div>` : ''}<a class="btn btn-accent" href="#${esc(s.slug)}" tabindex="-1">${u('explore')}${icon('arrow')}</a>`;
   }
 
   const PARTS = {
@@ -492,21 +513,19 @@
   }
 
   /* ---------- render + behaviour ---------- */
-  let current = null, pendingSystem = null, sxI = 0, zTop = 5, sxTimer = null;
+  let current = null, pendingSystem = null, panel = null;
 
   function render() {
     document.documentElement.lang = lang;
-    $('#app').innerHTML = header() + '<main>' + hero() + about() + systemsIndex() + engineering() + why() + testimonials() + quote() + '</main>' + footer();
-    if (sxI >= sys().length) sxI = 0;
-    if (sxI) sxActivate(sxI, true, true);
+    $('#app').innerHTML = header() + '<main>' + hero() + cats() + about() + engineering() + why() + testimonials() + quote() + '</main>' + footer();
     heroVideo();
-    onScroll();
-    requestAnimationFrame(roller);
+    railArrows();
+    syncPanels();
     if (pendingSystem) selectSystem(pendingSystem);
     updateWa();
   }
 
-  // hero background video: fade in once it is actually playing
+  // hero background video
   function heroVideo() {
     const v = $('#hero-video');
     if (!v) return;
@@ -516,63 +535,98 @@
     const pr = v.play && v.play();
     if (pr && pr.catch) pr.catch(() => {});
   }
-
-  // systems index
-  function roller() {
-    const list = $('#sx-list'), it = $$('.sx-item')[sxI];
-    if (!list || !it) return;
-    const b = it.querySelector('.sx-btn');
-    list.style.setProperty('--ry', it.offsetTop + 'px');
-    list.style.setProperty('--rh', b.offsetHeight + 'px');
-  }
-  function sxActivate(i, force, instant) {
-    const items = $$('.sx-item');
-    if (!items.length || (i === sxI && !force)) return;
-    sxI = i;
-    items.forEach((it, j) => it.classList.toggle('on', j === i));
-    const panes = $$('.sx-pane');
-    const s = sys()[i];
-    if (panes.length && s) {
-      const p = panes[i];
-      p.style.zIndex = ++zTop;
-      if (instant) { panes.forEach((q, j) => q.classList.toggle('on', j === i)); }
-      else {
-        p.classList.remove('on'); void p.offsetWidth; p.classList.add('on');
-        const w = $('.sx-wipe'), stage = $('#sx-stage');
-        if (w && stage && !reduce) { stage.style.setProperty('--sw', stage.offsetWidth + 16 + 'px'); w.classList.remove('go'); void w.offsetWidth; w.classList.add('go'); }
-        clearTimeout(sxTimer);
-        sxTimer = setTimeout(() => panes.forEach((q, j) => { if (j !== sxI) q.classList.remove('on'); }), 1050);
-      }
-      const cap = $('#sx-cap');
-      if (cap) { cap.innerHTML = sxCap(s); cap.classList.remove('swap'); void cap.offsetWidth; cap.classList.add('swap'); }
-      const c = $('#sx-count');
-      if (c) c.textContent = pad(i + 1) + ' / ' + pad(sys().length);
+  function openVideo() {
+    if (!S.heroVideo) return;
+    let m = $('#vm');
+    if (!m) {
+      m = document.createElement('div');
+      m.id = 'vm';
+      m.className = 'vm';
+      m.setAttribute('role', 'dialog');
+      m.setAttribute('aria-modal', 'true');
+      document.body.appendChild(m);
+      m.addEventListener('click', (e) => { if (e.target === m || e.target.closest('.lb-x')) closeVideo(); });
     }
-    roller();
-    if (mobile()) setTimeout(roller, 560);
+    m.innerHTML = `<video src="${esc(src(S.heroVideo))}" controls autoplay playsinline></video><button type="button" class="lb-btn lb-x" aria-label="${u('close')}">&times;</button>`;
+    m.hidden = false;
+    lock(true, 'vm');
+    m.querySelector('.lb-x').focus();
+  }
+  function closeVideo() { const m = $('#vm'); if (m) { m.hidden = true; m.innerHTML = ''; } lock(false, 'vm'); }
+
+  // system cards rail
+  function railArrows() {
+    const r = $('#rail');
+    if (!r) return;
+    const upd = () => {
+      const max = r.scrollWidth - r.clientWidth - 2;
+      const [a, b] = $$('[data-rail]');
+      if (a) a.disabled = r.scrollLeft <= 2;
+      if (b) b.disabled = r.scrollLeft >= max;
+    };
+    r.addEventListener('scroll', upd, { passive: true });
+    upd();
   }
 
-  // header + menu
+  // panels: mobile menu, desktop mega menu, search
+  function setPanel(p) { panel = p; syncPanels(); }
+  function syncPanels() {
+    const m = $('#mnav'), g = $('#mega'), s = $('#srch');
+    if (!m) return;
+    m.classList.toggle('open', panel === 'menu');
+    m.setAttribute('aria-hidden', String(panel !== 'menu'));
+    $('#burger').setAttribute('aria-expanded', String(panel === 'menu'));
+    g.hidden = panel !== 'mega';
+    $('.mega-btn').setAttribute('aria-expanded', String(panel === 'mega'));
+    s.hidden = panel !== 'search';
+    $('.srch-btn').setAttribute('aria-expanded', String(panel === 'search'));
+    lock(panel === 'menu' || (panel === 'search' && mobile()), 'panel');
+    onScroll();
+  }
   function onScroll() {
     const h = $('#hdr');
     if (!h) return;
-    const open = !!($('#mnav') && $('#mnav').classList.contains('open'));
-    h.classList.toggle('solid', scrollY > 40 && !open);
-    h.classList.toggle('on-menu', open);
-  }
-  function setMenu(open) {
-    const m = $('#mnav'), b = $('#burger');
-    if (!m) return;
-    m.classList.toggle('open', open);
-    m.setAttribute('aria-hidden', String(!open));
-    b.setAttribute('aria-expanded', String(open));
-    lock(open, 'menu');
-    onScroll();
+    h.classList.toggle('solid', scrollY > 40 && !panel);
+    h.classList.toggle('open-panel', !!panel);
   }
   const locks = new Set();
   function lock(on, who) {
     on ? locks.add(who) : locks.delete(who);
     document.documentElement.classList.toggle('lock', locks.size > 0);
+  }
+
+  // search
+  function searchIndex() {
+    const both = (o) => (o ? [o.en, o.el] : []);
+    const items = sys().map((s, i) => ({
+      href: '#' + s.slug, img: s.image, ic: sysIcon(s), title: t(s.name), sub: t(s.short), n: pad(i + 1),
+      title_n: norm(both(s.name).join(' ')),
+      hay: norm([...both(s.name), ...both(s.short), ...both(s.overview), ...(s.features || []).flatMap((f) => both(f.title)), ...(s.applications || []).flatMap(both), ...(s.specs || []).flatMap((r) => [...both(r.label), r.value])].join(' ')),
+    }));
+    const page = (href, ic, title, sub, words) => ({ href, ic, title, sub, title_n: norm(title), hay: norm(title + ' ' + sub + ' ' + words) });
+    items.push(
+      page('#engineering', 'layers', UI[lang].m_engineering, u('eng_title'), 'engineering quality thermal break profile glazing seals drainage insulation τεχνολογια ποιοτητα θερμοδιακοπη μονωση'),
+      page('#about', 'home', UI[lang].m_about, t(S.text.introTitle), 'about company team founder owner εταιρεια ομαδα ιδρυτης'),
+      page('#quote', 'file', u('quote'), u('quote_body'), 'contact quote price cost phone whatsapp email survey measure επικοινωνια προσφορα τιμη τηλεφωνο αυτοψια')
+    );
+    return items;
+  }
+  function runSearch(box) {
+    const input = box.querySelector('.sq'), res = box.querySelector('.sres');
+    const q = input.value;
+    const n = norm(q).trim();
+    if (box.closest('#mnav')) $('#mnav').classList.toggle('searching', !!n);
+    if (!n) { res.innerHTML = `<p class="s-label">${u('popular')}</p><div class="s-chips">${u('chips').map((c) => `<button type="button" data-chip="${esc(c)}">${esc(c)}</button>`).join('')}</div>`; return; }
+    const words = n.split(/\s+/);
+    const hits = searchIndex()
+      .filter((e) => words.every((w) => e.hay.includes(w)))
+      .map((e) => ({ e, score: words.filter((w) => e.title_n.includes(w)).length }))
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 8)
+      .map((x) => x.e);
+    res.innerHTML = hits.length
+      ? hits.map((e) => `<a class="sr" href="${esc(e.href)}">${e.img ? `<img src="${esc(src(e.img))}" alt="" loading="lazy">` : `<span class="sr-ic">${icon(e.ic)}</span>`}<span><b>${esc(e.title)}</b><small>${esc(e.sub)}</small></span>${icon('right')}</a>`).join('')
+      : `<p class="s-empty">${esc(u('no_results', { q: q.trim() }))}</p><div class="s-chips">${u('chips').map((c) => `<button type="button" data-chip="${esc(c)}">${esc(c)}</button>`).join('')}</div>`;
   }
 
   // engineering drawing
@@ -614,9 +668,10 @@
   }
   function route(first) {
     const h = decodeURIComponent(location.hash.slice(1));
+    if (panel) setPanel(null);
     if (h && bySlug(h)) { openSystem(h, first); return; }
     if (current) closeSystem();
-    if (h && !first) { const el = document.getElementById(h); if (el) setTimeout(() => el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }), current ? 0 : 20); }
+    if (h && !first) { const el = document.getElementById(h); if (el) setTimeout(() => el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }), 20); }
   }
 
   // quote form
@@ -711,9 +766,10 @@
     if (l === lang) return;
     lang = l;
     try { localStorage.setItem('lang', l); } catch (e) {}
-    const y = scrollY;
+    const y = scrollY, keep = panel;
     render();
     scrollTo(0, y);
+    if (keep) setPanel(keep);
     if (current) { const slug = current.slug, top = $('#sp').scrollTop; openSystem(slug, true); $('#sp').scrollTop = top; }
   }
 
@@ -721,18 +777,22 @@
   document.addEventListener('click', (e) => {
     const lb = e.target.closest('[data-lang]');
     if (lb) { setLang(lb.dataset.lang); return; }
-    if (e.target.closest('#burger')) { setMenu(!$('#mnav').classList.contains('open')); return; }
-    if (e.target.closest('#mnav a')) setMenu(false);
+    if (e.target.closest('#burger')) { setPanel(panel === 'menu' ? null : 'menu'); return; }
+    if (e.target.closest('.mega-btn')) { setPanel(panel === 'mega' ? null : 'mega'); return; }
+    if (e.target.closest('.srch-btn')) { setPanel(panel === 'search' ? null : 'search'); if (panel === 'search') setTimeout(() => { const i = $('#sq-top'); i.focus(); runSearch(i.closest('[data-search]')); }, 30); return; }
+    const acc = e.target.closest('.acc');
+    if (acc) { const open = acc.getAttribute('aria-expanded') !== 'true'; acc.setAttribute('aria-expanded', String(open)); $('#' + acc.getAttribute('aria-controls')).classList.toggle('open', open); return; }
+    const chip = e.target.closest('[data-chip]');
+    if (chip) { const box = chip.closest('[data-search]'), i = box.querySelector('.sq'); i.value = chip.dataset.chip; runSearch(box); i.focus(); return; }
+    if (panel && e.target.closest('#mnav a, #mega a, #srch a')) { setPanel(null); return; }
+    if (panel && panel !== 'menu' && !e.target.closest('#hdr')) setPanel(null);
 
-    const sx = e.target.closest('.sx-btn');
-    if (sx) {
-      const i = +sx.parentElement.dataset.i;
-      if (mobile() && i !== sxI) sxActivate(i);
-      else location.hash = sx.dataset.slug;
-      return;
-    }
+    const rb = e.target.closest('[data-rail]');
+    if (rb) { const r = $('#rail'); const card = r.querySelector('.card'); r.scrollBy({ left: +rb.dataset.rail * ((card ? card.offsetWidth : 300) + 16) * (mobile() ? 1 : 2), behavior: reduce ? 'auto' : 'smooth' }); return; }
+    if (e.target.closest('[data-video]')) { openVideo(); return; }
+
     const pt = e.target.closest('#parts li');
-    if (pt) { focusPart(pt.classList.contains('on') && mobile() ? null : pt.dataset.p); return; }
+    if (pt) { focusPart(pt.classList.contains('on') && !canHover() ? null : pt.dataset.p); return; }
 
     const consult = e.target.closest('[data-consult]');
     if (consult) {
@@ -743,11 +803,7 @@
       return;
     }
     const go = e.target.closest('.sp-tabs [data-go]');
-    if (go) {
-      const el = document.getElementById(go.dataset.go);
-      if (el) el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
-      return;
-    }
+    if (go) { const el = document.getElementById(go.dataset.go); if (el) el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }); return; }
     const z = e.target.closest('[data-zoom]');
     if (z && current) { openLB([current.image, ...(current.gallery || [])].filter(Boolean), +z.dataset.zoom); return; }
 
@@ -761,27 +817,17 @@
     }
   });
   document.addEventListener('input', (e) => {
+    if (e.target.classList.contains('sq')) { runSearch(e.target.closest('[data-search]')); return; }
     if (e.target.id === 'cfg-p' && current) { CFG[current.slug].p = e.target.value / 100; drawCfg(current); }
     if (e.target.closest('#qform')) updateWa();
   });
+  document.addEventListener('focusin', (e) => { if (e.target.classList.contains('sq')) runSearch(e.target.closest('[data-search]')); });
   document.addEventListener('change', (e) => { if (e.target.closest('#qform')) updateWa(); });
-  document.addEventListener('submit', (e) => {
-    if (e.target.id === 'qform') { e.preventDefault(); submitQuote(e.target); }
-  });
-  document.addEventListener('mouseover', (e) => {
-    if (mobile()) return;
-    const sx = e.target.closest('.sx-btn');
-    if (sx) sxActivate(+sx.parentElement.dataset.i);
-    const pt = e.target.closest('#parts li');
-    if (pt) focusPart(pt.dataset.p);
-  });
-  document.addEventListener('mouseout', (e) => { if (e.target.closest('#parts') && !e.relatedTarget?.closest?.('#parts')) focusPart(null); });
-  document.addEventListener('focusin', (e) => {
-    const sx = e.target.closest('.sx-btn');
-    if (sx && !mobile()) sxActivate(+sx.parentElement.dataset.i);
-  });
+  document.addEventListener('submit', (e) => { if (e.target.id === 'qform') { e.preventDefault(); submitQuote(e.target); } });
   document.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && e.target.classList.contains('sq')) { const first = e.target.closest('[data-search]').querySelector('.sr'); if (first) { e.preventDefault(); first.click(); } return; }
     if (e.key === 'Enter' && e.target.matches('[data-zoom][role=button]')) e.target.click();
+    if ($('#vm') && !$('#vm').hidden && e.key === 'Escape') { closeVideo(); return; }
     if (!$('#lb').hidden) {
       if (e.key === 'Escape') closeLB();
       else if (e.key === 'ArrowRight') stepLB(1);
@@ -789,12 +835,22 @@
       return;
     }
     if (e.key === 'Escape') {
-      if ($('#mnav')?.classList.contains('open')) setMenu(false);
+      if (panel) setPanel(null);
       else if (current) location.hash = 'systems';
     }
   });
+  // desktop: open the systems mega menu on hover
+  let megaT;
+  document.addEventListener('mouseover', (e) => {
+    if (!canHover()) return;
+    if (e.target.closest('.mega-btn')) { clearTimeout(megaT); if (panel !== 'mega' && panel !== 'search') setPanel('mega'); }
+    else if (e.target.closest('#mega')) clearTimeout(megaT);
+    else if (panel === 'mega' && !e.target.closest('#hdr')) { clearTimeout(megaT); megaT = setTimeout(() => { if (panel === 'mega') setPanel(null); }, 250); }
+    const pt = e.target.closest('#parts li');
+    if (pt) focusPart(pt.dataset.p);
+  });
+  document.addEventListener('mouseout', (e) => { if (e.target.closest('#parts') && !e.relatedTarget?.closest?.('#parts')) focusPart(null); });
   addEventListener('scroll', onScroll, { passive: true });
-  addEventListener('resize', () => requestAnimationFrame(roller));
   addEventListener('hashchange', () => route(false));
   $('#sp').addEventListener('scroll', () => {
     const tabs = $$('.sp-tabs [data-go]');

@@ -28,6 +28,7 @@ export const DEFAULT_SITE = {
     tagline: T('Engineering Excellence. Redefining Aluminium.', 'Μηχανική αριστεία. Επαναπροσδιορίζουμε το αλουμίνιο.'),
     heroTitle: T('Engineering excellence.', 'Μηχανική αριστεία.'),
     heroAccent: T('Redefining aluminium.', 'Επαναπροσδιορίζουμε το αλουμίνιο.'),
+    heroSub: T('Aluminium windows, doors and glass systems, made to measure in Cyprus.', 'Παράθυρα, πόρτες και συστήματα γυαλιού αλουμινίου, κατά παραγγελία στην Κύπρο.'),
     introTitle: T('Aluminium and glass systems for modern architecture in Cyprus.', 'Συστήματα αλουμινίου και γυαλιού για τη σύγχρονη αρχιτεκτονική στην Κύπρο.'),
     introBody: T(
       'We design, fabricate and install made-to-measure windows, doors, sliding and folding systems for homes, offices and commercial buildings.',
@@ -45,6 +46,7 @@ export const DEFAULT_SITE = {
   heroImage: 'img/house-windows.jpg',
   heroVideo: '',
   heroText: true,
+  aboutImage: 'img/lift-slide.jpg',
   founder: { name: '', photo: '', role: T('', ''), bio: T('', ''), quote: T('', '') },
   stats: [],
   values: [
@@ -56,7 +58,7 @@ export const DEFAULT_SITE = {
   testimonials: [],
   systems: [
     {
-      slug: 'motorized-sliding', visible: true, kind: 'slide', motor: true, configs: [2, 3, 4, 6],
+      slug: 'motorized-sliding', icon: 'motor', visible: true, kind: 'slide', motor: true, configs: [2, 3, 4, 6],
       name: T('Motorized Sliding Systems', 'Μηχανοκίνητα συρόμενα συστήματα'),
       short: T('Large glass panels that open at the touch of a button.', 'Μεγάλα γυάλινα φύλλα που ανοίγουν με το πάτημα ενός κουμπιού.'),
       overview: T(
@@ -75,7 +77,7 @@ export const DEFAULT_SITE = {
       brochure: '',
     },
     {
-      slug: 'vertical-sliding', visible: true, kind: 'vertical', motor: true, configs: [2, 3, 4],
+      slug: 'vertical-sliding', icon: 'arrowsV', visible: true, kind: 'vertical', motor: true, configs: [2, 3, 4],
       name: T('Vertical Sliding Systems', 'Κάθετα συρόμενα συστήματα'),
       short: T('Glass panels that rise and lower to open a space.', 'Γυάλινα φύλλα που ανεβαίνουν και κατεβαίνουν για να ανοίξει ο χώρος.'),
       overview: T(
@@ -94,7 +96,7 @@ export const DEFAULT_SITE = {
       brochure: '',
     },
     {
-      slug: 'aluminium-windows', visible: true, kind: 'window', motor: false, configs: [1, 2, 3],
+      slug: 'aluminium-windows', icon: 'window', visible: true, kind: 'window', motor: false, configs: [1, 2, 3],
       name: T('Aluminium Windows', 'Παράθυρα αλουμινίου'),
       short: T('Sliding, casement and tilt-and-turn windows.', 'Συρόμενα, ανοιγόμενα και ανακλινόμενα παράθυρα.'),
       overview: T(
@@ -113,7 +115,7 @@ export const DEFAULT_SITE = {
       brochure: '',
     },
     {
-      slug: 'aluminium-doors', visible: true, kind: 'swing', motor: false, configs: [1, 2],
+      slug: 'aluminium-doors', icon: 'door', visible: true, kind: 'swing', motor: false, configs: [1, 2],
       name: T('Aluminium Doors', 'Πόρτες αλουμινίου'),
       short: T('Entrance, patio and commercial doors.', 'Πόρτες εισόδου, βεράντας και επαγγελματικές.'),
       overview: T(
@@ -132,7 +134,7 @@ export const DEFAULT_SITE = {
       brochure: '',
     },
     {
-      slug: 'folding-systems', visible: true, kind: 'fold', motor: false, configs: [3, 4, 5, 6],
+      slug: 'folding-systems', icon: 'fold', visible: true, kind: 'fold', motor: false, configs: [3, 4, 5, 6],
       name: T('Folding Systems', 'Πτυσσόμενα συστήματα'),
       short: T('Panels that fold away to open a whole wall.', 'Φύλλα που διπλώνουν και ανοίγουν ολόκληρο τον τοίχο.'),
       overview: T(
@@ -151,7 +153,7 @@ export const DEFAULT_SITE = {
       brochure: '',
     },
     {
-      slug: 'sliding-glass', visible: true, kind: 'slide', motor: false, configs: [2, 3, 4, 6],
+      slug: 'sliding-glass', icon: 'arrowsH', visible: true, kind: 'slide', motor: false, configs: [2, 3, 4, 6],
       name: T('Sliding Glass Systems', 'Συρόμενα συστήματα γυαλιού'),
       short: T('Slim sliding doors and windows for wide views.', 'Λεπτές συρόμενες πόρτες και παράθυρα για μεγάλη θέα.'),
       overview: T(
@@ -170,7 +172,7 @@ export const DEFAULT_SITE = {
       brochure: '',
     },
     {
-      slug: 'curtain-wall', visible: true, kind: 'grid', motor: false, configs: [3, 4, 5, 6],
+      slug: 'curtain-wall', icon: 'grid', visible: true, kind: 'grid', motor: false, configs: [3, 4, 5, 6],
       name: T('Curtain Wall Systems', 'Συστήματα υαλοπετασμάτων'),
       short: T('Floor-to-ceiling glass walls for modern buildings.', 'Γυάλινοι τοίχοι από το δάπεδο ως την οροφή.'),
       overview: T(
@@ -189,7 +191,7 @@ export const DEFAULT_SITE = {
       brochure: '',
     },
     {
-      slug: 'glass-facade', visible: true, kind: 'grid', motor: false, configs: [3, 4, 5, 6],
+      slug: 'glass-facade', icon: 'building', visible: true, kind: 'grid', motor: false, configs: [3, 4, 5, 6],
       name: T('Glass Facade Systems', 'Συστήματα γυάλινων προσόψεων'),
       short: T('Shopfronts and facades with a clean glass finish.', 'Βιτρίνες και προσόψεις με καθαρό γυάλινο φινίρισμα.'),
       overview: T(
@@ -208,7 +210,7 @@ export const DEFAULT_SITE = {
       brochure: '',
     },
     {
-      slug: 'custom-solutions', visible: true, kind: 'none', motor: false, configs: [],
+      slug: 'custom-solutions', icon: 'sparkle', visible: true, kind: 'none', motor: false, configs: [],
       name: T('Custom Aluminium Solutions', 'Ειδικές κατασκευές αλουμινίου'),
       short: T('Railings, partitions and one-off designs.', 'Κάγκελα, χωρίσματα και ειδικές κατασκευές.'),
       overview: T(
