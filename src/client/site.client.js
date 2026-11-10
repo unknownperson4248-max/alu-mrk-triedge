@@ -206,7 +206,7 @@
   function cats() {
     const list = sys();
     return `<section class="cats" id="systems" aria-label="${u('systems_eyebrow')}">
-      <div class="wrap cats-head"><p class="eyebrow">${u('systems_eyebrow')}</p><div class="cats-arrows"><button type="button" data-rail="-1" aria-label="Previous">${icon('back')}</button><button type="button" data-rail="1" aria-label="Next">${icon('arrow')}</button></div></div>
+      <div class="wrap cats-head"><div><p class="eyebrow">${u('systems_eyebrow')}</p><h2>${esc(t(S.text.systemsTitle))}</h2></div><div class="cats-arrows"><button type="button" data-rail="-1" aria-label="Previous">${icon('back')}</button><button type="button" data-rail="1" aria-label="Next">${icon('arrow')}</button></div></div>
       <div class="rail" id="rail">${list
         .map(
           (s, i) => `<a class="card" href="#${esc(s.slug)}"><img src="${esc(src(s.image))}" alt="" loading="${i < 4 ? 'eager' : 'lazy'}">
