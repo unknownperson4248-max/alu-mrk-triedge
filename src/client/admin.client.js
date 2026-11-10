@@ -15,7 +15,7 @@
   const ICONS = ['motor', 'remote', 'maximize', 'shield', 'thermo', 'droplet', 'lock', 'sun', 'wind', 'layers', 'ruler', 'sparkle', 'building', 'fold', 'arrowsV', 'arrowsH', 'grid', 'window', 'door', 'palette', 'key', 'home', 'check', 'diamond', 'globe', 'users', 'handshake'];
   const KINDS = [['slide', 'Sliding panels'], ['vertical', 'Vertical sliding'], ['fold', 'Folding'], ['swing', 'Doors (swing)'], ['window', 'Windows'], ['grid', 'Curtain wall / facade grid'], ['none', 'No configurator']];
   const COLORS = [['navy', 'Navy (dark sections)'], ['accent', 'Accent (buttons, highlights)'], ['bg', 'Background'], ['surface', 'Light panels'], ['ink', 'Text']];
-  const PRESET_NAMES = { 'night-gold': 'Night & Gold (dark)', 'navy-gold': 'Navy & Gold', 'graphite-bronze': 'Graphite & Bronze', 'midnight-orange': 'Midnight & Orange', 'black-silver': 'Black & Silver', 'green-brass': 'Green & Brass' };
+  const PRESET_NAMES = { 'black-silver-gold': 'Black, Silver & Gold', 'night-gold': 'Night & Gold (dark)', 'navy-gold': 'Navy & Gold', 'graphite-bronze': 'Graphite & Bronze', 'midnight-orange': 'Midnight & Orange', 'black-silver': 'Black & Silver', 'green-brass': 'Green & Brass' };
   const T = () => ({ en: '', el: '' });
   const TPL = {
     feature: () => ({ icon: 'sparkle', title: T() }),
@@ -122,7 +122,10 @@
           ${v ? `<video class="vprev" src="${esc(src(v))}" muted loop autoplay playsinline></video><div class="pick"><button type="button" class="b b-sm" data-act="upload-video">Replace video</button><button type="button" class="b b-sm b-danger" data-act="clear" data-path="heroVideo">Remove video</button></div>`
               : `<div><button type="button" class="b b-sm b-pri" data-act="upload-video">Upload video</button></div>`}
           <small class="muted">MP4, up to 24 MB. Best: 10 to 20 seconds, 1920×1080, no sound.</small></div>
-        ${imgPick('heroImage', 'Photo')}</div>
+        ${imgPick('heroImage', 'First slide photo (shown under the video while it loads)')}</div>
+      <div class="card"><h2>More slides</h2><p class="hint">Photos that follow the first slide in the hero slider (up to 5).</p>
+        <div class="list">${(site.hero || []).map((h, i) => `<div class="item">${itemHead('hero', i, site.hero.length, 'Slide ' + (i + 2))}${imgPick(`hero.${i}.img`, 'Photo')}</div>`).join('') || '<p class="empty">No extra slides. The hero shows one photo.</p>'}</div>
+        ${addBtn('hero', 'hero', 'Add slide')}</div>
       <div class="card"><h2>Hero text</h2>
         ${check('heroText', 'Show the headline and button on top of the video')}
         ${pair('text.heroTitle', 'Headline (first line)')}

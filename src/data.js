@@ -5,6 +5,7 @@ const F = (icon, en, el) => ({ icon, title: T(en, el) });
 const SP = (en, el) => ({ label: T(en, el), value: '' });
 
 export const PRESETS = {
+  'black-silver-gold': { navy: '#17191d', accent: '#d4b36e', bg: '#0a0b0d', surface: '#141619', ink: '#eceef1' },
   'night-gold': { navy: '#121b2a', accent: '#e9b23c', bg: '#0b1019', surface: '#141d2b', ink: '#eef1f5' },
   'navy-gold': { navy: '#0e1b2e', accent: '#c98a3c', bg: '#ffffff', surface: '#eef1f4', ink: '#0c1522' },
   'graphite-bronze': { navy: '#2b3033', accent: '#b08a62', bg: '#ffffff', surface: '#f2f2f0', ink: '#16191b' },
@@ -15,7 +16,7 @@ export const PRESETS = {
 
 export const DEFAULT_SITE = {
   version: 1,
-  theme: { ...PRESETS['night-gold'] },
+  theme: { ...PRESETS['black-silver-gold'] },
   company: {
     name: 'Alu MRK TriEdge Ltd',
     phone: '+357 99 078280',
@@ -27,10 +28,10 @@ export const DEFAULT_SITE = {
   },
   text: {
     tagline: T('Engineering Excellence. Redefining Aluminium.', 'Μηχανική αριστεία. Επαναπροσδιορίζουμε το αλουμίνιο.'),
-    heroTitle: T('Engineering excellence.', 'Μηχανική αριστεία.'),
-    heroAccent: T('Redefining aluminium.', 'Επαναπροσδιορίζουμε το αλουμίνιο.'),
-    heroSub: T('Aluminium windows, doors and glass systems, made to measure in Cyprus.', 'Παράθυρα, πόρτες και συστήματα γυαλιού αλουμινίου, κατά παραγγελία στην Κύπρο.'),
-    introTitle: T('Innovative design. Superior quality.', 'Καινοτόμος σχεδιασμός. Ανώτερη ποιότητα.'),
+    heroTitle: T('Engineering Excellence.', 'Μηχανική αριστεία.'),
+    heroAccent: T('Redefining Aluminium.', 'Επαναπροσδιορίζουμε το αλουμίνιο.'),
+    heroSub: T('Aluminium windows, doors and glass systems for modern architecture, made to measure in Cyprus.', 'Παράθυρα, πόρτες και συστήματα γυαλιού αλουμινίου για σύγχρονη αρχιτεκτονική, κατά παραγγελία στην Κύπρο.'),
+    introTitle: T('Building a better tomorrow, together.', 'Χτίζουμε ένα καλύτερο αύριο, μαζί.'),
     introBody: T(
       'We design, fabricate and install made-to-measure windows, doors, sliding and folding systems for homes, offices and commercial buildings.',
       'Σχεδιάζουμε, κατασκευάζουμε και τοποθετούμε παράθυρα, πόρτες, συρόμενα και πτυσσόμενα συστήματα κατά παραγγελία για κατοικίες, γραφεία και επαγγελματικά κτίρια.'
@@ -39,15 +40,14 @@ export const DEFAULT_SITE = {
     systemsSub: T('Choose a system to see how it works, what it is made of and how it can open.', 'Επιλέξτε ένα σύστημα για να δείτε πώς λειτουργεί, από τι αποτελείται και πώς ανοίγει.'),
   },
   hero: [
-    { img: 'img/house-windows.jpg', caption: T('Curtain wall', 'Υαλοπέτασμα') },
     { img: 'img/glass-room.jpg', caption: T('Glass room', 'Γυάλινος χώρος') },
-    { img: 'img/lift-slide.jpg', caption: T('Sliding system', 'Συρόμενο σύστημα') },
+    { img: 'img/house-windows.jpg', caption: T('Curtain wall', 'Υαλοπέτασμα') },
     { img: 'img/folding-interior.jpg', caption: T('Folding doors', 'Πτυσσόμενες πόρτες') },
   ],
   heroImage: 'img/hero-house.jpg',
   heroVideo: '',
   heroText: true,
-  aboutImage: 'img/alu-profiles.jpg',
+  aboutImage: 'img/glass-room.jpg',
   heroBadge: T('Made to measure', 'Κατά παραγγελία'),
   projects: [
     { img: 'img/glass-room.jpg', caption: T('Glass room', 'Γυάλινος χώρος') },
@@ -64,10 +64,10 @@ export const DEFAULT_SITE = {
   founder: { name: '', photo: '', role: T('', ''), bio: T('', ''), quote: T('', '') },
   stats: [],
   values: [
-    { icon: 'ruler', title: T('Measured on site', 'Μέτρηση στον χώρο'), body: T('Every opening is surveyed and measured by our team before production.', 'Κάθε άνοιγμα μετριέται από την ομάδα μας πριν την παραγωγή.') },
+    { icon: 'diamond', title: T('Measured on site', 'Μέτρηση στον χώρο'), body: T('Every opening is surveyed and measured by our team before production.', 'Κάθε άνοιγμα μετριέται από την ομάδα μας πριν την παραγωγή.') },
     { icon: 'layers', title: T('Engineered systems', 'Σύγχρονα συστήματα'), body: T('Thermal-break profiles, quality hardware and insulated glass.', 'Προφίλ θερμοδιακοπής, ποιοτικοί μηχανισμοί και μονωτικά τζάμια.') },
     { icon: 'palette', title: T('Made to measure', 'Κατά παραγγελία'), body: T('Any size, any RAL colour or wood-effect finish.', 'Κάθε διάσταση, κάθε χρώμα RAL ή απομίμηση ξύλου.') },
-    { icon: 'shield', title: T('One team, start to finish', 'Μία ομάδα, από την αρχή ως το τέλος'), body: T('Survey, fabrication and installation by the same people.', 'Αυτοψία, κατασκευή και τοποθέτηση από τους ίδιους ανθρώπους.') },
+    { icon: 'users', title: T('One team, start to finish', 'Μία ομάδα, από την αρχή ως το τέλος'), body: T('Survey, fabrication and installation by the same people.', 'Αυτοψία, κατασκευή και τοποθέτηση από τους ίδιους ανθρώπους.') },
   ],
   testimonials: [],
   systems: [

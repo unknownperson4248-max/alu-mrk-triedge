@@ -12,3 +12,12 @@ rules = [
 [[kv_namespaces]]
 binding = "KV"
 id = "ff49aec19dfb4db68a4eaabbc0f35200"
+
+# Preview copy of the site for reviewing design changes (separate data, does not touch the live site).
+[env.preview]
+name = "alu-mrk-triedge-preview"
+workers_dev = true
+
+[[env.preview.kv_namespaces]]
+binding = "KV"
+id = "a6755b10722b47b1a4dab3d9a6470505"
