@@ -45,6 +45,7 @@ export const DEFAULT_SITE = {
   heroImage: 'img/house-windows.jpg',
   heroVideo: '',
   heroText: true,
+  founder: { name: '', photo: '', role: T('', ''), bio: T('', ''), quote: T('', '') },
   stats: [],
   values: [
     { icon: 'ruler', title: T('Measured on site', 'Μέτρηση στον χώρο'), body: T('Every opening is surveyed and measured by our team before production.', 'Κάθε άνοιγμα μετριέται από την ομάδα μας πριν την παραγωγή.') },

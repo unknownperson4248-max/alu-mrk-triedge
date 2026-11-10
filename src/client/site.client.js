@@ -21,6 +21,7 @@
   const UI = {
     en: {
       systems: 'Systems', engineering: 'Engineering', about: 'About', contact: 'Contact', quote: 'Request a quote', menu: 'Menu',
+      leadership: 'Leadership',
       m_systems: 'Aluminium Systems', m_engineering: 'Engineering & Quality', m_about: 'About Us', m_contact: 'Contact', our_systems: 'Our systems',
       hero_eyebrow: 'Aluminium & glass systems · Cyprus', explore_systems: 'Explore systems', scroll: 'Scroll',
       about_eyebrow: 'About us', survey: 'Book a free site survey', systems_eyebrow: 'Aluminium systems', explore: 'Explore system',
@@ -47,6 +48,7 @@
     },
     el: {
       systems: 'Συστήματα', engineering: 'Τεχνολογία', about: 'Εταιρεία', contact: 'Επικοινωνία', quote: 'Ζητήστε προσφορά', menu: 'Μενού',
+      leadership: 'Διοίκηση',
       m_systems: 'Συστήματα αλουμινίου', m_engineering: 'Τεχνολογία & ποιότητα', m_about: 'Η εταιρεία', m_contact: 'Επικοινωνία', our_systems: 'Τα συστήματά μας',
       hero_eyebrow: 'Συστήματα αλουμινίου & γυαλιού · Κύπρος', explore_systems: 'Δείτε τα συστήματα', scroll: 'Κύλιση',
       about_eyebrow: 'Η εταιρεία', survey: 'Κλείστε δωρεάν αυτοψία', systems_eyebrow: 'Συστήματα αλουμινίου', explore: 'Δείτε το σύστημα',
@@ -127,7 +129,6 @@
   /* ---------- sections ---------- */
   function header() {
     const c = S.company;
-    const list = sys();
     return `<header class="hdr" id="hdr">
       <div class="wrap nav">
         <a class="brand" href="#top" aria-label="${esc(c.name)}"><img class="logo-l" src="/img/logo-light.png" alt="${esc(c.name)}" width="98" height="46"><img class="logo-d" src="/img/logo-dark.png" alt="" width="98" height="46"></a>
@@ -140,19 +141,12 @@
       </div>
     </header>
     <div class="mnav" id="mnav" aria-hidden="true"><div class="mnav-in">
-      <p class="mnav-label">${u('menu')}</p>
       <ul class="mnav-main">
         <li><a href="#systems"><span>${u('m_systems')}</span>${icon('arrow')}</a></li>
         <li><a href="#engineering"><span>${u('m_engineering')}</span>${icon('arrow')}</a></li>
         <li><a href="#about"><span>${u('m_about')}</span>${icon('arrow')}</a></li>
         <li><a href="#quote"><span>${u('m_contact')}</span>${icon('arrow')}</a></li>
       </ul>
-      ${list.length ? `<p class="mnav-label">${u('our_systems')}</p><ul class="mnav-sys">${list.map((s, i) => `<li><a href="#${esc(s.slug)}"><small>${pad(i + 1)}</small><span>${esc(t(s.name))}</span></a></li>`).join('')}</ul>` : ''}
-      <div class="mnav-cta"><a class="btn btn-accent" href="#quote">${u('quote')}${icon('arrow')}</a>${waLink() ? `<a class="btn btn-wa" href="${esc(waLink(u('wa_hello', { c: c.name })))}" target="_blank" rel="noopener">${WA_SVG.replace('<svg', '<svg class="ic"')}WhatsApp</a>` : ''}</div>
-      <div class="mnav-foot">
-        ${c.phone ? `<a href="${telLink()}">${icon('phone')}<span>${esc(c.phone)}</span></a>` : ''}
-        ${c.email ? `<a href="mailto:${esc(c.email)}">${icon('mail')}<span>${esc(c.email)}</span></a>` : ''}
-      </div>
     </div></div>`;
   }
 
@@ -174,8 +168,24 @@
         <div><p class="eyebrow">${u('about_eyebrow')}</p><h2>${esc(t(S.text.introTitle))}</h2></div>
         <div><p class="lead">${esc(t(S.text.introBody))}</p><a class="arrow-link" href="#quote">${u('survey')}${icon('arrow')}</a></div>
       </div>
+      ${founder()}
       ${stats.length ? `<div class="stats rv">${stats.map((s) => `<div class="stat"><b>${esc(s.value)}</b><span>${esc(t(s.label))}</span></div>`).join('')}</div>` : ''}
     </div></section>`;
+  }
+
+  function founder() {
+    const f = S.founder || {};
+    if (!String(f.name || '').trim()) return '';
+    return `<div class="founder${f.photo ? '' : ' no-photo'}">
+      ${f.photo ? `<figure><img src="${esc(src(f.photo))}" alt="${esc(f.name)}" loading="lazy"></figure>` : ''}
+      <div>
+        <p class="eyebrow">${u('leadership')}</p>
+        <h3>${esc(f.name)}</h3>
+        ${t(f.role) ? `<p class="role">${esc(t(f.role))}</p>` : ''}
+        ${t(f.bio) ? `<p class="bio">${esc(t(f.bio))}</p>` : ''}
+        ${t(f.quote) ? `<blockquote>“${esc(t(f.quote))}”</blockquote>` : ''}
+      </div>
+    </div>`;
   }
 
   function systemsIndex() {

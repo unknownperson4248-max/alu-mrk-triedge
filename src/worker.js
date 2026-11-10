@@ -49,6 +49,7 @@ function mergeSite(stored) {
     theme: { ...d.theme, ...(stored.theme || {}) },
     company: { ...d.company, ...(stored.company || {}), socials: { ...d.company.socials, ...((stored.company || {}).socials || {}) } },
     text: { ...d.text, ...(stored.text || {}) },
+    founder: { ...d.founder, ...(stored.founder || {}) },
   };
 }
 

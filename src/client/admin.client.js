@@ -77,7 +77,7 @@
   const pair = (p, label, multi) => fld(label, `<div class="pair">${['en', 'el'].map((l) => `<div class="lang">${multi ? `<textarea data-path="${p}.${l}" rows="3">${esc(val(p + '.' + l))}</textarea>` : `<input type="text" data-path="${p}.${l}" value="${esc(val(p + '.' + l))}">`}<span>${l === 'en' ? 'EN' : 'ΕΛ'}</span></div>`).join('')}</div>`);
   const check = (p, label) => `<label class="check"><input type="checkbox" data-path="${p}" ${val(p) ? 'checked' : ''}>${esc(label)}</label>`;
   const sel = (p, label, opts) => fld(label, `<select data-path="${p}">${opts.map(([v, l]) => `<option value="${esc(v)}" ${String(val(p)) === String(v) ? 'selected' : ''}>${esc(l)}</option>`).join('')}</select>`);
-  const imgPick = (p, label) => fld(label, `<div class="pick"><img src="${esc(src(val(p)))}" alt=""><button type="button" class="b b-sm" data-act="pick" data-path="${p}">Change image</button></div>`);
+  const imgPick = (p, label, removable) => fld(label, `<div class="pick">${val(p) ? `<img src="${esc(src(val(p)))}" alt="">` : '<span class="noimg">No photo</span>'}<button type="button" class="b b-sm" data-act="pick" data-path="${p}">${val(p) ? 'Change' : 'Choose'} photo</button>${removable && val(p) ? `<button type="button" class="b b-sm b-danger" data-act="clear" data-path="${p}">Remove</button>` : ''}</div>`);
   const itemHead = (listPath, i, len, title) => `<div class="item-head"><span class="grow">${esc(title)}</span>
     <button type="button" class="b b-sm b-icon" data-act="move" data-path="${listPath}" data-i="${i}" data-d="-1" ${i === 0 ? 'disabled' : ''} aria-label="Move up">↑</button>
     <button type="button" class="b b-sm b-icon" data-act="move" data-path="${listPath}" data-i="${i}" data-d="1" ${i === len - 1 ? 'disabled' : ''} aria-label="Move down">↓</button>
@@ -100,6 +100,12 @@
         ${pair('company.hours', 'Opening hours', true)}
         <div class="row">${txt('company.socials.facebook', 'Facebook link', 'url', 'https://facebook.com/…')}${txt('company.socials.instagram', 'Instagram link', 'url', 'https://instagram.com/…')}${txt('company.socials.linkedin', 'LinkedIn link', 'url', 'https://linkedin.com/…')}</div>
         <p class="hint">Empty fields are hidden on the website.</p></div>
+      <div class="card"><h2>Owner / founder profile</h2><p class="hint">Shown in the About section. Hidden while the name is empty.</p>
+        ${imgPick('founder.photo', 'Photo (portrait works best)', true)}
+        ${txt('founder.name', 'Name')}
+        ${pair('founder.role', 'Role, e.g. Founder & Managing Director')}
+        ${pair('founder.bio', 'Short bio (2–4 sentences)', true)}
+        ${pair('founder.quote', 'Personal message (optional)', true)}</div>
       <div class="card"><h2>Main text</h2>
         ${pair('text.tagline', 'Tagline (footer and browser title)')}
         ${pair('text.introTitle', 'About: title', true)}
@@ -478,6 +484,7 @@
     if (!site.stats) site.stats = [];
     if (!site.testimonials) site.testimonials = [];
     if (!site.values) site.values = [];
+    if (!site.founder) site.founder = clone(defaults.founder);
     shell();
     loadQuotes();
   }

@@ -142,3 +142,4 @@ a{color:inherit}
 .mono{font-family:var(--mono);font-size:12px}
 .main.no-prev .preview{display:none}
 .vprev{width:100%;max-width:420px;aspect-ratio:16/9;object-fit:cover;border-radius:8px;border:1px solid var(--line);background:#000}
+.noimg{display:grid;place-items:center;width:96px;height:68px;border:1px dashed var(--line);border-radius:6px;font-size:11px;color:var(--muted)}

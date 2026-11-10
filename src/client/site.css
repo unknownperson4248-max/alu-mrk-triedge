@@ -91,7 +91,8 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .mnav-label{font:500 11px var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin:22px 0 6px}
 .mnav ul{list-style:none;margin:0;padding:0}
 .mnav-main li{border-bottom:1px solid var(--navy-line)}
-.mnav-main a{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:17px 0;text-decoration:none;font:300 23px/1.25 var(--display);letter-spacing:-.01em;color:#fff}
+.mnav-main{margin-top:12px}
+.mnav-main a{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:22px 0;text-decoration:none;font:300 26px/1.25 var(--display);letter-spacing:-.01em;color:#fff}
 .mnav-main .ic{width:18px;height:18px;color:var(--accent);transition:transform .3s var(--ease-out)}
 .mnav-main a:hover .ic,.mnav-main a:focus-visible .ic{transform:translateX(4px)}
 .mnav-sys a{display:flex;align-items:baseline;gap:14px;padding:8px 0;text-decoration:none;color:var(--on-navy-muted);font-size:15px;line-height:1.35}
@@ -132,6 +133,17 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .stat b{display:block;font:300 clamp(36px,4vw,56px)/1 var(--display);font-variant-numeric:tabular-nums}
 .stat span{display:block;margin-top:10px;color:var(--muted);font-size:14px}
 @media (max-width:560px){.stat+.stat{border-left:0;padding-left:0}}
+
+.founder{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,7fr);gap:clamp(28px,5vw,80px);align-items:center;margin-top:clamp(56px,7vw,96px);padding-top:clamp(48px,6vw,80px);border-top:1px solid var(--line)}
+.founder.no-photo{grid-template-columns:1fr}
+.founder figure{margin:0;position:relative;aspect-ratio:4/5;max-width:440px;width:100%;background:var(--surface);overflow:hidden}
+.founder figure img{width:100%;height:100%;object-fit:cover}
+.founder figure::after{content:"";position:absolute;inset:12px;border:1px solid rgba(255,255,255,.5);pointer-events:none}
+.founder h3{font:300 clamp(30px,3.6vw,48px)/1.1 var(--display);margin-top:16px}
+.founder .role{font:500 12px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:12px}
+.founder .bio{margin-top:22px;color:var(--muted);font-size:17px;max-width:58ch;white-space:pre-line}
+.founder blockquote{margin:28px 0 0;padding-left:20px;border-left:2px solid var(--accent);font:300 clamp(18px,1.6vw,22px)/1.5 var(--display);max-width:44ch}
+@media (max-width:800px){.founder{grid-template-columns:1fr}.founder figure{max-width:none}}
 
 /* ---------- systems index ---------- */
 .sx{background:var(--navy);color:var(--on-navy);padding-block:clamp(72px,9vw,128px);position:relative;overflow:hidden}
