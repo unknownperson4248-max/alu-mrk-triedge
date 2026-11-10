@@ -190,6 +190,9 @@ html[data-tone=dark] .hdr.solid .brand .logo-d,html[data-tone=dark] .hdr.open-pa
 .slide.on{opacity:1}
 .slide img,.slide video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .slide img{transform:scale(1.06);transition:transform 9s linear}
+/* single photo: a very slow drift so the hero feels alive until a video is uploaded */
+.slide:only-child.on img{transition:none;animation:kb 28s ease-in-out infinite alternate}
+@keyframes kb{from{transform:scale(1.01)}to{transform:scale(1.08) translate3d(-1.2%,-1%,0)}}
 .slide.on img{transform:scale(1)}
 .slide video{opacity:0;transition:opacity 1s}
 .slide video.ready{opacity:1}
@@ -258,7 +261,7 @@ html[data-tone=dark] .hdr.solid .brand .logo-d,html[data-tone=dark] .hdr.open-pa
   .seal{width:64px;height:64px;top:calc(var(--head) + env(safe-area-inset-top,0px) + 12px);right:max(20px,env(safe-area-inset-right,0px));transform:rotate(-6deg);box-shadow:0 10px 22px rgba(0,0,0,.5)}
   .seal::before{inset:4px}
   .seal span{font-size:8.2px;max-width:44px;letter-spacing:.06em}
-  .hero-in{flex:1;height:auto;justify-content:flex-end;padding-top:calc(var(--head) + env(safe-area-inset-top,0px) + 96px);padding-bottom:22px}
+  .hero-in{flex:1;height:auto;justify-content:flex-end;padding-top:calc(var(--head) + env(safe-area-inset-top,0px) + 96px);padding-bottom:36px}
   .hero .eyebrow{font-size:10.5px;letter-spacing:.16em;color:rgba(255,255,255,.78)}
   .hero .eyebrow::after{width:32px;background:rgba(255,255,255,.4)}
   .hero h1{font-size:clamp(28px,8.2vw,36px);line-height:1.08;margin-top:10px}
@@ -685,7 +688,7 @@ html.pv .hero-copy>*,html.pv .hs-count{animation:none}
 .mnav.open .mnav-short{animation-delay:.28s}
 
 @media (prefers-reduced-motion:reduce){
-  .fab::before,.fab::after,.fab svg,.hero-copy>*,.hs-count,.d-water,.d-break,.hero-cta .btn-accent::after,.mnav.open *{animation:none!important}
+  .slide:only-child.on img,.fab::before,.fab::after,.fab svg,.hero-copy>*,.hs-count,.d-water,.d-break,.hero-cta .btn-accent::after,.mnav.open *{animation:none!important}
   html{scroll-behavior:auto}
   .hero-media img.drift{animation:none}
   .card,.card img,.sp,.mega,.srch,.acc-panel{transition:none!important;animation:none!important}

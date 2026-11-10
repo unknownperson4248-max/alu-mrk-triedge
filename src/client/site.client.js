@@ -210,12 +210,10 @@
     </div>`;
   }
 
-  /* ---------- hero slider (video first if there is one, then photos) ---------- */
+  /* ---------- hero: one full-screen photo or video ---------- */
+  // one background: the uploaded video if there is one, otherwise the photo (which also shows while the video loads)
   function heroSlides() {
-    const first = S.heroImage || 'img/glass-room.jpg';
-    const out = [{ img: first, video: S.heroVideo || '' }];
-    (S.hero || []).forEach((h) => { if (h && h.img && h.img !== first) out.push({ img: h.img }); });
-    return out.slice(0, 6);
+    return [{ img: S.heroImage || 'img/glass-room.jpg', video: S.heroVideo || '' }];
   }
 
   function hero() {
