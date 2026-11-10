@@ -5,6 +5,7 @@ const F = (icon, en, el) => ({ icon, title: T(en, el) });
 const SP = (en, el) => ({ label: T(en, el), value: '' });
 
 export const PRESETS = {
+  'night-gold': { navy: '#121b2a', accent: '#e9b23c', bg: '#0b1019', surface: '#141d2b', ink: '#eef1f5' },
   'navy-gold': { navy: '#0e1b2e', accent: '#c98a3c', bg: '#ffffff', surface: '#eef1f4', ink: '#0c1522' },
   'graphite-bronze': { navy: '#2b3033', accent: '#b08a62', bg: '#ffffff', surface: '#f2f2f0', ink: '#16191b' },
   'midnight-orange': { navy: '#0b1220', accent: '#f08a24', bg: '#ffffff', surface: '#f1f3f6', ink: '#0b1220' },
@@ -14,7 +15,7 @@ export const PRESETS = {
 
 export const DEFAULT_SITE = {
   version: 1,
-  theme: { ...PRESETS['navy-gold'] },
+  theme: { ...PRESETS['night-gold'] },
   company: {
     name: 'Alu MRK TriEdge Ltd',
     phone: '+357 99 078280',
@@ -29,7 +30,7 @@ export const DEFAULT_SITE = {
     heroTitle: T('Engineering excellence.', 'Μηχανική αριστεία.'),
     heroAccent: T('Redefining aluminium.', 'Επαναπροσδιορίζουμε το αλουμίνιο.'),
     heroSub: T('Aluminium windows, doors and glass systems, made to measure in Cyprus.', 'Παράθυρα, πόρτες και συστήματα γυαλιού αλουμινίου, κατά παραγγελία στην Κύπρο.'),
-    introTitle: T('Aluminium and glass systems for modern architecture in Cyprus.', 'Συστήματα αλουμινίου και γυαλιού για τη σύγχρονη αρχιτεκτονική στην Κύπρο.'),
+    introTitle: T('Innovative design. Superior quality.', 'Καινοτόμος σχεδιασμός. Ανώτερη ποιότητα.'),
     introBody: T(
       'We design, fabricate and install made-to-measure windows, doors, sliding and folding systems for homes, offices and commercial buildings.',
       'Σχεδιάζουμε, κατασκευάζουμε και τοποθετούμε παράθυρα, πόρτες, συρόμενα και πτυσσόμενα συστήματα κατά παραγγελία για κατοικίες, γραφεία και επαγγελματικά κτίρια.'
@@ -43,10 +44,23 @@ export const DEFAULT_SITE = {
     { img: 'img/lift-slide.jpg', caption: T('Sliding system', 'Συρόμενο σύστημα') },
     { img: 'img/folding-interior.jpg', caption: T('Folding doors', 'Πτυσσόμενες πόρτες') },
   ],
-  heroImage: 'img/house-windows.jpg',
+  heroImage: 'img/hero-house.jpg',
   heroVideo: '',
   heroText: true,
-  aboutImage: 'img/lift-slide.jpg',
+  aboutImage: 'img/alu-profiles.jpg',
+  heroBadge: T('Made to measure', 'Κατά παραγγελία'),
+  projects: [
+    { img: 'img/glass-room.jpg', caption: T('Glass room', 'Γυάλινος χώρος') },
+    { img: 'img/house-windows.jpg', caption: T('Corner glazing', 'Γωνιακά υαλοστάσια') },
+    { img: 'img/door-window.jpg', caption: T('Entrance door & window', 'Πόρτα εισόδου & παράθυρο') },
+    { img: 'img/sliding-door.jpg', caption: T('Sliding door', 'Συρόμενη πόρτα') },
+    { img: 'img/office-partition.jpg', caption: T('Office partition', 'Χώρισμα γραφείου') },
+    { img: 'img/glass-stairs.jpg', caption: T('Glass railing', 'Γυάλινο κάγκελο') },
+    { img: 'img/sliding-window.jpg', caption: T('Sliding window', 'Συρόμενο παράθυρο') },
+    { img: 'img/folding-interior.jpg', caption: T('Folding doors', 'Πτυσσόμενες πόρτες') },
+    { img: 'img/lift-slide.jpg', caption: T('Three-panel sliding door', 'Συρόμενη πόρτα τριών φύλλων') },
+    { img: 'img/commercial-doors.jpg', caption: T('Commercial entrance', 'Επαγγελματική είσοδος') },
+  ],
   founder: { name: '', photo: '', role: T('', ''), bio: T('', ''), quote: T('', '') },
   stats: [],
   values: [

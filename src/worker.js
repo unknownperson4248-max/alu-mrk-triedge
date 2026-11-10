@@ -65,6 +65,12 @@ function themeCss(theme) {
   return `:root{--navy:${v('navy')};--accent:${v('accent')};--bg:${v('bg')};--surface:${v('surface')};--ink:${v('ink')}}`;
 }
 
+function tone(theme) {
+  const hex = HEX.test((theme && theme.bg) || '') ? theme.bg : '#ffffff';
+  const [r, g, b] = [1, 3, 5].map((k) => parseInt(hex.slice(k, k + 2), 16) / 255);
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b < 0.45 ? 'dark' : 'light';
+}
+
 function renderIndex(site, url) {
   const t = (o) => (o && (o.en || '')) || '';
   const title = `${site.company.name} · ${t(site.text.tagline)}`;
@@ -91,6 +97,8 @@ function renderIndex(site, url) {
     '{{LD}}': JSON.stringify(ld).replace(/</g, '\\u003c'),
     '{{DATA}}': data,
     '{{V}}': VERSION,
+    '{{TONE}}': tone(site.theme),
+    '{{NAVY}}': HEX.test(site.theme.navy || '') ? site.theme.navy : '#0e1b2e',
   };
   return INDEX_HTML.replace(/\{\{[A-Z_]+\}\}/g, (m) => (m in map ? map[m] : m));
 }

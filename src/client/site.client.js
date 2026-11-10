@@ -24,7 +24,9 @@
     en: {
       systems: 'Systems', engineering: 'Engineering', about: 'About', contact: 'Contact', quote: 'Request a quote', menu: 'Menu', search: 'Search', close: 'Close',
       main_menu: 'Main menu', m_systems: 'Aluminium Systems', m_engineering: 'Engineering & Quality', m_about: 'About Us', m_contact: 'Contact', view_all: 'View all systems',
-      call: 'Call', leadership: 'Leadership',
+      call: 'Call', leadership: 'Leadership', home: 'Home', projects: 'Projects', m_projects: 'Our Projects', get_quote: 'Get a quote',
+      proj_eyebrow: 'Our projects', proj_title: 'Our recent projects', proj_body: 'A selection of our aluminium and glass work for homes, offices and shops.', view_projects: 'View all projects',
+      band_title: 'Let’s build something great together', band_body: 'Get a free consultation and quote today.', contact_us: 'Contact us', quick_links: 'Quick links', follow: 'Follow us', contact_info: 'Contact info',
       search_ph: 'Search, e.g. sliding doors', no_results: 'No results for “{q}”.', popular: 'Popular searches', chips: ['Sliding', 'Windows', 'Doors', 'Folding', 'Glass'],
       hero_eyebrow: 'Aluminium & glass systems · Cyprus', explore_systems: 'Explore systems', watch: 'Watch video',
       about_eyebrow: 'About us', survey: 'Book a free site survey', systems_eyebrow: 'Aluminium systems', explore: 'Explore system',
@@ -52,7 +54,9 @@
     el: {
       systems: 'Συστήματα', engineering: 'Τεχνολογία', about: 'Εταιρεία', contact: 'Επικοινωνία', quote: 'Ζητήστε προσφορά', menu: 'Μενού', search: 'Αναζήτηση', close: 'Κλείσιμο',
       main_menu: 'Κύριο μενού', m_systems: 'Συστήματα αλουμινίου', m_engineering: 'Τεχνολογία & ποιότητα', m_about: 'Η εταιρεία', m_contact: 'Επικοινωνία', view_all: 'Όλα τα συστήματα',
-      call: 'Κλήση', leadership: 'Διοίκηση',
+      call: 'Κλήση', leadership: 'Διοίκηση', home: 'Αρχική', projects: 'Έργα', m_projects: 'Τα έργα μας', get_quote: 'Ζητήστε προσφορά',
+      proj_eyebrow: 'Τα έργα μας', proj_title: 'Πρόσφατα έργα', proj_body: 'Επιλογή από τις κατασκευές μας σε αλουμίνιο και γυαλί για σπίτια, γραφεία και καταστήματα.', view_projects: 'Όλα τα έργα',
+      band_title: 'Ας φτιάξουμε κάτι σπουδαίο μαζί', band_body: 'Ζητήστε δωρεάν συμβουλή και προσφορά σήμερα.', contact_us: 'Επικοινωνία', quick_links: 'Σύνδεσμοι', follow: 'Ακολουθήστε μας', contact_info: 'Στοιχεία επικοινωνίας',
       search_ph: 'Αναζήτηση, π.χ. συρόμενες πόρτες', no_results: 'Δεν βρέθηκαν αποτελέσματα για «{q}».', popular: 'Δημοφιλείς αναζητήσεις', chips: ['Συρόμενα', 'Παράθυρα', 'Πόρτες', 'Πτυσσόμενα', 'Γυαλί'],
       hero_eyebrow: 'Συστήματα αλουμινίου & γυαλιού · Κύπρος', explore_systems: 'Δείτε τα συστήματα', watch: 'Δείτε το βίντεο',
       about_eyebrow: 'Η εταιρεία', survey: 'Κλείστε δωρεάν αυτοψία', systems_eyebrow: 'Συστήματα αλουμινίου', explore: 'Δείτε το σύστημα',
@@ -119,6 +123,10 @@
     search: '<circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/>',
     play: '<path d="M9 6.5v11l9-5.5z"/>',
     file: '<path d="M14 3H6v18h12V7z"/><path d="M14 3v4h4M9 12h6M9 16h6"/>',
+    diamond: '<path d="M6 3h12l4 6-10 12L2 9z"/><path d="M2 9h20M9 3l3 18 3-18"/>',
+    globe: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>',
+    users: '<circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0M16 5a3 3 0 0 1 0 6M21 20a6 6 0 0 0-4-5.7"/>',
+    handshake: '<path d="M2 11l4-4 3 1 3-2 3 2 3-1 4 4"/><path d="M6 7l-1 9 3 3M18 7l1 9-3 3M9 15l2 2M11 13l3 3M13 11l3 3"/>',
     download: '<path d="M12 3v12M7 10l5 5 5-5M4 21h16"/>',
     zoom: '<circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4M11 8v6M8 11h6"/>',
     info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/>',
@@ -144,18 +152,30 @@
   /* ---------- header, mega menu, search, mobile menu ---------- */
   const searchBox = (id) => `<div class="sbox">${icon('search')}<input class="sq" id="${id}" type="search" placeholder="${esc(u('search_ph'))}" autocomplete="off" aria-label="${esc(u('search'))}"></div><div class="sres" aria-live="polite"></div>`;
 
+  function socialLinks(cls) {
+    const soc = Object.entries(S.company.socials || {}).filter(([, v]) => v);
+    return soc.length ? `<div class="${cls}">${soc.map(([k, v]) => `<a href="${esc(v)}" target="_blank" rel="noopener" aria-label="${esc(k)}">${icon(k)}</a>`).join('')}</div>` : '';
+  }
+
   function header() {
     const c = S.company, list = sys();
+    const tb = [
+      t(c.address) ? `<span>${icon('pin')}${esc(t(c.address).split('\n')[0])}</span>` : '',
+      c.email ? `<a href="mailto:${esc(c.email)}">${icon('mail')}${esc(c.email)}</a>` : '',
+      c.phone ? `<a href="${telLink()}">${icon('phone')}${esc(c.phone)}</a>` : '',
+    ].join('');
     return `<header class="hdr" id="hdr">
+      <div class="topbar"><div class="wrap topbar-in"><div class="tb-l">${tb}</div>${socialLinks('tb-r')}</div></div>
       <div class="wrap nav">
         <a class="brand" href="#top" aria-label="${esc(c.name)}"><img class="logo-l" src="/img/logo-light.png" alt="${esc(c.name)}" width="98" height="46"><img class="logo-d" src="/img/logo-dark.png" alt="" width="98" height="46"></a>
         <nav class="links" aria-label="Main">
+          <a href="#top" class="is-home">${u('home')}</a>
           <button type="button" class="mega-btn" aria-expanded="false" aria-controls="mega">${u('systems')}${icon('chev')}</button>
-          <a href="#engineering">${u('engineering')}</a><a href="#about">${u('about')}</a><a href="#quote">${u('contact')}</a>
+          <a href="#about">${u('about')}</a><a href="#projects">${u('projects')}</a><a href="#quote">${u('contact')}</a>
         </nav>
         <button type="button" class="icon-btn srch-btn" aria-expanded="false" aria-controls="srch" aria-label="${u('search')}">${icon('search')}</button>
         <div class="lang" role="group" aria-label="Language"><button type="button" data-lang="en" aria-pressed="${lang === 'en'}">EN</button><button type="button" data-lang="el" aria-pressed="${lang === 'el'}">ΕΛ</button></div>
-        <a class="btn btn-accent nav-cta" href="#quote">${u('quote')}</a>
+        <a class="btn btn-accent nav-cta" href="#quote">${u('get_quote')}${icon('arrow')}</a>
         <button type="button" class="burger" id="burger" aria-expanded="false" aria-controls="mnav" aria-label="${u('menu')}"><i><b></b><b></b></i></button>
       </div>
       <div class="mega" id="mega" hidden><div class="wrap mega-in">
@@ -171,8 +191,9 @@
         <ul class="mnav-main">
           <li><button type="button" class="acc" aria-expanded="false" aria-controls="acc-sys"><span>${u('m_systems')}</span>${icon('chev')}</button>
             <div class="acc-panel" id="acc-sys"><ul>${list.map((s, i) => `<li><a href="#${esc(s.slug)}"><small>${pad(i + 1)}</small>${esc(t(s.name))}</a></li>`).join('')}</ul></div></li>
-          <li><a href="#engineering"><span>${u('m_engineering')}</span>${icon('right')}</a></li>
           <li><a href="#about"><span>${u('m_about')}</span>${icon('right')}</a></li>
+          <li><a href="#projects"><span>${u('m_projects')}</span>${icon('right')}</a></li>
+          <li><a href="#engineering"><span>${u('m_engineering')}</span>${icon('right')}</a></li>
           <li><a href="#quote"><span>${u('m_contact')}</span>${icon('right')}</a></li>
         </ul>
         <div class="mnav-short">
@@ -184,46 +205,74 @@
     </div>`;
   }
 
-  /* ---------- hero + system cards ---------- */
+  /* ---------- hero (photo/video, text, numbers) with the system cards underneath ---------- */
   function hero() {
-    const img = S.heroImage || ((S.hero || [])[0] || {}).img || 'img/house-windows.jpg';
+    const img = S.heroImage || ((S.hero || [])[0] || {}).img || 'img/hero-house.jpg';
     const vid = S.heroVideo;
     const showText = S.heroText !== false;
     const stats = (S.stats || []).filter((s) => String(s.value || '').trim());
+    const badge = t(S.heroBadge);
     return `<section class="hero${showText ? '' : ' no-text'}" id="top" aria-label="${esc(S.company.name)}">
-      <div class="hero-media"><img class="${vid ? '' : 'drift'}" src="${esc(src(img))}" alt="" fetchpriority="high">${vid && !reduce ? `<video id="hero-video" src="${esc(src(vid))}" muted autoplay loop playsinline preload="auto" aria-hidden="true"></video>` : ''}</div>
-      <div class="hero-shade"></div>
-      ${showText ? `<div class="wrap hero-in"><div class="hero-copy">
-        <p class="eyebrow">${u('hero_eyebrow')}</p>
-        <h1>${esc(t(S.text.heroTitle))}<span>${esc(t(S.text.heroAccent))}</span></h1>
-        ${t(S.text.heroSub) ? `<p class="sub">${esc(t(S.text.heroSub))}</p>` : ''}
-        <div class="hero-cta"><a class="btn btn-accent" href="#systems">${u('explore_systems')}${icon('arrow')}</a>${vid ? `<button type="button" class="btn btn-ghost btn-play" data-video>${icon('play')}${u('watch')}</button>` : `<a class="btn btn-ghost" href="#quote">${u('quote')}</a>`}</div>
-        ${stats.length ? `<div class="hero-stats">${stats.map((s) => `<div><b>${esc(s.value)}</b><span>${esc(t(s.label))}</span></div>`).join('')}</div>` : ''}
-      </div></div>` : ''}
+      <div class="hero-top">
+        <div class="hero-media"><img class="${vid ? '' : 'drift'}" src="${esc(src(img))}" alt="" fetchpriority="high">${vid && !reduce ? `<video id="hero-video" src="${esc(src(vid))}" muted autoplay loop playsinline preload="auto" aria-hidden="true"></video>` : ''}<span class="hero-fade"></span>${badge ? `<span class="seal"><span>${esc(badge)}</span></span>` : ''}</div>
+        ${showText ? `<div class="wrap hero-in"><div class="hero-copy">
+          <p class="eyebrow">${u('hero_eyebrow')}</p>
+          <h1>${esc(t(S.text.heroTitle))}<span>${esc(t(S.text.heroAccent))}</span></h1>
+          ${t(S.text.heroSub) ? `<p class="sub">${esc(t(S.text.heroSub))}</p>` : ''}
+          <div class="hero-cta"><a class="btn btn-accent" href="#systems">${u('explore_systems')}${icon('arrow')}</a>${vid ? `<button type="button" class="btn btn-ghost btn-play" data-video><span class="play">${icon('play')}</span>${u('watch')}</button>` : `<a class="btn btn-ghost" href="#quote">${u('quote')}</a>`}</div>
+          ${stats.length ? `<div class="hero-stats">${stats.map((s) => `<div>${s.icon ? icon(s.icon) : ''}<p><b>${esc(s.value)}</b><span>${esc(t(s.label))}</span></p></div>`).join('')}</div>` : ''}
+        </div></div>` : ''}
+      </div>
+      ${cats()}
     </section>`;
   }
 
   function cats() {
     const list = sys();
-    return `<section class="cats" id="systems" aria-label="${u('systems_eyebrow')}">
-      <div class="wrap cats-head"><div><p class="eyebrow">${u('systems_eyebrow')}</p><h2>${esc(t(S.text.systemsTitle))}</h2></div><div class="cats-arrows"><button type="button" data-rail="-1" aria-label="Previous">${icon('back')}</button><button type="button" data-rail="1" aria-label="Next">${icon('arrow')}</button></div></div>
-      <div class="rail" id="rail">${list
+    return `<div class="cats" id="systems">
+      <div class="wrap cats-head"><p class="eyebrow">${u('systems_eyebrow')}</p><div class="cats-arrows"><button type="button" data-rail="-1" aria-label="Previous">${icon('back')}</button><button type="button" data-rail="1" aria-label="Next">${icon('arrow')}</button></div></div>
+      <div class="wrap"><div class="rail" id="rail">${list
         .map(
           (s, i) => `<a class="card" href="#${esc(s.slug)}"><img src="${esc(src(s.image))}" alt="" loading="${i < 4 ? 'eager' : 'lazy'}">
-          <span class="card-b"><span class="card-ic">${icon(sysIcon(s))}</span><span class="card-n"><small>${pad(i + 1)}</small>${esc(t(s.name))}</span><span class="card-go">${icon('arrow')}</span></span></a>`
+          <span class="card-b"><span class="card-ic">${icon(sysIcon(s))}</span><span class="card-n">${esc(t(s.name))}</span><span class="card-go">${icon('arrow')}</span></span></a>`
         )
-        .join('')}</div>
+        .join('')}</div></div>
+    </div>`;
+  }
+
+  /* ---------- about: profile image, text, key points ---------- */
+  function about() {
+    const img = S.aboutImage || 'img/alu-profiles.jpg';
+    const v = (S.values || []).filter((x) => t(x.title));
+    return `<section class="about" id="about">
+      <div class="about-grid">
+        <figure class="about-art"><img src="${esc(src(img))}" alt="" loading="lazy"></figure>
+        <div class="about-text">
+          <p class="eyebrow">${u('about_eyebrow')}</p>
+          <h2>${esc(t(S.text.introTitle))}</h2>
+          <p>${esc(t(S.text.introBody))}</p>
+          <a class="btn btn-accent" href="#quote">${u('survey')}${icon('arrow')}</a>
+        </div>
+        ${v.length ? `<ul class="about-feats">${v.map((x) => `<li><span class="ring">${icon(x.icon)}</span><span>${esc(t(x.title))}</span></li>`).join('')}</ul>` : ''}
+      </div>
+      <div class="wrap">${founder()}</div>
     </section>`;
   }
 
-  /* ---------- about ---------- */
-  function about() {
-    return `<section class="about" id="about"><div class="wrap">
-      <div class="about-card">
-        <div><p class="eyebrow">${u('about_eyebrow')}</p><h2>${esc(t(S.text.introTitle))}</h2></div>
-        <div><p>${esc(t(S.text.introBody))}</p><a class="arrow-link" href="#quote">${u('survey')}${icon('arrow')}</a></div>
-      </div>
-      ${founder()}
+  function projects() {
+    const list = (S.projects || []).filter((p) => p.img);
+    if (!list.length) return '';
+    return `<section class="projects" id="projects"><div class="wrap proj-grid">
+      <div class="proj-text"><p class="eyebrow">${u('proj_eyebrow')}</p><h2>${u('proj_title')}</h2><p>${u('proj_body')}</p><button type="button" class="btn btn-ghost" data-proj="0">${u('view_projects')}${icon('arrow')}</button></div>
+      <div class="proj-strip">${list.slice(0, 4).map((p, i) => `<button type="button" class="proj" data-proj="${i}" aria-label="${esc(t(p.caption) || u('proj_title'))}"><img src="${esc(src(p.img))}" alt="" loading="lazy">${t(p.caption) ? `<span>${esc(t(p.caption))}</span>` : ''}</button>`).join('')}</div>
+    </div></section>`;
+  }
+
+  function band() {
+    const list = (S.testimonials || []).filter((x) => t(x.quote));
+    return `<section class="band"><div class="wrap band-grid${list.length ? ' two' : ''}">
+      ${list.length ? `<div class="tst" id="tst"><span class="tst-q" aria-hidden="true">“</span><div class="tst-slides">${list.map((x, i) => `<blockquote class="${i ? '' : 'on'}"><p>${esc(t(x.quote))}</p><cite>— ${esc(x.name)}${t(x.role) ? ', ' + esc(t(x.role)) : ''}</cite></blockquote>`).join('')}</div>${list.length > 1 ? `<div class="tst-dots">${list.map((x, i) => `<button type="button" data-tst="${i}" class="${i ? '' : 'on'}" aria-label="${i + 1}"></button>`).join('')}</div>` : ''}</div>` : ''}
+      <div class="band-cta"><span class="band-ic">${icon('handshake')}</span><div><h3>${u('band_title')}</h3><p>${u('band_body')}</p></div><a class="btn btn-accent" href="#quote">${u('contact_us')}${icon('arrow')}</a></div>
     </div></section>`;
   }
 
@@ -270,24 +319,6 @@
     </div></section>`;
   }
 
-  function why() {
-    const v = (S.values || []).filter((x) => t(x.title));
-    if (!v.length) return '';
-    return `<section class="why" id="why"><div class="wrap">
-      <p class="eyebrow">${u('why_eyebrow')}</p><h2>${u('why_title')}</h2>
-      <div class="why-grid rv">${v.map((x) => `<div class="why-item"><span class="tile">${icon(x.icon)}</span><h3>${esc(t(x.title))}</h3><p>${esc(t(x.body))}</p></div>`).join('')}</div>
-    </div></section>`;
-  }
-
-  function testimonials() {
-    const list = (S.testimonials || []).filter((x) => t(x.quote));
-    if (!list.length) return '';
-    return `<section class="tst"><div class="wrap">
-      <p class="eyebrow">${u('tst_eyebrow')}</p>
-      <div class="tst-grid rv">${list.map((x) => `<blockquote><p>“${esc(t(x.quote))}”</p><cite><b>${esc(x.name)}</b>${x.role ? ' · ' + esc(t(x.role)) : ''}</cite></blockquote>`).join('')}</div>
-    </div></section>`;
-  }
-
   function quote() {
     const c = S.company;
     const lines = [];
@@ -321,19 +352,19 @@
   }
 
   function footer() {
-    const c = S.company;
-    const soc = Object.entries(c.socials || {}).filter(([, v]) => v);
-    return `<footer class="foot"><div class="wrap foot-top">
-      <div class="foot-brand"><img src="/img/logo-light.png" alt="${esc(c.name)}" width="111" height="52"><p>${esc(t(S.text.tagline))}</p>
-        ${soc.length ? `<div class="socials">${soc.map(([k, v]) => `<a href="${esc(v)}" target="_blank" rel="noopener" aria-label="${esc(k)}">${icon(k)}</a>`).join('')}</div>` : ''}</div>
-      <div><h4>${u('systems')}</h4><ul>${sys().map((s) => `<li><a href="#${esc(s.slug)}">${esc(t(s.name))}</a></li>`).join('')}</ul></div>
-      <div><h4>${u('company')}</h4><ul><li><a href="#about">${u('about')}</a></li><li><a href="#engineering">${u('engineering')}</a></li><li><a href="#quote">${u('quote')}</a></li></ul></div>
-      <div><h4>${u('contact')}</h4><ul>
-        ${c.phone ? `<li><a href="${telLink()}">${esc(c.phone)}</a></li>` : ''}
-        ${c.email ? `<li><a href="mailto:${esc(c.email)}">${esc(c.email)}</a></li>` : ''}
-        ${t(c.address) ? `<li style="white-space:pre-line">${esc(t(c.address))}</li>` : ''}
-        ${t(c.hours) ? `<li style="white-space:pre-line">${esc(t(c.hours))}</li>` : ''}
+    const c = S.company, list = sys();
+    const soc = socialLinks('socials');
+    return `<footer class="foot"><div class="wrap foot-top${soc ? ' has-soc' : ''}">
+      <div class="foot-brand"><img src="/img/logo-light.png" alt="${esc(c.name)}" width="111" height="52"><p>${esc(t(S.text.tagline))}</p></div>
+      <div><h4>${u('quick_links')}</h4><ul><li><a href="#top">${u('home')}</a></li><li><a href="#about">${u('about')}</a></li><li><a href="#systems">${u('systems')}</a></li><li><a href="#projects">${u('projects')}</a></li><li><a href="#quote">${u('contact')}</a></li></ul></div>
+      <div><h4>${u('systems')}</h4><ul>${list.slice(0, 6).map((s) => `<li><a href="#${esc(s.slug)}">${esc(t(s.name))}</a></li>`).join('')}</ul></div>
+      <div><h4>${u('contact_info')}</h4><ul class="foot-contact">
+        ${t(c.address) ? `<li>${icon('pin')}<span>${esc(t(c.address))}</span></li>` : ''}
+        ${c.phone ? `<li>${icon('phone')}<a href="${telLink()}">${esc(c.phone)}</a></li>` : ''}
+        ${c.email ? `<li>${icon('mail')}<a href="mailto:${esc(c.email)}">${esc(c.email)}</a></li>` : ''}
+        ${t(c.hours) ? `<li>${icon('clock')}<span>${esc(t(c.hours))}</span></li>` : ''}
       </ul></div>
+      ${soc ? `<div><h4>${u('follow')}</h4>${soc}</div>` : ''}
     </div><div class="wrap foot-bottom"><span>© ${new Date().getFullYear()} ${esc(c.name)}. ${u('rights')}</span><span>${esc(t(S.text.tagline))}</span></div></footer>
     ${waLink() ? `<a class="fab" href="${esc(waLink(u('wa_hello', { c: c.name })))}" target="_blank" rel="noopener" aria-label="WhatsApp">${WA_SVG}</a>` : ''}`;
   }
@@ -511,7 +542,8 @@
 
   function render() {
     document.documentElement.lang = lang;
-    $('#app').innerHTML = header() + '<main>' + hero() + cats() + about() + engineering() + why() + testimonials() + quote() + '</main>' + footer();
+    $('#app').innerHTML = header() + '<main>' + hero() + about() + projects() + engineering() + band() + quote() + '</main>' + footer();
+    tstStart();
     heroVideo();
     railArrows();
     syncPanels();
@@ -547,6 +579,21 @@
     m.querySelector('.lb-x').focus();
   }
   function closeVideo() { const m = $('#vm'); if (m) { m.hidden = true; m.innerHTML = ''; } lock(false, 'vm'); }
+
+  // testimonials rotate every few seconds
+  let tstTimer = null, tstI = 0;
+  function tstShow(i) {
+    const q = $$('#tst blockquote'), d = $$('#tst [data-tst]');
+    if (!q.length) return;
+    tstI = (i + q.length) % q.length;
+    q.forEach((x, j) => x.classList.toggle('on', j === tstI));
+    d.forEach((x, j) => x.classList.toggle('on', j === tstI));
+  }
+  function tstStart() {
+    clearInterval(tstTimer);
+    tstI = 0;
+    if (!reduce && $$('#tst blockquote').length > 1) tstTimer = setInterval(() => tstShow(tstI + 1), 6500);
+  }
 
   // system cards rail
   function railArrows() {
@@ -649,7 +696,8 @@
     lock(true, 'sp');
     renderCfg(s);
     document.title = `${t(s.name)} · ${S.company.name}`;
-    setTimeout(() => { const b = sp.querySelector('.sp-back'); b && b.focus({ preventScroll: true }); }, 50);
+    sp.setAttribute('tabindex', '-1');
+    setTimeout(() => sp.focus({ preventScroll: true }), 50);
   }
   function closeSystem() {
     const sp = $('#sp');
@@ -709,9 +757,9 @@
   }
 
   // lightbox
-  let lbList = [], lbI = 0;
-  function openLB(list, i) {
-    lbList = list; lbI = i;
+  let lbList = [], lbI = 0, lbCaps = [];
+  function openLB(list, i, caps) {
+    lbList = list; lbI = i; lbCaps = caps || [];
     const lb = $('#lb');
     lb.hidden = false;
     lock(true, 'lb');
@@ -722,8 +770,9 @@
     const lb = $('#lb'), img = lb.querySelector('img');
     img.classList.remove('zoom');
     img.src = src(lbList[lbI]);
-    img.alt = current ? t(current.name) : '';
-    lb.querySelector('.lb-cap').textContent = (current ? t(current.name) + ' · ' : '') + (lbI + 1) + ' / ' + lbList.length;
+    const cap = lbCaps[lbI] || (current ? t(current.name) : '');
+    img.alt = cap;
+    lb.querySelector('.lb-cap').textContent = (cap ? cap + ' · ' : '') + (lbI + 1) + ' / ' + lbList.length;
     lb.querySelector('.lb-pv').hidden = lb.querySelector('.lb-nx').hidden = lbList.length < 2;
   }
   function closeLB() { $('#lb').hidden = true; lock(false, 'lb'); }
@@ -782,8 +831,12 @@
     if (panel && panel !== 'menu' && !e.target.closest('#hdr')) setPanel(null);
 
     const rb = e.target.closest('[data-rail]');
-    if (rb) { const r = $('#rail'); const card = r.querySelector('.card'); r.scrollBy({ left: +rb.dataset.rail * ((card ? card.offsetWidth : 300) + 16) * (mobile() ? 1 : 2), behavior: reduce ? 'auto' : 'smooth' }); return; }
+    if (rb) { const r = $('#rail'); const card = r.querySelector('.card'); r.scrollBy({ left: +rb.dataset.rail * ((card ? card.offsetWidth : 300) + 16), behavior: reduce ? 'auto' : 'smooth' }); return; }
     if (e.target.closest('[data-video]')) { openVideo(); return; }
+    const pj = e.target.closest('[data-proj]');
+    if (pj) { const L = (S.projects || []).filter((x) => x.img); openLB(L.map((x) => x.img), +pj.dataset.proj, L.map((x) => t(x.caption))); return; }
+    const td = e.target.closest('[data-tst]');
+    if (td) { tstShow(+td.dataset.tst); tstStart(); tstShow(+td.dataset.tst); return; }
 
     const pt = e.target.closest('#parts li');
     if (pt) { focusPart(pt.classList.contains('on') && !canHover() ? null : pt.dataset.p); return; }
@@ -859,6 +912,9 @@
     const ok = (v) => /^#[0-9a-f]{6}$/i.test(v || '');
     const css = ['navy', 'accent', 'bg', 'surface', 'ink'].filter((k) => ok(th[k])).map((k) => `--${k}:${th[k]}`).join(';');
     $('#theme').textContent = `:root{${css}}`;
+    const hex = /^#[0-9a-f]{6}$/i.test(th.bg || '') ? th.bg : '#ffffff';
+    const [r, g, b] = [1, 3, 5].map((k) => parseInt(hex.slice(k, k + 2), 16) / 255);
+    document.documentElement.dataset.tone = 0.2126 * r + 0.7152 * g + 0.0722 * b < 0.45 ? 'dark' : 'light';
   }
   if (PREVIEW) {
     addEventListener('message', (e) => {

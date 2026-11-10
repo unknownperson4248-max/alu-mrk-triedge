@@ -11,17 +11,18 @@
   let pvMode = innerWidth < 700 ? 'mob' : 'desk';
   let dirty = false, tab = 'design', editIdx = null, quotes = null, quoteCount = 0, previewReady = false;
 
-  const TABS = [['design', 'Colours'], ['company', 'Company & text'], ['hero', 'Hero'], ['systems', 'Systems'], ['content', 'Why us & reviews'], ['inbox', 'Quote requests'], ['media', 'Images & files'], ['account', 'Password']];
-  const ICONS = ['motor', 'remote', 'maximize', 'shield', 'thermo', 'droplet', 'lock', 'sun', 'wind', 'layers', 'ruler', 'sparkle', 'building', 'fold', 'arrowsV', 'arrowsH', 'grid', 'window', 'door', 'palette', 'key', 'home', 'check'];
+  const TABS = [['design', 'Colours'], ['company', 'Company & text'], ['hero', 'Hero'], ['systems', 'Systems'], ['projects', 'Projects'], ['content', 'About points, numbers & reviews'], ['inbox', 'Quote requests'], ['media', 'Images & files'], ['account', 'Password']];
+  const ICONS = ['motor', 'remote', 'maximize', 'shield', 'thermo', 'droplet', 'lock', 'sun', 'wind', 'layers', 'ruler', 'sparkle', 'building', 'fold', 'arrowsV', 'arrowsH', 'grid', 'window', 'door', 'palette', 'key', 'home', 'check', 'diamond', 'globe', 'users', 'handshake'];
   const KINDS = [['slide', 'Sliding panels'], ['vertical', 'Vertical sliding'], ['fold', 'Folding'], ['swing', 'Doors (swing)'], ['window', 'Windows'], ['grid', 'Curtain wall / facade grid'], ['none', 'No configurator']];
   const COLORS = [['navy', 'Navy (dark sections)'], ['accent', 'Accent (buttons, highlights)'], ['bg', 'Background'], ['surface', 'Light panels'], ['ink', 'Text']];
-  const PRESET_NAMES = { 'navy-gold': 'Navy & Gold', 'graphite-bronze': 'Graphite & Bronze', 'midnight-orange': 'Midnight & Orange', 'black-silver': 'Black & Silver', 'green-brass': 'Green & Brass' };
+  const PRESET_NAMES = { 'night-gold': 'Night & Gold (dark)', 'navy-gold': 'Navy & Gold', 'graphite-bronze': 'Graphite & Bronze', 'midnight-orange': 'Midnight & Orange', 'black-silver': 'Black & Silver', 'green-brass': 'Green & Brass' };
   const T = () => ({ en: '', el: '' });
   const TPL = {
     feature: () => ({ icon: 'sparkle', title: T() }),
     spec: () => ({ label: T(), value: '' }),
     app: () => T(),
     hero: () => ({ img: 'img/house-windows.jpg', caption: T() }),
+    project: () => ({ img: 'img/house-windows.jpg', caption: T() }),
     stat: () => ({ value: '', label: T() }),
     value: () => ({ icon: 'sparkle', title: T(), body: T() }),
     testimonial: () => ({ name: '', role: T(), quote: T() }),
@@ -106,6 +107,7 @@
         ${pair('founder.role', 'Role, e.g. Founder & Managing Director')}
         ${pair('founder.bio', 'Short bio (2–4 sentences)', true)}
         ${pair('founder.quote', 'Personal message (optional)', true)}</div>
+      <div class="card"><h2>About section image</h2>${imgPick('aboutImage', 'Image next to the About text')}</div>
       <div class="card"><h2>Main text</h2>
         ${pair('text.tagline', 'Tagline (footer and browser title)')}
         ${pair('text.introTitle', 'About: title', true)}
@@ -125,7 +127,14 @@
         ${check('heroText', 'Show the headline and button on top of the video')}
         ${pair('text.heroTitle', 'Headline (first line)')}
         ${pair('text.heroAccent', 'Headline (accent line)')}
-        ${pair('text.heroSub', 'Short line under the headline', true)}</div>`;
+        ${pair('text.heroSub', 'Short line under the headline', true)}
+        ${pair('heroBadge', 'Gold badge on the photo (leave empty to hide)')}</div>`;
+  }
+  function vProjects() {
+    const L = site.projects || (site.projects = []);
+    return `<div class="card"><h2>Recent projects</h2><p class="hint">The first four show on the home page. All of them open in the gallery.</p>
+      <div class="list">${L.map((x, i) => `<div class="item">${itemHead('projects', i, L.length, x.caption?.en || 'Project ' + (i + 1))}${imgPick(`projects.${i}.img`, 'Photo')}${pair(`projects.${i}.caption`, 'Caption')}</div>`).join('') || '<p class="empty">No projects. The section is hidden.</p>'}</div>
+      ${addBtn('projects', 'project', 'Add project')}</div>`;
   }
   function vSystems() {
     if (editIdx != null && site.systems[editIdx]) return vSystemEdit(editIdx);
@@ -167,10 +176,10 @@
   }
   function vContent() {
     const v = site.values || [], st = site.stats || [], ts = site.testimonials || [];
-    return `<div class="card"><h2>Why choose us</h2>
+    return `<div class="card"><h2>About: key points</h2><p class="hint">The short points with gold icons next to the About text.</p>
         <div class="list">${v.map((x, i) => `<div class="item">${itemHead('values', i, v.length, x.title?.en || 'Item ' + (i + 1))}<div class="row">${sel(`values.${i}.icon`, 'Icon', ICONS.map((k) => [k, k]))}</div>${pair(`values.${i}.title`, 'Title')}${pair(`values.${i}.body`, 'Text', true)}</div>`).join('')}</div>${addBtn('values', 'value', 'Add item')}</div>
       <div class="card"><h2>Numbers (optional)</h2><p class="hint">Shown in the hero under the buttons, e.g. “15+” Years of experience. Use real numbers only. Hidden when empty.</p>
-        <div class="list">${st.map((x, i) => `<div class="item">${itemHead('stats', i, st.length, x.value || 'Number ' + (i + 1))}${txt(`stats.${i}.value`, 'Number', 'text', '15+')}${pair(`stats.${i}.label`, 'Label')}</div>`).join('') || '<p class="empty">No numbers. The section is hidden.</p>'}</div>${addBtn('stats', 'stat', 'Add number')}</div>
+        <div class="list">${st.map((x, i) => `<div class="item">${itemHead('stats', i, st.length, x.value || 'Number ' + (i + 1))}<div class="row">${txt(`stats.${i}.value`, 'Number', 'text', '15+')}${sel(`stats.${i}.icon`, 'Icon', [['', 'none'], ...ICONS.map((k) => [k, k])])}</div>${pair(`stats.${i}.label`, 'Label')}</div>`).join('') || '<p class="empty">No numbers. The section is hidden.</p>'}</div>${addBtn('stats', 'stat', 'Add number')}</div>
       <div class="card"><h2>Client reviews (optional)</h2><p class="hint">Only add real reviews with the client’s permission. Hidden when empty.</p>
         <div class="list">${ts.map((x, i) => `<div class="item">${itemHead('testimonials', i, ts.length, x.name || 'Review ' + (i + 1))}${txt(`testimonials.${i}.name`, 'Client name')}${pair(`testimonials.${i}.role`, 'Role or place (optional)')}${pair(`testimonials.${i}.quote`, 'Review', true)}</div>`).join('') || '<p class="empty">No reviews. The section is hidden.</p>'}</div>${addBtn('testimonials', 'testimonial', 'Add review')}</div>`;
   }
@@ -246,7 +255,7 @@
     $('#tabs').innerHTML = TABS.map(([k, l]) => `<button type="button" data-act="tab" data-tab="${k}" class="${k === tab ? 'on' : ''}">${esc(l)}${k === 'inbox' && quoteCount ? `<span class="badge">${quoteCount}</span>` : ''}</button>`).join('');
   }
   function renderEditor() {
-    const views = { design: vDesign, company: vCompany, hero: vHero, systems: vSystems, content: vContent, inbox: vInbox, media: vMedia, account: vAccount };
+    const views = { design: vDesign, company: vCompany, hero: vHero, systems: vSystems, projects: vProjects, content: vContent, inbox: vInbox, media: vMedia, account: vAccount };
     const y = scrollY;
     $('#editor').innerHTML = views[tab]();
     $('#main').classList.toggle('no-prev', tab === 'inbox' || tab === 'media' || tab === 'account');
@@ -487,6 +496,8 @@
     if (!site.testimonials) site.testimonials = [];
     if (!site.values) site.values = [];
     if (!site.founder) site.founder = clone(defaults.founder);
+    if (!site.projects) site.projects = clone(defaults.projects || []);
+    if (!site.heroBadge) site.heroBadge = { en: '', el: '' };
     shell();
     loadQuotes();
   }
