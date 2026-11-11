@@ -23,8 +23,9 @@ hash are stored in Workers KV (binding `KV`).
   (sections are hidden when empty).
 - **Profile Systems**: aluminium profile models (MU 2000, MU 3200, MU 3000, MU 114, MU 2075; profiles by MUSKITA) with category,
   description, colours, specifications and photo. Hidden products do not show on the site.
-- **Reviews**: reviews (rating, title, text, project, up to 3 photos) wait for approval; publishing copies
-  the photos to the public site.
+- **Reviews**: Play Store style. With a Google OAuth Client ID (admin → Reviews), customers sign in with
+  Google and post one review per account at once (they can edit or delete it); the company can reply, hide
+  or delete. Without a Client ID, reviews wait for approval as before.
 - **Quote requests**: multi-product requests from the quotation builder, each with a reference number
   (AMT-YYMMDD-XXXX) and private attachments. "Create quotation (PDF)" opens an editable, printable
   quotation; prices, VAT, validity and terms are typed in by hand (defaults are editable, empty by default).
