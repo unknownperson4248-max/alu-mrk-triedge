@@ -12,12 +12,12 @@
   let pendRev = null, pendCount = 0, editProd = null;
   let dirty = false, tab = 'works', editIdx = null, editWork = null, quotes = null, quoteCount = 0, previewReady = false;
 
-  const TABS = [['works', 'Latest work'], ['inbox', 'Quote requests'], ['reviews', 'Reviews'], ['hero', 'Hero'], ['company', 'Company & About'], ['products', 'Products'], ['systems', 'Systems'], ['content', 'Key points & numbers'], ['design', 'Colours'], ['media', 'Images & files'], ['account', 'Password']];
+  const TABS = [['works', 'Latest work'], ['inbox', 'Quote requests'], ['reviews', 'Reviews'], ['hero', 'Hero'], ['company', 'Company & About'], ['products', 'Profile Systems'], ['systems', 'Systems'], ['content', 'Key points & numbers'], ['design', 'Colours'], ['media', 'Images & files'], ['account', 'Password']];
   // the ⋮ menu: every part of the website under its own heading
   const MENU = [
     ['Your work', [['works', 'Latest work', 'Add photos of finished jobs'], ['cats', 'Gallery categories', 'Sliding, Windows, Doors…']]],
     ['Customers', [['inbox', 'Quote requests', 'Requests from the quote form'], ['reviews', 'Reviews', 'Approve and manage customer reviews']]],
-    ['Website pages', [['content', 'Key points & numbers', 'About points and counters'], ['hero', 'Hero', 'Top photo or video and headline'], ['company', 'Company & About', 'Phone, address, About text, owner profile'], ['products', 'Products (MUSKITA)', 'MU 2000, MU 3200, MU 3000, MU 2075…'], ['systems', 'Systems', 'Your nine product categories']]],
+    ['Website pages', [['content', 'Key points & numbers', 'About points and counters'], ['hero', 'Hero', 'Top photo or video and headline'], ['company', 'Company & About', 'Phone, address, About text, owner profile'], ['products', 'Aluminium Profile Systems', 'MU 2000, MU 3200, MU 3000, MU 2075…'], ['systems', 'Systems', 'Your nine product categories']]],
     ['Look & files', [['design', 'Colours', 'Website colours'], ['media', 'Images & files', 'All uploaded photos, videos and PDFs']]],
     ['Account', [['account', 'Password', 'Change the admin password']]],
   ];
@@ -186,12 +186,12 @@
         <div class="list">${L.map((r, i) => `<div class="item">${itemHead('reviews', i, L.length, (r.name || 'Review ' + (i + 1)) + '  ' + stars(+r.rating || 5))}<div class="row">${txt(`reviews.${i}.name`, 'Customer name')}${txt(`reviews.${i}.place`, 'Area / city (optional)')}${txt(`reviews.${i}.title`, 'Title (optional)')}${txt(`reviews.${i}.project`, 'Project (optional)')}${sel(`reviews.${i}.rating`, 'Rating', [5, 4, 3, 2, 1].map((n) => [n, stars(n)]))}</div>${area(`reviews.${i}.text`, 'Review')}</div>`).join('') || '<p class="empty">No published reviews yet.</p>'}</div>
         ${addBtn('reviews', 'review', 'Add a review yourself')}</div>`;
   }
-  /* ---------- products (MUSKITA) ---------- */
+  /* ---------- aluminium profile systems (models) ---------- */
   function vProducts() {
     if (editProd != null && site.products[editProd]) return vProductEdit(editProd);
     const L = site.products;
     const catName = (id) => { const c = site.productCats.find((x) => x.id === id); return c ? c.name.en : id; };
-    return `<div class="card"><h2>Products (MUSKITA profile systems)</h2><p class="hint">Shown in the Products section and in the quotation form. Only enter specifications that come from MUSKITA’s catalogue. Hidden products (unticked) are not shown.</p>
+    return `<div class="card"><h2>Aluminium Profile Systems</h2><p class="hint">Shown in the Aluminium Profile Systems section and in the quotation form. Only enter specifications from the profile manufacturer’s (MUSKITA) catalogue. Hidden products (unticked) are not shown.</p>
       <div class="list">${L.map((x, i) => `<div class="sys-row${x.visible === false ? ' off' : ''}">
         <input type="checkbox" data-path="products.${i}.visible" ${x.visible !== false ? 'checked' : ''} aria-label="Show on website" style="width:18px;height:18px;accent-color:#0e1b2e">
         <img src="${esc(src(x.image))}" alt="">
@@ -212,12 +212,12 @@
         ${pair(`${p}.short`, 'Short description (card)', true)}
         ${pair(`${p}.desc`, 'Full description', true)}
         ${imgPick(`${p}.image`, 'Photo')}</div>
-      <div class="card"><h2>Technical specifications</h2><p class="hint">Copy only from MUSKITA’s catalogue. Rows without a value are hidden.</p>
+      <div class="card"><h2>Technical specifications</h2><p class="hint">Copy only from the manufacturer’s (MUSKITA) catalogue. Rows without a value are hidden.</p>
         <div class="list">${(x.specs || []).map((r, k) => `<div class="item">${itemHead(`${p}.specs`, k, x.specs.length, r.label?.en || 'Row ' + (k + 1))}${pair(`${p}.specs.${k}.label`, 'Label')}${txt(`${p}.specs.${k}.value`, 'Value', 'text', 'e.g. 200 kg')}</div>`).join('') || '<p class="empty">No specifications yet. The page says “Technical details on request”.</p>'}</div>
         ${addBtn(`${p}.specs`, 'pspec', 'Add row')}</div>
       <div class="card"><h2>Colours, applications and source</h2>${pair(`${p}.colours`, 'Colours & finishes', true)}
         <div class="list">${(x.applications || []).map((a, k) => `<div class="item">${itemHead(`${p}.applications`, k, x.applications.length, a.en || 'Application')}${pair(`${p}.applications.${k}`, 'Text')}</div>`).join('')}</div>${addBtn(`${p}.applications`, 'app', 'Add application')}
-        ${txt(`${p}.source`, 'Source link (MUSKITA product page)', 'url', 'https://')}</div>
+        ${txt(`${p}.source`, 'Source link (manufacturer product page)', 'url', 'https://')}</div>
       <div class="card"><h2>Delete</h2><div><button type="button" class="b b-danger" data-act="del-prod" data-i="${i}">Delete ${esc(x.model || 'product')}</button></div></div>`;
   }
   function vSystems() {

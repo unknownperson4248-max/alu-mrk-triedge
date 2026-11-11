@@ -29,8 +29,8 @@
       main_menu: 'Main menu', m_systems: 'Aluminium Systems', m_engineering: 'Engineering & Quality', m_about: 'About Us', m_contact: 'Contact', view_all: 'View all systems',
       call: 'Call', leadership: 'Leadership',
       ask_price: 'Ask the price', ask_wa_msg: 'Hello {c}, I would like the price for this:', wa_note: 'Opens WhatsApp with the message ready. You only need to press send.',
-      products: 'Products', m_products: 'MUSKITA Systems', prod_eyebrow: 'MUSKITA profile systems', prod_title: 'Profile systems we work with', prod_sub: 'We fabricate and install with MUSKITA aluminium profile systems, made in Cyprus.',
-      details: 'Details', add_quote: 'Add to quotation', added_quote: 'Added to your quotation', tech_data: 'Technical data', tech_source: 'Source: MUSKITA product information. Values vary by version and configuration; we confirm the exact figures for your project.', tech_on_request: 'Technical details on request.', colours: 'Colours & finishes', all_products: 'All products',
+      products: 'Aluminium Profile Systems', m_products: 'Aluminium Profile Systems', prod_eyebrow: 'Aluminium Profile Systems', prod_title: 'Our profile models', prod_sub: 'We fabricate and install these aluminium profile systems to measure. Profiles are supplied by MUSKITA.', prod_maker: 'Profile manufacturer: MUSKITA',
+      details: 'Details', add_quote: 'Add to quotation', added_quote: 'Added to your quotation', tech_data: 'Technical data', tech_source: 'Source: MUSKITA product information. Values vary by version and configuration; we confirm the exact figures for your project.', tech_on_request: 'Technical details on request.', colours: 'Colours & finishes', all_products: 'All models',
       qb_title: 'Request a quotation', qb_sub: 'Add every door, window or system you need. We review the measurements and send you a written quotation.',
       qb_step1: 'Products', qb_step2: 'Details', qb_step3: 'Review', qb_product: 'Product {n}', qb_edit_product: 'Edit product {n}',
       qb_cat: 'Product category', qb_model: 'Model', qb_model_other: 'Other / not sure', qb_choose: 'Choose…', qb_width: 'Width (mm)', qb_height: 'Height (mm)', qb_qty: 'Quantity',
@@ -91,8 +91,8 @@
       main_menu: 'Κύριο μενού', m_systems: 'Συστήματα αλουμινίου', m_engineering: 'Τεχνολογία & ποιότητα', m_about: 'Η εταιρεία', m_contact: 'Επικοινωνία', view_all: 'Όλα τα συστήματα',
       call: 'Κλήση', leadership: 'Διοίκηση',
       ask_price: 'Ρωτήστε τιμή', ask_wa_msg: 'Γεια σας, θα ήθελα την τιμή για αυτό:', wa_note: 'Ανοίγει το WhatsApp με έτοιμο μήνυμα. Πατήστε μόνο αποστολή.',
-      products: 'Προϊόντα', m_products: 'Συστήματα MUSKITA', prod_eyebrow: 'Συστήματα προφίλ MUSKITA', prod_title: 'Τα συστήματα προφίλ που χρησιμοποιούμε', prod_sub: 'Κατασκευάζουμε και τοποθετούμε με συστήματα προφίλ αλουμινίου MUSKITA, κατασκευασμένα στην Κύπρο.',
-      details: 'Λεπτομέρειες', add_quote: 'Προσθήκη στην προσφορά', added_quote: 'Προστέθηκε στην προσφορά σας', tech_data: 'Τεχνικά στοιχεία', tech_source: 'Πηγή: στοιχεία προϊόντος MUSKITA. Οι τιμές διαφέρουν ανά έκδοση και διαμόρφωση· επιβεβαιώνουμε τα ακριβή στοιχεία για το έργο σας.', tech_on_request: 'Τεχνικά στοιχεία κατόπιν αιτήματος.', colours: 'Χρώματα & φινιρίσματα', all_products: 'Όλα τα προϊόντα',
+      products: 'Συστήματα προφίλ αλουμινίου', m_products: 'Συστήματα προφίλ αλουμινίου', prod_eyebrow: 'Συστήματα προφίλ αλουμινίου', prod_title: 'Τα μοντέλα προφίλ μας', prod_sub: 'Κατασκευάζουμε και τοποθετούμε αυτά τα συστήματα προφίλ αλουμινίου στα μέτρα σας. Τα προφίλ προμηθεύει η MUSKITA.', prod_maker: 'Κατασκευαστής προφίλ: MUSKITA',
+      details: 'Λεπτομέρειες', add_quote: 'Προσθήκη στην προσφορά', added_quote: 'Προστέθηκε στην προσφορά σας', tech_data: 'Τεχνικά στοιχεία', tech_source: 'Πηγή: στοιχεία προϊόντος MUSKITA. Οι τιμές διαφέρουν ανά έκδοση και διαμόρφωση· επιβεβαιώνουμε τα ακριβή στοιχεία για το έργο σας.', tech_on_request: 'Τεχνικά στοιχεία κατόπιν αιτήματος.', colours: 'Χρώματα & φινιρίσματα', all_products: 'Όλα τα μοντέλα',
       qb_title: 'Ζητήστε προσφορά', qb_sub: 'Προσθέστε κάθε πόρτα, παράθυρο ή σύστημα που χρειάζεστε. Ελέγχουμε τις διαστάσεις και σας στέλνουμε γραπτή προσφορά.',
       qb_step1: 'Προϊόντα', qb_step2: 'Στοιχεία', qb_step3: 'Έλεγχος', qb_product: 'Προϊόν {n}', qb_edit_product: 'Επεξεργασία προϊόντος {n}',
       qb_cat: 'Κατηγορία προϊόντος', qb_model: 'Μοντέλο', qb_model_other: 'Άλλο / δεν είμαι σίγουρος', qb_choose: 'Επιλέξτε…', qb_width: 'Πλάτος (mm)', qb_height: 'Ύψος (mm)', qb_qty: 'Ποσότητα',
@@ -345,7 +345,7 @@
     </section>`;
   }
 
-  /* ---------- MUSKITA product catalogue ---------- */
+  /* ---------- aluminium profile systems (models) ---------- */
   const prods = () => (S.products || []).filter((x) => x && x.visible !== false && x.model);
   const byProd = (id) => prods().find((x) => x.id === id);
   const pcat = (id) => { const c = (S.productCats || []).find((x) => x.id === id); return c ? t(c.name) : ''; };
@@ -379,9 +379,10 @@
       </div></div>
       <section class="sp-hero"><div class="wrap sp-hero-grid">
         <div>
-          <p class="eyebrow">${esc(pcat(x.cat))} · MUSKITA</p>
+          <p class="eyebrow">${esc(pcat(x.cat))}</p>
           <h1>${esc(x.model)}</h1>
           <p class="lead">${esc(t(x.name))}</p>
+          <p class="sp-maker">${u('prod_maker')}</p>
           ${t(x.desc) ? `<p class="prod-desc">${esc(t(x.desc))}</p>` : ''}
           <div class="sp-cta">
             <button type="button" class="btn btn-navy" data-addq="${esc(x.id)}">${icon('file')}${u('add_quote')}</button>
@@ -652,7 +653,7 @@
     } else {
       h += `<div class="qb-picked"><img src="${esc(src(g.img))}" alt=""><div><small>${u('qb_cat')}</small><b>${u(g.k)}</b></div><button type="button" class="qb-link" data-qb="grp" data-g="">${u('qb_change')}</button></div>`;
       if (ms.length) {
-        h += `<div class="qb-sub-h">${u('qb_choose_model')}</div><div class="qb-models">${ms.map((x) => `<button type="button" class="qb-model${d.mp && d.model === x.model ? ' on' : ''}" aria-pressed="${!!(d.mp && d.model === x.model)}" data-qb="model" data-m="${esc(x.model)}"><span class="qb-model-im"><img src="${esc(src(x.image))}" alt="" loading="lazy"></span><span class="qb-model-t"><b>${esc(x.model)}</b><span>${esc(t(x.name))}</span><small>${esc(pcat(x.cat))} · MUSKITA</small></span><span class="qb-radio"></span></button>`).join('')}
+        h += `<div class="qb-sub-h">${u('qb_choose_model')}</div><div class="qb-models">${ms.map((x) => `<button type="button" class="qb-model${d.mp && d.model === x.model ? ' on' : ''}" aria-pressed="${!!(d.mp && d.model === x.model)}" data-qb="model" data-m="${esc(x.model)}"><span class="qb-model-im"><img src="${esc(src(x.image))}" alt="" loading="lazy"></span><span class="qb-model-t"><b>${esc(x.model)}</b><span>${esc(t(x.name))}</span><small>${esc(pcat(x.cat))}</small></span><span class="qb-radio"></span></button>`).join('')}
           <button type="button" class="qb-model${d.mp && !d.model ? ' on' : ''}" aria-pressed="${!!(d.mp && !d.model)}" data-qb="model" data-m=""><span class="qb-model-im qb-ns">?</span><span class="qb-model-t"><b>${u('qb_not_sure')}</b><span>${u('qb_not_sure_sub')}</span></span><span class="qb-radio"></span></button></div>`;
         if (g.id === 'sliding' && d.mp && !d.model) h += `<div class="qb-chips qb-stype">${['sliding-doors', 'sliding-windows'].map((c) => `<button type="button" class="qb-chip${d.cat === c ? ' on' : ''}" aria-pressed="${d.cat === c}" data-qb="stype" data-c="${c}">${esc(pcat(c))}</button>`).join('')}</div>`;
       }

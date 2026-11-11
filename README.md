@@ -21,7 +21,7 @@ hash are stored in Workers KV (binding `KV`).
   "On request" on the site.
 - **Why us & reviews**: the four "Why choose us" items, optional numbers and client reviews
   (sections are hidden when empty).
-- **Products (MUSKITA)**: profile models (MU 2000, MU 3200, MU 3000, MU 2075, MU 114) with category,
+- **Aluminium Profile Systems**: profile models (MU 2000, MU 3200, MU 3000, MU 114, MU 2075; profiles by MUSKITA) with category,
   description, colours, specifications and photo. Hidden products do not show on the site.
 - **Reviews**: reviews (rating, title, text, project, up to 3 photos) wait for approval; publishing copies
   the photos to the public site.

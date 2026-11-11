@@ -79,7 +79,7 @@ export const DEFAULT_SITE = {
     { icon: 'users', title: T('One team, start to finish', 'Μία ομάδα, από την αρχή ως το τέλος'), body: T('Survey, fabrication and installation by the same people.', 'Αυτοψία, κατασκευή και τοποθέτηση από τους ίδιους ανθρώπους.') },
   ],
   testimonials: [],
-  // Product catalogue (MUSKITA profile systems). Specs are copied from MUSKITA's own product pages; leave a value empty when it is not confirmed.
+  // Aluminium profile systems (models). MUSKITA is the profile manufacturer/supplier; specs are copied from its product pages. Leave a value empty when it is not confirmed.
   productCats: [
     { id: 'doors', name: T('Aluminium Doors', 'Πόρτες αλουμινίου') },
     { id: 'sliding-doors', name: T('Sliding Doors', 'Συρόμενες πόρτες') },
@@ -92,7 +92,7 @@ export const DEFAULT_SITE = {
   products: [
     {
       id: 'mu2000', model: 'MU 2000', visible: true, cat: 'doors', image: 'img/door-window.jpg',
-      name: T('Door system', 'Σύστημα πόρτας'),
+      name: T('Door System', 'Σύστημα πόρτας'),
       short: T('Cost-effective non-insulated hinged system with a linear design.', 'Οικονομικό μη θερμομονωτικό ανοιγόμενο σύστημα με γραμμικό σχεδιασμό.'),
       desc: T('MU 2000 is a cost-effective, non-insulated aluminium system with a clean linear design, used for doors and windows where thermal insulation is not required.', 'Το MU 2000 είναι ένα οικονομικό, μη θερμομονωτικό σύστημα αλουμινίου με καθαρό γραμμικό σχεδιασμό, για πόρτες και παράθυρα όπου δεν απαιτείται θερμομόνωση.'),
       colours: T('', ''), specs: [], applications: [T('Homes', 'Κατοικίες'), T('Apartments', 'Διαμερίσματα'), T('Shops & offices', 'Καταστήματα & γραφεία')],
@@ -100,7 +100,7 @@ export const DEFAULT_SITE = {
     },
     {
       id: 'mu3200', model: 'MU 3200', visible: true, cat: 'sliding-windows', image: 'img/sliding-window.jpg',
-      name: T('Sliding window system', 'Συρόμενο σύστημα παραθύρων'),
+      name: T('Sliding Window System', 'Συρόμενο σύστημα παραθύρων'),
       short: T('Slim, cost-effective sliding system for small to medium openings.', 'Λεπτό, οικονομικό συρόμενο σύστημα για μικρά έως μεσαία ανοίγματα.'),
       desc: T('MU 3200 (Light Duty) is a cost-effective sliding aluminium system with a slim design, suitable for windows and doors of small to medium dimensions. It is non-insulated.', 'Το MU 3200 (Light Duty) είναι ένα οικονομικό συρόμενο σύστημα αλουμινίου με λεπτό σχεδιασμό, κατάλληλο για παράθυρα και πόρτες μικρών έως μεσαίων διαστάσεων. Δεν είναι θερμομονωτικό.'),
       colours: T('', ''), specs: [], applications: [T('Windows', 'Παράθυρα'), T('Balcony doors', 'Μπαλκονόπορτες'), T('Apartments', 'Διαμερίσματα')],
@@ -108,7 +108,7 @@ export const DEFAULT_SITE = {
     },
     {
       id: 'mu3000', model: 'MU 3000', visible: true, cat: 'thermal', image: 'img/lift-slide.jpg',
-      name: T('Thermal sliding & lift-and-slide system', 'Θερμομονωτικό συρόμενο & ανυψούμενο σύστημα'),
+      name: T('Thermal Sliding System', 'Θερμομονωτικό συρόμενο σύστημα'),
       short: T('Long-standing sliding and lift-and-slide range, with or without thermal insulation.', 'Δοκιμασμένη σειρά συρόμενων και ανυψούμενων-συρόμενων συστημάτων, με ή χωρίς θερμομόνωση.'),
       desc: T('The MU 3000 series are reliable, cost-effective sliding and lift-and-slide aluminium systems, available with or without thermal insulation, in straight or curved profiles. Versions: MU3000 Thermal, MU3000 Thermal Lift & Slide, MU3000 Plus Thermal, MU3000 and MU3000 Plus. Single to quadruple sashes, flush thresholds and corner openings without posts are possible.', 'Η σειρά MU 3000 περιλαμβάνει αξιόπιστα, οικονομικά συρόμενα και ανυψούμενα-συρόμενα συστήματα αλουμινίου, με ή χωρίς θερμομόνωση, σε ευθύγραμμα ή καμπύλα προφίλ. Εκδόσεις: MU3000 Thermal, MU3000 Thermal Lift & Slide, MU3000 Plus Thermal, MU3000 και MU3000 Plus. Δυνατότητα από ένα έως τέσσερα φύλλα, χωνευτό κατωκάσι και γωνιακά ανοίγματα χωρίς κολόνα.'),
       colours: T('Powder-coated colours, anodised finishes and wood effects (ask us for the colour chart).', 'Ηλεκτροστατική βαφή, ανοδιώσεις και απομίμηση ξύλου (ζητήστε τον χρωματολόγιο).'),
@@ -128,8 +128,8 @@ export const DEFAULT_SITE = {
     },
     {
       id: 'mu2075', model: 'MU 2075', visible: true, cat: 'windows', image: 'img/house-windows.jpg',
-      name: T('Thermal hinged window & door system', 'Θερμομονωτικό ανοιγόμενο σύστημα παραθύρων & θυρών'),
-      short: T('MUSKITA’s top thermal hinged system: energy efficiency, sound insulation and security.', 'Το κορυφαίο θερμομονωτικό ανοιγόμενο σύστημα της MUSKITA: ενεργειακή απόδοση, ηχομόνωση και ασφάλεια.'),
+      name: T('Aluminium System', 'Σύστημα αλουμινίου'),
+      short: T('Thermal hinged system for windows and doors: energy efficiency, sound insulation and security.', 'Θερμομονωτικό ανοιγόμενο σύστημα για παράθυρα και πόρτες: ενεργειακή απόδοση, ηχομόνωση και ασφάλεια.'),
       desc: T('MU 2075 is a thermal hinged system for windows and doors, combining energy efficiency, sound insulation and security, in linear or curved designs. Versions: MU2075, MU2075 Curve, MU2075 Elite and MU2075 Elite Plus. Configurations include one to three sash windows, doors, tilt & turn, tilt & slide, pivot doors, double doors and shopfronts.', 'Το MU 2075 είναι θερμομονωτικό ανοιγόμενο σύστημα για παράθυρα και πόρτες, που συνδυάζει ενεργειακή απόδοση, ηχομόνωση και ασφάλεια, σε γραμμικό ή καμπύλο σχεδιασμό. Εκδόσεις: MU2075, MU2075 Curve, MU2075 Elite και MU2075 Elite Plus. Διαμορφώσεις: παράθυρα ενός έως τριών φύλλων, πόρτες, ανοιγοανακλινόμενα, tilt & slide, περιστρεφόμενες πόρτες, δίφυλλες πόρτες και βιτρίνες.'),
       colours: T('Over 80 finishes: anodised, powder-coated, wood effects and sublimation.', 'Πάνω από 80 φινιρίσματα: ανοδιώσεις, ηλεκτροστατική βαφή, απομίμηση ξύλου και sublimation.'),
       specs: [
@@ -148,8 +148,8 @@ export const DEFAULT_SITE = {
       source: 'https://muskita.tabsandspaces.agency/product/mu2075',
     },
     {
-      id: 'mu114', model: 'MU 114', visible: false, cat: 'thermal', image: 'img/sliding-door.jpg',
-      name: T('Thermal sliding system', 'Θερμομονωτικό συρόμενο σύστημα'),
+      id: 'mu114', model: 'MU 114', visible: true, cat: 'thermal', image: 'img/sliding-door.jpg',
+      name: T('Thermal Sliding System', 'Θερμομονωτικό συρόμενο σύστημα'),
       short: T('', ''), desc: T('', ''), colours: T('', ''), specs: [], applications: [],
       source: '',
     },
