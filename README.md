@@ -14,6 +14,8 @@ hash are stored in Workers KV (binding `KV`).
 - **Colours**: five theme colours or a preset. The preview updates as you edit; Save puts it live.
 - **Company & text**: name, phone, WhatsApp, email, address, opening hours, social links, headlines.
 - **Hero slides**: photos and captions for the slideshow at the top.
+- **Latest work**: add finished jobs (photos, title, category, month, place). New work goes first on the
+  website with a NEW label for 45 days; gallery categories drive the filter buttons.
 - **Systems**: show/hide, order, names, descriptions, photos, gallery, features, technical
   specifications, configurator type, applications and a PDF brochure. Empty spec values show
   "On request" on the site.

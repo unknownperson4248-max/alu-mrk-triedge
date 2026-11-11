@@ -9,9 +9,17 @@
 
   let site = null, media = [], builtin = [], presets = {}, defaults = null;
   let pvMode = innerWidth < 700 ? 'mob' : 'desk';
-  let dirty = false, tab = 'design', editIdx = null, quotes = null, quoteCount = 0, previewReady = false;
+  let dirty = false, tab = 'works', editIdx = null, editWork = null, quotes = null, quoteCount = 0, previewReady = false;
 
-  const TABS = [['design', 'Colours'], ['company', 'Company & text'], ['hero', 'Hero'], ['systems', 'Systems'], ['projects', 'Projects'], ['content', 'About points, numbers & reviews'], ['inbox', 'Quote requests'], ['media', 'Images & files'], ['account', 'Password']];
+  const TABS = [['works', 'Latest work'], ['inbox', 'Quote requests'], ['hero', 'Hero'], ['company', 'Company & About'], ['systems', 'Systems'], ['content', 'Key points, numbers & reviews'], ['design', 'Colours'], ['media', 'Images & files'], ['account', 'Password']];
+  // the ⋮ menu: every part of the website under its own heading
+  const MENU = [
+    ['Your work', [['works', 'Latest work', 'Add photos of finished jobs'], ['cats', 'Gallery categories', 'Sliding, Windows, Doors…']]],
+    ['Customers', [['inbox', 'Quote requests', 'Messages from the website form'], ['content', 'Key points, numbers & reviews', 'About points, counters, client reviews']]],
+    ['Website pages', [['hero', 'Hero', 'Top photo or video and headline'], ['company', 'Company & About', 'Phone, address, About text, owner profile'], ['systems', 'Systems', 'Your nine product categories']]],
+    ['Look & files', [['design', 'Colours', 'Website colours'], ['media', 'Images & files', 'All uploaded photos, videos and PDFs']]],
+    ['Account', [['account', 'Password', 'Change the admin password']]],
+  ];
   const ICONS = ['motor', 'remote', 'maximize', 'shield', 'thermo', 'droplet', 'lock', 'sun', 'wind', 'layers', 'ruler', 'sparkle', 'building', 'fold', 'arrowsV', 'arrowsH', 'grid', 'window', 'door', 'palette', 'key', 'home', 'check', 'diamond', 'globe', 'users', 'handshake'];
   const KINDS = [['slide', 'Sliding panels'], ['vertical', 'Vertical sliding'], ['fold', 'Folding'], ['swing', 'Doors (swing)'], ['window', 'Windows'], ['grid', 'Curtain wall / facade grid'], ['none', 'No configurator']];
   const COLORS = [['navy', 'Navy (dark sections)'], ['accent', 'Accent (buttons, highlights)'], ['bg', 'Background'], ['surface', 'Light panels'], ['ink', 'Text']];
@@ -22,7 +30,7 @@
     spec: () => ({ label: T(), value: '' }),
     app: () => T(),
     hero: () => ({ img: 'img/house-windows.jpg', caption: T() }),
-    project: () => ({ img: 'img/house-windows.jpg', caption: T() }),
+    cat: () => ({ id: 'c' + Date.now().toString(36), name: T() }),
     stat: () => ({ value: '', label: T() }),
     value: () => ({ icon: 'sparkle', title: T(), body: T() }),
     testimonial: () => ({ name: '', role: T(), quote: T() }),
@@ -130,11 +138,36 @@
         ${pair('text.heroSub', 'Short line under the headline', true)}
         ${pair('heroBadge', 'Gold badge on the photo (leave empty to hide)')}</div>`;
   }
-  function vProjects() {
-    const L = site.projects || (site.projects = []);
-    return `<div class="card"><h2>Recent projects</h2><p class="hint">The first four show on the home page. All of them open in the gallery.</p>
-      <div class="list">${L.map((x, i) => `<div class="item">${itemHead('projects', i, L.length, x.caption?.en || 'Project ' + (i + 1))}${imgPick(`projects.${i}.img`, 'Photo')}${pair(`projects.${i}.caption`, 'Caption')}</div>`).join('') || '<p class="empty">No projects. The section is hidden.</p>'}</div>
-      ${addBtn('projects', 'project', 'Add project')}</div>`;
+  const NEW_DAYS = 45;
+  const isNew = (w) => !!w.ts && Date.now() - w.ts < NEW_DAYS * 864e5;
+  const catLabel = (id) => { const c = (site.galleryCats || []).find((x) => x.id === id); return c ? c.name.en || c.name.el || id : 'No category'; };
+  function vWorks() {
+    if (editWork != null && site.works[editWork]) return vWorkEdit(editWork);
+    const L = site.works, C = site.galleryCats;
+    return `<div class="card"><div class="item-head"><h2 class="grow">Latest work</h2><button type="button" class="b b-pri" data-act="add-work">+ Add new work</button></div>
+        <p class="hint">Finished a job? Tap “Add new work”, choose the photos, add a title and category, then press Save. It goes first on the website with a NEW label for ${NEW_DAYS} days.</p>
+        <div class="list">${L.map((w, i) => `<div class="sys-row">
+          <span class="mono muted">${String(i + 1).padStart(2, '0')}</span>
+          ${w.images && w.images[0] ? `<img src="${esc(src(w.images[0]))}" alt="">` : '<span class="noimg" style="width:64px;height:48px">No photo</span>'}
+          <div style="min-width:0"><div class="nm">${esc(w.title?.en || w.title?.el || 'Untitled')} ${isNew(w) ? '<em class="tag" style="background:#c98a3c;color:#1a1206">new</em>' : ''}</div><div class="sub">${esc(catLabel(w.cat))}${w.date ? ' · ' + esc(w.date) : ''} · ${(w.images || []).length} photo${(w.images || []).length === 1 ? '' : 's'}</div></div>
+          <div class="acts"><button type="button" class="b b-sm b-icon" data-act="move" data-path="works" data-i="${i}" data-d="-1" ${i === 0 ? 'disabled' : ''} aria-label="Move up">↑</button><button type="button" class="b b-sm b-icon" data-act="move" data-path="works" data-i="${i}" data-d="1" ${i === L.length - 1 ? 'disabled' : ''} aria-label="Move down">↓</button><button type="button" class="b b-sm b-pri" data-act="edit-work" data-i="${i}">Edit</button></div>
+        </div>`).join('') || '<p class="empty">No work yet. The gallery is hidden until you add one.</p>'}</div></div>
+      <div class="card" id="cats-card"><h2>Gallery categories</h2><p class="hint">The filter buttons above the gallery. A category shows on the website once at least one work uses it.</p>
+        <div class="list">${C.map((c, i) => `<div class="item">${itemHead('galleryCats', i, C.length, c.name?.en || 'Category ' + (i + 1))}${pair(`galleryCats.${i}.name`, 'Name')}</div>`).join('') || '<p class="empty">No categories.</p>'}</div>
+        ${addBtn('galleryCats', 'cat', 'Add category')}</div>`;
+  }
+  function vWorkEdit(i) {
+    const w = site.works[i], p = `works.${i}`;
+    return `<div class="crumb"><button type="button" class="b b-sm" data-act="back-work">← All work</button><h2>${esc(w.title?.en || 'New work')}</h2></div>
+      <div class="card"><h2>Photos</h2><p class="hint">The first photo is the cover. Tap ★ on another photo to make it the cover.</p>
+        <div class="thumbs">${(w.images || []).map((g, k) => `<div class="thumb"><img src="${esc(src(g))}" alt=""><button type="button" class="x" data-act="del" data-path="${p}.images" data-i="${k}" data-now="1" aria-label="Remove">×</button>${k ? `<button type="button" class="first" data-act="work-cover" data-i="${k}" aria-label="Make cover">★</button>` : '<span class="cover">Cover</span>'}</div>`).join('') || '<span class="muted">No photos yet.</span>'}</div>
+        <div class="pick"><button type="button" class="b b-pri" data-act="work-photos">Upload photos</button><button type="button" class="b b-sm" data-act="pick-add" data-path="${p}.images">Choose from library</button></div></div>
+      <div class="card"><h2>Details</h2>
+        ${pair(`${p}.title`, 'Title, e.g. Sliding doors, villa in Limassol')}
+        <div class="row">${sel(`${p}.cat`, 'Category', [['', 'No category'], ...site.galleryCats.map((c) => [c.id, c.name.en || c.name.el || c.id])])}${fld('Month finished', `<input type="month" data-path="${p}.date" value="${esc(w.date || '')}">`)}</div>
+        ${pair(`${p}.place`, 'Place (optional), e.g. Limassol')}
+        <label class="check"><input type="checkbox" data-act="toggle-new" ${isNew(w) ? 'checked' : ''}>Show the NEW label (${NEW_DAYS} days from today)</label></div>
+      <div class="card"><h2>Delete</h2><div><button type="button" class="b b-danger" data-act="del-work" data-i="${i}">Delete this work</button></div></div>`;
   }
   function vSystems() {
     if (editIdx != null && site.systems[editIdx]) return vSystemEdit(editIdx);
@@ -231,7 +264,9 @@
     app.innerHTML = `<div class="top"><div class="top-in"><img src="/img/logo-light.png" alt=""><span class="title">Website admin</span><span class="state" id="state">All changes saved</span><span class="sp"></span>
         <a class="b b-sm hide-m" href="/" target="_blank" rel="noopener">View website</a>
         <button type="button" class="b b-sm prev-toggle" data-act="prev-toggle">Preview</button>
-        <button type="button" class="b b-acc" data-act="save" id="save">Save</button></div></div>
+        <button type="button" class="b b-acc" data-act="save" id="save">Save</button>
+        <button type="button" class="b b-icon menu-btn" data-act="menu" aria-expanded="false" aria-controls="amenu" aria-label="Menu">⋮</button></div>
+        <div class="amenu" id="amenu" hidden></div></div>
       <nav class="tabs" id="tabs" aria-label="Sections"></nav>
       <div class="main" id="main"><div class="editor" id="editor"></div>
         <aside class="preview" id="preview" aria-label="Preview"><div class="preview-bar"><span>Live preview</span><span class="sp"></span><div class="pv-mode" role="group" aria-label="Preview size"><button type="button" data-act="pv-mode" data-m="desk" aria-pressed="${pvMode === 'desk'}">Desktop</button><button type="button" data-act="pv-mode" data-m="mob" aria-pressed="${pvMode === 'mob'}">Mobile</button></div><button type="button" class="b b-sm prev-toggle" data-act="prev-toggle">Close</button></div><div class="pv-wrap" id="pv-wrap"><iframe id="pv" src="/?preview=1" title="Website preview"></iframe></div></aside></div>`;
@@ -251,11 +286,38 @@
     f.style.transform = 'scale(' + k + ')';
   }
   addEventListener('resize', () => requestAnimationFrame(fitPreview));
+  function renderMenu() {
+    const m = $('#amenu');
+    if (!m) return;
+    m.innerHTML = MENU.map(([head, items]) => `<div class="amenu-g"><p>${esc(head)}</p>${items.map(([k, l, d]) => `<button type="button" data-act="goto" data-tab="${k}" class="${(k === 'cats' ? 'works' : k) === tab && k !== 'cats' ? 'on' : ''}"><b>${esc(l)}${k === 'inbox' && quoteCount ? ` <span class="badge">${quoteCount}</span>` : ''}</b><small>${esc(d)}</small></button>`).join('')}</div>`).join('')
+      + `<div class="amenu-g"><p>More</p><a href="/" target="_blank" rel="noopener"><b>View website</b><small>Opens in a new tab</small></a><button type="button" data-act="logout"><b>Sign out</b><small></small></button></div>`;
+  }
+  function setMenu(open) {
+    const m = $('#amenu'), b = $('.menu-btn');
+    if (!m) return;
+    if (open) renderMenu();
+    m.hidden = !open;
+    b.setAttribute('aria-expanded', String(open));
+  }
+  function goTab(k) {
+    const toCats = k === 'cats';
+    tab = toCats ? 'works' : k;
+    editIdx = null;
+    editWork = null;
+    renderTabs();
+    renderEditor();
+    scrollTo(0, 0);
+    if (toCats) requestAnimationFrame(() => { const c = $('#cats-card'); if (c) c.scrollIntoView({ block: 'start' }); });
+    if (tab === 'inbox') loadQuotes();
+    previewGo(tab === 'systems' ? 'systems' : tab === 'works' ? 'projects' : tab === 'content' || tab === 'company' ? 'about' : 'top');
+    const on = $('#tabs .on');
+    if (on && on.scrollIntoView) on.scrollIntoView({ block: 'nearest', inline: 'center' });
+  }
   function renderTabs() {
     $('#tabs').innerHTML = TABS.map(([k, l]) => `<button type="button" data-act="tab" data-tab="${k}" class="${k === tab ? 'on' : ''}">${esc(l)}${k === 'inbox' && quoteCount ? `<span class="badge">${quoteCount}</span>` : ''}</button>`).join('');
   }
   function renderEditor() {
-    const views = { design: vDesign, company: vCompany, hero: vHero, systems: vSystems, projects: vProjects, content: vContent, inbox: vInbox, media: vMedia, account: vAccount };
+    const views = { design: vDesign, company: vCompany, hero: vHero, systems: vSystems, works: vWorks, content: vContent, inbox: vInbox, media: vMedia, account: vAccount };
     const y = scrollY;
     $('#editor').innerHTML = views[tab]();
     $('#main').classList.toggle('no-prev', tab === 'inbox' || tab === 'media' || tab === 'account');
@@ -385,18 +447,46 @@
 
   document.addEventListener('click', async (e) => {
     const b = e.target.closest('[data-act]');
+    if ((!b || b.dataset.act !== 'menu') && $('#amenu') && !$('#amenu').hidden && !e.target.closest('#amenu')) setMenu(false);
     if (!b || !site) return;
     const act = b.dataset.act, p = b.dataset.path;
     switch (act) {
       case 'tab':
-        tab = b.dataset.tab;
-        editIdx = null;
-        renderTabs();
-        renderEditor();
-        scrollTo(0, 0);
-        if (tab === 'inbox') loadQuotes();
-        previewGo(tab === 'systems' ? 'systems' : tab === 'content' ? 'why' : 'top');
+      case 'goto':
+        setMenu(false);
+        goTab(b.dataset.tab);
         break;
+      case 'menu': setMenu($('#amenu').hidden); break;
+      case 'add-work': {
+        const files = await chooseFiles('image/*', true);
+        if (!files.length) break;
+        const up = await uploadFiles(files);
+        if (!up.length) break;
+        const d = new Date();
+        site.works.unshift({ id: 'w' + Date.now().toString(36), title: T(), cat: '', place: T(), date: d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0'), images: up, ts: Date.now() });
+        editWork = 0;
+        markDirty(); renderEditor(); scrollTo(0, 0);
+        toast('Photos added. Add a title and category, then press Save.', 'ok');
+        break;
+      }
+      case 'edit-work': editWork = +b.dataset.i; renderEditor(); scrollTo(0, 0); break;
+      case 'back-work': editWork = null; renderEditor(); break;
+      case 'work-photos': {
+        const files = await chooseFiles('image/*', true);
+        const up = await uploadFiles(files);
+        if (up.length && site.works[editWork]) { (site.works[editWork].images || (site.works[editWork].images = [])).push(...up); markDirty(); renderEditor(); }
+        break;
+      }
+      case 'work-cover': {
+        const im = site.works[editWork] && site.works[editWork].images, k = +b.dataset.i;
+        if (im && im[k]) { im.unshift(im.splice(k, 1)[0]); markDirty(); renderEditor(); }
+        break;
+      }
+      case 'toggle-new': if (site.works[editWork]) { site.works[editWork].ts = b.checked ? Date.now() : 0; markDirty(); } break;
+      case 'del-work': {
+        if (!b.dataset.armed) { b.dataset.armed = '1'; b.textContent = 'Click again to delete'; break; }
+        site.works.splice(+b.dataset.i, 1); editWork = null; markDirty(); renderEditor(); toast('Work deleted. Press Save to apply.'); break;
+      }
       case 'save': save(); break;
       case 'prev-toggle': $('#preview').classList.toggle('show'); requestAnimationFrame(fitPreview); break;
       case 'pv-mode': pvMode = b.dataset.m; fitPreview(); break;
@@ -496,7 +586,8 @@
     if (!site.testimonials) site.testimonials = [];
     if (!site.values) site.values = [];
     if (!site.founder) site.founder = clone(defaults.founder);
-    if (!site.projects) site.projects = clone(defaults.projects || []);
+    if (!Array.isArray(site.works)) site.works = clone(defaults.works || []);
+    if (!Array.isArray(site.galleryCats)) site.galleryCats = clone(defaults.galleryCats || []);
     if (!site.heroBadge) site.heroBadge = { en: '', el: '' };
     shell();
     loadQuotes();

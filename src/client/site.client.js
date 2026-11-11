@@ -9,7 +9,10 @@
 
   let lang = '';
   try { lang = localStorage.getItem('lang') || ''; } catch (e) {}
-  if (lang !== 'en' && lang !== 'el') lang = (navigator.language || '').toLowerCase().startsWith('el') ? 'el' : 'en';
+  if (lang !== 'en' && lang !== 'el') {
+    const prefs = (navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || 'en']).map((x) => String(x).toLowerCase().slice(0, 2));
+    lang = prefs.find((x) => x === 'el' || x === 'en') || 'en';
+  }
 
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -24,7 +27,10 @@
     en: {
       systems: 'Systems', engineering: 'Engineering', about: 'About', contact: 'Contact', quote: 'Request a quote', menu: 'Menu', search: 'Search', close: 'Close',
       main_menu: 'Main menu', m_systems: 'Aluminium Systems', m_engineering: 'Engineering & Quality', m_about: 'About Us', m_contact: 'Contact', view_all: 'View all systems',
-      call: 'Call', leadership: 'Leadership', fab_chat: 'Chat with us on WhatsApp', home: 'Home', projects: 'Projects', m_projects: 'Our Projects', get_quote: 'Get a quote',
+      call: 'Call', leadership: 'Leadership',
+      help: 'Need help?', help_quote: 'Request a quote', help_email: 'Email us', help_call: 'Call us', close_help: 'Close',
+      gal_eyebrow: 'Latest work', gal_title: 'Recently completed projects', gal_view: 'View full gallery', gallery: 'Gallery', all: 'All', new_label: 'New',
+      gal_page_title: 'Our work', gal_page_sub: 'New projects are added here as we complete them.', back_home: 'Back to website', no_work: 'No projects in this category yet.', photos: 'photos', home: 'Home', projects: 'Projects', m_projects: 'Gallery', get_quote: 'Get a quote',
       proj_eyebrow: 'Our projects', proj_title: 'Iconic projects. Lasting impact.', proj_body: 'A selection of our aluminium and glass work for homes, offices and shops.', view_projects: 'View all projects',
       band_title: 'Let’s build something great together', band_body: 'Get a free consultation and quote today.', contact_us: 'Contact us', quick_links: 'Quick links', follow: 'Follow us', contact_info: 'Contact info',
       search_ph: 'Search, e.g. sliding doors', no_results: 'No results for “{q}”.', popular: 'Popular searches', chips: ['Sliding', 'Windows', 'Doors', 'Folding', 'Glass'],
@@ -54,7 +60,10 @@
     el: {
       systems: 'Συστήματα', engineering: 'Τεχνολογία', about: 'Εταιρεία', contact: 'Επικοινωνία', quote: 'Ζητήστε προσφορά', menu: 'Μενού', search: 'Αναζήτηση', close: 'Κλείσιμο',
       main_menu: 'Κύριο μενού', m_systems: 'Συστήματα αλουμινίου', m_engineering: 'Τεχνολογία & ποιότητα', m_about: 'Η εταιρεία', m_contact: 'Επικοινωνία', view_all: 'Όλα τα συστήματα',
-      call: 'Κλήση', leadership: 'Διοίκηση', fab_chat: 'Μιλήστε μαζί μας στο WhatsApp', home: 'Αρχική', projects: 'Έργα', m_projects: 'Τα έργα μας', get_quote: 'Ζητήστε προσφορά',
+      call: 'Κλήση', leadership: 'Διοίκηση',
+      help: 'Χρειάζεστε βοήθεια;', help_quote: 'Ζητήστε προσφορά', help_email: 'Στείλτε email', help_call: 'Καλέστε μας', close_help: 'Κλείσιμο',
+      gal_eyebrow: 'Πρόσφατα έργα', gal_title: 'Έργα που ολοκληρώσαμε πρόσφατα', gal_view: 'Δείτε όλα τα έργα', gallery: 'Έργα', all: 'Όλα', new_label: 'Νέο',
+      gal_page_title: 'Τα έργα μας', gal_page_sub: 'Εδώ προσθέτουμε τα νέα έργα μόλις ολοκληρωθούν.', back_home: 'Πίσω στην ιστοσελίδα', no_work: 'Δεν υπάρχουν ακόμη έργα σε αυτή την κατηγορία.', photos: 'φωτογραφίες', home: 'Αρχική', projects: 'Έργα', m_projects: 'Έργα', get_quote: 'Ζητήστε προσφορά',
       proj_eyebrow: 'Τα έργα μας', proj_title: 'Εμβληματικά έργα. Διαρκές αποτύπωμα.', proj_body: 'Επιλογή από τις κατασκευές μας σε αλουμίνιο και γυαλί για σπίτια, γραφεία και καταστήματα.', view_projects: 'Όλα τα έργα',
       band_title: 'Ας φτιάξουμε κάτι σπουδαίο μαζί', band_body: 'Ζητήστε δωρεάν συμβουλή και προσφορά σήμερα.', contact_us: 'Επικοινωνία', quick_links: 'Σύνδεσμοι', follow: 'Ακολουθήστε μας', contact_info: 'Στοιχεία επικοινωνίας',
       search_ph: 'Αναζήτηση, π.χ. συρόμενες πόρτες', no_results: 'Δεν βρέθηκαν αποτελέσματα για «{q}».', popular: 'Δημοφιλείς αναζητήσεις', chips: ['Συρόμενα', 'Παράθυρα', 'Πόρτες', 'Πτυσσόμενα', 'Γυαλί'],
@@ -122,6 +131,8 @@
     right: '<path d="M9 6l6 6-6 6"/>',
     search: '<circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/>',
     play: '<path d="M9 6.5v11l9-5.5z"/>',
+    headset: '<path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="2.5" y="13" width="4" height="6.5" rx="1.6"/><rect x="17.5" y="13" width="4" height="6.5" rx="1.6"/><path d="M19.5 19.5a4 4 0 0 1-4 3H13"/>',
+    images: '<rect x="3" y="6" width="15" height="13" rx="1.5"/><path d="M7 3h12a2 2 0 0 1 2 2v10M3 16l4.5-4.5 3.5 3.5 2.5-2.5 4.5 4.5"/>',
     file: '<path d="M14 3H6v18h12V7z"/><path d="M14 3v4h4M9 12h6M9 16h6"/>',
     diamond: '<path d="M6 3h12l4 6-10 12L2 9z"/><path d="M2 9h20M9 3l3 18 3-18"/>',
     globe: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>',
@@ -277,7 +288,6 @@
           <p class="eyebrow">${u('about_eyebrow')} ${esc(S.company.name)}</p>
           <h2>${esc(t(S.text.introTitle))}</h2>
           <p>${esc(t(S.text.introBody))}</p>
-          <a class="btn btn-accent" href="#quote">${u('survey')}${icon('arrow')}</a>
         </div>
         ${v.length ? `<ul class="about-feats rv-kids">${v.slice(0, 4).map((x, i) => `<li style="--i:${i}">${icon(x.icon)}<span>${esc(t(x.title))}</span></li>`).join('')}</ul>` : ''}
       </div>
@@ -285,13 +295,53 @@
     </section>`;
   }
 
+  /* ---------- latest work + gallery ---------- */
+  const NEW_DAYS = 45;
+  const gf = { home: 'all', page: 'all' };
+  const works = () => (S.works || []).filter((w) => w && (w.images || []).length);
+  const catName = (id) => { const c = (S.galleryCats || []).find((x) => x.id === id); return c ? t(c.name) : ''; };
+  const isNew = (w) => !!w.ts && Date.now() - w.ts < NEW_DAYS * 864e5;
+  const workDate = (w) => {
+    const m = /^(\d{4})-(\d{2})/.exec(w.date || '');
+    return m ? new Date(+m[1], +m[2] - 1, 1).toLocaleDateString(lang === 'el' ? 'el-GR' : 'en-GB', { month: 'short', year: 'numeric' }) : '';
+  };
+  function workCard(w, i) {
+    const meta = [catName(w.cat), workDate(w)].filter(Boolean).join(' · ');
+    return `<button type="button" class="work" style="--i:${Math.min(i, 8)}" data-work="${esc(w.id)}" aria-label="${esc(t(w.title))}">
+      <img src="${esc(src(w.images[0]))}" alt="" loading="lazy">
+      ${isNew(w) ? `<span class="work-new">${u('new_label')}</span>` : ''}
+      ${w.images.length > 1 ? `<span class="work-n">${icon('images')}${w.images.length}</span>` : ''}
+      <span class="work-b">${meta ? `<small>${esc(meta)}</small>` : ''}<b>${esc(t(w.title))}</b>${t(w.place) ? `<em>${esc(t(w.place))}</em>` : ''}</span>
+    </button>`;
+  }
+  function chips(where) {
+    const used = new Set(works().map((w) => w.cat));
+    const cats = (S.galleryCats || []).filter((c) => used.has(c.id) && t(c.name));
+    if (cats.length < 2) return '';
+    return `<div class="chips" role="group" aria-label="${u('gallery')}">${[{ id: 'all', name: u('all') }, ...cats.map((c) => ({ id: c.id, name: t(c.name) }))].map((c) => `<button type="button" data-gf="${where}" data-c="${esc(c.id)}" aria-pressed="${gf[where] === c.id}">${esc(c.name)}</button>`).join('')}</div>`;
+  }
+  function workList(where) {
+    const list = works().filter((w) => gf[where] === 'all' || w.cat === gf[where]);
+    const shown = where === 'home' ? list.slice(0, 6) : list;
+    return shown.length ? shown.map(workCard).join('') : `<p class="work-empty">${u('no_work')}</p>`;
+  }
   function projects() {
-    const list = (S.projects || []).filter((p) => p.img);
-    if (!list.length) return '';
+    if (!works().length) return '';
     return `<section class="projects" id="projects">
-      <div class="wrap proj-head rv"><div><p class="eyebrow">${u('proj_eyebrow')}</p><h2>${u('proj_title')}</h2></div><button type="button" class="link-sm" data-proj="0">${u('view_projects')}${icon('arrow')}</button></div>
-      <div class="proj-strip rv-kids">${list.slice(0, 6).map((p, i) => `<button type="button" class="proj" style="--i:${i}" data-proj="${i}" aria-label="${esc(t(p.caption) || u('proj_title'))}"><img src="${esc(src(p.img))}" alt="" loading="lazy">${t(p.caption) ? `<span>${esc(t(p.caption))}</span>` : ''}</button>`).join('')}</div>
+      <div class="wrap proj-head rv"><div><p class="eyebrow">${u('gal_eyebrow')}</p><h2>${u('gal_title')}</h2></div><a class="link-sm" href="#gallery">${u('gal_view')}${icon('arrow')}</a></div>
+      <div class="wrap">${chips('home')}</div>
+      <div class="work-grid home rv-kids" id="work-home">${workList('home')}</div>
     </section>`;
+  }
+  function galleryPage() {
+    return `<div class="sp-bar"><div class="wrap">
+        <a class="sp-back" href="#projects">${icon('back')}${u('back_home')}</a>
+        <span class="sp-title">${u('gallery')}</span>
+        <a class="btn btn-accent" href="#quote">${u('quote')}</a>
+      </div></div>
+      <section class="gal-head"><div class="wrap"><p class="eyebrow">${u('gallery')}</p><h1>${u('gal_page_title')}</h1><p>${u('gal_page_sub')}</p>${chips('page')}</div></section>
+      <section class="gal-body"><div class="wrap"><div class="work-grid" id="work-page">${workList('page')}</div></div></section>
+      ${footerMini()}`;
   }
 
   function band() {
@@ -392,7 +442,31 @@
       </ul></div>
       ${soc ? `<div><h4>${u('follow')}</h4>${soc}</div>` : ''}
     </div><div class="wrap foot-bottom"><span>© ${new Date().getFullYear()} ${esc(c.name)}. ${u('rights')}</span><span>${esc(t(S.text.tagline))}</span></div></footer>
-    ${waLink() ? `<a class="fab" href="${esc(waLink(u('wa_hello', { c: c.name })))}" target="_blank" rel="noopener" aria-label="${esc(u('fab_chat'))}">${WA_SVG}<span class="fab-t" aria-hidden="true">${u('fab_chat')}</span></a>` : ''}`;
+    ${helpButton()}`;
+  }
+
+  // floating "Need help?" button: opens a small menu with quote, WhatsApp, email and call
+  function helpButton() {
+    const c = S.company;
+    const items = [
+      `<a class="help-item" href="#quote"><span>${u('help_quote')}</span><i class="hi">${icon('file')}</i></a>`,
+      waLink() ? `<a class="help-item" href="${esc(waLink(u('wa_hello', { c: c.name })))}" target="_blank" rel="noopener"><span>WhatsApp</span><i class="hi wa">${waIcon}</i></a>` : '',
+      c.email ? `<a class="help-item" href="mailto:${esc(c.email)}"><span>${u('help_email')}</span><i class="hi">${icon('mail')}</i></a>` : '',
+      c.phone ? `<a class="help-item" href="${telLink()}"><span>${u('help_call')}</span><i class="hi">${icon('phone')}</i></a>` : '',
+    ].filter(Boolean);
+    return `<div class="help" id="help">
+      <div class="help-menu" id="help-menu">${items.map((x, i) => x.replace('class="help-item"', `class="help-item" style="--i:${items.length - 1 - i}" tabindex="-1"`)).join('')}</div>
+      <button type="button" class="help-btn" aria-expanded="false" aria-controls="help-menu" aria-label="${esc(u('help'))}"><span class="help-t" aria-hidden="true">${u('help')}</span><span class="help-ic a">${icon('headset')}</span><span class="help-ic b" aria-hidden="true">&times;</span></button>
+    </div>`;
+  }
+  function setHelp(open) {
+    const h = $('#help');
+    if (!h) return;
+    h.classList.toggle('open', open);
+    h.classList.remove('say');
+    h.querySelector('.help-btn').setAttribute('aria-expanded', String(open));
+    h.querySelector('.help-btn').setAttribute('aria-label', open ? u('close_help') : u('help'));
+    $$('.help-item', h).forEach((a) => a.setAttribute('tabindex', open ? '0' : '-1'));
   }
 
   /* ---------- system detail page ---------- */
@@ -757,7 +831,7 @@
     if (past && !fabSaid && !reduce && !PREVIEW) {
       fabSaid = true;
       try { if (sessionStorage.getItem('fab')) return; sessionStorage.setItem('fab', '1'); } catch (e) {}
-      setTimeout(() => { const f = $('.fab'); if (f) { f.classList.add('say'); setTimeout(() => f.classList.remove('say'), 5500); } }, 1400);
+      setTimeout(() => { const f = $('#help'); if (f && !f.classList.contains('open')) { f.classList.add('say'); setTimeout(() => f.classList.remove('say'), 6000); } }, 1200);
     }
   }
   let fabSaid = false;
@@ -779,6 +853,7 @@
     items.push(
       page('#engineering', 'layers', UI[lang].m_engineering, u('eng_title'), 'engineering quality thermal break profile glazing seals drainage insulation τεχνολογια ποιοτητα θερμοδιακοπη μονωση'),
       page('#about', 'home', UI[lang].m_about, t(S.text.introTitle), 'about company team founder owner εταιρεια ομαδα ιδρυτης'),
+      page('#gallery', 'images', u('gal_page_title'), u('gal_page_sub'), 'gallery projects photos work latest portfolio εργα φωτογραφιες γκαλερι'),
       page('#quote', 'file', u('quote'), u('quote_body'), 'contact quote price cost phone whatsapp email survey measure επικοινωνια προσφορα τιμη τηλεφωνο αυτοψια')
     );
     return items;
@@ -839,12 +914,42 @@
     sp.classList.remove('open');
     lock(false, 'sp');
     document.title = `${S.company.name} · ${t(S.text.tagline)}`;
-    setTimeout(() => { if (!current) { sp.hidden = true; sp.innerHTML = ''; } }, reduce ? 0 : 720);
+    setTimeout(() => { if (!current && !galOpen) { sp.hidden = true; sp.innerHTML = ''; } }, reduce ? 0 : 720);
+  }
+  let galOpen = false;
+  function openGallery(instant) {
+    current = null;
+    galOpen = true;
+    const sp = $('#sp');
+    sp.innerHTML = galleryPage();
+    sp.setAttribute('role', 'dialog');
+    sp.setAttribute('aria-modal', 'true');
+    sp.setAttribute('aria-label', u('gallery'));
+    sp.hidden = false;
+    sp.scrollTop = 0;
+    if (instant || reduce) sp.classList.add('open');
+    else requestAnimationFrame(() => requestAnimationFrame(() => sp.classList.add('open')));
+    lock(true, 'sp');
+    document.title = `${u('gal_page_title')} · ${S.company.name}`;
+    sp.setAttribute('tabindex', '-1');
+    setTimeout(() => sp.focus({ preventScroll: true }), 50);
+  }
+  function closeGallery() {
+    if (!galOpen) return;
+    galOpen = false;
+    const sp = $('#sp');
+    sp.classList.remove('open');
+    lock(false, 'sp');
+    document.title = `${S.company.name} · ${t(S.text.tagline)}`;
+    setTimeout(() => { if (!current && !galOpen) { sp.hidden = true; sp.innerHTML = ''; } }, reduce ? 0 : 720);
   }
   function route(first) {
     const h = decodeURIComponent(location.hash.slice(1));
     if (panel) setPanel(null);
-    if (h && bySlug(h)) { openSystem(h, first); return; }
+    setHelp(false);
+    if (h === 'gallery' && works().length) { openGallery(first); return; }
+    if (h && bySlug(h)) { galOpen = false; openSystem(h, first); return; }
+    if (galOpen) closeGallery();
     if (current) closeSystem();
     if (h && !first) { const el = document.getElementById(h); if (el) setTimeout(() => el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }), 20); }
   }
@@ -947,12 +1052,15 @@
     scrollTo(0, y);
     if (keep) setPanel(keep);
     if (current) { const slug = current.slug, top = $('#sp').scrollTop; openSystem(slug, true); $('#sp').scrollTop = top; }
+    else if (galOpen) { const top = $('#sp').scrollTop; openGallery(true); $('#sp').scrollTop = top; }
   }
 
   /* ---------- events (delegated, bound once) ---------- */
   document.addEventListener('click', (e) => {
     const lb = e.target.closest('[data-lang]');
     if (lb) { setLang(lb.dataset.lang); return; }
+    if (e.target.closest('.help-btn')) { setHelp(!$('#help').classList.contains('open')); return; }
+    if ($('#help') && $('#help').classList.contains('open')) setHelp(false);
     const ls = e.target.closest('.lsel-btn');
     $$('.lsel-menu').forEach((m) => { if (!ls || !ls.parentElement.contains(m)) { m.hidden = true; m.previousElementSibling.setAttribute('aria-expanded', 'false'); } });
     if (ls) { const m = ls.nextElementSibling; m.hidden = !m.hidden; ls.setAttribute('aria-expanded', String(!m.hidden)); return; }
@@ -971,8 +1079,17 @@
     const rb = e.target.closest('[data-rail]');
     if (rb) { const r = $('#rail'); const card = r.querySelector('.card'); r.scrollBy({ left: +rb.dataset.rail * ((card ? card.offsetWidth : 300) + 16), behavior: reduce ? 'auto' : 'smooth' }); return; }
     if (e.target.closest('[data-video]')) { openVideo(); return; }
-    const pj = e.target.closest('[data-proj]');
-    if (pj) { const L = (S.projects || []).filter((x) => x.img); openLB(L.map((x) => x.img), +pj.dataset.proj, L.map((x) => t(x.caption))); return; }
+    const wk = e.target.closest('[data-work]');
+    if (wk) { const w = works().find((x) => x.id === wk.dataset.work); if (w) openLB(w.images, 0, w.images.map(() => t(w.title))); return; }
+    const gchip = e.target.closest('[data-gf]');
+    if (gchip) {
+      const where = gchip.dataset.gf;
+      gf[where] = gchip.dataset.c;
+      $$(`[data-gf="${where}"]`).forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.c === gf[where])));
+      const grid = $(where === 'home' ? '#work-home' : '#work-page');
+      if (grid) { grid.innerHTML = workList(where); grid.classList.remove('in', 'now'); void grid.offsetWidth; grid.classList.add('in'); if (where === 'home') grid.scrollLeft = 0; }
+      return;
+    }
     const td = e.target.closest('[data-tst]');
     if (td) { tstShow(+td.dataset.tst); tstStart(); tstShow(+td.dataset.tst); return; }
 
@@ -1022,6 +1139,8 @@
     }
     if (e.key === 'Escape') {
       if (panel) setPanel(null);
+      else if ($('#help') && $('#help').classList.contains('open')) setHelp(false);
+      else if (galOpen) location.hash = 'projects';
       else if (current) location.hash = 'systems';
     }
   });
@@ -1065,6 +1184,7 @@
       scrollTo(0, y);
       if (slug && bySlug(slug)) openSystem(slug, true);
       else if (slug) closeSystem();
+      else if (galOpen) openGallery(true);
     });
     if (parent !== window) parent.postMessage({ type: 'preview-ready' }, location.origin);
   }

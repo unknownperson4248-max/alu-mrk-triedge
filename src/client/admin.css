@@ -143,3 +143,17 @@ a{color:inherit}
 .main.no-prev .preview{display:none}
 .vprev{width:100%;max-width:420px;aspect-ratio:16/9;object-fit:cover;border-radius:8px;border:1px solid var(--line);background:#000}
 .noimg{display:grid;place-items:center;width:96px;height:68px;border:1px dashed var(--line);border-radius:6px;font-size:11px;color:var(--muted)}
+.top{position:sticky}
+.menu-btn{font-size:20px;line-height:1;min-width:38px;font-weight:700}
+.amenu{position:absolute;right:max(12px,env(safe-area-inset-right,0px));top:calc(100% + 6px);z-index:40;width:min(340px,calc(100vw - 24px));max-height:calc(100vh - 90px);overflow-y:auto;background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:14px;box-shadow:0 24px 60px rgba(10,14,20,.3);padding:8px}
+.amenu-g{padding:6px 0}
+.amenu-g+.amenu-g{border-top:1px solid var(--line)}
+.amenu-g p{margin:6px 10px 4px;font:600 11px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.amenu button,.amenu a{display:grid;gap:1px;width:100%;text-align:left;padding:9px 10px;border:0;border-radius:8px;background:none;cursor:pointer;text-decoration:none;color:inherit}
+.amenu button:hover,.amenu a:hover{background:var(--bg)}
+.amenu button.on{background:#f3ead9}
+.amenu b{font-weight:600;font-size:14px}
+.amenu small{color:var(--muted);font-size:12px}
+.thumb .first{position:absolute;left:4px;top:4px;width:22px;height:22px;border-radius:50%;border:0;background:rgba(0,0,0,.65);color:#fff;cursor:pointer;font-size:12px;line-height:1}
+.thumb .cover{position:absolute;left:4px;top:4px;font:600 10px var(--mono);background:var(--acc);color:#1a1206;padding:2px 6px;border-radius:4px}
+.check input[data-act]{width:18px;height:18px;accent-color:var(--pri)}
