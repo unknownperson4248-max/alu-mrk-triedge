@@ -695,15 +695,10 @@
       const cc = c.cc || '+357';
       return `${qbSteps()}<div class="qb-sec"><div class="qb-sec-h"><h3>${u('qb_sec_contact')}</h3></div>
           <div class="qb-g2">${fld('name', 'qb_fullname', 'text', 'name', 1)}${fld('email', 'qb_email', 'email', 'email', 1, 'inputmode="email"')}</div>
-          <div class="f"><label for="qc-pnum">${u('qb_phone')} *</label><div class="qb-phone"><select id="qc-cc" data-qc="cc" aria-label="${esc(u('qb_cc'))}">${CC.map(([v, n]) => `<option value="${v}" ${v === cc ? 'selected' : ''}>${v} ${n}</option>`).join('')}</select><input id="qc-pnum" data-qc="pnum" type="tel" inputmode="tel" autocomplete="tel" maxlength="30" placeholder="99 000000" value="${esc(c.pnum || '')}"></div></div>
+          <div class="qb-g2"><div class="f"><label for="qc-pnum">${u('qb_phone')} *</label><div class="qb-phone"><select id="qc-cc" data-qc="cc" aria-label="${esc(u('qb_cc'))}">${CC.map(([v, n]) => `<option value="${v}" ${v === cc ? 'selected' : ''}>${v} ${n}</option>`).join('')}</select><input id="qc-pnum" data-qc="pnum" type="tel" inputmode="tel" autocomplete="tel" maxlength="30" placeholder="99 000000" value="${esc(c.pnum || '')}"></div></div>
+          ${fld('location', 'qb_location', 'text', 'address-level2', 0)}</div>
         </div>
-        <div class="qb-sec"><div class="qb-sec-h"><h3>${u('qb_sec_project')} <small>(${u('optional')})</small></h3></div>
-          ${fld('company', 'qb_company', 'text', 'organization', 0)}
-          <div class="qb-g2">${fld('location', 'qb_location', 'text', 'address-level2', 0)}<div class="f"><label for="qc-type">${u('qb_ptype')}</label><select id="qc-type" data-qc="type">${optList(u('ptype_opts'), c.type, u('qb_choose'))}</select></div></div>
-          <div class="f"><label for="qc-message">${u('qb_msg')}</label><textarea id="qc-message" data-qc="message" maxlength="2000" rows="3">${esc(c.message || '')}</textarea></div>
-        </div>
-        <label class="qb-check"><input type="checkbox" id="qc-privacy" data-qc="privacy" ${c.privacy ? 'checked' : ''}><span>${esc(u('qb_privacy', { c: S.company.name }))}</span></label>
-        <p class="qb-hint">${u('qb_privacy_note')}</p>
+        <label class="qb-check"><input type="checkbox" id="qc-privacy" data-qc="privacy" ${c.privacy ? 'checked' : ''}><span>${esc(u('qb_privacy', { c: S.company.name }))}<small>${u('qb_privacy_note')}</small></span></label>
         <p class="q-status err" id="qb-cerr" role="alert"></p>
         <div class="qb-nav"><button type="button" class="btn btn-ghost" data-qb="to-items">${icon('back')}${u('qb_back')}</button><button type="button" class="btn btn-accent" data-qb="to-review">${u('qb_review')}${icon('arrow')}</button></div>`;
     }
@@ -713,7 +708,7 @@
           <p class="qb-count">${esc(qbSummary(QB.items))}</p>
           <div class="qb-items">${QB.items.map((it, k) => qbCard(it, k, 'review')).join('')}</div></div>
         <div class="qb-sec"><div class="qb-sec-h"><h3>${u('qb_customer')}</h3><button type="button" class="qb-link" data-qb="to-details">${u('qb_edit')}</button></div>
-          <dl class="qb-dl">${r('qb_fullname', c.name)}${r('qb_email', c.email)}${r('qb_phone', c.phone)}${r('qb_company', c.company)}${r('qb_location', c.location)}${r('qb_ptype', c.type)}${r('qb_msg', c.message)}</dl></div>
+          <dl class="qb-dl">${r('qb_fullname', c.name)}${r('qb_email', c.email)}${r('qb_phone', c.phone)}${r('qb_location', c.location)}</dl></div>
         <div class="hp" aria-hidden="true"><input id="qb-web" tabindex="-1" autocomplete="off"></div>
         <p class="q-status" id="qb-serr" role="status" aria-live="polite">${esc(QB.err || '')}</p>
         <div class="qb-nav"><button type="button" class="btn btn-ghost" data-qb="to-details">${icon('back')}${u('qb_back')}</button><button type="button" class="btn btn-accent" id="qb-send" data-qb="submit" ${QB.busy ? 'disabled' : ''}>${u(QB.busy ? 'qb_sending' : 'qb_submit')}${icon('arrow')}</button></div>`;
@@ -826,7 +821,7 @@
       try {
         let ref = 'AMT-PREVIEW';
         if (!PREVIEW) {
-          const body = { sid: QB.sid, lang, website: ($('#qb-web') || {}).value || '', customer: QB.cust, items: QB.items.map((it) => ({ ...it, files: (it.files || []).map((f) => ({ id: f.id })) })) };
+          const body = { sid: QB.sid, lang, website: ($('#qb-web') || {}).value || '', customer: { name: QB.cust.name, email: QB.cust.email, phone: QB.cust.phone, location: QB.cust.location, privacy: QB.cust.privacy }, items: QB.items.map((it) => ({ ...it, files: (it.files || []).map((f) => ({ id: f.id })) })) };
           const r = await fetch('/api/quote', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) });
           const j = await r.json().catch(() => ({}));
           if (!r.ok || !j.ok) throw new Error(j.error || 'send');
