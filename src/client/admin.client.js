@@ -444,19 +444,10 @@
       return true;
     } catch (e) { toast('Quotation not saved: ' + e.message, 'err'); return false; }
   }
-  // WhatsApp text for the customer: products, prices and total
+  // short WhatsApp text; the details are in the PDF sent in the same chat
   function qdMessage(q) {
-    const d = q.doc || qdRead(), c = qCust(q), co = site.company, cur = d.currency || '€';
-    const priced = d.rows.filter((r) => r.desc || r.price);
-    const L = [`Hello ${c.name || ''},`, '', `Thank you for your request. Here is our quotation ${d.no || q.ref || ''}:`, ''];
-    priced.forEach((r, k) => { const first = String(r.desc || '').split('\n')[0]; const line = (+r.qty || 0) * (+r.price || 0); L.push(`${k + 1}. ${first}${r.size ? ` (${r.size} mm)` : ''} × ${r.qty || 1}${r.price !== '' ? ` = ${cur} ${qdFmt(line)}` : ''}`); });
-    L.push('');
-    if (d.vat !== '' && d.vat != null) { L.push(`Subtotal: ${cur} ${qdFmt(d.subtotal)}`); L.push(`VAT ${d.vat}%: ${cur} ${qdFmt(d.total - d.subtotal)}`); }
-    L.push(`Total: ${cur} ${qdFmt(d.total)}`);
-    if (d.validity) L.push(`Valid for: ${d.validity}`);
-    if (d.payment) L.push(`Payment: ${d.payment}`);
-    L.push('', 'I am also sending the PDF quotation here.', '', [co.name, co.phone].filter(Boolean).join(' · '));
-    return L.join('\n');
+    const d = q.doc || qdRead(), c = qCust(q), co = site.company;
+    return [`Hello ${c.name || ''},`, '', `Thank you for your request. Please find attached our quotation ${d.no || q.ref || ''} (PDF).`, '', 'If you have any questions, just reply here.', '', [co.name, co.phone].filter(Boolean).join(' · ')].join('\n');
   }
   function qdCalc() {
     const cur = (site.quoteSettings || {}).currency || '€', f = (n) => n.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
