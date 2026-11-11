@@ -48,7 +48,7 @@
       qb_choose_prod: 'Choose product', qb_choose_model: 'Choose model', qb_change: 'Change', qb_not_sure: 'Not sure / other', qb_not_sure_sub: 'We help you choose the right system.',
       qb_sec_size: 'Measurements', qb_sec_finish: 'Colour, glass & opening', qb_sec_extra: 'Extra details', qb_qty_s: 'Qty', qb_pcs: '{n} pcs', qb_added: 'Added', qb_dup: 'Duplicate',
       qb_list_t: 'Your quotation list', qb_cont_details: 'Continue to your details', qb_sec_contact: 'Contact details', qb_sec_project: 'About the project', qb_cc: 'Country code',
-      qb_need_prod: 'Please choose a product.', qb_width_s: 'Width', qb_height_s: 'Height', qb_more: 'Notes, extras or a photo', qb_need_model: 'Please choose a model, or “Not sure”.', qb_talk: 'Prefer to talk to us?',
+      qb_need_prod: 'Please choose a product.', qb_pname: 'Product name', qb_pname_ph: 'e.g. glass railing, pergola', qb_need_pname: 'Please write the product you need.', qb_width_s: 'Width', qb_height_s: 'Height', qb_more: 'Notes, extras or a photo', qb_need_model: 'Please choose a model, or “Not sure”.', qb_talk: 'Prefer to talk to us?',
       colour_opts: ['White', 'Black', 'Anthracite grey', 'Silver (anodised)', 'Bronze', 'Wood effect', 'Other RAL colour (write in notes)', 'Not sure'],
       glass_opts: ['Double glazed', 'Triple glazed', 'Single glass', 'Laminated safety glass', 'Tempered glass', 'Frosted glass', 'No glass', 'Not sure'],
       opening_opts: ['Sliding', 'Lift & slide', 'Hinged / casement', 'Tilt & turn', 'Folding', 'Fixed', 'Not sure'],
@@ -110,7 +110,7 @@
       qb_choose_prod: 'Επιλέξτε προϊόν', qb_choose_model: 'Επιλέξτε μοντέλο', qb_change: 'Αλλαγή', qb_not_sure: 'Δεν είμαι σίγουρος / άλλο', qb_not_sure_sub: 'Σας βοηθάμε να επιλέξετε το σωστό σύστημα.',
       qb_sec_size: 'Διαστάσεις', qb_sec_finish: 'Χρώμα, γυαλί & άνοιγμα', qb_sec_extra: 'Επιπλέον στοιχεία', qb_qty_s: 'Ποσ.', qb_pcs: '{n} τεμ.', qb_added: 'Προστέθηκε', qb_dup: 'Αντιγραφή',
       qb_list_t: 'Η λίστα προσφοράς σας', qb_cont_details: 'Συνέχεια στα στοιχεία σας', qb_sec_contact: 'Στοιχεία επικοινωνίας', qb_sec_project: 'Για το έργο', qb_cc: 'Κωδικός χώρας',
-      qb_need_prod: 'Επιλέξτε προϊόν.', qb_width_s: 'Πλάτος', qb_height_s: 'Ύψος', qb_more: 'Σημειώσεις, επιπλέον ή φωτογραφία', qb_need_model: 'Επιλέξτε μοντέλο ή «Δεν είμαι σίγουρος».', qb_talk: 'Προτιμάτε να μιλήσουμε;',
+      qb_need_prod: 'Επιλέξτε προϊόν.', qb_pname: 'Όνομα προϊόντος', qb_pname_ph: 'π.χ. γυάλινο κάγκελο, πέργκολα', qb_need_pname: 'Γράψτε το προϊόν που χρειάζεστε.', qb_width_s: 'Πλάτος', qb_height_s: 'Ύψος', qb_more: 'Σημειώσεις, επιπλέον ή φωτογραφία', qb_need_model: 'Επιλέξτε μοντέλο ή «Δεν είμαι σίγουρος».', qb_talk: 'Προτιμάτε να μιλήσουμε;',
       colour_opts: ['Λευκό', 'Μαύρο', 'Ανθρακί', 'Ασημί (ανοδίωση)', 'Μπρονζέ', 'Απομίμηση ξύλου', 'Άλλο χρώμα RAL (γράψτε στις σημειώσεις)', 'Δεν είμαι σίγουρος'],
       glass_opts: ['Διπλό τζάμι', 'Τριπλό τζάμι', 'Μονό τζάμι', 'Laminated γυαλί ασφαλείας', 'Σκληρυμένο γυαλί', 'Αμμοβολή / θαμπό', 'Χωρίς γυαλί', 'Δεν είμαι σίγουρος'],
       opening_opts: ['Συρόμενο', 'Ανυψούμενο-συρόμενο', 'Ανοιγόμενο', 'Ανοιγοανακλινόμενο', 'Πτυσσόμενο', 'Σταθερό', 'Δεν είμαι σίγουρος'],
@@ -668,6 +668,7 @@
       const sel = (f, id, lbl, vals) => `<div class="f"><label for="${id}">${u(lbl)}</label><select id="${id}" data-qi="${f}">${optList(vals, d[f], u('qb_choose'))}</select></div>`;
       const more = QB.more || d.specs || d.notes || (d.files || []).length;
       h += `<div class="qb-box" id="qb-spec">
+          ${g.id === 'custom' ? `<div class="f"><label for="qi-name">${u('qb_pname')} *</label><input id="qi-name" data-qi="model" maxlength="80" autocomplete="off" placeholder="${esc(u('qb_pname_ph'))}" value="${esc(d.model)}"></div>` : ''}
           <div class="qb-g3"><div class="f"><label for="qi-w">${u('qb_width_s')} *</label><input id="qi-w" data-qi="width" type="number" inputmode="numeric" min="1" max="30000" step="1" placeholder="mm" value="${esc(d.width)}"></div>
           <div class="f"><label for="qi-h">${u('qb_height_s')} *</label><input id="qi-h" data-qi="height" type="number" inputmode="numeric" min="1" max="30000" step="1" placeholder="mm" value="${esc(d.height)}"></div>
           <div class="f"><label for="qi-q">${u('qb_qty_s')} *</label><input id="qi-q" data-qi="qty" type="number" inputmode="numeric" min="1" max="999" step="1" value="${esc(d.qty)}"></div></div>
@@ -752,6 +753,7 @@
     QB.edit = -1;
     const g = grpOf(preset && preset.cat);
     QB.draft = blankItem({ ...preset, grp: g ? g.id : 'custom', mp: 1 });
+    if (!g || g.id === 'custom') QB.draft.model = QB.draft.model || QB.draft.specs || '';
     qbRender();
     if (location.hash === '#quote') route(); else location.hash = 'quote';
     setTimeout(() => { const w = $('#qi-w'); if (w) w.focus({ preventScroll: true }); }, 900);
@@ -802,6 +804,7 @@
       const er = $('#qb-ierr');
       if (!g) { if (er) er.textContent = u('qb_need_prod'); return; }
       if (grpModels(g).length && !d.mp) { if (er) er.textContent = u('qb_need_model'); return; }
+      if (g.id === 'custom') { d.model = String(d.model || '').trim(); if (!d.model) { if (er) er.textContent = u('qb_need_pname'); const f = $('#qi-name'); if (f) f.focus(); return; } }
       if (!d.cat || !(d.width > 0) || !(d.height > 0) || !(d.qty >= 1)) { if (er) er.textContent = u('qb_need'); const f = !(d.width > 0) ? '#qi-w' : !(d.height > 0) ? '#qi-h' : '#qi-q'; if ($(f)) $(f).focus(); return; }
       d.catName = pcat(d.cat);
       if (QB.edit >= 0) QB.items[QB.edit] = d; else QB.items.push(d);
