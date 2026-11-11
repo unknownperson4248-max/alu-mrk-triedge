@@ -48,7 +48,7 @@
       qb_choose_prod: 'Choose product', qb_choose_model: 'Choose model', qb_change: 'Change', qb_not_sure: 'Not sure / other', qb_not_sure_sub: 'We help you choose the right system.',
       qb_sec_size: 'Measurements', qb_sec_finish: 'Colour, glass & opening', qb_sec_extra: 'Extra details', qb_qty_s: 'Qty', qb_pcs: '{n} pcs', qb_added: 'Added', qb_dup: 'Duplicate',
       qb_list_t: 'Your quotation list', qb_cont_details: 'Continue to your details', qb_sec_contact: 'Contact details', qb_sec_project: 'About the project', qb_cc: 'Country code',
-      qb_need_prod: 'Please choose a product.', qb_need_model: 'Please choose a model, or “Not sure”.', qb_talk: 'Prefer to talk to us?',
+      qb_need_prod: 'Please choose a product.', qb_width_s: 'Width', qb_height_s: 'Height', qb_more: 'Notes, extras or a photo', qb_need_model: 'Please choose a model, or “Not sure”.', qb_talk: 'Prefer to talk to us?',
       colour_opts: ['White', 'Black', 'Anthracite grey', 'Silver (anodised)', 'Bronze', 'Wood effect', 'Other RAL colour (write in notes)', 'Not sure'],
       glass_opts: ['Double glazed', 'Triple glazed', 'Single glass', 'Laminated safety glass', 'Tempered glass', 'Frosted glass', 'No glass', 'Not sure'],
       opening_opts: ['Sliding', 'Lift & slide', 'Hinged / casement', 'Tilt & turn', 'Folding', 'Fixed', 'Not sure'],
@@ -110,7 +110,7 @@
       qb_choose_prod: 'Επιλέξτε προϊόν', qb_choose_model: 'Επιλέξτε μοντέλο', qb_change: 'Αλλαγή', qb_not_sure: 'Δεν είμαι σίγουρος / άλλο', qb_not_sure_sub: 'Σας βοηθάμε να επιλέξετε το σωστό σύστημα.',
       qb_sec_size: 'Διαστάσεις', qb_sec_finish: 'Χρώμα, γυαλί & άνοιγμα', qb_sec_extra: 'Επιπλέον στοιχεία', qb_qty_s: 'Ποσ.', qb_pcs: '{n} τεμ.', qb_added: 'Προστέθηκε', qb_dup: 'Αντιγραφή',
       qb_list_t: 'Η λίστα προσφοράς σας', qb_cont_details: 'Συνέχεια στα στοιχεία σας', qb_sec_contact: 'Στοιχεία επικοινωνίας', qb_sec_project: 'Για το έργο', qb_cc: 'Κωδικός χώρας',
-      qb_need_prod: 'Επιλέξτε προϊόν.', qb_need_model: 'Επιλέξτε μοντέλο ή «Δεν είμαι σίγουρος».', qb_talk: 'Προτιμάτε να μιλήσουμε;',
+      qb_need_prod: 'Επιλέξτε προϊόν.', qb_width_s: 'Πλάτος', qb_height_s: 'Ύψος', qb_more: 'Σημειώσεις, επιπλέον ή φωτογραφία', qb_need_model: 'Επιλέξτε μοντέλο ή «Δεν είμαι σίγουρος».', qb_talk: 'Προτιμάτε να μιλήσουμε;',
       colour_opts: ['Λευκό', 'Μαύρο', 'Ανθρακί', 'Ασημί (ανοδίωση)', 'Μπρονζέ', 'Απομίμηση ξύλου', 'Άλλο χρώμα RAL (γράψτε στις σημειώσεις)', 'Δεν είμαι σίγουρος'],
       glass_opts: ['Διπλό τζάμι', 'Τριπλό τζάμι', 'Μονό τζάμι', 'Laminated γυαλί ασφαλείας', 'Σκληρυμένο γυαλί', 'Αμμοβολή / θαμπό', 'Χωρίς γυαλί', 'Δεν είμαι σίγουρος'],
       opening_opts: ['Συρόμενο', 'Ανυψούμενο-συρόμενο', 'Ανοιγόμενο', 'Ανοιγοανακλινόμενο', 'Πτυσσόμενο', 'Σταθερό', 'Δεν είμαι σίγουρος'],
@@ -366,7 +366,7 @@
     return `<section class="prods" id="products"><div class="wrap">
       <div class="proj-head rv"><div><p class="eyebrow">${u('prod_eyebrow')}</p><h2>${u('prod_title')}</h2><p class="prods-sub">${u('prod_sub')}</p></div></div>
       ${cats.length > 1 ? `<div class="chips" role="group" aria-label="${u('products')}">${[{ id: 'all', name: u('all_products') }, ...cats.map((c) => ({ id: c.id, name: t(c.name) }))].map((c) => `<button type="button" data-pf="${esc(c.id)}" aria-pressed="${pf === c.id}">${esc(c.name)}</button>`).join('')}</div>` : ''}
-      <div class="prod-grid rv-kids" id="prod-grid">${prodCards()}</div>
+      <div class="prod-rail"><button type="button" class="rail-btn prev" data-prail="-1" aria-label="Previous">${icon('back')}</button><div class="prod-grid rv-kids" id="prod-grid">${prodCards()}</div><button type="button" class="rail-btn next" data-prail="1" aria-label="Next">${icon('arrow')}</button></div>
     </div></section>`;
   }
   function productPage(x) {
@@ -611,7 +611,7 @@
   let QB = { step: 'items', items: [], edit: -1, draft: null, cust: {}, sid: newSid(), ref: '', err: '' };
   try { const q = JSON.parse(localStorage.getItem(QB_KEY) || 'null'); if (q && Array.isArray(q.items)) QB = { ...QB, ...q, err: '', busy: false }; } catch (e) {}
   if (QB.cust && QB.cust.phone && QB.cust.pnum == null) QB.cust.pnum = QB.cust.phone;
-  const qbSave = () => { try { const { err, busy, ...keep } = QB; localStorage.setItem(QB_KEY, JSON.stringify(keep)); } catch (e) {} };
+  const qbSave = () => { try { const { err, busy, more, ...keep } = QB; localStorage.setItem(QB_KEY, JSON.stringify(keep)); } catch (e) {} };
   const blankItem = (o) => ({ grp: '', mp: 0, cat: '', model: '', width: '', height: '', qty: 1, colour: '', glass: '', glassThk: '', opening: '', specs: '', notes: '', files: [], ...(o || {}) });
   const optList = (vals, cur, blank) => (blank ? `<option value="">${esc(blank)}</option>` : '') + vals.map((v) => `<option ${v === cur ? 'selected' : ''}>${esc(v)}</option>`).join('');
 
@@ -645,7 +645,6 @@
     const d = QB.draft || (QB.draft = blankItem());
     const g = grpById(d.grp), ms = grpModels(g), n = QB.edit >= 0 ? QB.edit + 1 : QB.items.length + 1;
     const ready = g && (!ms.length || d.mp);
-    const chips = (f, vals) => `<div class="qb-chips" role="group">${vals.map((v) => `<button type="button" class="qb-chip${d[f] === v ? ' on' : ''}" aria-pressed="${d[f] === v}" data-qb="chip" data-f="${f}" data-v="${esc(v)}">${esc(v)}</button>`).join('')}</div>`;
     let h = `<div class="qb-sec" id="qb-edit"><div class="qb-sec-h"><h3>${QB.edit >= 0 ? u('qb_edit_product', { n }) : g ? u('qb_product', { n }) : u('qb_choose_prod')}</h3>${QB.items.length ? `<button type="button" class="qb-link" data-qb="cancel-item">${u('qb_cancel')}</button>` : ''}</div>`;
     if (!g) {
       h += `<div class="qb-cats">${QG.slice(0, 4).map((x) => `<button type="button" class="qb-cat" data-qb="grp" data-g="${x.id}"><span class="qb-cat-im"><img src="${esc(src(x.img))}" alt="" loading="lazy"></span><b>${u(x.k)}</b></button>`).join('')}</div>
@@ -659,22 +658,21 @@
       }
     }
     if (ready) {
-      h += `<div class="qb-box" id="qb-spec"><h4>${icon('ruler')}${u('qb_sec_size')}</h4>
-          <div class="qb-g2"><div class="f"><label for="qi-w">${u('qb_width')} *</label><input id="qi-w" data-qi="width" type="number" inputmode="numeric" min="1" max="30000" step="1" placeholder="2000" value="${esc(d.width)}"></div>
-          <div class="f"><label for="qi-h">${u('qb_height')} *</label><input id="qi-h" data-qi="height" type="number" inputmode="numeric" min="1" max="30000" step="1" placeholder="2100" value="${esc(d.height)}"></div></div>
-          <div class="f"><label for="qi-q">${u('qb_qty')} *</label><div class="qb-qty"><button type="button" data-qb="qty-" aria-label="−1">−</button><input id="qi-q" data-qi="qty" type="number" inputmode="numeric" min="1" max="999" step="1" value="${esc(d.qty)}"><button type="button" data-qb="qty+" aria-label="+1">+</button></div></div></div>
-        <div class="qb-box"><h4>${icon('palette')}${u('qb_sec_finish')}</h4>
-          <div class="f"><span class="lbl">${u('qb_colour')}</span>${chips('colour', u('colour_opts'))}</div>
-          <div class="f"><span class="lbl">${u('qb_glass')}</span>${chips('glass', u('glass_opts'))}</div>
-          <div class="f"><label for="qi-glt">${u('qb_glass_thk')}</label><input id="qi-glt" data-qi="glassThk" maxlength="40" placeholder="${esc(u('qb_glass_thk_ph'))}" value="${esc(d.glassThk)}"></div>
-          <div class="f"><span class="lbl">${u('qb_opening')}</span>${chips('opening', u('opening_opts'))}</div></div>
-        <div class="qb-box"><h4>${icon('info')}${u('qb_sec_extra')} <small>(${u('optional')})</small></h4>
-          <div class="f"><label for="qi-sp">${u('qb_specs')}</label><textarea id="qi-sp" data-qi="specs" maxlength="500" rows="2" placeholder="${esc(u('qb_specs_ph'))}">${esc(d.specs)}</textarea></div>
-          <div class="f"><label for="qi-no">${u('qb_notes')}</label><textarea id="qi-no" data-qi="notes" maxlength="1000" rows="2" placeholder="${esc(u('qb_notes_ph'))}">${esc(d.notes)}</textarea></div>
-          <div class="f"><span class="lbl">${u('qb_files')}</span>
-            <div class="qb-files">${(d.files || []).map((f, k) => `<span class="qb-file">${icon(f.type === 'application/pdf' ? 'file' : 'images')}<b>${esc(f.name)}</b><button type="button" data-qf-del="${k}" aria-label="${u('qb_remove')}">&times;</button></span>`).join('')}
-              ${(d.files || []).length < 3 ? `<label class="qb-up">${icon('download')}<span id="qb-up-t">${u('qb_add_file')}</span><input type="file" id="qb-file" accept="image/jpeg,image/png,image/webp,application/pdf,image/heic"></label>` : ''}</div>
-            <small class="qb-hint">${u('qb_files_hint')}</small></div></div>`;
+      const sel = (f, id, lbl, vals) => `<div class="f"><label for="${id}">${u(lbl)}</label><select id="${id}" data-qi="${f}">${optList(vals, d[f], u('qb_choose'))}</select></div>`;
+      const more = QB.more || d.specs || d.notes || (d.files || []).length;
+      h += `<div class="qb-box" id="qb-spec">
+          <div class="qb-g3"><div class="f"><label for="qi-w">${u('qb_width_s')} *</label><input id="qi-w" data-qi="width" type="number" inputmode="numeric" min="1" max="30000" step="1" placeholder="mm" value="${esc(d.width)}"></div>
+          <div class="f"><label for="qi-h">${u('qb_height_s')} *</label><input id="qi-h" data-qi="height" type="number" inputmode="numeric" min="1" max="30000" step="1" placeholder="mm" value="${esc(d.height)}"></div>
+          <div class="f"><label for="qi-q">${u('qb_qty_s')} *</label><input id="qi-q" data-qi="qty" type="number" inputmode="numeric" min="1" max="999" step="1" value="${esc(d.qty)}"></div></div>
+          <div class="qb-g2">${sel('colour', 'qi-col', 'qb_colour', u('colour_opts'))}${sel('opening', 'qi-open', 'qb_opening', u('opening_opts'))}${sel('glass', 'qi-gl', 'qb_glass', u('glass_opts'))}
+          <div class="f"><label for="qi-glt">${u('qb_glass_thk')}</label><input id="qi-glt" data-qi="glassThk" maxlength="40" placeholder="${esc(u('qb_glass_thk_ph'))}" value="${esc(d.glassThk)}"></div></div>
+          <details class="qb-more" id="qb-more"${more ? ' open' : ''}><summary>${icon('plus')}<span>${u('qb_more')}</span><small>${u('optional')}</small></summary><div class="qb-more-b">
+            <div class="f"><label for="qi-sp">${u('qb_specs')}</label><textarea id="qi-sp" data-qi="specs" maxlength="500" rows="2" placeholder="${esc(u('qb_specs_ph'))}">${esc(d.specs)}</textarea></div>
+            <div class="f"><label for="qi-no">${u('qb_notes')}</label><textarea id="qi-no" data-qi="notes" maxlength="1000" rows="2" placeholder="${esc(u('qb_notes_ph'))}">${esc(d.notes)}</textarea></div>
+            <div class="f"><span class="lbl">${u('qb_files')}</span>
+              <div class="qb-files">${(d.files || []).map((f, k) => `<span class="qb-file">${icon(f.type === 'application/pdf' ? 'file' : 'images')}<b>${esc(f.name)}</b><button type="button" data-qf-del="${k}" aria-label="${u('qb_remove')}">&times;</button></span>`).join('')}
+                ${(d.files || []).length < 3 ? `<label class="qb-up">${icon('download')}<span id="qb-up-t">${u('qb_add_file')}</span><input type="file" id="qb-file" accept="image/jpeg,image/png,image/webp,application/pdf,image/heic"></label>` : ''}</div>
+              <small class="qb-hint">${u('qb_files_hint')}</small></div></div></details></div>`;
     }
     h += `<p class="q-status err" id="qb-ierr" role="alert"></p>`;
     if (ready) h += `<button type="button" class="btn btn-accent qb-go" data-qb="save-item">${icon(QB.edit >= 0 ? 'check' : 'plus')}${u(QB.edit >= 0 ? 'qb_save' : 'qb_add')}</button>`;
@@ -700,8 +698,8 @@
           <div class="f"><label for="qc-pnum">${u('qb_phone')} *</label><div class="qb-phone"><select id="qc-cc" data-qc="cc" aria-label="${esc(u('qb_cc'))}">${CC.map(([v, n]) => `<option value="${v}" ${v === cc ? 'selected' : ''}>${v} ${n}</option>`).join('')}</select><input id="qc-pnum" data-qc="pnum" type="tel" inputmode="tel" autocomplete="tel" maxlength="30" placeholder="99 000000" value="${esc(c.pnum || '')}"></div></div>
         </div>
         <div class="qb-sec"><div class="qb-sec-h"><h3>${u('qb_sec_project')} <small>(${u('optional')})</small></h3></div>
-          <div class="qb-g2">${fld('company', 'qb_company', 'text', 'organization', 0)}${fld('location', 'qb_location', 'text', 'address-level2', 0)}</div>
-          <div class="f"><span class="lbl">${u('qb_ptype')}</span><div class="qb-chips">${u('ptype_opts').map((v) => `<button type="button" class="qb-chip${c.type === v ? ' on' : ''}" aria-pressed="${c.type === v}" data-qb="cchip" data-v="${esc(v)}">${esc(v)}</button>`).join('')}</div></div>
+          ${fld('company', 'qb_company', 'text', 'organization', 0)}
+          <div class="qb-g2">${fld('location', 'qb_location', 'text', 'address-level2', 0)}<div class="f"><label for="qc-type">${u('qb_ptype')}</label><select id="qc-type" data-qc="type">${optList(u('ptype_opts'), c.type, u('qb_choose'))}</select></div></div>
           <div class="f"><label for="qc-message">${u('qb_msg')}</label><textarea id="qc-message" data-qc="message" maxlength="2000" rows="3">${esc(c.message || '')}</textarea></div>
         </div>
         <label class="qb-check"><input type="checkbox" id="qc-privacy" data-qc="privacy" ${c.privacy ? 'checked' : ''}><span>${esc(u('qb_privacy', { c: S.company.name }))}</span></label>
@@ -795,8 +793,6 @@
       d.model = p ? p.model : ''; d.mp = 1; d.cat = p ? p.cat : g ? g.cats[0] : 'custom';
       qbRender(); if (first) qbGo('#qb-spec');
     } else if (a === 'stype') { const d = qbReadItem(); d.cat = el.dataset.c; qbRender(); }
-    else if (a === 'chip') { const d = qbReadItem(), f = el.dataset.f, v = el.dataset.v; d[f] = d[f] === v ? '' : v; qbRender(); }
-    else if (a === 'cchip') { const c = qbReadCust(), v = el.dataset.v; c.type = c.type === v ? '' : v; qbRender(); }
     else if (a === 'qty-' || a === 'qty+') { const d = qbReadItem(); d.qty = Math.min(999, Math.max(1, (Math.round(+d.qty) || 1) + (a === 'qty+' ? 1 : -1))); const q = $('#qi-q'); if (q) q.value = d.qty; qbSave(); }
     else if (a === 'save-item') {
       const d = qbReadItem(), g = grpById(d.grp);
@@ -1078,6 +1074,7 @@
     tstStart();
     hsShow(hsI);
     railArrows();
+    prodArrows();
     syncPanels();
     reveal($('#app'), renders++ > 0);
   }
@@ -1211,6 +1208,14 @@
     if (!reduce && $$('#tst blockquote').length > 1) tstTimer = setInterval(() => tstShow(tstI + 1), 6500);
   }
 
+  // product row arrows
+  function prodArrows() {
+    const g = $('#prod-grid');
+    if (!g) return;
+    const upd = () => { const [a, b] = $$('[data-prail]'); const max = g.scrollWidth - g.clientWidth - 2; if (a) a.disabled = g.scrollLeft <= 2; if (b) b.disabled = g.scrollLeft >= max; };
+    if (!g.dataset.w) { g.dataset.w = '1'; g.addEventListener('scroll', upd, { passive: true }); addEventListener('resize', upd, { passive: true }); }
+    upd();
+  }
   // system cards rail
   let railUpd = null;
   addEventListener('resize', () => railUpd && railUpd(), { passive: true });
@@ -1516,6 +1521,8 @@
     if (panel && e.target.closest('#mnav a, #mega a, #srch a')) { setPanel(null); return; }
     if (panel && panel !== 'menu' && !e.target.closest('#hdr')) setPanel(null);
 
+    const pr = e.target.closest('[data-prail]');
+    if (pr) { const g = $('#prod-grid'), c = g && g.querySelector('.prod'); if (g) g.scrollBy({ left: +pr.dataset.prail * ((c ? c.offsetWidth : 280) + 14), behavior: reduce ? 'auto' : 'smooth' }); return; }
     const rb = e.target.closest('[data-rail]');
     if (rb) { const r = $('#rail'); const card = r.querySelector('.card'); r.scrollBy({ left: +rb.dataset.rail * ((card ? card.offsetWidth : 300) + 16), behavior: reduce ? 'auto' : 'smooth' }); return; }
     if (e.target.closest('[data-video]')) { openVideo(); return; }
@@ -1545,7 +1552,7 @@
     const qfd = e.target.closest('[data-qf-del]');
     if (qfd) { const d = qbReadItem(); d.files.splice(+qfd.dataset.qfDel, 1); qbRender(); return; }
     const pfb = e.target.closest('[data-pf]');
-    if (pfb) { pf = pfb.dataset.pf; $$('[data-pf]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.pf === pf))); const g = $('#prod-grid'); if (g) { g.innerHTML = prodCards(); g.classList.remove('in', 'now'); void g.offsetWidth; g.classList.add('in'); } return; }
+    if (pfb) { pf = pfb.dataset.pf; $$('[data-pf]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.pf === pf))); const g = $('#prod-grid'); if (g) { g.innerHTML = prodCards(); g.scrollLeft = 0; g.classList.remove('in', 'now'); void g.offsetWidth; g.classList.add('in'); prodArrows(); } return; }
     const go = e.target.closest('.sp-tabs [data-go]');
     if (go) { const el = document.getElementById(go.dataset.go); if (el) el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }); return; }
     const z = e.target.closest('[data-zoom]');
@@ -1572,6 +1579,7 @@
     if (e.target.id === 'qb-file' && e.target.files[0]) { const d = qbReadItem(); const f = await qbUpload(e.target.files[0]); if (f) { d.files = [...(d.files || []), f].slice(0, 3); qbRender(); } return; }
     if (e.target.id === 'rv-file' && e.target.files.length) { rvUpload([...e.target.files]); return; }
   });
+  document.addEventListener('toggle', (e) => { if (e.target.id === 'qb-more') QB.more = e.target.open; }, true);
   document.addEventListener('submit', (e) => {
     if (e.target.id === 'rv-form') { e.preventDefault(); submitReview(); }
   });
