@@ -32,17 +32,23 @@
       products: 'Products', m_products: 'MUSKITA Systems', prod_eyebrow: 'MUSKITA profile systems', prod_title: 'Profile systems we work with', prod_sub: 'We fabricate and install with MUSKITA aluminium profile systems, made in Cyprus.',
       details: 'Details', add_quote: 'Add to quotation', added_quote: 'Added to your quotation', tech_data: 'Technical data', tech_source: 'Source: MUSKITA product information. Values vary by version and configuration; we confirm the exact figures for your project.', tech_on_request: 'Technical details on request.', colours: 'Colours & finishes', all_products: 'All products',
       qb_title: 'Request a quotation', qb_sub: 'Add every door, window or system you need. We review the measurements and send you a written quotation.',
-      qb_step1: 'Products', qb_step2: 'Your details', qb_step3: 'Review', qb_product: 'Product {n}', qb_edit_product: 'Edit product {n}',
+      qb_step1: 'Products', qb_step2: 'Details', qb_step3: 'Review', qb_product: 'Product {n}', qb_edit_product: 'Edit product {n}',
       qb_cat: 'Product category', qb_model: 'Model', qb_model_other: 'Other / not sure', qb_choose: 'Choose…', qb_width: 'Width (mm)', qb_height: 'Height (mm)', qb_qty: 'Quantity',
       qb_colour: 'Colour / finish', qb_glass: 'Glass type', qb_glass_thk: 'Glass thickness', qb_glass_thk_ph: 'e.g. 4-16-4', qb_opening: 'Opening type', qb_specs: 'Additional specifications', qb_specs_ph: 'Handles, locks, mosquito nets, thresholds…', qb_notes: 'Notes', qb_notes_ph: 'Anything else we should know about this item',
       qb_files: 'Photo or drawing (optional)', qb_files_hint: 'JPG, PNG or PDF, up to 10 MB, max 3 files.', qb_add_file: 'Add file', qb_uploading: 'Uploading…',
       qb_add: 'Add to quotation', qb_save: 'Save changes', qb_cancel: 'Cancel', qb_add_more: 'Add another product', qb_edit: 'Edit', qb_remove: 'Remove', qb_continue: 'Continue', qb_back: 'Back', qb_review: 'Review request', qb_submit: 'Send quotation request',
-      qb_list: 'Your quotation ({n})', qb_empty: 'No products added yet.', qb_need: 'Please choose a category and enter width, height and quantity.', qb_need_items: 'Add at least one product first.',
+      qb_list: 'Your quotation ({n})', qb_empty: 'No products added yet.', qb_need: 'Please enter width, height and quantity.', qb_need_items: 'Add at least one product first.',
       qb_fullname: 'Full name', qb_email: 'Email', qb_phone: 'Phone (with country code)', qb_phone_ph: '+357 99 000000', qb_company: 'Company name', qb_location: 'Project location', qb_ptype: 'Project type', qb_msg: 'Additional message', optional: 'optional',
       qb_privacy: 'I agree that {c} uses these details only to answer my quotation request.', qb_privacy_note: 'We use your details only to prepare and send your quotation. We do not share them with anyone else.',
       qb_err_name: 'Please enter your full name.', qb_err_email: 'Please enter a valid email address.', qb_err_phone: 'Please enter your phone number with the country code, e.g. +357.', qb_err_privacy: 'Please accept the privacy notice.',
       qb_customer: 'Customer details', qb_done_title: 'Thank you, your request has been sent.', qb_done_body: 'Your reference is {r}. We will review your products and measurements and contact you with a written quotation.', qb_done_wa: 'Also send it on WhatsApp', qb_new: 'Start a new request', qb_wa_msg: 'Hello {c}, I have sent quotation request {r}.',
       qb_sending: 'Sending…', qb_err_send: 'Your request could not be sent. Please try again, or contact us by phone or WhatsApp.', qb_err_file: 'This file could not be uploaded. Use JPG, PNG or PDF up to 10 MB.', qb_items_n: '{n} products', qb_item_1: '1 product',
+      qb_eyebrow: 'Get a quote', qb_h: 'Build your quotation', qb_lead: 'Choose your aluminium products, add the sizes and we prepare a written quotation for you.',
+      qg_doors: 'Doors', qg_windows: 'Windows', qg_sliding: 'Sliding systems', qg_glass: 'Glass', qg_custom: 'Custom solution', qb_other_cat: 'Something else? Tell us what you need.',
+      qb_choose_prod: 'Choose product', qb_choose_model: 'Choose model', qb_change: 'Change', qb_not_sure: 'Not sure / other', qb_not_sure_sub: 'We help you choose the right system.',
+      qb_sec_size: 'Measurements', qb_sec_finish: 'Colour, glass & opening', qb_sec_extra: 'Extra details', qb_qty_s: 'Qty', qb_pcs: '{n} pcs', qb_added: 'Added', qb_dup: 'Duplicate',
+      qb_list_t: 'Your quotation list', qb_cont_details: 'Continue to your details', qb_sec_contact: 'Contact details', qb_sec_project: 'About the project', qb_cc: 'Country code',
+      qb_need_prod: 'Please choose a product.', qb_need_model: 'Please choose a model, or “Not sure”.', qb_talk: 'Prefer to talk to us?',
       colour_opts: ['White', 'Black', 'Anthracite grey', 'Silver (anodised)', 'Bronze', 'Wood effect', 'Other RAL colour (write in notes)', 'Not sure'],
       glass_opts: ['Double glazed', 'Triple glazed', 'Single glass', 'Laminated safety glass', 'Tempered glass', 'Frosted glass', 'No glass', 'Not sure'],
       opening_opts: ['Sliding', 'Lift & slide', 'Hinged / casement', 'Tilt & turn', 'Folding', 'Fixed', 'Not sure'],
@@ -88,17 +94,23 @@
       products: 'Προϊόντα', m_products: 'Συστήματα MUSKITA', prod_eyebrow: 'Συστήματα προφίλ MUSKITA', prod_title: 'Τα συστήματα προφίλ που χρησιμοποιούμε', prod_sub: 'Κατασκευάζουμε και τοποθετούμε με συστήματα προφίλ αλουμινίου MUSKITA, κατασκευασμένα στην Κύπρο.',
       details: 'Λεπτομέρειες', add_quote: 'Προσθήκη στην προσφορά', added_quote: 'Προστέθηκε στην προσφορά σας', tech_data: 'Τεχνικά στοιχεία', tech_source: 'Πηγή: στοιχεία προϊόντος MUSKITA. Οι τιμές διαφέρουν ανά έκδοση και διαμόρφωση· επιβεβαιώνουμε τα ακριβή στοιχεία για το έργο σας.', tech_on_request: 'Τεχνικά στοιχεία κατόπιν αιτήματος.', colours: 'Χρώματα & φινιρίσματα', all_products: 'Όλα τα προϊόντα',
       qb_title: 'Ζητήστε προσφορά', qb_sub: 'Προσθέστε κάθε πόρτα, παράθυρο ή σύστημα που χρειάζεστε. Ελέγχουμε τις διαστάσεις και σας στέλνουμε γραπτή προσφορά.',
-      qb_step1: 'Προϊόντα', qb_step2: 'Τα στοιχεία σας', qb_step3: 'Έλεγχος', qb_product: 'Προϊόν {n}', qb_edit_product: 'Επεξεργασία προϊόντος {n}',
+      qb_step1: 'Προϊόντα', qb_step2: 'Στοιχεία', qb_step3: 'Έλεγχος', qb_product: 'Προϊόν {n}', qb_edit_product: 'Επεξεργασία προϊόντος {n}',
       qb_cat: 'Κατηγορία προϊόντος', qb_model: 'Μοντέλο', qb_model_other: 'Άλλο / δεν είμαι σίγουρος', qb_choose: 'Επιλέξτε…', qb_width: 'Πλάτος (mm)', qb_height: 'Ύψος (mm)', qb_qty: 'Ποσότητα',
       qb_colour: 'Χρώμα / φινίρισμα', qb_glass: 'Τύπος γυαλιού', qb_glass_thk: 'Πάχος γυαλιού', qb_glass_thk_ph: 'π.χ. 4-16-4', qb_opening: 'Τύπος ανοίγματος', qb_specs: 'Επιπλέον προδιαγραφές', qb_specs_ph: 'Χερούλια, κλειδαριές, σήτες, κατωκάσια…', qb_notes: 'Σημειώσεις', qb_notes_ph: 'Οτιδήποτε άλλο πρέπει να γνωρίζουμε για αυτό το προϊόν',
       qb_files: 'Φωτογραφία ή σχέδιο (προαιρετικά)', qb_files_hint: 'JPG, PNG ή PDF, έως 10 MB, έως 3 αρχεία.', qb_add_file: 'Προσθήκη αρχείου', qb_uploading: 'Μεταφόρτωση…',
       qb_add: 'Προσθήκη στην προσφορά', qb_save: 'Αποθήκευση αλλαγών', qb_cancel: 'Ακύρωση', qb_add_more: 'Προσθήκη άλλου προϊόντος', qb_edit: 'Επεξεργασία', qb_remove: 'Αφαίρεση', qb_continue: 'Συνέχεια', qb_back: 'Πίσω', qb_review: 'Έλεγχος αιτήματος', qb_submit: 'Αποστολή αιτήματος προσφοράς',
-      qb_list: 'Η προσφορά σας ({n})', qb_empty: 'Δεν έχετε προσθέσει προϊόντα ακόμη.', qb_need: 'Επιλέξτε κατηγορία και συμπληρώστε πλάτος, ύψος και ποσότητα.', qb_need_items: 'Προσθέστε πρώτα τουλάχιστον ένα προϊόν.',
+      qb_list: 'Η προσφορά σας ({n})', qb_empty: 'Δεν έχετε προσθέσει προϊόντα ακόμη.', qb_need: 'Συμπληρώστε πλάτος, ύψος και ποσότητα.', qb_need_items: 'Προσθέστε πρώτα τουλάχιστον ένα προϊόν.',
       qb_fullname: 'Ονοματεπώνυμο', qb_email: 'Email', qb_phone: 'Τηλέφωνο (με κωδικό χώρας)', qb_phone_ph: '+357 99 000000', qb_company: 'Εταιρεία', qb_location: 'Τοποθεσία έργου', qb_ptype: 'Είδος έργου', qb_msg: 'Επιπλέον μήνυμα', optional: 'προαιρετικό',
       qb_privacy: 'Συμφωνώ η {c} να χρησιμοποιήσει αυτά τα στοιχεία μόνο για να απαντήσει στο αίτημα προσφοράς μου.', qb_privacy_note: 'Χρησιμοποιούμε τα στοιχεία σας μόνο για να ετοιμάσουμε και να σας στείλουμε την προσφορά. Δεν τα μοιραζόμαστε με κανέναν.',
       qb_err_name: 'Συμπληρώστε το ονοματεπώνυμό σας.', qb_err_email: 'Συμπληρώστε έγκυρη διεύθυνση email.', qb_err_phone: 'Συμπληρώστε τηλέφωνο με κωδικό χώρας, π.χ. +357.', qb_err_privacy: 'Αποδεχτείτε τη σημείωση απορρήτου.',
       qb_customer: 'Στοιχεία πελάτη', qb_done_title: 'Ευχαριστούμε, το αίτημά σας στάλθηκε.', qb_done_body: 'Ο αριθμός αναφοράς σας είναι {r}. Θα ελέγξουμε τα προϊόντα και τις διαστάσεις και θα επικοινωνήσουμε μαζί σας με γραπτή προσφορά.', qb_done_wa: 'Στείλτε το και στο WhatsApp', qb_new: 'Νέο αίτημα', qb_wa_msg: 'Γεια σας, έστειλα το αίτημα προσφοράς {r}.',
       qb_sending: 'Αποστολή…', qb_err_send: 'Το αίτημα δεν στάλθηκε. Δοκιμάστε ξανά ή επικοινωνήστε μαζί μας τηλεφωνικά ή στο WhatsApp.', qb_err_file: 'Το αρχείο δεν ανέβηκε. Χρησιμοποιήστε JPG, PNG ή PDF έως 10 MB.', qb_items_n: '{n} προϊόντα', qb_item_1: '1 προϊόν',
+      qb_eyebrow: 'Προσφορά', qb_h: 'Δημιουργήστε την προσφορά σας', qb_lead: 'Επιλέξτε τα προϊόντα αλουμινίου, προσθέστε τις διαστάσεις και ετοιμάζουμε γραπτή προσφορά για εσάς.',
+      qg_doors: 'Πόρτες', qg_windows: 'Παράθυρα', qg_sliding: 'Συρόμενα συστήματα', qg_glass: 'Γυαλί', qg_custom: 'Ειδική κατασκευή', qb_other_cat: 'Κάτι άλλο; Πείτε μας τι χρειάζεστε.',
+      qb_choose_prod: 'Επιλέξτε προϊόν', qb_choose_model: 'Επιλέξτε μοντέλο', qb_change: 'Αλλαγή', qb_not_sure: 'Δεν είμαι σίγουρος / άλλο', qb_not_sure_sub: 'Σας βοηθάμε να επιλέξετε το σωστό σύστημα.',
+      qb_sec_size: 'Διαστάσεις', qb_sec_finish: 'Χρώμα, γυαλί & άνοιγμα', qb_sec_extra: 'Επιπλέον στοιχεία', qb_qty_s: 'Ποσ.', qb_pcs: '{n} τεμ.', qb_added: 'Προστέθηκε', qb_dup: 'Αντιγραφή',
+      qb_list_t: 'Η λίστα προσφοράς σας', qb_cont_details: 'Συνέχεια στα στοιχεία σας', qb_sec_contact: 'Στοιχεία επικοινωνίας', qb_sec_project: 'Για το έργο', qb_cc: 'Κωδικός χώρας',
+      qb_need_prod: 'Επιλέξτε προϊόν.', qb_need_model: 'Επιλέξτε μοντέλο ή «Δεν είμαι σίγουρος».', qb_talk: 'Προτιμάτε να μιλήσουμε;',
       colour_opts: ['Λευκό', 'Μαύρο', 'Ανθρακί', 'Ασημί (ανοδίωση)', 'Μπρονζέ', 'Απομίμηση ξύλου', 'Άλλο χρώμα RAL (γράψτε στις σημειώσεις)', 'Δεν είμαι σίγουρος'],
       glass_opts: ['Διπλό τζάμι', 'Τριπλό τζάμι', 'Μονό τζάμι', 'Laminated γυαλί ασφαλείας', 'Σκληρυμένο γυαλί', 'Αμμοβολή / θαμπό', 'Χωρίς γυαλί', 'Δεν είμαι σίγουρος'],
       opening_opts: ['Συρόμενο', 'Ανυψούμενο-συρόμενο', 'Ανοιγόμενο', 'Ανοιγοανακλινόμενο', 'Πτυσσόμενο', 'Σταθερό', 'Δεν είμαι σίγουρος'],
@@ -173,6 +185,10 @@
     pin: '<path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/>',
     clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
     arrow: '<path d="M4 12h15M13 6l6 6-6 6"/>',
+    plus: '<path d="M12 5v14M5 12h14"/>',
+    pen: '<path d="M4 20h4L19 9l-4-4L4 16v4z"/><path d="M13.5 6.5l4 4"/>',
+    copy: '<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/>',
+    trash: '<path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/>',
     back: '<path d="M20 12H5M11 6l-6 6 6 6"/>',
     chev: '<path d="M6 9l6 6 6-6"/>',
     right: '<path d="M9 6l6 6-6 6"/>',
@@ -594,94 +610,122 @@
   const newSid = () => (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(16).slice(2));
   let QB = { step: 'items', items: [], edit: -1, draft: null, cust: {}, sid: newSid(), ref: '', err: '' };
   try { const q = JSON.parse(localStorage.getItem(QB_KEY) || 'null'); if (q && Array.isArray(q.items)) QB = { ...QB, ...q, err: '', busy: false }; } catch (e) {}
+  if (QB.cust && QB.cust.phone && QB.cust.pnum == null) QB.cust.pnum = QB.cust.phone;
   const qbSave = () => { try { const { err, busy, ...keep } = QB; localStorage.setItem(QB_KEY, JSON.stringify(keep)); } catch (e) {} };
-  const blankItem = (o) => ({ cat: '', model: '', width: '', height: '', qty: 1, colour: '', glass: '', glassThk: '', opening: '', specs: '', notes: '', files: [], ...(o || {}) });
-  const catOpts = () => (S.productCats || []).filter((c) => t(c.name));
-  const modelsFor = (cat) => prods().filter((x) => x.cat === cat);
+  const blankItem = (o) => ({ grp: '', mp: 0, cat: '', model: '', width: '', height: '', qty: 1, colour: '', glass: '', glassThk: '', opening: '', specs: '', notes: '', files: [], ...(o || {}) });
   const optList = (vals, cur, blank) => (blank ? `<option value="">${esc(blank)}</option>` : '') + vals.map((v) => `<option ${v === cur ? 'selected' : ''}>${esc(v)}</option>`).join('');
-  const itemLine = (it) => [it.model || u('qb_model_other'), `${it.width} × ${it.height} mm`, `× ${it.qty}`, it.colour].filter(Boolean).join(' · ');
 
-  function qbItemForm() {
-    const d = QB.draft || blankItem(), n = QB.edit >= 0 ? QB.edit + 1 : QB.items.length + 1;
-    const ms = modelsFor(d.cat);
-    return `<div class="qb-card qb-edit" id="qb-edit">
-      <div class="qb-card-h"><h4>${u(QB.edit >= 0 ? 'qb_edit_product' : 'qb_product', { n })}</h4></div>
-      <div class="q-row">
-        <div class="f"><label for="qi-cat">${u('qb_cat')} *</label><select id="qi-cat" data-qi="cat"><option value="">${u('qb_choose')}</option>${catOpts().map((c) => `<option value="${esc(c.id)}" ${c.id === d.cat ? 'selected' : ''}>${esc(t(c.name))}</option>`).join('')}</select></div>
-        <div class="f"><label for="qi-model">${u('qb_model')}</label><select id="qi-model" data-qi="model">${ms.map((x) => `<option value="${esc(x.model)}" ${x.model === d.model ? 'selected' : ''}>${esc(x.model)} · ${esc(t(x.name))}</option>`).join('')}<option value="" ${!d.model || !ms.some((x) => x.model === d.model) ? 'selected' : ''}>${u('qb_model_other')}</option></select></div>
-      </div>
-      <div class="q-row three">
-        <div class="f"><label for="qi-w">${u('qb_width')} *</label><input id="qi-w" data-qi="width" type="number" inputmode="numeric" min="1" max="30000" step="1" value="${esc(d.width)}"></div>
-        <div class="f"><label for="qi-h">${u('qb_height')} *</label><input id="qi-h" data-qi="height" type="number" inputmode="numeric" min="1" max="30000" step="1" value="${esc(d.height)}"></div>
-        <div class="f"><label for="qi-q">${u('qb_qty')} *</label><input id="qi-q" data-qi="qty" type="number" inputmode="numeric" min="1" max="999" step="1" value="${esc(d.qty)}"></div>
-      </div>
-      <div class="q-row">
-        <div class="f"><label for="qi-col">${u('qb_colour')}</label><select id="qi-col" data-qi="colour">${optList(u('colour_opts'), d.colour, u('qb_choose'))}</select></div>
-        <div class="f"><label for="qi-open">${u('qb_opening')}</label><select id="qi-open" data-qi="opening">${optList(u('opening_opts'), d.opening, u('qb_choose'))}</select></div>
-      </div>
-      <div class="q-row">
-        <div class="f"><label for="qi-gl">${u('qb_glass')}</label><select id="qi-gl" data-qi="glass">${optList(u('glass_opts'), d.glass, u('qb_choose'))}</select></div>
-        <div class="f"><label for="qi-glt">${u('qb_glass_thk')}</label><input id="qi-glt" data-qi="glassThk" maxlength="40" placeholder="${esc(u('qb_glass_thk_ph'))}" value="${esc(d.glassThk)}"></div>
-      </div>
-      <div class="f"><label for="qi-sp">${u('qb_specs')}</label><textarea id="qi-sp" data-qi="specs" maxlength="500" rows="2" placeholder="${esc(u('qb_specs_ph'))}">${esc(d.specs)}</textarea></div>
-      <div class="f"><label for="qi-no">${u('qb_notes')}</label><textarea id="qi-no" data-qi="notes" maxlength="1000" rows="2" placeholder="${esc(u('qb_notes_ph'))}">${esc(d.notes)}</textarea></div>
-      <div class="f"><span class="lbl">${u('qb_files')}</span>
-        <div class="qb-files">${(d.files || []).map((f, k) => `<span class="qb-file">${icon(f.type === 'application/pdf' ? 'file' : 'images')}<b>${esc(f.name)}</b><button type="button" data-qf-del="${k}" aria-label="${u('qb_remove')}">&times;</button></span>`).join('')}
-          ${(d.files || []).length < 3 ? `<label class="btn btn-sm btn-ghost qb-up">${icon('download')}<span id="qb-up-t">${u('qb_add_file')}</span><input type="file" id="qb-file" accept="image/jpeg,image/png,image/webp,application/pdf,image/heic"></label>` : ''}</div>
-        <small class="qb-hint">${u('qb_files_hint')}</small></div>
-      <p class="q-status err" id="qb-ierr" role="alert"></p>
-      <div class="qb-actions"><button type="button" class="btn btn-accent" data-qb="save-item">${icon(QB.edit >= 0 ? 'check' : 'arrow')}${u(QB.edit >= 0 ? 'qb_save' : 'qb_add')}</button>${QB.items.length ? `<button type="button" class="btn btn-ghost" data-qb="cancel-item">${u('qb_cancel')}</button>` : ''}</div>
-    </div>`;
+  const QG = [
+    { id: 'doors', cats: ['doors'], img: 'img/commercial-doors.jpg', k: 'qg_doors' },
+    { id: 'windows', cats: ['windows'], img: 'img/house-windows.jpg', k: 'qg_windows' },
+    { id: 'sliding', cats: ['sliding-doors', 'sliding-windows', 'thermal'], img: 'img/sliding-door.jpg', k: 'qg_sliding' },
+    { id: 'glass', cats: ['glass'], img: 'img/glass-stairs.jpg', k: 'qg_glass' },
+    { id: 'custom', cats: ['custom'], img: 'img/alu-profiles.jpg', k: 'qg_custom' },
+  ];
+  const CC = [['+357', 'CY'], ['+30', 'GR'], ['+44', 'UK'], ['+49', 'DE'], ['+40', 'RO'], ['+359', 'BG'], ['+7', 'RU'], ['+380', 'UA'], ['+972', 'IL'], ['+961', 'LB'], ['+880', 'BD'], ['+91', 'IN'], ['+63', 'PH'], ['+1', 'US/CA']];
+  const grpOf = (cat) => QG.find((g) => g.cats.includes(cat)) || null;
+  const grpById = (id) => QG.find((g) => g.id === id) || null;
+  const grpModels = (g) => (g ? prods().filter((x) => g.cats.includes(x.cat)) : []);
+  const prodByModel = (m) => (m ? prods().find((x) => x.model === m) : null);
+  const itemImg = (it) => { const p = prodByModel(it.model); return src((p && p.image) || (grpOf(it.cat) || QG[4]).img); };
+  const itemTitle = (it) => { const p = prodByModel(it.model); return it.model ? `${it.model} – ${p ? t(p.name) : it.catName || ''}` : it.catName || pcat(it.cat); };
+  const itemMeta = (it) => [`${it.width} × ${it.height} mm`, it.colour, `${u('qb_qty_s')} ${it.qty}`].filter(Boolean).join(' · ');
+  const qbSummary = (list) => { const n = list.length, pcs = list.reduce((s, it) => s + (+it.qty || 0), 0); return `${n === 1 ? u('qb_item_1') : u('qb_items_n', { n })} · ${u('qb_pcs', { n: pcs })}`; };
+
+  function qbCard(it, k, mode) {
+    const extra = [it.glass, it.glassThk, it.opening].filter(Boolean).join(' · ');
+    const full = mode === 'review';
+    return `<article class="qb-item"><img class="qb-item-im" src="${esc(itemImg(it))}" alt="" loading="lazy">
+      <div class="qb-item-b"><div class="qb-item-t"><b>${esc(it.model || it.catName || pcat(it.cat))}</b>${mode === 'list' ? `<span class="qb-badge">${icon('check')}${u('qb_added')}</span>` : `<span class="qb-num">${k + 1}</span>`}</div>
+        ${it.model ? `<span class="qb-item-n">${esc((prodByModel(it.model) && t(prodByModel(it.model).name)) || it.catName || '')}</span>` : ''}<span class="qb-item-m">${esc(itemMeta(it))}</span>${extra ? `<small>${esc(extra)}</small>` : ''}${full && it.specs ? `<small>${esc(it.specs)}</small>` : ''}${full && it.notes ? `<small>${esc(it.notes)}</small>` : ''}${it.files && it.files.length ? `<small>${icon('images')} ${full ? esc(it.files.map((f) => f.name).join(', ')) : it.files.length}</small>` : ''}</div>
+      ${mode === 'list' ? `<div class="qb-item-a"><button type="button" data-qb="edit" data-k="${k}">${icon('pen')}${u('qb_edit')}</button><button type="button" data-qb="dup" data-k="${k}">${icon('copy')}${u('qb_dup')}</button><button type="button" class="del" data-qb="del" data-k="${k}">${icon('trash')}${u('qb_remove')}</button></div>` : ''}
+    </article>`;
   }
-  function qbList(editable) {
-    if (!QB.items.length) return '';
-    return `<div class="qb-list"><p class="qb-list-h">${u('qb_list', { n: QB.items.length })}</p>${QB.items.map((it, k) => `<div class="qb-item">
-      <span class="qb-n">${k + 1}</span>
-      <div class="qb-i-b"><b>${esc(it.catName || '')}</b><span>${esc(itemLine(it))}</span>${[it.glass, it.glassThk, it.opening].filter(Boolean).length ? `<small>${esc([it.glass, it.glassThk, it.opening].filter(Boolean).join(' · '))}</small>` : ''}${it.files && it.files.length ? `<small>${icon('images')} ${it.files.length}</small>` : ''}</div>
-      ${editable ? `<div class="qb-i-a"><button type="button" class="btn btn-sm btn-ghost" data-qb="edit" data-k="${k}">${u('qb_edit')}</button><button type="button" class="btn btn-sm btn-ghost qb-del" data-qb="del" data-k="${k}">${u('qb_remove')}</button></div>` : ''}
-    </div>`).join('')}</div>`;
+  function qbItemForm() {
+    const d = QB.draft || (QB.draft = blankItem());
+    const g = grpById(d.grp), ms = grpModels(g), n = QB.edit >= 0 ? QB.edit + 1 : QB.items.length + 1;
+    const ready = g && (!ms.length || d.mp);
+    const chips = (f, vals) => `<div class="qb-chips" role="group">${vals.map((v) => `<button type="button" class="qb-chip${d[f] === v ? ' on' : ''}" aria-pressed="${d[f] === v}" data-qb="chip" data-f="${f}" data-v="${esc(v)}">${esc(v)}</button>`).join('')}</div>`;
+    let h = `<div class="qb-sec" id="qb-edit"><div class="qb-sec-h"><h3>${QB.edit >= 0 ? u('qb_edit_product', { n }) : g ? u('qb_product', { n }) : u('qb_choose_prod')}</h3>${QB.items.length ? `<button type="button" class="qb-link" data-qb="cancel-item">${u('qb_cancel')}</button>` : ''}</div>`;
+    if (!g) {
+      h += `<div class="qb-cats">${QG.slice(0, 4).map((x) => `<button type="button" class="qb-cat" data-qb="grp" data-g="${x.id}"><span class="qb-cat-im"><img src="${esc(src(x.img))}" alt="" loading="lazy"></span><b>${u(x.k)}</b></button>`).join('')}</div>
+        <button type="button" class="qb-cat-more" data-qb="grp" data-g="custom"><span>${icon('sparkle')}</span><div><b>${u('qg_custom')}</b><small>${u('qb_other_cat')}</small></div>${icon('right')}</button>`;
+    } else {
+      h += `<div class="qb-picked"><img src="${esc(src(g.img))}" alt=""><div><small>${u('qb_cat')}</small><b>${u(g.k)}</b></div><button type="button" class="qb-link" data-qb="grp" data-g="">${u('qb_change')}</button></div>`;
+      if (ms.length) {
+        h += `<div class="qb-sub-h">${u('qb_choose_model')}</div><div class="qb-models">${ms.map((x) => `<button type="button" class="qb-model${d.mp && d.model === x.model ? ' on' : ''}" aria-pressed="${!!(d.mp && d.model === x.model)}" data-qb="model" data-m="${esc(x.model)}"><span class="qb-model-im"><img src="${esc(src(x.image))}" alt="" loading="lazy"></span><span class="qb-model-t"><b>${esc(x.model)}</b><span>${esc(t(x.name))}</span><small>${esc(pcat(x.cat))} · MUSKITA</small></span><span class="qb-radio"></span></button>`).join('')}
+          <button type="button" class="qb-model${d.mp && !d.model ? ' on' : ''}" aria-pressed="${!!(d.mp && !d.model)}" data-qb="model" data-m=""><span class="qb-model-im qb-ns">?</span><span class="qb-model-t"><b>${u('qb_not_sure')}</b><span>${u('qb_not_sure_sub')}</span></span><span class="qb-radio"></span></button></div>`;
+        if (g.id === 'sliding' && d.mp && !d.model) h += `<div class="qb-chips qb-stype">${['sliding-doors', 'sliding-windows'].map((c) => `<button type="button" class="qb-chip${d.cat === c ? ' on' : ''}" aria-pressed="${d.cat === c}" data-qb="stype" data-c="${c}">${esc(pcat(c))}</button>`).join('')}</div>`;
+      }
+    }
+    if (ready) {
+      h += `<div class="qb-box" id="qb-spec"><h4>${icon('ruler')}${u('qb_sec_size')}</h4>
+          <div class="qb-g2"><div class="f"><label for="qi-w">${u('qb_width')} *</label><input id="qi-w" data-qi="width" type="number" inputmode="numeric" min="1" max="30000" step="1" placeholder="2000" value="${esc(d.width)}"></div>
+          <div class="f"><label for="qi-h">${u('qb_height')} *</label><input id="qi-h" data-qi="height" type="number" inputmode="numeric" min="1" max="30000" step="1" placeholder="2100" value="${esc(d.height)}"></div></div>
+          <div class="f"><label for="qi-q">${u('qb_qty')} *</label><div class="qb-qty"><button type="button" data-qb="qty-" aria-label="−1">−</button><input id="qi-q" data-qi="qty" type="number" inputmode="numeric" min="1" max="999" step="1" value="${esc(d.qty)}"><button type="button" data-qb="qty+" aria-label="+1">+</button></div></div></div>
+        <div class="qb-box"><h4>${icon('palette')}${u('qb_sec_finish')}</h4>
+          <div class="f"><span class="lbl">${u('qb_colour')}</span>${chips('colour', u('colour_opts'))}</div>
+          <div class="f"><span class="lbl">${u('qb_glass')}</span>${chips('glass', u('glass_opts'))}</div>
+          <div class="f"><label for="qi-glt">${u('qb_glass_thk')}</label><input id="qi-glt" data-qi="glassThk" maxlength="40" placeholder="${esc(u('qb_glass_thk_ph'))}" value="${esc(d.glassThk)}"></div>
+          <div class="f"><span class="lbl">${u('qb_opening')}</span>${chips('opening', u('opening_opts'))}</div></div>
+        <div class="qb-box"><h4>${icon('info')}${u('qb_sec_extra')} <small>(${u('optional')})</small></h4>
+          <div class="f"><label for="qi-sp">${u('qb_specs')}</label><textarea id="qi-sp" data-qi="specs" maxlength="500" rows="2" placeholder="${esc(u('qb_specs_ph'))}">${esc(d.specs)}</textarea></div>
+          <div class="f"><label for="qi-no">${u('qb_notes')}</label><textarea id="qi-no" data-qi="notes" maxlength="1000" rows="2" placeholder="${esc(u('qb_notes_ph'))}">${esc(d.notes)}</textarea></div>
+          <div class="f"><span class="lbl">${u('qb_files')}</span>
+            <div class="qb-files">${(d.files || []).map((f, k) => `<span class="qb-file">${icon(f.type === 'application/pdf' ? 'file' : 'images')}<b>${esc(f.name)}</b><button type="button" data-qf-del="${k}" aria-label="${u('qb_remove')}">&times;</button></span>`).join('')}
+              ${(d.files || []).length < 3 ? `<label class="qb-up">${icon('download')}<span id="qb-up-t">${u('qb_add_file')}</span><input type="file" id="qb-file" accept="image/jpeg,image/png,image/webp,application/pdf,image/heic"></label>` : ''}</div>
+            <small class="qb-hint">${u('qb_files_hint')}</small></div></div>`;
+    }
+    h += `<p class="q-status err" id="qb-ierr" role="alert"></p>`;
+    if (ready) h += `<button type="button" class="btn btn-accent qb-go" data-qb="save-item">${icon(QB.edit >= 0 ? 'check' : 'plus')}${u(QB.edit >= 0 ? 'qb_save' : 'qb_add')}</button>`;
+    return h + '</div>';
   }
   function qbSteps() {
-    const order = ['items', 'details', 'review'];
+    const order = ['items', 'details', 'review'], go = ['to-items', 'to-details'];
     const at = order.indexOf(QB.step);
-    return `<ol class="qb-steps">${['qb_step1', 'qb_step2', 'qb_step3'].map((k, i) => `<li class="${i < at ? 'done' : i === at ? 'on' : ''}"><span>${i + 1}</span>${u(k)}</li>`).join('')}</ol>`;
+    return `<ol class="qb-steps">${['qb_step1', 'qb_step2', 'qb_step3'].map((k, i) => `<li class="${i < at ? 'done' : i === at ? 'on' : ''}"${i === at ? ' aria-current="step"' : ''}>${i < at ? `<button type="button" data-qb="${go[i]}">` : '<span>'}<i>${i < at ? icon('check') : i + 1}</i>${u(k)}${i < at ? '</button>' : '</span>'}</li>`).join('')}</ol>`;
   }
   function qbBody() {
     const c = QB.cust || {};
     if (QB.step === 'done') {
-      const wa = waLink(u('qb_wa_msg', { c: S.company.name, r: QB.ref }) + `\n${u('name')}: ${c.name || ''}\n${u('phone')}: ${c.phone || ''}\n` + QB.doneItems.map((it, k) => `${k + 1}. ${it.catName} · ${itemLine(it)}`).join('\n'));
+      const wa = waLink(u('qb_wa_msg', { c: S.company.name, r: QB.ref }) + `\n${u('name')}: ${c.name || ''}\n${u('phone')}: ${c.phone || ''}\n` + QB.doneItems.map((it, k) => `${k + 1}. ${itemTitle(it)} · ${itemMeta(it)}`).join('\n'));
       return `<div class="qb-done"><span class="qb-tick">${icon('check')}</span><h3>${u('qb_done_title')}</h3><p>${esc(u('qb_done_body', { r: QB.ref }))}</p><p class="qb-ref">${esc(QB.ref)}</p>
         <div class="qb-actions">${wa ? `<a class="btn btn-wa" href="${esc(wa)}" target="_blank" rel="noopener">${waIcon}${u('qb_done_wa')}</a>` : ''}<button type="button" class="btn btn-ghost" data-qb="new">${u('qb_new')}</button></div>${wa ? `<small class="qb-hint">${u('wa_note')}</small>` : ''}</div>`;
     }
     if (QB.step === 'details') {
-      const fld = (k, lbl, type, ac, req, extra) => `<div class="f"><label for="qc-${k}">${u(lbl)}${req ? ' *' : ` <small>(${u('optional')})</small>`}</label><input id="qc-${k}" data-qc="${k}" type="${type}" autocomplete="${ac}" maxlength="120" value="${esc(c[k] || '')}" ${extra || ''}></div>`;
-      return `${qbSteps()}<div class="qb-card">
-        <div class="q-row">${fld('name', 'qb_fullname', 'text', 'name', 1)}${fld('email', 'qb_email', 'email', 'email', 1)}</div>
-        <div class="q-row">${fld('phone', 'qb_phone', 'tel', 'tel', 1, `placeholder="${esc(u('qb_phone_ph'))}"`)}${fld('company', 'qb_company', 'text', 'organization', 0)}</div>
-        <div class="q-row">${fld('location', 'qb_location', 'text', 'address-level2', 0)}<div class="f"><label for="qc-type">${u('qb_ptype')} <small>(${u('optional')})</small></label><select id="qc-type" data-qc="type">${optList(u('ptype_opts'), c.type, u('qb_choose'))}</select></div></div>
-        <div class="f"><label for="qc-message">${u('qb_msg')} <small>(${u('optional')})</small></label><textarea id="qc-message" data-qc="message" maxlength="2000" rows="3">${esc(c.message || '')}</textarea></div>
+      const fld = (k, lbl, type, ac, req, extra) => `<div class="f"><label for="qc-${k}">${u(lbl)}${req ? ' *' : ''}</label><input id="qc-${k}" data-qc="${k}" type="${type}" autocomplete="${ac}" maxlength="120" value="${esc(c[k] || '')}" ${extra || ''}></div>`;
+      const cc = c.cc || '+357';
+      return `${qbSteps()}<div class="qb-sec"><div class="qb-sec-h"><h3>${u('qb_sec_contact')}</h3></div>
+          <div class="qb-g2">${fld('name', 'qb_fullname', 'text', 'name', 1)}${fld('email', 'qb_email', 'email', 'email', 1, 'inputmode="email"')}</div>
+          <div class="f"><label for="qc-pnum">${u('qb_phone')} *</label><div class="qb-phone"><select id="qc-cc" data-qc="cc" aria-label="${esc(u('qb_cc'))}">${CC.map(([v, n]) => `<option value="${v}" ${v === cc ? 'selected' : ''}>${v} ${n}</option>`).join('')}</select><input id="qc-pnum" data-qc="pnum" type="tel" inputmode="tel" autocomplete="tel" maxlength="30" placeholder="99 000000" value="${esc(c.pnum || '')}"></div></div>
+        </div>
+        <div class="qb-sec"><div class="qb-sec-h"><h3>${u('qb_sec_project')} <small>(${u('optional')})</small></h3></div>
+          <div class="qb-g2">${fld('company', 'qb_company', 'text', 'organization', 0)}${fld('location', 'qb_location', 'text', 'address-level2', 0)}</div>
+          <div class="f"><span class="lbl">${u('qb_ptype')}</span><div class="qb-chips">${u('ptype_opts').map((v) => `<button type="button" class="qb-chip${c.type === v ? ' on' : ''}" aria-pressed="${c.type === v}" data-qb="cchip" data-v="${esc(v)}">${esc(v)}</button>`).join('')}</div></div>
+          <div class="f"><label for="qc-message">${u('qb_msg')}</label><textarea id="qc-message" data-qc="message" maxlength="2000" rows="3">${esc(c.message || '')}</textarea></div>
+        </div>
         <label class="qb-check"><input type="checkbox" id="qc-privacy" data-qc="privacy" ${c.privacy ? 'checked' : ''}><span>${esc(u('qb_privacy', { c: S.company.name }))}</span></label>
         <p class="qb-hint">${u('qb_privacy_note')}</p>
         <p class="q-status err" id="qb-cerr" role="alert"></p>
-        <div class="qb-actions"><button type="button" class="btn btn-ghost" data-qb="to-items">${icon('back')}${u('qb_back')}</button><button type="button" class="btn btn-accent" data-qb="to-review">${u('qb_review')}${icon('arrow')}</button></div>
-      </div>`;
+        <div class="qb-nav"><button type="button" class="btn btn-ghost" data-qb="to-items">${icon('back')}${u('qb_back')}</button><button type="button" class="btn btn-accent" data-qb="to-review">${u('qb_review')}${icon('arrow')}</button></div>`;
     }
     if (QB.step === 'review') {
       const r = (k, v) => (v ? `<div><dt>${u(k)}</dt><dd>${esc(v)}</dd></div>` : '');
-      return `${qbSteps()}<div class="qb-card">
-        <div class="qb-rev-h"><h4>${u('qb_list', { n: QB.items.length })}</h4><button type="button" class="link-sm" data-qb="to-items">${u('qb_edit')}</button></div>
-        ${QB.items.map((it, k) => `<div class="qb-rev-item"><b>${k + 1}. ${esc(it.catName)}${it.model ? ' · ' + esc(it.model) : ''}</b><span>${esc(`${it.width} × ${it.height} mm · × ${it.qty}`)}</span><small>${esc([it.colour, it.glass, it.glassThk, it.opening].filter(Boolean).join(' · '))}</small>${it.specs ? `<small>${esc(it.specs)}</small>` : ''}${it.notes ? `<small>${esc(it.notes)}</small>` : ''}${it.files.length ? `<small>${icon('images')} ${esc(it.files.map((f) => f.name).join(', '))}</small>` : ''}</div>`).join('')}
-        <div class="qb-rev-h"><h4>${u('qb_customer')}</h4><button type="button" class="link-sm" data-qb="to-details">${u('qb_edit')}</button></div>
-        <dl class="qb-dl">${r('qb_fullname', c.name)}${r('qb_email', c.email)}${r('qb_phone', c.phone)}${r('qb_company', c.company)}${r('qb_location', c.location)}${r('qb_ptype', c.type)}${r('qb_msg', c.message)}</dl>
+      return `${qbSteps()}<div class="qb-sec"><div class="qb-sec-h"><h3>${u('qb_list_t')}</h3><button type="button" class="qb-link" data-qb="to-items">${u('qb_edit')}</button></div>
+          <p class="qb-count">${esc(qbSummary(QB.items))}</p>
+          <div class="qb-items">${QB.items.map((it, k) => qbCard(it, k, 'review')).join('')}</div></div>
+        <div class="qb-sec"><div class="qb-sec-h"><h3>${u('qb_customer')}</h3><button type="button" class="qb-link" data-qb="to-details">${u('qb_edit')}</button></div>
+          <dl class="qb-dl">${r('qb_fullname', c.name)}${r('qb_email', c.email)}${r('qb_phone', c.phone)}${r('qb_company', c.company)}${r('qb_location', c.location)}${r('qb_ptype', c.type)}${r('qb_msg', c.message)}</dl></div>
         <div class="hp" aria-hidden="true"><input id="qb-web" tabindex="-1" autocomplete="off"></div>
         <p class="q-status" id="qb-serr" role="status" aria-live="polite">${esc(QB.err || '')}</p>
-        <div class="qb-actions"><button type="button" class="btn btn-ghost" data-qb="to-details">${icon('back')}${u('qb_back')}</button><button type="button" class="btn btn-accent" id="qb-send" data-qb="submit" ${QB.busy ? 'disabled' : ''}>${u(QB.busy ? 'qb_sending' : 'qb_submit')}${icon('arrow')}</button></div>
-      </div>`;
+        <div class="qb-nav"><button type="button" class="btn btn-ghost" data-qb="to-details">${icon('back')}${u('qb_back')}</button><button type="button" class="btn btn-accent" id="qb-send" data-qb="submit" ${QB.busy ? 'disabled' : ''}>${u(QB.busy ? 'qb_sending' : 'qb_submit')}${icon('arrow')}</button></div>`;
     }
-    const editing = QB.edit >= 0 || QB.draft || !QB.items.length;
-    return `${qbSteps()}${editing ? qbItemForm() : ''}${qbList(true)}
-      ${!editing ? `<div class="qb-actions"><button type="button" class="btn btn-ghost" data-qb="add-more">+ ${u('qb_add_more')}</button><button type="button" class="btn btn-accent" data-qb="to-details">${u('qb_continue')}${icon('arrow')}</button></div>` : ''}
-      <p class="q-status err" id="qb-lerr" role="alert"></p>`;
+    const editing = QB.draft || !QB.items.length;
+    const list = QB.items.length ? `<div class="qb-sec"><div class="qb-sec-h"><h3>${u('qb_list_t')}</h3><span class="qb-count">${esc(qbSummary(QB.items))}</span></div>
+        <div class="qb-items">${QB.items.map((it, k) => qbCard(it, k, editing ? 'view' : 'list')).join('')}</div>
+        ${editing ? '' : `<button type="button" class="qb-addmore" data-qb="add-more">${icon('plus')}${u('qb_add_more')}</button>`}</div>` : '';
+    if (editing) return `${qbSteps()}${qbItemForm()}${QB.edit >= 0 ? '' : list}`;
+    return `${qbSteps()}${list}<button type="button" class="btn btn-accent qb-go" data-qb="to-details">${u('qb_cont_details')}${icon('arrow')}</button><p class="q-status err" id="qb-lerr" role="alert"></p>`;
   }
   function qbRender(focus) {
     const b = $('#qb');
@@ -698,13 +742,16 @@
   function qbReadCust() {
     const c = QB.cust || (QB.cust = {});
     $$('[data-qc]').forEach((el) => { c[el.dataset.qc] = el.type === 'checkbox' ? el.checked : el.value.trim(); });
+    const pn = (c.pnum || '').trim();
+    c.phone = /^(\+|00)/.test(pn) ? pn : pn ? `${c.cc || '+357'} ${pn.replace(/^0+/, '')}` : '';
     return c;
   }
   function qbScrollTop() { const q = $('#quote'); if (q && q.getBoundingClientRect().top < 0) q.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }); }
   function qbStart(preset) {
     QB.step = 'items';
     QB.edit = -1;
-    QB.draft = blankItem(preset);
+    const g = grpOf(preset && preset.cat);
+    QB.draft = blankItem({ ...preset, grp: g ? g.id : 'custom', mp: 1 });
     qbRender();
     if (location.hash === '#quote') route(); else location.hash = 'quote';
     setTimeout(() => { const w = $('#qi-w'); if (w) w.focus({ preventScroll: true }); }, 900);
@@ -736,19 +783,36 @@
       return null;
     }
   }
+  const qbGo = (sel) => { const e = $(sel); if (e && (e.getBoundingClientRect().top < 70 || e.getBoundingClientRect().top > innerHeight * 0.7)) e.scrollIntoView({ block: 'start', behavior: reduce ? 'auto' : 'smooth' }); };
   async function qbAction(a, el) {
-    if (a === 'save-item') {
-      const d = qbReadItem();
+    if (a === 'grp') {
+      const d = qbReadItem(), g = grpById(el.dataset.g);
+      d.grp = g ? g.id : ''; d.model = ''; d.mp = g && !grpModels(g).length ? 1 : 0; d.cat = g ? g.cats[0] : '';
+      qbRender(); qbGo('#qb-edit');
+    } else if (a === 'model') {
+      const d = qbReadItem(), g = grpById(d.grp), p = prodByModel(el.dataset.m);
+      const first = !d.mp;
+      d.model = p ? p.model : ''; d.mp = 1; d.cat = p ? p.cat : g ? g.cats[0] : 'custom';
+      qbRender(); if (first) qbGo('#qb-spec');
+    } else if (a === 'stype') { const d = qbReadItem(); d.cat = el.dataset.c; qbRender(); }
+    else if (a === 'chip') { const d = qbReadItem(), f = el.dataset.f, v = el.dataset.v; d[f] = d[f] === v ? '' : v; qbRender(); }
+    else if (a === 'cchip') { const c = qbReadCust(), v = el.dataset.v; c.type = c.type === v ? '' : v; qbRender(); }
+    else if (a === 'qty-' || a === 'qty+') { const d = qbReadItem(); d.qty = Math.min(999, Math.max(1, (Math.round(+d.qty) || 1) + (a === 'qty+' ? 1 : -1))); const q = $('#qi-q'); if (q) q.value = d.qty; qbSave(); }
+    else if (a === 'save-item') {
+      const d = qbReadItem(), g = grpById(d.grp);
       d.width = Math.round(+d.width); d.height = Math.round(+d.height); d.qty = Math.round(+d.qty);
-      if (!d.cat || !(d.width > 0) || !(d.height > 0) || !(d.qty >= 1)) { $('#qb-ierr').textContent = u('qb_need'); return; }
+      const er = $('#qb-ierr');
+      if (!g) { if (er) er.textContent = u('qb_need_prod'); return; }
+      if (grpModels(g).length && !d.mp) { if (er) er.textContent = u('qb_need_model'); return; }
+      if (!d.cat || !(d.width > 0) || !(d.height > 0) || !(d.qty >= 1)) { if (er) er.textContent = u('qb_need'); const f = !(d.width > 0) ? '#qi-w' : !(d.height > 0) ? '#qi-h' : '#qi-q'; if ($(f)) $(f).focus(); return; }
       d.catName = pcat(d.cat);
       if (QB.edit >= 0) QB.items[QB.edit] = d; else QB.items.push(d);
       QB.edit = -1; QB.draft = null;
-      qbRender();
-      const l = $('.qb-list'); if (l) l.scrollIntoView({ block: 'nearest', behavior: reduce ? 'auto' : 'smooth' });
-    } else if (a === 'cancel-item') { QB.edit = -1; QB.draft = null; qbRender(); }
-    else if (a === 'add-more') { QB.edit = -1; QB.draft = blankItem(); qbRender('#qi-cat'); }
-    else if (a === 'edit') { QB.edit = +el.dataset.k; QB.draft = JSON.parse(JSON.stringify(QB.items[QB.edit])); qbRender('#qi-cat'); }
+      qbRender(); qbGo('#qb');
+    } else if (a === 'cancel-item') { QB.edit = -1; QB.draft = null; qbRender(); qbGo('#qb'); }
+    else if (a === 'add-more') { QB.edit = -1; QB.draft = blankItem(); qbRender(); qbGo('#qb-edit'); }
+    else if (a === 'edit') { QB.edit = +el.dataset.k; const d = JSON.parse(JSON.stringify(QB.items[QB.edit])); const g = grpOf(d.cat); QB.draft = { ...d, grp: d.grp || (g ? g.id : 'custom'), mp: 1 }; qbRender(); qbGo('#qb-edit'); }
+    else if (a === 'dup') { const k = +el.dataset.k; QB.items.splice(k + 1, 0, JSON.parse(JSON.stringify(QB.items[k]))); qbRender(); }
     else if (a === 'del') { QB.items.splice(+el.dataset.k, 1); if (!QB.items.length) { QB.draft = blankItem(); QB.edit = -1; } qbRender(); }
     else if (a === 'to-items') { if (QB.step === 'details') qbReadCust(); QB.step = 'items'; qbRender(); qbScrollTop(); }
     else if (a === 'to-details') {
@@ -757,7 +821,7 @@
       QB.step = 'details'; qbRender('#qc-name'); qbScrollTop();
     } else if (a === 'to-review') {
       const c = qbReadCust(), er = $('#qb-cerr');
-      const bad = !c.name ? ['qb_err_name', '#qc-name'] : !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(c.email || '') ? ['qb_err_email', '#qc-email'] : !/^\s*(\+|00)/.test(c.phone || '') || (c.phone || '').replace(/\D/g, '').length < 8 ? ['qb_err_phone', '#qc-phone'] : !c.privacy ? ['qb_err_privacy', '#qc-privacy'] : null;
+      const bad = !c.name ? ['qb_err_name', '#qc-name'] : !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(c.email || '') ? ['qb_err_email', '#qc-email'] : !/^\s*(\+|00)/.test(c.phone || '') || (c.phone || '').replace(/\D/g, '').length < 8 ? ['qb_err_phone', '#qc-pnum'] : !c.privacy ? ['qb_err_privacy', '#qc-privacy'] : null;
       if (bad) { er.textContent = u(bad[0]); $(bad[1]).focus(); return; }
       QB.step = 'review'; QB.err = ''; qbRender(); qbScrollTop();
     } else if (a === 'submit') {
@@ -786,9 +850,11 @@
     if (c.email) lines.push(`<a class="q-line" href="mailto:${esc(c.email)}">${icon('mail')}<div><small>${u('email')}</small><span>${esc(c.email)}</span></div></a>`);
     if (t(c.address)) lines.push(`<div class="q-line">${icon('pin')}<div><small>${u('address')}</small><span>${esc(t(c.address))}</span></div></div>`);
     if (t(c.hours)) lines.push(`<div class="q-line">${icon('clock')}<div><small>${u('hours')}</small><span>${esc(t(c.hours))}</span></div></div>`);
-    return `<section class="quote" id="quote"><div class="wrap q-grid">
-      <div class="rv q-side"><p class="eyebrow">${u('quote_eyebrow')}</p><h2>${u('qb_title')}</h2><p class="lead">${u('qb_sub')}</p><div class="q-lines">${lines.join('')}</div></div>
-      <div class="qb rv" id="qb">${qbBody()}</div>
+    return `<section class="quote" id="quote"><div class="wrap qb-wrap">
+      <div class="qb-shell rv"><div class="qb-top"><span class="qb-brand">${esc(c.name)}</span><span class="qb-pill">${u('qb_eyebrow')}</span></div>
+        <h2>${u('qb_h')}</h2><p class="qb-lead">${u('qb_lead')}</p>
+        <div class="qb" id="qb">${qbBody()}</div></div>
+      <aside class="qb-contact rv"><p class="eyebrow">${u('quote_eyebrow')}</p><h3>${u('qb_talk')}</h3><div class="q-lines">${lines.join('')}</div></aside>
     </div></section>`;
   }
 
@@ -1501,7 +1567,6 @@
   });
   document.addEventListener('focusin', (e) => { if (e.target.classList.contains('sq')) runSearch(e.target.closest('[data-search]')); });
   document.addEventListener('change', async (e) => {
-    if (e.target.id === 'qi-cat') { const d = qbReadItem(); d.model = (modelsFor(d.cat)[0] || {}).model || ''; qbRender('#qi-cat'); return; }
     if (e.target.dataset && e.target.dataset.qi) { qbReadItem(); qbSave(); return; }
     if (e.target.dataset && e.target.dataset.qc) { qbReadCust(); qbSave(); return; }
     if (e.target.id === 'qb-file' && e.target.files[0]) { const d = qbReadItem(); const f = await qbUpload(e.target.files[0]); if (f) { d.files = [...(d.files || []), f].slice(0, 3); qbRender(); } return; }
