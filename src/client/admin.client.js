@@ -43,6 +43,7 @@
     eye: '<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
     plus: '<path d="M12 5v14M5 12h14"/>',
     right: '<path d="M9 6l6 6-6 6"/>',
+    trash: '<path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/>',
   };
   const ni = (n) => `<svg class="ni" viewBox="0 0 24 24" aria-hidden="true">${NI[n] || ''}</svg>`;
   const ICONS = ['motor', 'remote', 'maximize', 'shield', 'thermo', 'droplet', 'lock', 'sun', 'wind', 'layers', 'ruler', 'sparkle', 'building', 'fold', 'arrowsV', 'arrowsH', 'grid', 'window', 'door', 'palette', 'key', 'home', 'check', 'diamond', 'globe', 'users', 'handshake'];
@@ -126,6 +127,7 @@
     return cardTarget(card) || PV_TAB[tab] || 'top';
   }
   let pvLast = '', pvPending = '', lastCard = null;
+  const needTr = new Set(), manualEl = new Set(), grOpen = new Set();
   function previewGo(target) {
     target = target || pvTarget();
     pvLast = target;
@@ -139,14 +141,21 @@
   const fld = (label, inner, hint) => `<div class="fld">${label ? `<label>${esc(label)}</label>` : ''}${inner}${hint ? `<small class="muted">${esc(hint)}</small>` : ''}</div>`;
   const txt = (p, label, type = 'text', ph = '', hint = '') => fld(label, `<input type="${type}" data-path="${p}" value="${esc(val(p))}" placeholder="${esc(ph)}">`, hint);
   const area = (p, label) => fld(label, `<textarea data-path="${p}">${esc(val(p))}</textarea>`);
-  const pair = (p, label, multi) => fld(label, `<div class="pair">${['en', 'el'].map((l) => `<div class="lang">${multi ? `<textarea data-path="${p}.${l}" rows="3">${esc(val(p + '.' + l))}</textarea>` : `<input type="text" data-path="${p}.${l}" value="${esc(val(p + '.' + l))}">`}<span>${l === 'en' ? 'EN' : 'ΕΛ'}</span></div>`).join('')}</div>`);
+  // Bilingual text: you write English; the Greek line under it is translated automatically when you save.
+  const grLine = (p) => {
+    const elv = String(val(p + '.el') || ''), pend = needTr.has(getP(site, p));
+    if (!elv && !String(val(p + '.en') || '').trim() && !grOpen.has(p)) return '';
+    if (grOpen.has(p)) return `<div class="gr open"><span class="gr-l">ΕΛ</span><input type="text" data-path="${p}.el" value="${esc(elv)}" aria-label="Greek"><button type="button" class="gr-b" data-act="gr-done" data-p="${p}">Done</button></div>`;
+    return `<div class="gr"><span class="gr-l">ΕΛ</span><span class="gr-t${elv && !pend ? '' : ' none'}" data-grt="${p}">${esc(pend ? 'Greek updates when you save' : elv || 'Greek is added when you save')}</span><button type="button" class="gr-b" data-act="gr-edit" data-p="${p}">Edit</button></div>`;
+  };
+  const pair = (p, label, multi) => fld(label, `${multi ? `<textarea data-path="${p}.en" rows="3">${esc(val(p + '.en'))}</textarea>` : `<input type="text" data-path="${p}.en" value="${esc(val(p + '.en'))}">`}${grLine(p)}`);
   const check = (p, label) => `<label class="check"><input type="checkbox" data-path="${p}" ${val(p) ? 'checked' : ''}>${esc(label)}</label>`;
   const sel = (p, label, opts) => fld(label, `<select data-path="${p}">${opts.map(([v, l]) => `<option value="${esc(v)}" ${String(val(p)) === String(v) ? 'selected' : ''}>${esc(l)}</option>`).join('')}</select>`);
   const imgPick = (p, label, removable) => fld(label, `<div class="pick">${val(p) ? `<img src="${esc(src(val(p)))}" alt="">` : '<span class="noimg">No photo</span>'}<button type="button" class="b b-sm" data-act="pick" data-path="${p}">${val(p) ? 'Change' : 'Choose'} photo</button>${removable && val(p) ? `<button type="button" class="b b-sm b-danger" data-act="clear" data-path="${p}">Remove</button>` : ''}</div>`);
   const itemHead = (listPath, i, len, title) => `<div class="item-head"><span class="grow">${esc(title)}</span>
     <button type="button" class="b b-sm b-icon" data-act="move" data-path="${listPath}" data-i="${i}" data-d="-1" ${i === 0 ? 'disabled' : ''} aria-label="Move up">↑</button>
     <button type="button" class="b b-sm b-icon" data-act="move" data-path="${listPath}" data-i="${i}" data-d="1" ${i === len - 1 ? 'disabled' : ''} aria-label="Move down">↓</button>
-    <button type="button" class="b b-sm b-danger" data-act="del" data-path="${listPath}" data-i="${i}">Remove</button></div>`;
+    <button type="button" class="b b-sm b-icon b-danger" data-act="del" data-path="${listPath}" data-i="${i}" aria-label="Remove" title="Remove">${ni('trash')}</button></div>`;
   const addBtn = (listPath, tpl, label) => `<div><button type="button" class="b b-sm" data-act="add" data-path="${listPath}" data-tpl="${tpl}">+ ${esc(label)}</button></div>`;
 
   /* ---------- tabs ---------- */
@@ -207,9 +216,13 @@
           ${w.images && w.images[0] ? `<img src="${esc(src(w.images[0]))}" alt="">` : '<span class="noimg" style="width:64px;height:48px">No photo</span>'}
           <div style="min-width:0"><div class="nm">${esc(w.title?.en || w.title?.el || 'Untitled')} ${isNew(w) ? '<em class="tag" style="background:#c98a3c;color:#1a1206">new</em>' : ''}</div><div class="sub">${esc(catLabel(w.cat))}${w.date ? ' · ' + esc(w.date) : ''} · ${(w.images || []).length} photo${(w.images || []).length === 1 ? '' : 's'}</div></div>
           <div class="acts"><button type="button" class="b b-sm b-icon" data-act="move" data-path="works" data-i="${i}" data-d="-1" ${i === 0 ? 'disabled' : ''} aria-label="Move up">↑</button><button type="button" class="b b-sm b-icon" data-act="move" data-path="works" data-i="${i}" data-d="1" ${i === L.length - 1 ? 'disabled' : ''} aria-label="Move down">↓</button><button type="button" class="b b-sm b-pri" data-act="edit-work" data-i="${i}">Edit</button></div>
-        </div>`).join('') || '<p class="empty">No work yet. The gallery is hidden until you add one.</p>'}</div></div>
-      <div class="card" id="cats-card"><h2>Gallery categories</h2><p class="hint">The filter buttons above the gallery. A category shows on the website once at least one work uses it.</p>
-        <div class="list">${C.map((c, i) => `<div class="item">${itemHead('galleryCats', i, C.length, c.name?.en || 'Category ' + (i + 1))}${pair(`galleryCats.${i}.name`, 'Name')}</div>`).join('') || '<p class="empty">No categories.</p>'}</div>
+        </div>`).join('') || '<p class="empty">No work yet. The gallery is hidden until you add one.</p>'}</div></div>`;
+  }
+  function vCats() {
+    const C = site.galleryCats;
+    return `<div class="card" id="cats-card"><h2>Gallery categories</h2><p class="hint">The filter buttons above the gallery. A category shows once a work uses it.</p>
+        <div class="list">${C.map((c, i) => `<div class="cat-row"><div class="cat-in"><input type="text" data-path="galleryCats.${i}.name.en" value="${esc(c.name?.en || '')}" placeholder="Category name" aria-label="Category ${i + 1}">${grLine(`galleryCats.${i}.name`)}</div>
+          <div class="acts"><button type="button" class="b b-sm b-icon" data-act="move" data-path="galleryCats" data-i="${i}" data-d="-1" ${i === 0 ? 'disabled' : ''} aria-label="Move up">↑</button><button type="button" class="b b-sm b-icon" data-act="move" data-path="galleryCats" data-i="${i}" data-d="1" ${i === C.length - 1 ? 'disabled' : ''} aria-label="Move down">↓</button><button type="button" class="b b-sm b-icon b-danger" data-act="del" data-path="galleryCats" data-i="${i}" aria-label="Remove">${ni('trash')}</button></div></div>`).join('') || '<p class="empty">No categories.</p>'}</div>
         ${addBtn('galleryCats', 'cat', 'Add category')}</div>`;
   }
   function vWorkEdit(i) {
@@ -490,21 +503,19 @@
     if (b) b.setAttribute('aria-expanded', String(open));
   }
   function goTab(k) {
-    const toCats = k === 'cats';
-    tab = toCats ? 'works' : k;
+    tab = k;
     editIdx = null;
     editWork = null;
     editProd = null;
     renderTabs();
     renderEditor();
     scrollTo(0, 0);
-    if (toCats) requestAnimationFrame(() => { const c = $('#cats-card'); if (c) c.scrollIntoView({ block: 'start' }); });
     if (tab === 'inbox') loadQuotes();
     if (tab === 'reviews') { loadReviews(); loadUReviews(); }
     if (tab === 'dash') { loadQuotes(true); loadReviews(); loadUReviews(); }
-    previewGo(PV_TAB[toCats ? 'cats' : tab] || 'top');
+    previewGo(PV_TAB[tab] || 'top');
     const pt = $('#page-title');
-    if (pt) pt.textContent = toCats ? NAV_NAME.cats : NAV_NAME[tab] || '';
+    if (pt) pt.textContent = NAV_NAME[tab] || '';
   }
   function renderTabs() {
     const nav = $('#side-nav');
@@ -514,7 +525,7 @@
     document.title = (quoteCount ? '(' + quoteCount + ') ' : '') + 'Admin · Alu MRK TriEdge';
   }
   function renderEditor() {
-    const views = { dash: vDash, design: vDesign, company: vCompany, hero: vHero, systems: vSystems, works: vWorks, products: vProducts, reviews: vReviews, content: vContent, inbox: vInbox, media: vMedia, account: vAccount };
+    const views = { cats: vCats, dash: vDash, design: vDesign, company: vCompany, hero: vHero, systems: vSystems, works: vWorks, products: vProducts, reviews: vReviews, content: vContent, inbox: vInbox, media: vMedia, account: vAccount };
     const y = scrollY;
     $('#editor').innerHTML = views[tab]();
     $('#main').classList.toggle('no-prev', tab === 'dash' || tab === 'inbox' || tab === 'media' || tab === 'account');
@@ -552,13 +563,38 @@
       if (tab === 'reviews' || tab === 'dash') renderEditor();
     } catch (e) { toast(e.message, 'err'); }
   }
+  // finds every English/Greek text pair in the site data
+  function eachT(o, fn) {
+    if (!o || typeof o !== 'object') return;
+    if (Array.isArray(o)) { o.forEach((x) => eachT(x, fn)); return; }
+    const k = Object.keys(o);
+    if (k.length === 2 && 'en' in o && 'el' in o && typeof o.en === 'string') { fn(o); return; }
+    k.forEach((x) => eachT(o[x], fn));
+  }
+  async function autoGreek(b) {
+    const jobs = [];
+    eachT(site, (o) => { if (o.en.trim() && !manualEl.has(o) && (needTr.has(o) || !String(o.el || '').trim())) jobs.push(o); });
+    if (!jobs.length) return;
+    b.textContent = 'Translating…';
+    try {
+      for (let i = 0; i < jobs.length; i += 15) {
+        const part = jobs.slice(i, i + 15);
+        const j = await api('/api/admin/translate', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ texts: part.map((o) => o.en) }) });
+        (j.out || []).forEach((v, k) => { if (v && part[k]) { part[k].el = v; needTr.delete(part[k]); } });
+      }
+    } catch (e) { toast('Greek could not be translated right now (' + e.message + '). English is saved; try Save again later.', 'err'); }
+    b.textContent = 'Saving…';
+  }
   async function save() {
     const b = $('#save');
     b.disabled = true;
     b.textContent = 'Saving…';
     try {
+      await autoGreek(b);
       await api('/api/admin/site', { method: 'PUT', headers: { 'content-type': 'application/json' }, body: JSON.stringify(site) });
       dirty = false;
+      manualEl.clear();
+      if (!$('.qdoc-wrap:not([hidden])')) renderEditor();
       const s = $('#state');
       s.textContent = 'All changes saved';
       s.classList.remove('dirty');
@@ -656,6 +692,13 @@
     else v = el.value;
     if (p.endsWith('.slug')) { v = String(v).toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-+/, '').slice(0, 60); }
     setP(site, p, v);
+    if (/\.(en|el)$/.test(p)) {
+      const o = getP(site, p.slice(0, -3));
+      if (o && typeof o === 'object') {
+        if (p.endsWith('.en')) { if (!manualEl.has(o)) needTr.add(o); const g = $(`[data-grt="${p.slice(0, -3)}"]`); if (g) { g.textContent = 'Greek updates when you save'; g.classList.add('none'); } }
+        else { manualEl.add(o); needTr.delete(o); }
+      }
+    }
     if (p.startsWith('theme.')) $$(`[data-path="${p}"]`).forEach((x) => { if (x !== el) x.value = v; });
     markDirty();
     if (el.type === 'checkbox' && ((tab === 'systems' && editIdx == null) || (tab === 'products' && editProd == null))) renderEditor();
@@ -763,6 +806,8 @@
         site.works.splice(+b.dataset.i, 1); editWork = null; markDirty(); renderEditor(); toast('Work deleted. Press Save to apply.'); break;
       }
       case 'save': save(); break;
+      case 'gr-edit': grOpen.add(b.dataset.p); renderEditor(); { const i = $(`[data-path="${b.dataset.p}.el"]`); if (i) i.focus(); } break;
+      case 'gr-done': grOpen.delete(b.dataset.p); renderEditor(); break;
       case 'pv-card': {
         const card = b.closest('.card');
         lastCard = card;

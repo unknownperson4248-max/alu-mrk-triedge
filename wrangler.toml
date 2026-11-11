@@ -13,10 +13,17 @@ rules = [
 binding = "KV"
 id = "ff49aec19dfb4db68a4eaabbc0f35200"
 
+# Cloudflare Workers AI: translates admin text from English to Greek.
+[ai]
+binding = "AI"
+
 # Preview copy of the site for reviewing design changes (separate data, does not touch the live site).
 [env.preview]
 name = "alu-mrk-triedge-preview"
 workers_dev = true
+
+[env.preview.ai]
+binding = "AI"
 
 [[env.preview.kv_namespaces]]
 binding = "KV"

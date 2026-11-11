@@ -529,6 +529,46 @@ async function handleUserReviews(req, env, url, path) {
   return json({ ok: false, error: 'not_found' }, 404);
 }
 
+// English -> Greek with Cloudflare Workers AI. A language model that knows the trade terms does the work;
+// a plain translation model is the fallback. Results are kept in KV so the same text is translated once.
+const TR_MODEL = '@cf/meta/llama-4-scout-17b-16e-instruct';
+const TR_PROMPT = 'You translate website text for Alu MRK TriEdge Ltd, an aluminium windows, doors and glass company in Cyprus, from English to Greek (as used in Cyprus). Use the correct trade terms, for example: sliding = συρόμενο, lift and slide = ανυψούμενο-συρόμενο, folding = πτυσσόμενο, hinged = ανοιγόμενο, railing = κάγκελο, partition = χώρισμα, curtain wall = υαλοπέτασμα, facade = πρόσοψη, thermal break = θερμοδιακοπή, double glazing = διπλά τζάμια, profile = προφίλ, shopfront = βιτρίνα. Keep brand names, company names, model codes (such as MU 2000), numbers, units, emails and URLs unchanged. Translate every word. Keep line breaks. Short labels stay short; use the imperative for buttons (for example: Get a free site survey = Ζητήστε δωρεάν αυτοψία). Reply with only a JSON array of strings: the translations, in the same order and with the same length as the input array.';
+async function trKey(s) { return 'tr:el:' + (await sha256hex(TR_MODEL + '|' + s)).slice(0, 40); }
+async function m2mGreek(env, s) {
+  const out = [];
+  for (const line of s.split('\n')) {
+    if (!line.trim()) { out.push(line); continue; }
+    const r = await env.AI.run('@cf/meta/m2m100-1.2b', { text: line, source_lang: 'en', target_lang: 'el' });
+    out.push(String((r && r.translated_text) || '').trim());
+  }
+  return out.join('\n').trim();
+}
+async function toGreekBatch(env, texts) {
+  const out = texts.map(() => '');
+  const miss = [];
+  for (let k = 0; k < texts.length; k++) {
+    if (!texts[k].trim()) continue;
+    const hit = await env.KV.get(await trKey(texts[k]));
+    if (hit) out[k] = hit; else miss.push(k);
+  }
+  if (!miss.length) return out;
+  let got = null;
+  try {
+    const r = await env.AI.run(TR_MODEL, { messages: [{ role: 'system', content: TR_PROMPT }, { role: 'user', content: JSON.stringify(miss.map((k) => texts[k])) }], max_tokens: 4000, temperature: 0.1 });
+    let v = r && (r.response != null ? r.response : r.choices && r.choices[0] && r.choices[0].message && r.choices[0].message.content);
+    if (typeof v === 'string') { const a = v.indexOf('['), b = v.lastIndexOf(']'); v = a >= 0 && b > a ? JSON.parse(v.slice(a, b + 1)) : null; }
+    if (Array.isArray(v) && v.length === miss.length && v.every((x) => typeof x === 'string')) got = v;
+  } catch (e) { got = null; }
+  for (let n = 0; n < miss.length; n++) {
+    const k = miss[n];
+    let v = got ? got[n].trim() : '';
+    if (!v) { try { v = await m2mGreek(env, texts[k]); } catch (e) { v = ''; } }
+    out[k] = v;
+    if (v) await env.KV.put(await trKey(texts[k]), v);
+  }
+  return out;
+}
+
 async function listMedia(env) {
   const out = [];
   let cursor;
@@ -659,6 +699,14 @@ async function handleAdminApi(req, env, url, path) {
       photos.push('media/' + mid);
     }
     return json({ ok: true, review: { id: r.id, name: r.name, place: r.place || '', title: r.title || '', project: r.project || '', rating: r.rating, text: r.text, ts: r.ts, photos } });
+  }
+  if (path === '/api/admin/translate' && method === 'POST') {
+    if (!env.AI) return json({ ok: false, error: 'Translation is not available' }, 503);
+    let b;
+    try { b = await req.json(); } catch { return json({ ok: false, error: 'Bad request' }, 400); }
+    const texts = (Array.isArray(b.texts) ? b.texts : []).slice(0, 20).map((x) => String(x || '').slice(0, 2000));
+    try { return json({ ok: true, out: await toGreekBatch(env, texts) }); }
+    catch (e) { return json({ ok: false, error: 'Translation failed' }, 502); }
   }
   if (path === '/api/admin/ureviews' && method === 'GET') {
     return json({ items: (await urvAll(env)).map((r) => ({ ...urvPublic(r), email: r.email || '', hidden: !!r.hidden, reports: r.reports || 0 })) });

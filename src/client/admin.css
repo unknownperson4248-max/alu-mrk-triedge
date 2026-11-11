@@ -290,3 +290,17 @@ button.drow:hover{background:#fafbfc}
 .card-pv .ni{width:16px;height:16px}
 .card>.card-pv~h2:first-of-type,.card>.card-pv~.item-head{padding-right:104px}
 @media (max-width:640px){.card-pv span{display:none}.card-pv{padding:4px 9px;top:10px;right:10px}.card>.card-pv~h2:first-of-type,.card>.card-pv~.item-head{padding-right:46px}}
+
+/* English field with its Greek line */
+.gr{display:flex;align-items:center;gap:8px;margin-top:6px;padding:6px 6px 6px 10px;border-radius:8px;background:#f6f7f9;font-size:13px;min-width:0}
+.gr-l{font:600 11px var(--mono);color:#8a5d1f;flex:none}
+.gr-t{flex:1;min-width:0;color:#3c434b;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.gr-t.none{color:var(--muted);font-style:italic}
+.gr-b{flex:none;border:0;background:none;color:#8a5d1f;font-weight:600;font-size:13px;cursor:pointer;padding:4px 6px;border-radius:6px}
+.gr-b:hover{background:#efe3cc}
+.gr.open input{flex:1;min-width:0;padding:7px 9px;border:1px solid var(--line);border-radius:6px;background:#fff}
+.cat-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:start;padding:10px 0;border-bottom:1px solid var(--line)}
+.cat-row:last-child{border-bottom:0}
+.cat-row input[type=text]{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:8px;background:#fff}
+.cat-row .acts{display:flex;gap:6px;padding-top:2px}
+.b-icon .ni{width:16px;height:16px}
