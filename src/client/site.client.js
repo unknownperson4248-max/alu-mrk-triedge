@@ -196,6 +196,7 @@
     key: '<circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M17 6l3 3"/>',
     home: '<path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/>',
     check: '<path d="M5 12l5 5L20 7"/>',
+    close: '<path d="M6 6l12 12M18 6L6 18"/>',
     phone: '<path d="M5 3h4l2 5-3 2a12 12 0 0 0 6 6l2-3 5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 5a2 2 0 0 1 2-2z"/>',
     mail: '<rect x="3" y="5" width="18" height="14" rx="1"/><path d="M3 7l9 6 9-6"/>',
     pin: '<path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/>',
@@ -1123,14 +1124,14 @@
   function helpButton() {
     const c = S.company;
     const items = [
-      `<a class="help-item" href="#quote"><span>${u('help_quote')}</span><i class="hi">${icon('file')}</i></a>`,
+      `<a class="help-item" href="#quote"><span>${u('help_quote')}</span><i class="hi hi-quote">${icon('file')}</i></a>`,
       waLink() ? `<a class="help-item" href="${esc(waLink(u('wa_hello', { c: c.name })))}" target="_blank" rel="noopener"><span>WhatsApp</span><i class="hi wa">${waIcon}</i></a>` : '',
-      c.email ? `<a class="help-item" href="mailto:${esc(c.email)}"><span>${u('help_email')}</span><i class="hi">${icon('mail')}</i></a>` : '',
-      c.phone ? `<a class="help-item" href="${telLink()}"><span>${u('help_call')}</span><i class="hi">${icon('phone')}</i></a>` : '',
+      c.email ? `<a class="help-item" href="mailto:${esc(c.email)}"><span>${u('help_email')}</span><i class="hi hi-mail">${icon('mail')}</i></a>` : '',
+      c.phone ? `<a class="help-item" href="${telLink()}"><span>${u('help_call')}</span><i class="hi hi-call">${icon('phone')}</i></a>` : '',
     ].filter(Boolean);
     return `<div class="help" id="help">
       <div class="help-menu" id="help-menu">${items.map((x, i) => x.replace('class="help-item"', `class="help-item" style="--i:${items.length - 1 - i}" tabindex="-1"`)).join('')}</div>
-      <button type="button" class="help-btn" aria-expanded="false" aria-controls="help-menu" aria-label="${esc(u('help'))}"><span class="help-t" aria-hidden="true">${u('help')}</span><span class="help-ic a">${icon('headset')}</span><span class="help-ic b" aria-hidden="true">&times;</span></button>
+      <button type="button" class="help-btn" aria-expanded="false" aria-controls="help-menu" aria-label="${esc(u('help'))}"><span class="help-t" aria-hidden="true">${u('help')}</span><span class="help-ic a">${icon('headset')}</span><span class="help-ic b" aria-hidden="true">${icon('close')}</span></button>
     </div>`;
   }
   function setHelp(open) {

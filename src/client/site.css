@@ -1099,3 +1099,19 @@ html.pv .hero-copy>*,html.pv .hs-count{animation:none}
 .brand{display:flex;align-items:center;min-height:44px}
 .lsel-btn{min-height:44px;padding:8px 6px}
 .mnav .sbox input{min-height:44px}
+
+/* help button: smoother pulse, no sticky hover on phones, coloured options */
+.help-btn::before,.help-btn::after{animation:help-ring 3s cubic-bezier(.2,.7,.2,1) infinite;will-change:transform,opacity}
+.help-btn::after{animation-delay:1.5s}
+@keyframes help-ring{0%{transform:scale(1);opacity:.55}100%{transform:scale(1.5);opacity:0}}
+.help-btn:hover{transform:none}
+@media (hover:hover){.help-btn:hover{transform:scale(1.05)}}
+.help-btn:active{transform:scale(.94)}
+.help-ic.b{font:inherit}
+.help-ic.b .ic{width:24px;height:24px;stroke-width:2}
+.hi{--c:#1c1f24;--g:rgba(214,220,226,.25);background:var(--c);border-color:transparent;box-shadow:0 8px 20px rgba(0,0,0,.4),0 0 0 0 var(--g);transition:transform .2s,box-shadow .25s}
+.hi-quote{--c:var(--accent);--g:color-mix(in srgb,var(--accent) 45%,transparent);color:#14171a}
+.hi.wa{--c:#1f8f55;--g:rgba(31,143,85,.45)}
+.hi-mail{--c:#3b6fd8;--g:rgba(59,111,216,.45)}
+.hi-call{--c:#0f9b8e;--g:rgba(15,155,142,.45)}
+.help-item:hover .hi,.help-item:focus-visible .hi{box-shadow:0 8px 20px rgba(0,0,0,.4),0 0 0 6px var(--g)}
