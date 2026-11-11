@@ -1938,8 +1938,26 @@
     const [r, g, b] = [1, 3, 5].map((k) => parseInt(hex.slice(k, k + 2), 16) / 255);
     document.documentElement.dataset.tone = 0.2126 * r + 0.7152 * g + 0.0722 * b < 0.45 ? 'dark' : 'light';
   }
+  // admin preview: jump straight to the part of the page being edited
+  function previewTo(t) {
+    if (byProd(t) || bySlug(t) || t === 'gallery' || t === 'all-reviews') { if (location.hash === '#' + t) route(true); else location.hash = t; return; }
+    if (layerBusy() || location.hash) { history.replaceState(null, '', location.pathname + location.search); route(true); }
+    const go = () => {
+      if (t === 'top') { scrollTo(0, 0); return; }
+      let el = null;
+      for (const s of t.split('|')) { try { el = document.querySelector(/^[#.]/.test(s) ? s : '#' + s); } catch (e) {} if (el) break; }
+      if (!el) return;
+      let y = 0;
+      for (let n = el; n; n = n.offsetParent) y += n.offsetTop;
+      const head = ($('#hdr') || { offsetHeight: 0 }).offsetHeight;
+      scrollTo(0, Math.max(0, y - head - 16));
+    };
+    go();
+    setTimeout(go, 120);
+  }
   if (PREVIEW) {
     addEventListener('message', (e) => {
+      if (e.origin === location.origin && e.data && e.data.type === 'preview-go') { previewTo(String(e.data.target || 'top')); return; }
       if (e.origin !== location.origin || !e.data || e.data.type !== 'preview') return;
       S = e.data.site;
       applyTheme(S.theme || {});

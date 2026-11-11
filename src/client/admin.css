@@ -274,3 +274,19 @@ button.drow:hover{background:#fafbfc}
 .dot{width:10px;height:10px;border-radius:50%;background:#c9ced4;margin:0 13px}
 .dot.ok{background:#22a35a}
 .dot.warn{background:#e2a33a}
+
+/* keep everything inside the screen on narrow phones */
+.editor{grid-template-columns:minmax(0,1fr)}
+.card{grid-template-columns:minmax(0,1fr)}
+.card>*,.list>*,.item>*{min-width:0}
+.item-head{flex-wrap:wrap}
+.q-top{flex-wrap:wrap}
+@media (max-width:420px){.editor{padding-left:12px;padding-right:12px}.card{padding:14px}}
+
+/* per-card preview button */
+.card{position:relative}
+.card-pv{position:absolute;top:12px;right:12px;z-index:2;display:inline-flex;align-items:center;gap:6px;min-height:34px;padding:4px 12px;border:1px solid var(--line);border-radius:999px;background:#fff;color:#5f6873;font-size:13px;font-weight:500;cursor:pointer}
+.card-pv:hover{border-color:var(--gold);color:#8a5d1f}
+.card-pv .ni{width:16px;height:16px}
+.card>.card-pv~h2:first-of-type,.card>.card-pv~.item-head{padding-right:104px}
+@media (max-width:640px){.card-pv span{display:none}.card-pv{padding:4px 9px;top:10px;right:10px}.card>.card-pv~h2:first-of-type,.card>.card-pv~.item-head{padding-right:46px}}

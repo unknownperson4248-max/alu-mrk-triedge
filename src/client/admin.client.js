@@ -100,9 +100,38 @@
     const f = $('#pv');
     if (f && previewReady && f.contentWindow) f.contentWindow.postMessage({ type: 'preview', site }, location.origin);
   }
-  function previewGo(hash) {
+  // Preview follows what you are editing: each tab, and each card inside it, points at its part of the website.
+  const PV_TAB = { dash: 'top', inbox: '#quote', reviews: '#reviews', works: '#projects', cats: '#projects', hero: 'top', company: '#about', products: '#products', systems: '#systems', content: '#about', design: 'top', media: 'top', account: 'top' };
+  const PV_CARD = [
+    [/^Company details/, '#quote'], [/^Owner|founder/i, '.founder|#about'], [/^About section image|^Main text/, '#about'],
+    [/^Hero/, 'top'], [/^About: key points/, '.about-feats|#about'], [/^Numbers/, '.about-stats|#about'],
+    [/^Gallery categories|^Latest work/, '#projects'], [/^Product categories|^Profile Systems/, '#products'],
+    [/review|Google sign-in/i, '#reviews'], [/^Systems/, '#systems'], [/^Website colours/, 'top'],
+  ];
+  function cardTarget(card) {
+    const h = card && card.querySelector('h2');
+    const name = h ? h.textContent.trim() : '';
+    for (const [re, t] of PV_CARD) if (re.test(name)) return t;
+    return '';
+  }
+  function pvTarget(card) {
+    if (tab === 'products' && editProd != null && site.products[editProd]) return site.products[editProd].id;
+    if (tab === 'systems' && editIdx != null && site.systems[editIdx]) return site.systems[editIdx].slug;
+    if (tab === 'works' && (editWork != null)) return '#projects';
+    if (!card && lastCard && lastCard.isConnected) { const r = lastCard.getBoundingClientRect(); if (r.bottom > 80 && r.top < innerHeight) card = lastCard; }
+    if (!card) {
+      const top = ($('.top') || { offsetHeight: 64 }).offsetHeight + 24;
+      card = $$('#editor .card').find((el) => el.getBoundingClientRect().bottom > top + 60);
+    }
+    return cardTarget(card) || PV_TAB[tab] || 'top';
+  }
+  let pvLast = '', pvPending = '', lastCard = null;
+  function previewGo(target) {
+    target = target || pvTarget();
+    pvLast = target;
     const f = $('#pv');
-    try { if (f && f.contentWindow) f.contentWindow.location.hash = hash || 'top'; } catch (e) {}
+    if (!f || !f.contentWindow || !previewReady) { pvPending = target; return; }
+    f.contentWindow.postMessage({ type: 'preview-go', target }, location.origin);
   }
 
   /* ---------- field builders ---------- */
@@ -473,7 +502,7 @@
     if (tab === 'inbox') loadQuotes();
     if (tab === 'reviews') { loadReviews(); loadUReviews(); }
     if (tab === 'dash') { loadQuotes(true); loadReviews(); loadUReviews(); }
-    previewGo(tab === 'products' ? 'products' : tab === 'inbox' ? 'quote' : tab === 'reviews' ? 'reviews' : tab === 'systems' ? 'systems' : tab === 'works' ? 'projects' : tab === 'content' || tab === 'company' ? 'about' : 'top');
+    previewGo(PV_TAB[toCats ? 'cats' : tab] || 'top');
     const pt = $('#page-title');
     if (pt) pt.textContent = toCats ? NAV_NAME.cats : NAV_NAME[tab] || '';
   }
@@ -491,6 +520,9 @@
     $('#main').classList.toggle('no-prev', tab === 'dash' || tab === 'inbox' || tab === 'media' || tab === 'account');
     requestAnimationFrame(fitPreview);
     scrollTo(0, y);
+    lastCard = null;
+    // an eye button on every card that has a matching part on the website
+    if (!['dash', 'inbox', 'media', 'account'].includes(tab)) $$('#editor .card').forEach((c) => { if (!/Delete|Sign out/.test((c.querySelector('h2') || {}).textContent || '')) c.insertAdjacentHTML('afterbegin', `<button type="button" class="card-pv" data-act="pv-card" title="Show this part in the preview">${ni('eye')}<span>Preview</span></button>`); });
   }
 
   /* ---------- data actions ---------- */
@@ -633,6 +665,13 @@
     if (p && p.endsWith('.slug')) { const s = site.systems[editIdx]; if (s && !s.slug) s.slug = 'system-' + (editIdx + 1); renderEditor(); }
   });
 
+  document.addEventListener('focusin', (e) => {
+    const card = e.target.closest && e.target.closest('#editor .card');
+    if (!card) return;
+    lastCard = card;
+    const t = pvTarget(card);
+    if (t !== pvLast) previewGo(t);
+  });
   document.addEventListener('click', async (e) => {
     const b = e.target.closest('[data-act]');
     if (!b || !site) return;
@@ -646,7 +685,7 @@
       case 'side-open': setSide(true); break;
       case 'side-close': setSide(false); break;
       case 'edit-prod': editProd = +b.dataset.i; renderEditor(); scrollTo(0, 0); previewGo(site.products[editProd].id); break;
-      case 'back-prod': editProd = null; renderEditor(); previewGo('products'); break;
+      case 'back-prod': editProd = null; renderEditor(); previewGo('#products'); break;
       case 'add-prod': {
         let n = site.products.length + 1, id = 'product-' + n;
         while (site.products.some((x) => x.id === id)) id = 'product-' + ++n;
@@ -724,7 +763,20 @@
         site.works.splice(+b.dataset.i, 1); editWork = null; markDirty(); renderEditor(); toast('Work deleted. Press Save to apply.'); break;
       }
       case 'save': save(); break;
-      case 'prev-toggle': $('#preview').classList.toggle('show'); requestAnimationFrame(fitPreview); break;
+      case 'pv-card': {
+        const card = b.closest('.card');
+        lastCard = card;
+        $('#preview').classList.add('show');
+        requestAnimationFrame(fitPreview);
+        previewGo(pvTarget(card));
+        break;
+      }
+      case 'prev-toggle': {
+        const show = $('#preview').classList.toggle('show');
+        requestAnimationFrame(fitPreview);
+        if (show) previewGo(pvTarget());
+        break;
+      }
       case 'pv-mode': pvMode = b.dataset.m; fitPreview(); break;
       case 'preset': site.theme = { ...presets[b.dataset.k] }; markDirty(); renderEditor(); break;
       case 'reset-theme': site.theme = { ...defaults.theme }; markDirty(); renderEditor(); break;
@@ -743,7 +795,7 @@
       case 'pick-add': { const v = await picker('Add photo to gallery'); if (v) { (getP(site, p) || setP(site, p, []) || getP(site, p)).push(v); markDirty(); renderEditor(); } break; }
       case 'clear': setP(site, p, ''); markDirty(); renderEditor(); break;
       case 'edit-sys': editIdx = +b.dataset.i; renderEditor(); scrollTo(0, 0); previewGo(site.systems[editIdx].slug); break;
-      case 'back-sys': editIdx = null; renderEditor(); previewGo('systems'); break;
+      case 'back-sys': editIdx = null; renderEditor(); previewGo('#systems'); break;
       case 'add-sys': {
         let n = site.systems.length + 1, slug = 'new-system-' + n;
         while (site.systems.some((s) => s.slug === slug)) slug = 'new-system-' + ++n;
@@ -826,7 +878,7 @@
   });
 
   addEventListener('message', (e) => {
-    if (e.origin === location.origin && e.data && e.data.type === 'preview-ready') { previewReady = true; sendPreview(); }
+    if (e.origin === location.origin && e.data && e.data.type === 'preview-ready') { previewReady = true; sendPreview(); previewGo(pvPending || pvTarget()); pvPending = ''; }
   });
   addEventListener('beforeunload', (e) => { if (dirty) { e.preventDefault(); e.returnValue = ''; } });
   addEventListener('keydown', (e) => { if ((e.ctrlKey || e.metaKey) && e.key === 's' && site) { e.preventDefault(); save(); } });
