@@ -317,3 +317,4 @@ button.drow:hover{background:#fafbfc}
 .qdoc-wrap{overflow-x:hidden}
 @media (max-width:640px){.qd-tab{min-width:560px}.qd-tab .qd-price{width:76px}.qd-tab .qd-qty{width:48px}.qd-sum{width:100%}}
 @media print{.qd-tabw{overflow:visible}.qd-tab{min-width:0}}
+@media (max-width:640px){.qd-foot{flex-direction:column;align-items:flex-start}.qd-foot>span{overflow-wrap:anywhere}}
