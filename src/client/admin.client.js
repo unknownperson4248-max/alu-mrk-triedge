@@ -17,7 +17,7 @@
   const MENU = [
     ['Your work', [['works', 'Latest work', 'Add photos of finished jobs'], ['cats', 'Gallery categories', 'Sliding, Windows, Doors…']]],
     ['Customers', [['inbox', 'Quote requests', 'Requests from the quote form'], ['reviews', 'Reviews', 'Approve and manage customer reviews']]],
-    ['Website pages', [['content', 'Key points & numbers', 'About points and counters'], ['hero', 'Hero', 'Top photo or video and headline'], ['company', 'Company & About', 'Phone, address, About text, owner profile'], ['products', 'Aluminium Profile Systems', 'MU 2000, MU 3200, MU 3000, MU 2075…'], ['systems', 'Systems', 'Your nine product categories']]],
+    ['Website pages', [['content', 'Key points & numbers', 'About points and counters'], ['hero', 'Hero', 'Top photo or video and headline'], ['company', 'Company & About', 'Phone, address, About text, owner profile'], ['products', 'Profile Systems', 'MU 2000, MU 3200, MU 3000, MU 2075…'], ['systems', 'Systems', 'Your nine product categories']]],
     ['Look & files', [['design', 'Colours', 'Website colours'], ['media', 'Images & files', 'All uploaded photos, videos and PDFs']]],
     ['Account', [['account', 'Password', 'Change the admin password']]],
   ];
@@ -191,7 +191,7 @@
     if (editProd != null && site.products[editProd]) return vProductEdit(editProd);
     const L = site.products;
     const catName = (id) => { const c = site.productCats.find((x) => x.id === id); return c ? c.name.en : id; };
-    return `<div class="card"><h2>Aluminium Profile Systems</h2><p class="hint">Shown in the Aluminium Profile Systems section and in the quotation form. Only enter specifications from the profile manufacturer’s (MUSKITA) catalogue. Hidden products (unticked) are not shown.</p>
+    return `<div class="card"><h2>Profile Systems</h2><p class="hint">Shown in the Profile Systems section and in the quotation form. Only enter specifications from the profile manufacturer’s (MUSKITA) catalogue. Hidden products (unticked) are not shown.</p>
       <div class="list">${L.map((x, i) => `<div class="sys-row${x.visible === false ? ' off' : ''}">
         <input type="checkbox" data-path="products.${i}.visible" ${x.visible !== false ? 'checked' : ''} aria-label="Show on website" style="width:18px;height:18px;accent-color:#0e1b2e">
         <img src="${esc(src(x.image))}" alt="">

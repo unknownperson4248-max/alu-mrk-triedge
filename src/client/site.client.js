@@ -29,7 +29,7 @@
       main_menu: 'Main menu', m_systems: 'Aluminium Systems', m_engineering: 'Engineering & Quality', m_about: 'About Us', m_contact: 'Contact', view_all: 'View all systems',
       call: 'Call', leadership: 'Leadership',
       ask_price: 'Ask the price', ask_wa_msg: 'Hello {c}, I would like the price for this:', wa_note: 'Opens WhatsApp with the message ready. You only need to press send.',
-      products: 'Aluminium Profile Systems', m_products: 'Aluminium Profile Systems', prod_eyebrow: 'Aluminium Profile Systems', prod_title: 'Our profile models', prod_sub: 'We fabricate and install these aluminium profile systems to measure. Profiles are supplied by MUSKITA.', prod_maker: 'Profile manufacturer: MUSKITA',
+      products: 'Profile Systems', m_products: 'Profile Systems', prod_eyebrow: 'Profile Systems', view_all_prof: 'View all profile systems', prod_title: 'Our profile models', prod_sub: 'We fabricate and install these aluminium profile systems to measure. Profiles are supplied by MUSKITA.', prod_maker: 'Profile manufacturer: MUSKITA',
       details: 'Details', add_quote: 'Add to quotation', added_quote: 'Added to your quotation', tech_data: 'Technical data', tech_source: 'Source: MUSKITA product information. Values vary by version and configuration; we confirm the exact figures for your project.', tech_on_request: 'Technical details on request.', colours: 'Colours & finishes', all_products: 'All models',
       qb_title: 'Request a quotation', qb_sub: 'Add every door, window or system you need. We review the measurements and send you a written quotation.',
       qb_step1: 'Products', qb_step2: 'Details', qb_step3: 'Review', qb_product: 'Product {n}', qb_edit_product: 'Edit product {n}',
@@ -91,7 +91,7 @@
       main_menu: 'Κύριο μενού', m_systems: 'Συστήματα αλουμινίου', m_engineering: 'Τεχνολογία & ποιότητα', m_about: 'Η εταιρεία', m_contact: 'Επικοινωνία', view_all: 'Όλα τα συστήματα',
       call: 'Κλήση', leadership: 'Διοίκηση',
       ask_price: 'Ρωτήστε τιμή', ask_wa_msg: 'Γεια σας, θα ήθελα την τιμή για αυτό:', wa_note: 'Ανοίγει το WhatsApp με έτοιμο μήνυμα. Πατήστε μόνο αποστολή.',
-      products: 'Συστήματα προφίλ αλουμινίου', m_products: 'Συστήματα προφίλ αλουμινίου', prod_eyebrow: 'Συστήματα προφίλ αλουμινίου', prod_title: 'Τα μοντέλα προφίλ μας', prod_sub: 'Κατασκευάζουμε και τοποθετούμε αυτά τα συστήματα προφίλ αλουμινίου στα μέτρα σας. Τα προφίλ προμηθεύει η MUSKITA.', prod_maker: 'Κατασκευαστής προφίλ: MUSKITA',
+      products: 'Συστήματα προφίλ', m_products: 'Συστήματα προφίλ', prod_eyebrow: 'Συστήματα προφίλ', view_all_prof: 'Όλα τα συστήματα προφίλ', prod_title: 'Τα μοντέλα προφίλ μας', prod_sub: 'Κατασκευάζουμε και τοποθετούμε αυτά τα συστήματα προφίλ αλουμινίου στα μέτρα σας. Τα προφίλ προμηθεύει η MUSKITA.', prod_maker: 'Κατασκευαστής προφίλ: MUSKITA',
       details: 'Λεπτομέρειες', add_quote: 'Προσθήκη στην προσφορά', added_quote: 'Προστέθηκε στην προσφορά σας', tech_data: 'Τεχνικά στοιχεία', tech_source: 'Πηγή: στοιχεία προϊόντος MUSKITA. Οι τιμές διαφέρουν ανά έκδοση και διαμόρφωση· επιβεβαιώνουμε τα ακριβή στοιχεία για το έργο σας.', tech_on_request: 'Τεχνικά στοιχεία κατόπιν αιτήματος.', colours: 'Χρώματα & φινιρίσματα', all_products: 'Όλα τα μοντέλα',
       qb_title: 'Ζητήστε προσφορά', qb_sub: 'Προσθέστε κάθε πόρτα, παράθυρο ή σύστημα που χρειάζεστε. Ελέγχουμε τις διαστάσεις και σας στέλνουμε γραπτή προσφορά.',
       qb_step1: 'Προϊόντα', qb_step2: 'Στοιχεία', qb_step3: 'Έλεγχος', qb_product: 'Προϊόν {n}', qb_edit_product: 'Επεξεργασία προϊόντος {n}',
@@ -254,8 +254,8 @@
         <a class="brand" href="#top" aria-label="${esc(c.name)}"><img class="logo-l" src="/img/logo-light.png" alt="${esc(c.name)}" width="98" height="46"><img class="logo-d" src="/img/logo-dark.png" alt="" width="98" height="46"></a>
         <nav class="links" aria-label="Main">
           <a href="#top" class="is-home">${u('home')}</a>
-          <button type="button" class="mega-btn" aria-expanded="false" aria-controls="mega">${u('m_systems')}${icon('chev')}</button>
-          ${prods().length ? `<a href="#products">${u('products')}</a>` : ''}<a href="#projects">${u('m_projects')}</a><a href="#about">${u('m_about')}</a><a href="#quote">${u('contact')}</a>
+          <button type="button" class="mega-btn" data-p="mega" aria-expanded="false" aria-controls="mega">${u('m_systems')}${icon('chev')}</button>
+          ${prods().length ? `<button type="button" class="mega-btn" data-p="pmega" aria-expanded="false" aria-controls="pmega">${u('products')}${icon('chev')}</button>` : ''}<a href="#projects">${u('m_projects')}</a><a href="#about">${u('m_about')}</a><a href="#quote">${u('contact')}</a>
         </nav>
         <button type="button" class="icon-btn srch-btn" aria-expanded="false" aria-controls="srch" aria-label="${u('search')}">${icon('search')}</button>
         ${langSelect()}
@@ -266,6 +266,10 @@
         <div class="mega-intro"><p class="eyebrow">${u('systems_eyebrow')}</p><h3>${esc(t(S.text.systemsTitle))}</h3><p>${esc(t(S.text.systemsSub))}</p><a class="arrow-link" href="#systems">${u('view_all')}${icon('arrow')}</a></div>
         <ul class="mega-grid">${list.map((s, i) => `<li><a href="#${esc(s.slug)}"><img src="${esc(src(s.image))}" alt="" loading="lazy"><span><small>${pad(i + 1)}</small>${esc(t(s.name))}</span></a></li>`).join('')}</ul>
       </div></div>
+      ${prods().length ? `<div class="mega" id="pmega" hidden><div class="wrap mega-in">
+        <div class="mega-intro"><p class="eyebrow">${u('prod_eyebrow')}</p><h3>${u('prod_title')}</h3><p>${u('prod_sub')}</p><a class="arrow-link" href="#products">${u('view_all_prof')}${icon('arrow')}</a></div>
+        <ul class="mega-grid">${prods().map((x) => `<li><a href="#${esc(x.id)}"><img src="${esc(src(x.image))}" alt="" loading="lazy"><span><small>${esc(x.model)}</small>${esc(t(x.name))}</span></a></li>`).join('')}</ul>
+      </div></div>` : ''}
       <div class="srch" id="srch" hidden><div class="wrap srch-in" data-search>${searchBox('sq-top')}</div></div>
     </header>
     <div class="mnav" id="mnav" aria-hidden="true">
@@ -273,13 +277,15 @@
       <div class="mnav-nav">
         <p class="mnav-label">${u('main_menu')}</p>
         <ul class="mnav-main">
-          <li><button type="button" class="acc" aria-expanded="false" aria-controls="acc-sys"><span>${u('m_systems')}</span>${icon('chev')}</button>
+          <li><a href="#top"><span><i class="mi">${icon('home')}</i>${u('home')}</span>${icon('right')}</a></li>
+          <li><button type="button" class="acc" aria-expanded="false" aria-controls="acc-sys"><span><i class="mi">${icon('grid')}</i>${u('m_systems')}</span>${icon('chev')}</button>
             <div class="acc-panel" id="acc-sys"><ul>${list.map((s, i) => `<li><a href="#${esc(s.slug)}"><small>${pad(i + 1)}</small>${esc(t(s.name))}</a></li>`).join('')}</ul></div></li>
-          ${prods().length ? `<li><a href="#products"><span>${u('m_products')}</span>${icon('right')}</a></li>` : ''}
-          <li><a href="#projects"><span>${u('m_projects')}</span>${icon('right')}</a></li>
-          <li><a href="#about"><span>${u('m_about')}</span>${icon('right')}</a></li>
-          <li><a href="#engineering"><span>${u('m_engineering')}</span>${icon('right')}</a></li>
-          <li><a href="#quote"><span>${u('m_contact')}</span>${icon('right')}</a></li>
+          ${prods().length ? `<li><button type="button" class="acc" aria-expanded="false" aria-controls="acc-prof"><span><i class="mi">${icon('layers')}</i>${u('m_products')}</span>${icon('chev')}</button>
+            <div class="acc-panel" id="acc-prof"><ul>${prods().map((x) => `<li><a href="#${esc(x.id)}"><small class="mdl">${esc(x.model)}</small>${esc(t(x.name))}</a></li>`).join('')}<li><a class="acc-all" href="#products">${u('view_all_prof')}${icon('arrow')}</a></li></ul></div></li>` : ''}
+          <li><a href="#projects"><span><i class="mi">${icon('images')}</i>${u('m_projects')}</span>${icon('right')}</a></li>
+          <li><a href="#reviews"><span><i class="mi">${icon('star')}</i>${u('reviews')}</span>${icon('right')}</a></li>
+          <li><a href="#about"><span><i class="mi">${icon('users')}</i>${u('m_about')}</span>${icon('right')}</a></li>
+          <li><a href="#quote"><span><i class="mi">${icon('mail')}</i>${u('m_contact')}</span>${icon('right')}</a></li>
         </ul>
         <div class="mnav-short">
           ${c.phone ? `<a href="${telLink()}">${icon('phone')}<span>${u('call')}</span></a>` : ''}
@@ -1071,6 +1077,7 @@
     hsShow(hsI);
     railArrows();
     prodArrows();
+    fitNav();
     syncPanels();
     reveal($('#app'), renders++ > 0);
   }
@@ -1204,6 +1211,17 @@
     if (!reduce && $$('#tst blockquote').length > 1) tstTimer = setInterval(() => tstShow(tstI + 1), 6500);
   }
 
+  // desktop menu: when the links do not fit (e.g. longer Greek labels), use the mobile menu button instead
+  function fitNav() {
+    const h = $('#hdr'), nav = $('.nav'), cta = $('.nav-cta');
+    if (!h || !nav || !cta) return;
+    h.classList.remove('nav-tight');
+    if (getComputedStyle(cta).display === 'none') return;
+    const edge = nav.getBoundingClientRect().right - parseFloat(getComputedStyle(nav).paddingRight || 0);
+    if (cta.getBoundingClientRect().right > edge + 1) h.classList.add('nav-tight');
+  }
+  addEventListener('resize', fitNav, { passive: true });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitNav);
   // product row arrows
   function prodArrows() {
     const g = $('#prod-grid');
@@ -1243,8 +1261,10 @@
     m.classList.toggle('open', panel === 'menu');
     m.setAttribute('aria-hidden', String(panel !== 'menu'));
     $('#burger').setAttribute('aria-expanded', String(panel === 'menu'));
-    g.hidden = panel !== 'mega';
-    $('.mega-btn').setAttribute('aria-expanded', String(panel === 'mega'));
+    if (g) g.hidden = panel !== 'mega';
+    const pg = $('#pmega');
+    if (pg) pg.hidden = panel !== 'pmega';
+    $$('.mega-btn').forEach((b) => b.setAttribute('aria-expanded', String(panel === b.dataset.p)));
     s.hidden = panel !== 'search';
     $('.srch-btn').setAttribute('aria-expanded', String(panel === 'search'));
     lock(panel === 'menu' || (panel === 'search' && mobile()), 'panel');
@@ -1508,13 +1528,14 @@
     const sb = e.target.closest('[data-slide]');
     if (sb) { hsShow(hsI + +sb.dataset.slide); return; }
     if (e.target.closest('#burger')) { setPanel(panel === 'menu' ? null : 'menu'); return; }
-    if (e.target.closest('.mega-btn')) { setPanel(panel === 'mega' ? null : 'mega'); return; }
+    const mb = e.target.closest('.mega-btn');
+    if (mb) { setPanel(panel === mb.dataset.p && !canHover() ? null : mb.dataset.p); return; }
     if (e.target.closest('.srch-btn')) { setPanel(panel === 'search' ? null : 'search'); if (panel === 'search') { const i = $('#sq-top'); i.focus(); runSearch(i.closest('[data-search]')); } return; }
     const acc = e.target.closest('.acc');
     if (acc) { const open = acc.getAttribute('aria-expanded') !== 'true'; acc.setAttribute('aria-expanded', String(open)); $('#' + acc.getAttribute('aria-controls')).classList.toggle('open', open); return; }
     const chip = e.target.closest('[data-chip]');
     if (chip) { const box = chip.closest('[data-search]'), i = box.querySelector('.sq'); i.value = chip.dataset.chip; runSearch(box); i.focus(); return; }
-    if (panel && e.target.closest('#mnav a, #mega a, #srch a')) { setPanel(null); return; }
+    if (panel && e.target.closest('#mnav a, #mega a, #pmega a, #srch a')) { setPanel(null); return; }
     if (panel && panel !== 'menu' && !e.target.closest('#hdr')) setPanel(null);
 
     const pr = e.target.closest('[data-prail]');
@@ -1602,9 +1623,10 @@
   let megaT;
   document.addEventListener('mouseover', (e) => {
     if (!canHover()) return;
-    if (e.target.closest('.mega-btn')) { clearTimeout(megaT); if (panel !== 'mega' && panel !== 'search') setPanel('mega'); }
-    else if (e.target.closest('#mega')) clearTimeout(megaT);
-    else if (panel === 'mega' && !e.target.closest('#hdr')) { clearTimeout(megaT); megaT = setTimeout(() => { if (panel === 'mega') setPanel(null); }, 250); }
+    const mb = e.target.closest('.mega-btn'), isMega = (p) => p === 'mega' || p === 'pmega';
+    if (mb) { clearTimeout(megaT); if (panel !== mb.dataset.p && panel !== 'search') setPanel(mb.dataset.p); }
+    else if (e.target.closest('#mega, #pmega')) clearTimeout(megaT);
+    else if (isMega(panel) && !e.target.closest('#hdr')) { clearTimeout(megaT); megaT = setTimeout(() => { if (isMega(panel)) setPanel(null); }, 250); }
     const pt = e.target.closest('#parts li');
     if (pt) focusPart(pt.dataset.p);
   });

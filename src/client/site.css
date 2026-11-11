@@ -85,7 +85,7 @@ html[data-tone=dark] .hdr.solid .brand .logo-d,html[data-tone=dark] .hdr.open-pa
   .tb-r .ic{width:16px;height:16px}
   .hdr.solid .topbar,.hdr.open-panel .topbar{height:0;opacity:0;border-bottom-width:0}
 }
-.links{display:flex;align-items:center;gap:30px;margin-left:auto;font-size:15px}
+.links{display:flex;align-items:center;gap:clamp(18px,2vw,30px);margin-left:auto;font-size:15px;white-space:nowrap}
 .links a,.mega-btn{text-decoration:none;opacity:.85;position:relative;padding:8px 0;background:none;border:0;cursor:pointer;display:inline-flex;align-items:center;gap:6px;font:inherit;color:inherit}
 .links a:hover,.mega-btn:hover,.mega-btn[aria-expanded="true"]{opacity:1}
 .links a::after,.mega-btn::after{content:"";position:absolute;left:0;right:100%;bottom:2px;height:1px;background:var(--accent);transition:right .35s var(--ease-out)}
@@ -116,7 +116,7 @@ html[data-tone=dark] .hdr.solid .brand .logo-d,html[data-tone=dark] .hdr.open-pa
 .lsel-menu button{text-align:left;padding:10px 12px;border:0;border-radius:6px;background:none;cursor:pointer;font-size:14px}
 .lsel-menu button:hover{background:color-mix(in srgb,var(--ink) 8%,transparent)}
 .lsel-menu button[aria-checked="true"]{color:var(--accent-ink);font-weight:600}
-@media (max-width:1100px){.links,.nav-cta,.srch-btn{display:none}.lsel{margin-left:auto}.burger{display:inline-flex}.nav{gap:10px}}
+@media (max-width:1180px){.links,.nav-cta,.srch-btn{display:none}.lsel{margin-left:auto}.burger{display:inline-flex}.nav{gap:10px}}
 
 @media (max-width:420px){.brand img{height:40px}}
 
@@ -975,7 +975,9 @@ html.pv .hero-copy>*,html.pv .hs-count{animation:none}
 .mnav.open .mnav-main>li:nth-child(3){animation-delay:.14s}
 .mnav.open .mnav-main>li:nth-child(4){animation-delay:.18s}
 .mnav.open .mnav-main>li:nth-child(5){animation-delay:.22s}
-.mnav.open .mnav-short{animation-delay:.28s}
+.mnav.open .mnav-main>li:nth-child(6){animation-delay:.26s}
+.mnav.open .mnav-main>li:nth-child(7){animation-delay:.3s}
+.mnav.open .mnav-short{animation-delay:.34s}
 
 @media (prefers-reduced-motion:reduce){
   .slide:only-child.on img,.help-btn::before,.help-btn::after,.help-ic.a .ic,.hero-copy>*,.hs-count,.d-water,.d-break,.hero-cta .btn-accent::after,.mnav.open *{animation:none!important}
@@ -995,3 +997,18 @@ html.pv .hero-copy>*,html.pv .hs-count{animation:none}
 .qb-more-b{display:grid;gap:14px;padding-bottom:16px}
 
 .sp-maker{margin-top:10px;font:500 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+
+/* mobile menu: icons and profile models */
+.mnav-main>li>a>span,.acc>span{display:inline-flex;align-items:center;gap:14px}
+.mnav-main .mi{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:10px;background:var(--surface);flex:none}
+.mnav-main .mi .ic{width:18px;height:18px;color:var(--silver);transform:none!important}
+.mnav-main>li>a,.mnav-main .acc{padding:13px 0;font-size:19px}
+.acc-panel{padding-left:48px}
+.acc-panel small.mdl{font:600 12px var(--mono);letter-spacing:.04em;color:var(--accent-ink);min-width:62px}
+.acc-panel a.acc-all{color:var(--accent-ink);font-size:14.5px;align-items:center;gap:8px}
+.acc-panel a.acc-all .ic{width:16px;height:16px}
+#pmega .mega-grid small{font:600 12px var(--mono);letter-spacing:.04em;color:var(--accent-ink)}
+.nav-tight .links,.nav-tight .nav-cta,.nav-tight .srch-btn{display:none}
+.nav-tight .lsel{margin-left:auto}
+.nav-tight .burger{display:inline-flex}
+.nav-tight .nav{gap:10px}
