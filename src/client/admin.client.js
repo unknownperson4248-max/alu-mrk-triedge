@@ -9,7 +9,7 @@
 
   let site = null, media = [], builtin = [], presets = {}, defaults = null;
   let pvMode = innerWidth < 700 ? 'mob' : 'desk';
-  let pendRev = null, pendCount = 0, editProd = null;
+  let pendRev = null, pendCount = 0, editProd = null, uRev = null;
   let dirty = false, tab = 'works', editIdx = null, editWork = null, quotes = null, quoteCount = 0, previewReady = false;
 
   const TABS = [['works', 'Latest work'], ['inbox', 'Quote requests'], ['reviews', 'Reviews'], ['hero', 'Hero'], ['company', 'Company & About'], ['products', 'Profile Systems'], ['systems', 'Systems'], ['content', 'Key points & numbers'], ['design', 'Colours'], ['media', 'Images & files'], ['account', 'Password']];
@@ -178,8 +178,29 @@
   const stars = (n) => '★★★★★'.slice(0, n) + '☆☆☆☆☆'.slice(0, 5 - n);
   function vReviews() {
     if (!pendRev) loadReviews();
-    const P = pendRev || [], L = site.reviews;
-    return `<div class="card"><div class="item-head"><h2 class="grow">Waiting for approval (${P.length})</h2><button type="button" class="b b-sm" data-act="reload-rev">Refresh</button></div>
+    if (!uRev) loadUReviews();
+    const P = pendRev || [], L = site.reviews, U = uRev || [], on = !!String((site.reviewSettings || {}).googleClientId || '').trim();
+    const origins = [location.origin, 'https://alu-mrk-triedge.rahatwize.workers.dev', 'https://alu-mrk-triedge-preview.rahatwize.workers.dev'].filter((v, i, a) => a.indexOf(v) === i);
+    return `<div class="card"><h2>Google sign-in for reviews ${on ? '<span class="tag ok">On</span>' : '<span class="tag">Off</span>'}</h2>
+        <p class="hint">${on ? 'Customers sign in with Google and their review is shown at once (one review per Google account, which they can edit or delete). You can reply to, hide or delete any review below.' : 'While this is empty, reviews from the website wait below for your approval. Paste a Google Client ID to switch to instant reviews with Google sign-in.'}</p>
+        ${txt('reviewSettings.googleClientId', 'Google OAuth Client ID', 'text', '1234567890-abc...apps.googleusercontent.com')}
+        <details class="howto"><summary>How to get a Client ID (free, about 10 minutes)</summary><ol>
+          <li>Open <b>console.cloud.google.com</b> and sign in with the company Google account.</li>
+          <li>Create a project (any name, e.g. "Alu MRK website").</li>
+          <li>Go to <b>APIs &amp; Services → OAuth consent screen</b>: choose <b>External</b>, enter the app name and the company email, save, then <b>Publish app</b>.</li>
+          <li>Go to <b>Credentials → Create credentials → OAuth client ID</b>, type <b>Web application</b>.</li>
+          <li>Under <b>Authorised JavaScript origins</b> add:<br>${origins.map((o) => `<code>${esc(o)}</code>`).join('<br>')}</li>
+          <li>Create, copy the <b>Client ID</b> (it ends with <code>.apps.googleusercontent.com</code>), paste it above and press <b>Save</b>. The Client ID is not a secret.</li>
+        </ol></details></div>
+      <div class="card"><div class="item-head"><h2 class="grow">Reviews from Google accounts (${U.length})</h2><button type="button" class="b b-sm" data-act="reload-urev">Refresh</button></div>
+        <p class="hint">Shown on the website at once. Reply as the company, or hide/delete a review only if it is abusive or fake. Emails are private.</p>
+        <div class="list">${U.map((r) => `<div class="q${r.hidden ? ' is-hidden' : ''}"><div class="q-top"><b>${esc(r.name)}</b><span class="rstars">${stars(+r.rating || 5)}</span><time>${esc(new Date(r.uts || r.ts).toLocaleDateString())}</time></div>
+          <div class="muted">${esc(r.email || '')} ${r.verified ? '<span class="tag ok">Verified customer</span>' : ''} ${r.reports ? `<span class="tag warn">Reported ${r.reports}×</span>` : ''} ${r.hidden ? '<span class="tag">Hidden</span>' : ''} ${r.helpful ? `<span class="tag">${r.helpful} helpful</span>` : ''}</div>
+          <p style="margin:6px 0;white-space:pre-line">${esc(r.text)}</p>
+          ${(r.photos || []).length ? `<div class="thumbs">${r.photos.map((p) => `<a class="thumb" href="/${esc(p)}" target="_blank" rel="noopener"><img src="/${esc(p)}" alt=""></a>`).join('')}</div>` : ''}
+          <div class="fld"><label for="urr-${esc(r.id)}">Your reply (shown under the review)</label><textarea id="urr-${esc(r.id)}" rows="2" maxlength="1500">${esc((r.reply && r.reply.text) || '')}</textarea></div>
+          <div class="acts"><button type="button" class="b b-sm b-pri" data-act="ur-reply" data-id="${esc(r.id)}">Save reply</button><button type="button" class="b b-sm" data-act="ur-hide" data-id="${esc(r.id)}">${r.hidden ? 'Show again' : 'Hide'}</button>${r.reports ? `<button type="button" class="b b-sm" data-act="ur-clear" data-id="${esc(r.id)}">Clear reports</button>` : ''}<button type="button" class="b b-sm b-danger" data-act="ur-del" data-id="${esc(r.id)}">Delete</button></div></div>`).join('') || `<p class="empty">${uRev ? 'No reviews yet.' : 'Loading…'}</p>`}</div></div>
+      <div class="card"><div class="item-head"><h2 class="grow">Waiting for approval (${P.length})</h2><button type="button" class="b b-sm" data-act="reload-rev">Refresh</button></div>
         <p class="hint">Reviews sent from the website. Nothing is shown publicly until you approve it. Approving also saves your other unsaved changes.</p>
         <div class="list">${P.map((r) => `<div class="q"><div class="q-top"><b>${esc(r.name)}</b><span class="rstars">${stars(+r.rating || 5)}</span><time>${esc(new Date(r.ts).toLocaleDateString())}</time></div>${r.place ? `<div class="muted">${esc(r.place)}</div>` : ''}${r.title ? `<b style="display:block;margin-top:4px">${esc(r.title)}</b>` : ''}<p style="margin:4px 0;white-space:pre-line">${esc(r.text)}</p>${r.project ? `<div class="muted">Project: ${esc(r.project)}</div>` : ''}${(r.photos || []).length ? `<div class="thumbs">${r.photos.map((id) => `<a class="thumb" href="/api/admin/file/${esc(id)}" target="_blank" rel="noopener"><img src="/api/admin/file/${esc(id)}" alt=""></a>`).join('')}</div>` : ''}<div class="acts"><button type="button" class="b b-sm b-pri" data-act="rev-ok" data-id="${esc(r.id)}">Approve & publish</button><button type="button" class="b b-sm b-danger" data-act="rev-no" data-id="${esc(r.id)}">Delete</button></div></div>`).join('') || `<p class="empty">${pendRev ? 'No reviews waiting.' : 'Loading…'}</p>`}</div></div>
       <div class="card"><h2>Published reviews (${L.length})</h2><p class="hint">Shown on the website with the average rating. Only add reviews from real customers.</p>
@@ -426,6 +447,13 @@
       if (tab === 'inbox') renderEditor();
     } catch (e) { toast(e.message, 'err'); }
   }
+  async function loadUReviews() {
+    try {
+      const j = await api('/api/admin/ureviews');
+      uRev = j.items || [];
+      if (tab === 'reviews') renderEditor();
+    } catch (e) { toast(e.message, 'err'); }
+  }
   async function loadReviews() {
     try {
       const j = await api('/api/admin/reviews');
@@ -573,6 +601,20 @@
         site.products.splice(+b.dataset.i, 1); editProd = null; markDirty(); renderEditor(); break;
       }
       case 'reload-rev': pendRev = null; renderEditor(); break;
+      case 'reload-urev': uRev = null; renderEditor(); break;
+      case 'ur-reply': case 'ur-hide': case 'ur-clear': {
+        const r0 = (uRev || []).find((x) => x.id === b.dataset.id);
+        if (!r0) break;
+        const body = act === 'ur-reply' ? { reply: ($('#urr-' + r0.id) || {}).value || '' } : act === 'ur-hide' ? { hidden: !r0.hidden } : { clearReports: true };
+        b.disabled = true;
+        try { const j = await api('/api/admin/ureviews/' + r0.id, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) }); uRev = uRev.map((x) => (x.id === r0.id ? j.review : x)); toast(act === 'ur-reply' ? (body.reply ? 'Reply saved. It is shown on the website.' : 'Reply removed.') : 'Saved.', 'ok'); renderEditor(); } catch (err) { toast(err.message, 'err'); b.disabled = false; }
+        break;
+      }
+      case 'ur-del': {
+        if (!b.dataset.armed) { b.dataset.armed = '1'; b.textContent = 'Sure?'; break; }
+        try { await api('/api/admin/ureviews/' + b.dataset.id, { method: 'DELETE' }); uRev = (uRev || []).filter((x) => x.id !== b.dataset.id); renderEditor(); toast('Review deleted.', 'ok'); } catch (err) { toast(err.message, 'err'); }
+        break;
+      }
       case 'rev-ok': {
         const r0 = (pendRev || []).find((x) => x.id === b.dataset.id);
         if (!r0) break;
@@ -748,6 +790,7 @@
     if (!Array.isArray(site.products)) site.products = clone(defaults.products || []);
     if (!Array.isArray(site.productCats)) site.productCats = clone(defaults.productCats || []);
     site.quoteSettings = { ...(defaults.quoteSettings || {}), ...(site.quoteSettings || {}) };
+    site.reviewSettings = { ...(defaults.reviewSettings || {}), ...(site.reviewSettings || {}) };
     if (!site.heroBadge) site.heroBadge = { en: '', el: '' };
     shell();
     loadQuotes();

@@ -215,3 +215,10 @@ html.qd-open,html.qd-open body{overflow:hidden}
   .qd-terms>div:has(.qd-ed:empty){display:none}
   .qd-tab th{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
+.howto{margin-top:10px;font-size:13px}
+.howto summary{cursor:pointer;font-weight:600}
+.howto ol{margin:8px 0 0;padding-left:20px;display:grid;gap:6px}
+.howto code{font-size:12px;background:#eef0f3;padding:1px 5px;border-radius:4px}
+.tag.ok{background:#e3f5ea;color:#1f7a4a}
+.tag.warn{background:#fdecea;color:#b3261e}
+.q.is-hidden{opacity:.6}

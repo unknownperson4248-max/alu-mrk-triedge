@@ -51,6 +51,7 @@ function mergeSite(stored) {
     text: { ...d.text, ...(stored.text || {}) },
     founder: { ...d.founder, ...(stored.founder || {}) },
     quoteSettings: { ...d.quoteSettings, ...(stored.quoteSettings || {}) },
+    reviewSettings: { ...d.reviewSettings, ...(stored.reviewSettings || {}) },
   };
 }
 
@@ -233,6 +234,8 @@ async function handleQuote(req, env, url) {
 
   const ts = Date.now(), ref = quoteRef();
   const rec = { ref, ts, lang: clip(b.lang, 4), customer, items };
+  // remembers the email so a later Google review from it shows "Verified customer"
+  await env.KV.put('qe:' + (await sha256hex(customer.email.toLowerCase())), '1', KEEP);
   const site = await getSite(env);
   const lines = items.map((it, k) => `${k + 1}. ${it.model || it.catName} (${it.catName}) ${it.width} x ${it.height} mm, qty ${it.qty}`
     + [it.colour && `colour ${it.colour}`, it.glass && `glass ${it.glass}${it.glassThk ? ' ' + it.glassThk : ''}`, it.opening && `opening ${it.opening}`].filter(Boolean).map((x) => ', ' + x).join('')
@@ -347,6 +350,183 @@ async function handleReviewPost(req, env, url) {
     text: `New review from ${r.name} (${r.rating}/5)\n${r.title ? r.title + '\n' : ''}${r.text}\n\nApprove or delete it in the admin panel: ${url.origin}/admin`,
   });
   return json({ ok: true });
+}
+
+/* ---------- customer reviews with Google sign-in (one review per Google account, published at once) ---------- */
+const URV = 'urv';
+const RV_DAYS = 180;
+const dec = new TextDecoder();
+const b64uDec = (s) => {
+  s = String(s).replace(/-/g, '+').replace(/_/g, '/');
+  s += '='.repeat((4 - (s.length % 4)) % 4);
+  return Uint8Array.from(atob(s), (c) => c.charCodeAt(0));
+};
+async function sha256hex(v) {
+  const h = await crypto.subtle.digest('SHA-256', enc.encode(String(v)));
+  return [...new Uint8Array(h)].map((b) => b.toString(16).padStart(2, '0')).join('');
+}
+let GKEYS = null, GKEYS_AT = 0;
+async function googleKeys(force) {
+  if (!force && GKEYS && Date.now() - GKEYS_AT < 3600e3) return GKEYS;
+  const r = await fetch('https://www.googleapis.com/oauth2/v3/certs');
+  if (!r.ok) throw new Error('google_keys');
+  GKEYS = (await r.json()).keys || [];
+  GKEYS_AT = Date.now();
+  return GKEYS;
+}
+// Checks a Google "Sign in with Google" ID token: signature, issuer, audience (our client ID) and expiry.
+async function verifyGoogle(token, clientId) {
+  const [h, p, s] = String(token || '').split('.');
+  if (!h || !p || !s || !clientId) return null;
+  let head, claims;
+  try { head = JSON.parse(dec.decode(b64uDec(h))); claims = JSON.parse(dec.decode(b64uDec(p))); } catch { return null; }
+  if (head.alg !== 'RS256') return null;
+  let jwk = (await googleKeys()).find((k) => k.kid === head.kid);
+  if (!jwk) jwk = (await googleKeys(true)).find((k) => k.kid === head.kid);
+  if (!jwk) return null;
+  const key = await crypto.subtle.importKey('jwk', { kty: jwk.kty, n: jwk.n, e: jwk.e, alg: 'RS256', ext: true }, { name: 'RSASSA-PKCS1-v1_5', hash: 'SHA-256' }, false, ['verify']);
+  if (!(await crypto.subtle.verify('RSASSA-PKCS1-v1_5', key, b64uDec(s), enc.encode(h + '.' + p)))) return null;
+  if (!['accounts.google.com', 'https://accounts.google.com'].includes(claims.iss)) return null;
+  if (claims.aud !== clientId || !(claims.exp * 1000 > Date.now()) || !claims.sub) return null;
+  return claims;
+}
+const devLoginOk = (env, url) => env.DEV_FAKE_GOOGLE === '1' && (url.hostname === '127.0.0.1' || url.hostname === 'localhost');
+async function rvCookie(env, user, secure) {
+  const payload = b64u(enc.encode(JSON.stringify({ ...user, x: Date.now() + RV_DAYS * 864e5 })));
+  const sig = await hmac(env.SESSION_SECRET, 'rv.' + payload);
+  return `rtok=${payload}.${sig}; Path=/; HttpOnly; ${secure ? 'Secure; ' : ''}SameSite=Lax; Max-Age=${RV_DAYS * 86400}`;
+}
+async function rvUser(req, env) {
+  const m = (req.headers.get('cookie') || '').match(/(?:^|;\s*)rtok=([^;]+)/);
+  if (!m || !env.SESSION_SECRET) return null;
+  const [payload, sig] = m[1].split('.');
+  if (!payload || !sig || !safeEq(sig, await hmac(env.SESSION_SECRET, 'rv.' + payload))) return null;
+  try {
+    const u = JSON.parse(dec.decode(b64uDec(payload)));
+    return u && u.u && u.x > Date.now() ? u : null;
+  } catch { return null; }
+}
+const urvAll = async (env) => (await env.KV.get(URV, 'json')) || [];
+const urvSave = (env, list) => env.KV.put(URV, JSON.stringify(list));
+const urvPublic = (r) => ({ id: r.id, name: r.name, pic: r.pic || '', rating: r.rating, text: r.text, photos: r.photos || [], ts: r.ts, uts: r.uts || r.ts, verified: !!r.verified, helpful: r.helpful || 0, reply: r.reply || null });
+async function publicUserReviews(env) {
+  return (await urvAll(env)).filter((r) => !r.hidden).map(urvPublic);
+}
+async function voterKey(req, env, user) {
+  if (user) return 'u' + user.u.slice(0, 16);
+  return 'i' + (await hmac(env.SESSION_SECRET || 'x', 'ip.' + (req.headers.get('cf-connecting-ip') || ''))).slice(0, 16);
+}
+// Copies a private upload (qf:) to public media and returns its path, or '' when it is not an image.
+async function publishUpload(env, id, label) {
+  const { value, metadata } = await env.KV.getWithMetadata('qf:' + id, { type: 'arrayBuffer' });
+  const ext = metadata && { 'image/jpeg': '.jpg', 'image/png': '.png', 'image/webp': '.webp' }[metadata.type];
+  if (!value || !ext) return '';
+  const mid = rid(8) + ext;
+  await env.KV.put('media:' + mid, value, { metadata: { type: metadata.type, name: label + (metadata.name || mid), size: value.byteLength, ts: Date.now() } });
+  await env.KV.delete('qf:' + id);
+  return 'media/' + mid;
+}
+async function dropMedia(env, paths) {
+  for (const p of paths || []) if (/^media\/[a-z0-9]{16}\.(jpg|png|webp)$/.test(p)) await env.KV.delete('media:' + p.slice(6));
+}
+
+async function handleUserReviews(req, env, url, path) {
+  const method = req.method;
+  if (method !== 'GET' && !sameOrigin(req, url)) return json({ ok: false }, 403);
+  const site = await getSite(env);
+  const clientId = String((site.reviewSettings || {}).googleClientId || '').trim();
+  const secure = url.protocol === 'https:';
+  const user = await rvUser(req, env);
+  const mineOf = async (u) => (u ? (await urvAll(env)).find((r) => r.uid === u.u) : null);
+
+  if (path === '/api/review/me' && method === 'GET') {
+    const mine = await mineOf(user);
+    return json({ ok: true, user: user ? { name: user.n, pic: user.p } : null, mine: mine && !mine.hidden ? urvPublic(mine) : mine ? { ...urvPublic(mine), hidden: true } : null });
+  }
+  if (path === '/api/review/login' && method === 'POST') {
+    let b;
+    try { b = await req.json(); } catch { return json({ ok: false, error: 'bad_request' }, 400); }
+    if (!(await bump(env, 'urv-login', 2000))) return json({ ok: false, error: 'busy' }, 429);
+    let c = null;
+    if (b && b.dev && devLoginOk(env, url)) c = { sub: String(b.sub || 'dev-user'), name: clip(b.name || 'Dev User', 60), email: clip(b.email || 'dev@example.com', 120), email_verified: true, picture: '' };
+    else c = await verifyGoogle(b && b.credential, clientId).catch(() => null);
+    if (!c) return json({ ok: false, error: 'login_failed' }, 401);
+    const pic = /^https:\/\/lh3\.googleusercontent\.com\//.test(c.picture || '') ? String(c.picture).slice(0, 300) : '';
+    const u = { u: (await sha256hex('google:' + c.sub)).slice(0, 32), n: clip(c.name || c.given_name || (c.email || '').split('@')[0], 60) || 'Google user', p: pic, e: c.email_verified ? clip(c.email, 120).toLowerCase() : '' };
+    const mine = await mineOf(u);
+    return json({ ok: true, user: { name: u.n, pic: u.p }, mine: mine ? urvPublic(mine) : null }, 200, { 'set-cookie': await rvCookie(env, u, secure) });
+  }
+  if (path === '/api/review/logout' && method === 'POST') {
+    return json({ ok: true }, 200, { 'set-cookie': `rtok=; Path=/; HttpOnly; ${secure ? 'Secure; ' : ''}SameSite=Lax; Max-Age=0` });
+  }
+  if (path === '/api/review/mine' && (method === 'POST' || method === 'DELETE')) {
+    if (!user) return json({ ok: false, error: 'login' }, 401);
+    const list = await urvAll(env);
+    const k = list.findIndex((r) => r.uid === user.u);
+    if (method === 'DELETE') {
+      if (k < 0) return json({ ok: true });
+      await dropMedia(env, list[k].photos);
+      list.splice(k, 1);
+      await urvSave(env, list);
+      return json({ ok: true });
+    }
+    let b;
+    try { b = await req.json(); } catch { return json({ ok: false, error: 'bad_request' }, 400); }
+    const rating = Math.round(+b.rating), textv = clip(b.text, 1500);
+    if (!(rating >= 1 && rating <= 5) || textv.length < 10) return json({ ok: false, error: 'required' }, 400);
+    if (!(await bump(env, 'urv', 300))) return json({ ok: false, error: 'busy' }, 429);
+    const old = k >= 0 ? list[k] : null;
+    if (!old && list.length >= 3000) return json({ ok: false, error: 'busy' }, 429);
+    const keep = [], fresh = [];
+    for (const v of Array.isArray(b.photos) ? b.photos.slice(0, 3) : []) {
+      const s = String(v);
+      if (old && (old.photos || []).includes(s)) keep.push(s);
+      else if (FILE_ID.test(s)) fresh.push(s);
+    }
+    const photos = [...keep];
+    for (const id of fresh) { if (photos.length >= 3) break; const p = await publishUpload(env, id, 'review-'); if (p) photos.push(p); }
+    if (old) await dropMedia(env, (old.photos || []).filter((p) => !photos.includes(p)));
+    const verified = !!(user.e && (await env.KV.get('qe:' + (await sha256hex(user.e)))));
+    const now = Date.now();
+    const r = old
+      ? { ...old, name: user.n, pic: user.p, email: user.e, rating, text: textv, photos, uts: now, verified, lang: clip(b.lang, 4) }
+      : { id: rid(6), uid: user.u, name: user.n, pic: user.p, email: user.e, rating, text: textv, photos, ts: now, uts: now, verified, helpful: 0, votes: {}, reports: 0, reporters: [], hidden: false, reply: null, lang: clip(b.lang, 4) };
+    if (old) list[k] = r; else list.unshift(r);
+    await urvSave(env, list);
+    if (!old) {
+      await sendMail(env, site, {
+        subject: `New review on the website · ${'★'.repeat(rating)} · ${r.name}`,
+        html: mailShell('New review on the website', `<p style="margin:0 0 10px;font-size:20px;color:#c99a3c">${'★'.repeat(rating)}${'☆'.repeat(5 - rating)}</p><table role="presentation" cellpadding="0" cellspacing="0">${row('Name', r.name)}${row('Email', r.email)}${row('Verified customer', verified ? 'Yes' : '')}${row('Photos', photos.length ? String(photos.length) : '')}</table><p style="white-space:pre-line">${escMail(textv)}</p><p>It is already shown on the website. You can reply to it or hide it in the admin panel (Reviews).</p>`, url.origin),
+        text: `New review from ${r.name} (${rating}/5)\n${textv}\n\nReply or hide it in the admin panel: ${url.origin}/admin`,
+      });
+    }
+    return json({ ok: true, review: urvPublic(r) });
+  }
+  if ((path === '/api/review/vote' || path === '/api/review/report') && method === 'POST') {
+    let b;
+    try { b = await req.json(); } catch { return json({ ok: false, error: 'bad_request' }, 400); }
+    const list = await urvAll(env);
+    const r = list.find((x) => x.id === String(b && b.id) && !x.hidden);
+    if (!r) return json({ ok: false, error: 'not_found' }, 404);
+    const vk = await voterKey(req, env, user);
+    if (path === '/api/review/vote') {
+      if (user && r.uid === user.u) return json({ ok: false, error: 'own' }, 400);
+      if (!(await bump(env, 'urv-vote', 5000))) return json({ ok: false, error: 'busy' }, 429);
+      const v = [1, -1].includes(+b.v) ? +b.v : 0;
+      r.votes = r.votes || {};
+      if (v) r.votes[vk] = v; else delete r.votes[vk];
+      const keys = Object.keys(r.votes);
+      if (keys.length > 3000) delete r.votes[keys[0]];
+      r.helpful = Object.values(r.votes).filter((x) => x === 1).length;
+      await urvSave(env, list);
+      return json({ ok: true, helpful: r.helpful });
+    }
+    if (!(await bump(env, 'urv-report', 500))) return json({ ok: false, error: 'busy' }, 429);
+    r.reporters = r.reporters || [];
+    if (!r.reporters.includes(vk)) { r.reporters.push(vk); r.reports = r.reporters.length; await urvSave(env, list); }
+    return json({ ok: true });
+  }
+  return json({ ok: false, error: 'not_found' }, 404);
 }
 
 async function listMedia(env) {
@@ -480,6 +660,29 @@ async function handleAdminApi(req, env, url, path) {
     }
     return json({ ok: true, review: { id: r.id, name: r.name, place: r.place || '', title: r.title || '', project: r.project || '', rating: r.rating, text: r.text, ts: r.ts, photos } });
   }
+  if (path === '/api/admin/ureviews' && method === 'GET') {
+    return json({ items: (await urvAll(env)).map((r) => ({ ...urvPublic(r), email: r.email || '', hidden: !!r.hidden, reports: r.reports || 0 })) });
+  }
+  const um = /^\/api\/admin\/ureviews\/([a-f0-9]{12})$/.exec(path);
+  if (um && (method === 'POST' || method === 'DELETE')) {
+    const list = await urvAll(env);
+    const k = list.findIndex((x) => x.id === um[1]);
+    if (k < 0) return json({ ok: false, error: 'Review not found' }, 404);
+    if (method === 'DELETE') {
+      await dropMedia(env, list[k].photos);
+      list.splice(k, 1);
+      await urvSave(env, list);
+      return json({ ok: true });
+    }
+    let b;
+    try { b = await req.json(); } catch { return json({ ok: false, error: 'Bad request' }, 400); }
+    const r = list[k];
+    if ('reply' in b) { const tx = clip(b.reply, 1500); r.reply = tx ? { text: tx, ts: Date.now() } : null; }
+    if ('hidden' in b) r.hidden = !!b.hidden;
+    if (b.clearReports) { r.reports = 0; r.reporters = []; }
+    await urvSave(env, list);
+    return json({ ok: true, review: { ...urvPublic(r), email: r.email || '', hidden: !!r.hidden, reports: r.reports || 0 } });
+  }
   if (path === '/api/admin/reviews' && method === 'GET') {
     return json({ items: (await env.KV.get('rev-pending', 'json')) || [] });
   }
@@ -502,11 +705,14 @@ export default {
       if (path === '/api/quote' && req.method === 'POST') return await handleQuote(req, env, url);
       if (path === '/api/upload' && req.method === 'POST') return await handleUpload(req, env, url);
       if (path === '/api/review' && req.method === 'POST') return await handleReviewPost(req, env, url);
+      if (path.startsWith('/api/review/')) return await handleUserReviews(req, env, url, path);
 
       if (req.method !== 'GET' && req.method !== 'HEAD') return text('Method not allowed', 'text/plain', 'no-store', 405);
 
       if (path === '/' || path === '/index.html') {
         const site = await getSite(env);
+        site.ureviews = await publicUserReviews(env);
+        if (devLoginOk(env, url)) site.devLogin = true;
         return text(renderIndex(site, url), 'text/html; charset=utf-8', 'no-cache', 200, { 'x-frame-options': 'SAMEORIGIN' });
       }
       if (path === '/site.css') return text(SITE_CSS, 'text/css; charset=utf-8', 'public, max-age=31536000, immutable');

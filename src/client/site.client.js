@@ -56,6 +56,14 @@
       rev_title_f: 'Review title', rev_project: 'Project or product (optional)', rev_photos: 'Project photos (optional)', rev_photos_hint: 'Up to 3 photos.',
       reviews: 'Reviews', rev_title: 'What our clients say', rev_title_empty: 'Worked with us?', rev_empty: 'Tell others about your experience. Your review appears here after we check it.',
       rev_write: 'Write a review', rev_count: '{n} reviews', rev_one: '1 review', rev_form_title: 'Your review', rev_rating: 'Your rating', rev_text: 'Your experience', rev_place: 'Area / city (optional)',
+      rv_h: 'Ratings and reviews', rv_rate: 'Rate our work', rv_rate_sub: 'Tell others what you think', rv_see_all: 'See all reviews', rv_empty_g: 'No reviews yet. Be the first to tell others about your experience.',
+      rv_helpful_n: '{n} people found this helpful', rv_helpful_1: '1 person found this helpful', rv_was: 'Was this review helpful?', yes: 'Yes', no: 'No',
+      rv_verified: 'Verified customer', rv_reply_from: 'Response from {c}', rv_edited: 'Edited', rv_more: 'More options', rv_report: 'Report review', rv_reported: 'Thank you. We will check this review.',
+      rv_signin_t: 'Sign in to write a review', rv_signin_b: 'Use your Google account. You can write one review and edit or delete it at any time.', rv_privacy: 'Your Google name and photo are shown with your review. Your email is never shown.',
+      rv_posting_as: 'Posting publicly as', rv_signout: 'Sign out', rv_signed_out: 'You are signed out.', rv_your: 'Your review', rv_edit: 'Edit your review', rv_delete: 'Delete', rv_sure: 'Sure?',
+      rv_post: 'Post review', rv_update: 'Update review', rv_live: 'Thank you! Your review is now on the website.', rv_updated: 'Your review was updated.', rv_deleted: 'Your review was deleted.',
+      rv_desc_ph: 'Describe your experience (at least 10 characters)', rv_need: 'Please choose a rating and write at least 10 characters.', rv_err_login: 'Sign-in did not work. Please try again.',
+      rv_sort_rel: 'Most relevant', rv_sort_new: 'Newest', rv_none_filter: 'No reviews with this rating yet.', rv_page_sub: 'Reviews from customers signed in with a Google account.', rv_photo_n: 'Photo {n}', rv_hidden: 'This review is hidden by the company.',
       rev_send: 'Send review', rev_thanks: 'Thank you! Your review will appear on the website after we check it.', rev_need: 'Please choose a rating, add your name and write a few words.',
       help: 'Need help?', help_quote: 'Request a quote', help_email: 'Email us', help_call: 'Call us', close_help: 'Close',
       gal_eyebrow: 'Latest work', gal_title: 'Recently completed projects', gal_view: 'View full gallery', gallery: 'Gallery', all: 'All', new_label: 'New',
@@ -118,6 +126,14 @@
       rev_title_f: 'Τίτλος κριτικής', rev_project: 'Έργο ή προϊόν (προαιρετικά)', rev_photos: 'Φωτογραφίες έργου (προαιρετικά)', rev_photos_hint: 'Έως 3 φωτογραφίες.',
       reviews: 'Κριτικές', rev_title: 'Τι λένε οι πελάτες μας', rev_title_empty: 'Συνεργαστήκατε μαζί μας;', rev_empty: 'Μοιραστείτε την εμπειρία σας. Η κριτική σας εμφανίζεται εδώ μετά από έλεγχο.',
       rev_write: 'Γράψτε κριτική', rev_count: '{n} κριτικές', rev_one: '1 κριτική', rev_form_title: 'Η κριτική σας', rev_rating: 'Η βαθμολογία σας', rev_text: 'Η εμπειρία σας', rev_place: 'Περιοχή / πόλη (προαιρετικά)',
+      rv_h: 'Αξιολογήσεις και κριτικές', rv_rate: 'Βαθμολογήστε τη δουλειά μας', rv_rate_sub: 'Πείτε στους άλλους τη γνώμη σας', rv_see_all: 'Όλες οι κριτικές', rv_empty_g: 'Δεν υπάρχουν κριτικές ακόμη. Γίνετε ο πρώτος που θα μοιραστεί την εμπειρία του.',
+      rv_helpful_n: '{n} άτομα το βρήκαν χρήσιμο', rv_helpful_1: '1 άτομο το βρήκε χρήσιμο', rv_was: 'Ήταν χρήσιμη αυτή η κριτική;', yes: 'Ναι', no: 'Όχι',
+      rv_verified: 'Επαληθευμένος πελάτης', rv_reply_from: 'Απάντηση από {c}', rv_edited: 'Επεξεργασμένη', rv_more: 'Περισσότερα', rv_report: 'Αναφορά κριτικής', rv_reported: 'Ευχαριστούμε. Θα ελέγξουμε αυτή την κριτική.',
+      rv_signin_t: 'Συνδεθείτε για να γράψετε κριτική', rv_signin_b: 'Χρησιμοποιήστε τον λογαριασμό σας Google. Γράφετε μία κριτική και μπορείτε να την αλλάξετε ή να τη διαγράψετε όποτε θέλετε.', rv_privacy: 'Το όνομα και η φωτογραφία σας από το Google εμφανίζονται με την κριτική. Το email σας δεν εμφανίζεται ποτέ.',
+      rv_posting_as: 'Δημοσίευση ως', rv_signout: 'Αποσύνδεση', rv_signed_out: 'Αποσυνδεθήκατε.', rv_your: 'Η κριτική σας', rv_edit: 'Επεξεργασία κριτικής', rv_delete: 'Διαγραφή', rv_sure: 'Σίγουρα;',
+      rv_post: 'Δημοσίευση κριτικής', rv_update: 'Ενημέρωση κριτικής', rv_live: 'Ευχαριστούμε! Η κριτική σας δημοσιεύτηκε.', rv_updated: 'Η κριτική σας ενημερώθηκε.', rv_deleted: 'Η κριτική σας διαγράφηκε.',
+      rv_desc_ph: 'Περιγράψτε την εμπειρία σας (τουλάχιστον 10 χαρακτήρες)', rv_need: 'Επιλέξτε βαθμολογία και γράψτε τουλάχιστον 10 χαρακτήρες.', rv_err_login: 'Η σύνδεση δεν πέτυχε. Δοκιμάστε ξανά.',
+      rv_sort_rel: 'Πιο σχετικές', rv_sort_new: 'Νεότερες', rv_none_filter: 'Δεν υπάρχουν ακόμη κριτικές με αυτή τη βαθμολογία.', rv_page_sub: 'Κριτικές από πελάτες συνδεδεμένους με λογαριασμό Google.', rv_photo_n: 'Φωτογραφία {n}', rv_hidden: 'Αυτή η κριτική έχει αποκρυφτεί από την εταιρεία.',
       rev_send: 'Αποστολή κριτικής', rev_thanks: 'Ευχαριστούμε! Η κριτική σας θα εμφανιστεί στην ιστοσελίδα μετά από έλεγχο.', rev_need: 'Επιλέξτε βαθμολογία, γράψτε το όνομά σας και λίγα λόγια.',
       help: 'Χρειάζεστε βοήθεια;', help_quote: 'Ζητήστε προσφορά', help_email: 'Στείλτε email', help_call: 'Καλέστε μας', close_help: 'Κλείσιμο',
       gal_eyebrow: 'Πρόσφατα έργα', gal_title: 'Έργα που ολοκληρώσαμε πρόσφατα', gal_view: 'Δείτε όλα τα έργα', gallery: 'Έργα', all: 'Όλα', new_label: 'Νέο',
@@ -185,6 +201,7 @@
     pin: '<path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/>',
     clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
     arrow: '<path d="M4 12h15M13 6l6 6-6 6"/>',
+    dots: '<circle cx="12" cy="5" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="12" cy="19" r="1.4"/>',
     plus: '<path d="M12 5v14M5 12h14"/>',
     pen: '<path d="M4 20h4L19 9l-4-4L4 16v4z"/><path d="M13.5 6.5l4 4"/>',
     copy: '<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/>',
@@ -484,46 +501,217 @@
     </div></section>`;
   }
 
-  /* ---------- reviews ---------- */
+  /* ---------- reviews (Play Store style: Google sign-in, one review per account, shown at once) ---------- */
   const reviewsList = () => (S.reviews || []).filter((r) => r && String(r.text || '').trim() && String(r.name || '').trim());
   const STAR = 'M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z';
   const stars = (n) => `<span class="stars" role="img" aria-label="${n} / 5">${[1, 2, 3, 4, 5].map((i) => `<svg viewBox="0 0 24 24" class="${i <= n ? 'on' : ''}" aria-hidden="true"><path d="${STAR}"/></svg>`).join('')}</span>`;
-  const revDate = (r) => (r.ts ? new Date(r.ts).toLocaleDateString(lang === 'el' ? 'el-GR' : 'en-GB', { month: 'short', year: 'numeric' }) : '');
+  const rate5 = (r) => Math.min(5, Math.max(1, Math.round(+r.rating) || 5));
+  const rvDay = (ts) => (ts ? new Date(ts).toLocaleDateString(lang === 'el' ? 'el-GR' : 'en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : '');
+  const GCID = () => String((S.reviewSettings || {}).googleClientId || '').trim();
+  const googleOn = () => !!(GCID() || S.devLogin);
+  let RV = { user: null, mine: null };
+  let rvVotes = {};
+  try { rvVotes = JSON.parse(localStorage.getItem('rv-votes') || '{}') || {}; } catch (e) {}
+  const uRevs = () => (S.ureviews || []).filter((r) => r && r.text);
+  const allRevs = () => [...uRevs(), ...reviewsList().map((r) => ({ ...r, legacy: true }))];
+  const byRelevance = (a, b) => (!!b.verified - !!a.verified) || ((b.helpful || 0) - (a.helpful || 0)) || (((b.photos || []).length > 0) - ((a.photos || []).length > 0)) || ((b.uts || b.ts || 0) - (a.uts || a.ts || 0));
+  const hue = (s) => [...String(s || '')].reduce((a, c) => a + c.charCodeAt(0), 0) % 360;
+  const avatar = (r) => (r.pic ? `<span class="rva"><img src="${esc(r.pic)}" alt="" referrerpolicy="no-referrer" loading="lazy"></span>` : `<span class="rva" style="--h:${hue(r.name)}">${esc(String(r.name || '?').trim().charAt(0).toUpperCase())}</span>`);
+
+  function revCard(r, i) {
+    const own = RV.mine && r.id === RV.mine.id;
+    const edited = r.uts && r.ts && r.uts - r.ts > 60000;
+    const v = rvVotes[r.id] || 0;
+    const meta = [own ? u('rv_your') : '', rvDay(r.uts || r.ts), edited ? u('rv_edited') : '', r.legacy ? r.place : ''].filter(Boolean).join(' · ');
+    return `<article class="rvc" style="--i:${i || 0}" data-rid="${esc(r.id)}">
+      <header class="rvc-h">${avatar(r)}<div class="rvc-n"><b>${esc(r.name)}</b>${r.verified ? `<small class="rv-ver">${icon('check')}${u('rv_verified')}</small>` : ''}</div>
+        ${!r.legacy && !own ? `<div class="rvc-menu"><button type="button" class="rvc-more" data-rvmenu aria-label="${u('rv_more')}" aria-expanded="false">${icon('dots')}</button><div class="rvc-pop" hidden><button type="button" data-rvreport="${esc(r.id)}">${icon('info')}${u('rv_report')}</button></div></div>` : ''}</header>
+      <div class="rvc-meta">${stars(rate5(r))}<span>${esc(meta)}</span></div>
+      ${r.title ? `<h3>${esc(r.title)}</h3>` : ''}
+      <p class="rvc-t">${esc(r.text)}</p>
+      ${(r.photos || []).length ? `<div class="rev-ph">${r.photos.map((ph, k) => `<button type="button" data-rvp="${esc(r.id)}" data-k="${k}" aria-label="${u('zoom')}"><img src="${esc(src(ph))}" alt="" loading="lazy"></button>`).join('')}</div>` : ''}
+      ${r.project ? `<small class="rev-proj">${esc(r.project)}</small>` : ''}
+      ${r.helpful ? `<p class="rvc-hn">${r.helpful === 1 ? u('rv_helpful_1') : u('rv_helpful_n', { n: r.helpful })}</p>` : ''}
+      ${!r.legacy && !own ? `<div class="rvc-vote"><span>${u('rv_was')}</span><button type="button" data-rvvote="${esc(r.id)}" data-v="1" aria-pressed="${v === 1}">${u('yes')}</button><button type="button" data-rvvote="${esc(r.id)}" data-v="-1" aria-pressed="${v === -1}">${u('no')}</button></div>` : ''}
+      ${r.reply && r.reply.text ? `<div class="rvc-reply"><div><b>${esc(u('rv_reply_from', { c: S.company.name }))}</b><span>${esc(rvDay(r.reply.ts))}</span></div><p>${esc(r.reply.text)}</p></div>` : ''}
+    </article>`;
+  }
+  function revSummary(L) {
+    const n = L.length, avg = n ? L.reduce((a, r) => a + rate5(r), 0) / n : 0;
+    return `<div class="rv-sum"><div class="rv-big"><b>${avg.toFixed(1)}</b>${stars(Math.round(avg))}<span>${n === 1 ? u('rev_one') : u('rev_count', { n })}</span></div>
+      <ul class="rv-bars" aria-hidden="true">${[5, 4, 3, 2, 1].map((s) => { const c = L.filter((r) => rate5(r) === s).length; return `<li><span>${s}</span><i><b style="width:${n ? Math.round((c / n) * 100) : 0}%"></b></i></li>`; }).join('')}</ul></div>`;
+  }
+  function rateBox() {
+    if (RV.mine) return `<div class="rv-rate mine"><p class="rv-rate-h">${u('rv_your')}</p>${stars(rate5(RV.mine))}<p class="rv-mine-t">${esc(RV.mine.text)}</p>${RV.mine.hidden ? `<p class="rv-rate-s">${u('rv_hidden')}</p>` : ''}<button type="button" class="link-sm" data-review>${icon('pen')}${u('rv_edit')}</button></div>`;
+    return `<div class="rv-rate"><p class="rv-rate-h">${u('rv_rate')}</p><p class="rv-rate-s">${u('rv_rate_sub')}</p>
+      <div class="rv-pick" role="group" aria-label="${u('rev_rating')}">${[1, 2, 3, 4, 5].map((i) => `<button type="button" data-rate="${i}" aria-label="${i} / 5"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="${STAR}"/></svg></button>`).join('')}</div>
+      <button type="button" class="link-sm" data-review>${u('rev_write')}</button></div>`;
+  }
   function reviews() {
-    const L = reviewsList();
-    const avg = L.length ? L.reduce((a, r) => a + Math.min(5, Math.max(1, +r.rating || 5)), 0) / L.length : 0;
+    const L = allRevs().sort(byRelevance);
     return `<section class="reviews" id="reviews"><div class="wrap">
-      <div class="rev-head rv"><div><p class="eyebrow">${u('reviews')}</p><h2>${L.length ? u('rev_title') : u('rev_title_empty')}</h2>
-        ${L.length ? `<p class="rev-avg">${stars(Math.round(avg))}<b>${avg.toFixed(1)}</b><span>${L.length === 1 ? u('rev_one') : u('rev_count', { n: L.length })}</span></p>` : `<p class="rev-sub">${u('rev_empty')}</p>`}</div>
-        <button type="button" class="btn btn-ghost" data-review>${icon('star')}${u('rev_write')}</button></div>
-      ${L.length ? `<div class="rev-grid rv-kids">${L.slice(0, 6).map((r, i) => `<blockquote class="rev" style="--i:${i}">${stars(Math.min(5, Math.max(1, +r.rating || 5)))}${r.title ? `<h3>${esc(r.title)}</h3>` : ''}<p>${esc(r.text)}</p>${(r.photos || []).length ? `<div class="rev-ph">${r.photos.map((ph, k) => `<button type="button" data-rvp="${esc(r.id)}" data-k="${k}" aria-label="${u('zoom')}"><img src="${esc(src(ph))}" alt="" loading="lazy"></button>`).join('')}</div>` : ''}${r.project ? `<small class="rev-proj">${esc(r.project)}</small>` : ''}<cite><b>${esc(r.name)}</b>${esc([r.place, revDate(r)].filter(Boolean).join(' · '))}</cite></blockquote>`).join('')}</div>` : ''}
+      <div class="rev-head rv"><div><p class="eyebrow">${u('reviews')}</p><h2>${u('rv_h')}</h2>${L.length ? '' : `<p class="rev-sub">${u(googleOn() ? 'rv_empty_g' : 'rev_empty')}</p>`}</div>${L.length ? `<a class="rv-arrow" href="#all-reviews" aria-label="${u('rv_see_all')}">${icon('arrow')}</a>` : ''}</div>
+      <div class="rv-top rv${L.length ? '' : ' solo'}">${L.length ? revSummary(L) : ''}${rateBox()}</div>
+      ${L.length ? `<div class="rev-grid rv-kids">${L.slice(0, 3).map(revCard).join('')}</div>${L.length > 3 ? `<a class="btn btn-ghost rv-seeall" href="#all-reviews">${u('rv_see_all')} (${L.length})${icon('arrow')}</a>` : ''}` : ''}
     </div></section>`;
   }
-  function openReview() {
+  let rvSort = 'rel', rvStar = 0;
+  function revPageList() {
+    let L = allRevs();
+    if (rvStar) L = L.filter((r) => rate5(r) === rvStar);
+    L.sort(rvSort === 'new' ? (a, b) => (b.uts || b.ts || 0) - (a.uts || a.ts || 0) : byRelevance);
+    return L.length ? L.map(revCard).join('') : `<p class="rev-sub">${u('rv_none_filter')}</p>`;
+  }
+  function revPage() {
+    const L = allRevs();
+    return `<div class="sp-bar"><div class="wrap">
+        <a class="sp-back" href="#reviews">${icon('back')}${u('back_home')}</a>
+        <span class="sp-title">${u('rv_h')}</span>
+        <button type="button" class="btn btn-accent" data-review>${u(RV.mine ? 'rv_edit' : 'rev_write')}</button>
+      </div></div>
+      <section class="gal-head rvp-head"><div class="wrap"><p class="eyebrow">${u('reviews')}</p><h1>${u('rv_h')}</h1>${googleOn() ? `<p>${u('rv_page_sub')}</p>` : ''}
+        ${L.length ? revSummary(L) : ''}
+        <div class="chips rvp-chips" role="group" aria-label="${u('rv_h')}">${[['rel', u('rv_sort_rel')], ['new', u('rv_sort_new')]].map(([k, l]) => `<button type="button" data-rvsort="${k}" aria-pressed="${rvSort === k}">${l}</button>`).join('')}${[5, 4, 3, 2, 1].map((s) => `<button type="button" data-rvstar="${s}" aria-pressed="${rvStar === s}">${s} ★</button>`).join('')}</div></div></section>
+      <section class="gal-body rvp-body"><div class="wrap"><div class="rvp-list" id="rvp-list">${revPageList()}</div></div></section>
+      ${footerMini()}`;
+  }
+  // redraw the review section (and the all-reviews page when it is open) after a change
+  function refreshReviews() {
+    const old = $('#reviews');
+    if (old) { const w = document.createElement('div'); w.innerHTML = reviews(); const n = w.firstElementChild; old.replaceWith(n); reveal(n, true); }
+    if (revOpen) { const sp = $('#sp'), y = sp.scrollTop; sp.innerHTML = revPage(); sp.scrollTop = y; }
+  }
+  function redrawCard(id) {
+    const r = allRevs().find((x) => x.id === id);
+    if (!r) return;
+    $$(`[data-rid="${id}"]`).forEach((el) => { const w = document.createElement('div'); w.innerHTML = revCard(r, +getComputedStyle(el).getPropertyValue('--i') || 0); el.replaceWith(w.firstElementChild); });
+  }
+  function toast(msg) {
+    let t = $('#toast');
+    if (!t) { t = document.createElement('div'); t.id = 'toast'; t.className = 'toast'; t.setAttribute('role', 'status'); t.setAttribute('aria-live', 'polite'); document.body.appendChild(t); }
+    t.textContent = msg;
+    t.classList.add('on');
+    clearTimeout(toast.t);
+    toast.t = setTimeout(() => t.classList.remove('on'), 3400);
+  }
+  async function rvApi(path, method, body) {
+    const r = await fetch(path, { method, headers: body ? { 'content-type': 'application/json' } : {}, body: body ? JSON.stringify(body) : undefined, credentials: 'same-origin' });
+    const j = await r.json().catch(() => ({}));
+    return { status: r.status, ok: r.ok && j.ok !== false, j };
+  }
+  function upsertMine(r) {
+    const L = S.ureviews || (S.ureviews = []);
+    const k = L.findIndex((x) => x.id === r.id);
+    if (r.hidden) { if (k >= 0) L.splice(k, 1); }
+    else if (k >= 0) L[k] = r; else L.unshift(r);
+    RV.mine = r;
+  }
+  async function rvLoadMe() {
+    if (!googleOn() || PREVIEW) return;
+    try {
+      const { ok, j } = await rvApi('/api/review/me', 'GET');
+      if (!ok) return;
+      RV.user = j.user;
+      if (j.mine) upsertMine(j.mine);
+      if (j.user || j.mine) refreshReviews();
+    } catch (e) {}
+  }
+  // Google Identity Services: loaded only when someone wants to write a review
+  let gsiP = null, gsiInit = false, rvPreset = 0;
+  function loadGsi() {
+    if (window.google && google.accounts && google.accounts.id) return Promise.resolve();
+    if (!GCID()) return Promise.reject(new Error('no client id'));
+    return gsiP || (gsiP = new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = 'https://accounts.google.com/gsi/client';
+      s.async = true;
+      s.onload = () => res();
+      s.onerror = () => { gsiP = null; rej(new Error('gsi')); };
+      document.head.appendChild(s);
+    }));
+  }
+  function renderGsiButton() {
+    const el = $('#gsi-btn');
+    if (!el || !window.google || !google.accounts) return;
+    if (!gsiInit) { google.accounts.id.initialize({ client_id: GCID(), callback: (resp) => rvLogin({ credential: resp.credential }), ux_mode: 'popup', auto_select: false, cancel_on_tap_outside: true }); gsiInit = true; }
+    google.accounts.id.renderButton(el, { theme: 'filled_black', size: 'large', shape: 'pill', text: 'continue_with', logo_alignment: 'left', locale: lang === 'el' ? 'el' : 'en', width: Math.max(220, Math.min(340, el.clientWidth || 300)) });
+  }
+  async function rvLogin(body) {
+    const st = $('#rv-status');
+    try {
+      const { ok, j } = await rvApi('/api/review/login', 'POST', body);
+      if (!ok) throw new Error('login');
+      RV.user = j.user;
+      if (j.mine) upsertMine(j.mine);
+      refreshReviews();
+      if ($('#rvm') && !$('#rvm').hidden) openReview(rvPreset);
+    } catch (e) { if (st) { st.textContent = u('rv_err_login'); st.className = 'q-status err'; } }
+  }
+
+  function rvModal() {
     let m = $('#rvm');
     if (!m) { m = document.createElement('div'); m.id = 'rvm'; m.className = 'rvm'; m.setAttribute('role', 'dialog'); m.setAttribute('aria-modal', 'true'); document.body.appendChild(m); }
     m.setAttribute('aria-label', u('rev_form_title'));
+    m.hidden = false;
+    lock(true, 'rvm');
+    return m;
+  }
+  const starPick = (n) => `<div class="star-pick" role="radiogroup" aria-label="${u('rev_rating')}">${[1, 2, 3, 4, 5].map((i) => `<button type="button" role="radio" class="${i <= n ? 'on' : ''}" aria-checked="${i === n}" data-star="${i}" aria-label="${i} / 5"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="${STAR}"/></svg></button>`).join('')}</div>`;
+  const photoBox = () => `<div class="f"><span class="lbl">${u('rev_photos')}</span><div class="qb-files" id="rv-files"></div><label class="btn btn-sm btn-ghost qb-up">${icon('images')}<span id="rv-up-t">${u('qb_add_file')}</span><input type="file" id="rv-file" accept="image/jpeg,image/png,image/webp,image/heic" multiple></label><small class="qb-hint">${u('rev_photos_hint')}</small></div>`;
+  function openReview(preset) {
+    rvPreset = +preset || 0;
+    if (!googleOn()) { openReviewLegacy(rvPreset); return; }
+    const m = rvModal();
+    if (!RV.user) {
+      m.innerHTML = `<div class="rvm-card rvm-sign">
+        <button type="button" class="rvm-x" data-rv-close aria-label="${u('close')}">&times;</button>
+        <h3>${u('rv_signin_t')}</h3><p class="rvm-p">${u('rv_signin_b')}</p>
+        <div id="gsi-btn" class="gsi-btn"></div>
+        ${S.devLogin ? `<button type="button" class="btn btn-ghost" data-rvdev>Test sign-in (local only)</button>` : ''}
+        <p class="q-status" id="rv-status" role="status" aria-live="polite"></p>
+        <p class="qb-hint">${u('rv_privacy')}</p></div>`;
+      if (GCID()) loadGsi().then(renderGsiButton).catch(() => { const st = $('#rv-status'); if (st) { st.textContent = u('rv_err_login'); st.className = 'q-status err'; } });
+      setTimeout(() => { const x = m.querySelector('.rvm-x'); if (x) x.focus({ preventScroll: true }); }, 50);
+      return;
+    }
+    const mine = RV.mine, rating = rvPreset || (mine ? rate5(mine) : 0);
+    rvPhotos = mine ? (mine.photos || []).map((p, k) => ({ path: p, name: u('rv_photo_n', { n: k + 1 }) })) : [];
+    m.dataset.rating = String(rating);
+    m.innerHTML = `<form class="rvm-card" id="rv-form" novalidate>
+      <button type="button" class="rvm-x" data-rv-close aria-label="${u('close')}">&times;</button>
+      <h3>${u(mine ? 'rv_edit' : 'rev_form_title')}</h3>
+      <div class="rvm-user">${avatar(RV.user)}<div><small>${u('rv_posting_as')}</small><b>${esc(RV.user.name)}</b></div><button type="button" class="link-sm" data-rvsignout>${u('rv_signout')}</button></div>
+      <div class="f"><span class="lbl">${u('rev_rating')}</span>${starPick(rating)}</div>
+      <div class="f"><label for="rv-text">${u('rev_text')} *</label><textarea id="rv-text" maxlength="1500" rows="5" placeholder="${esc(u('rv_desc_ph'))}">${esc(mine ? mine.text : '')}</textarea></div>
+      ${photoBox()}
+      <div class="q-actions"><button type="submit" class="btn btn-accent" id="rv-send">${u(mine ? 'rv_update' : 'rv_post')}${icon('arrow')}</button>${mine ? `<button type="button" class="btn btn-ghost rv-del" data-rvdel>${icon('trash')}${u('rv_delete')}</button>` : ''}</div>
+      <p class="q-status" id="rv-status" role="status" aria-live="polite"></p>
+      <p class="qb-hint">${u('rv_privacy')}</p>
+    </form>`;
+    rvDraw();
+    setTimeout(() => { const t = $('#rv-text'); if (t) t.focus({ preventScroll: true }); }, 50);
+  }
+  function openReviewLegacy(preset) {
+    const m = rvModal();
     m.innerHTML = `<form class="rvm-card" id="rv-form" novalidate>
       <button type="button" class="rvm-x" data-rv-close aria-label="${u('close')}">&times;</button>
       <h3>${u('rev_form_title')}</h3>
-      <div class="f"><span class="lbl">${u('rev_rating')}</span><div class="star-pick" role="radiogroup" aria-label="${u('rev_rating')}">${[1, 2, 3, 4, 5].map((i) => `<button type="button" role="radio" aria-checked="false" data-star="${i}" aria-label="${i} / 5"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="${STAR}"/></svg></button>`).join('')}</div></div>
+      <div class="f"><span class="lbl">${u('rev_rating')}</span>${starPick(preset)}</div>
       <div class="q-row"><div class="f"><label for="rv-name">${u('name')} *</label><input id="rv-name" autocomplete="name" maxlength="60" required></div><div class="f"><label for="rv-place">${u('rev_place')}</label><input id="rv-place" maxlength="60"></div></div>
       <div class="f"><label for="rv-title">${u('rev_title_f')}</label><input id="rv-title" maxlength="100"></div>
       <div class="f"><label for="rv-text">${u('rev_text')} *</label><textarea id="rv-text" maxlength="1200" required></textarea></div>
       <div class="f"><label for="rv-project">${u('rev_project')}</label><input id="rv-project" maxlength="100"></div>
-      <div class="f"><span class="lbl">${u('rev_photos')}</span><div class="qb-files" id="rv-files"></div><label class="btn btn-sm btn-ghost qb-up">${icon('images')}<span id="rv-up-t">${u('qb_add_file')}</span><input type="file" id="rv-file" accept="image/jpeg,image/png,image/webp,image/heic" multiple></label><small class="qb-hint">${u('rev_photos_hint')}</small></div>
+      ${photoBox()}
       <div class="hp" aria-hidden="true"><input id="rv-web" tabindex="-1" autocomplete="off"></div>
       <div class="q-actions"><button type="submit" class="btn btn-accent" id="rv-send">${u('rev_send')}${icon('arrow')}</button></div>
       <p class="q-status" id="rv-status" role="status" aria-live="polite"></p>
     </form>`;
-    m.hidden = false;
-    m.dataset.rating = '0';
+    m.dataset.rating = String(preset || 0);
     rvPhotos = [];
-    lock(true, 'rvm');
     setTimeout(() => $('#rv-name') && $('#rv-name').focus({ preventScroll: true }), 50);
   }
   let rvPhotos = [];
-  function rvDraw() { const b = $('#rv-files'); if (b) b.innerHTML = rvPhotos.map((f, k) => `<span class="qb-file">${icon('images')}<b>${esc(f.name)}</b><button type="button" data-rvf-del="${k}" aria-label="${u('qb_remove')}">&times;</button></span>`).join(''); }
+  function rvDraw() { const b = $('#rv-files'); if (b) b.innerHTML = rvPhotos.map((f, k) => `<span class="qb-file">${f.path ? `<img class="qb-file-im" src="${esc(src(f.path))}" alt="">` : icon('images')}<b>${esc(f.name)}</b><button type="button" data-rvf-del="${k}" aria-label="${u('qb_remove')}">&times;</button></span>`).join(''); }
   async function rvUpload(files) {
     const tx = $('#rv-up-t');
     for (const file of files.slice(0, 3 - rvPhotos.length)) {
@@ -549,6 +737,24 @@
   }
   function closeReview() { const m = $('#rvm'); if (m) { m.hidden = true; m.innerHTML = ''; } lock(false, 'rvm'); }
   async function submitReview() {
+    if (!googleOn()) { submitLegacy(); return; }
+    const m = $('#rvm'), st = $('#rv-status'), btn = $('#rv-send');
+    const d = { rating: +m.dataset.rating, text: $('#rv-text').value.trim(), photos: rvPhotos.map((f) => f.path || f.id), lang };
+    st.className = 'q-status';
+    if (!d.rating || d.text.length < 10) { st.textContent = u('rv_need'); st.classList.add('err'); return; }
+    btn.disabled = true;
+    const was = !!RV.mine;
+    try {
+      const { status, ok, j } = await rvApi('/api/review/mine', 'POST', d);
+      if (status === 401) { RV.user = null; openReview(d.rating); return; }
+      if (!ok) throw new Error('send');
+      upsertMine(j.review);
+      closeReview();
+      refreshReviews();
+      toast(u(was ? 'rv_updated' : 'rv_live'));
+    } catch (e) { st.textContent = u('send_err'); st.classList.add('err'); btn.disabled = false; }
+  }
+  async function submitLegacy() {
     const m = $('#rvm'), st = $('#rv-status'), btn = $('#rv-send');
     const d = { rating: +m.dataset.rating, name: $('#rv-name').value.trim(), place: $('#rv-place').value.trim(), title: $('#rv-title').value.trim(), project: $('#rv-project').value.trim(), text: $('#rv-text').value.trim(), photos: rvPhotos.map((f) => f.id), website: $('#rv-web').value, lang };
     st.className = 'q-status';
@@ -565,6 +771,42 @@
       st.textContent = u('send_err');
       st.classList.add('err');
       btn.disabled = false;
+    }
+  }
+  async function rvAction(el) {
+    if (el.matches('[data-rvdev]')) { rvLogin({ dev: true, sub: 'dev-' + (localStorage.getItem('rv-dev') || 'a'), name: 'Test Customer', email: 'test@example.com' }); return; }
+    if (el.matches('[data-rvsignout]')) {
+      await rvApi('/api/review/logout', 'POST', {}).catch(() => {});
+      RV.user = null; RV.mine = null;
+      if (googleOn() && window.google && google.accounts) google.accounts.id.disableAutoSelect();
+      closeReview(); refreshReviews(); toast(u('rv_signed_out'));
+      return;
+    }
+    if (el.matches('[data-rvdel]')) {
+      if (!el.dataset.armed) { el.dataset.armed = '1'; el.lastChild.textContent = u('rv_sure'); return; }
+      const { ok } = await rvApi('/api/review/mine', 'DELETE').catch(() => ({ ok: false }));
+      if (!ok) { const st = $('#rv-status'); if (st) { st.textContent = u('send_err'); st.className = 'q-status err'; } return; }
+      S.ureviews = (S.ureviews || []).filter((x) => !RV.mine || x.id !== RV.mine.id);
+      RV.mine = null;
+      closeReview(); refreshReviews(); toast(u('rv_deleted'));
+      return;
+    }
+    if (el.matches('[data-rvvote]')) {
+      const id = el.dataset.rvvote, v = +el.dataset.v, nv = rvVotes[id] === v ? 0 : v;
+      const r = uRevs().find((x) => x.id === id);
+      if (!r) return;
+      const before = rvVotes[id] || 0;
+      rvVotes[id] = nv;
+      r.helpful = Math.max(0, (r.helpful || 0) + (nv === 1 ? 1 : 0) - (before === 1 ? 1 : 0));
+      try { localStorage.setItem('rv-votes', JSON.stringify(rvVotes)); } catch (e) {}
+      redrawCard(id);
+      if (!PREVIEW) { const { ok, j } = await rvApi('/api/review/vote', 'POST', { id, v: nv }).catch(() => ({})); if (ok && typeof j.helpful === 'number') { r.helpful = j.helpful; redrawCard(id); } }
+      return;
+    }
+    if (el.matches('[data-rvreport]')) {
+      $$('.rvc-pop').forEach((p) => { p.hidden = true; });
+      if (!PREVIEW) await rvApi('/api/review/report', 'POST', { id: el.dataset.rvreport }).catch(() => {});
+      toast(u('rv_reported'));
     }
   }
 
@@ -1373,8 +1615,34 @@
     document.title = `${S.company.name} · ${t(S.text.tagline)}`;
     setTimeout(() => { if (!layerBusy()) { sp.hidden = true; sp.innerHTML = ''; } }, reduce ? 0 : 720);
   }
-  let galOpen = false, prodCur = null;
-  const layerBusy = () => current || galOpen || prodCur;
+  let galOpen = false, prodCur = null, revOpen = false;
+  const layerBusy = () => current || galOpen || prodCur || revOpen;
+  function openRevPage(instant) {
+    current = null; galOpen = false; prodCur = null;
+    revOpen = true;
+    const sp = $('#sp');
+    sp.innerHTML = revPage();
+    sp.setAttribute('role', 'dialog');
+    sp.setAttribute('aria-modal', 'true');
+    sp.setAttribute('aria-label', u('rv_h'));
+    sp.hidden = false;
+    sp.scrollTop = 0;
+    if (instant || reduce) sp.classList.add('open');
+    else requestAnimationFrame(() => requestAnimationFrame(() => sp.classList.add('open')));
+    lock(true, 'sp');
+    document.title = `${u('rv_h')} · ${S.company.name}`;
+    sp.setAttribute('tabindex', '-1');
+    setTimeout(() => sp.focus({ preventScroll: true }), 50);
+  }
+  function closeRevPage() {
+    if (!revOpen) return;
+    revOpen = false;
+    const sp = $('#sp');
+    sp.classList.remove('open');
+    lock(false, 'sp');
+    document.title = `${S.company.name} · ${t(S.text.tagline)}`;
+    setTimeout(() => { if (!layerBusy()) { sp.hidden = true; sp.innerHTML = ''; } }, reduce ? 0 : 720);
+  }
   function openProduct(id, instant) {
     const x = byProd(id);
     if (!x) return;
@@ -1435,9 +1703,11 @@
     const h = decodeURIComponent(location.hash.slice(1));
     if (panel) setPanel(null);
     setHelp(false);
-    if (h === 'gallery' && works().length) { prodCur = null; openGallery(first); return; }
-    if (h && byProd(h)) { openProduct(h, first); return; }
-    if (h && bySlug(h)) { galOpen = false; prodCur = null; openSystem(h, first); return; }
+    if (h === 'all-reviews' && allRevs().length) { openRevPage(first); return; }
+    if (h === 'gallery' && works().length) { prodCur = null; revOpen = false; openGallery(first); return; }
+    if (h && byProd(h)) { revOpen = false; openProduct(h, first); return; }
+    if (h && bySlug(h)) { galOpen = false; prodCur = null; revOpen = false; openSystem(h, first); return; }
+    if (revOpen) closeRevPage();
     if (prodCur) closeProduct();
     if (galOpen) closeGallery();
     if (current) closeSystem();
@@ -1516,13 +1786,28 @@
     const lb = e.target.closest('[data-lang]');
     if (lb) { setLang(lb.dataset.lang); return; }
     if (e.target.closest('.help-btn')) { setHelp(!$('#help').classList.contains('open')); return; }
+    if (!e.target.closest('.rvc-menu')) $$('.rvc-pop:not([hidden])').forEach((p) => { p.hidden = true; });
+    const rate = e.target.closest('[data-rate]');
+    if (rate) { openReview(+rate.dataset.rate); return; }
     if (e.target.closest('[data-review]')) { openReview(); return; }
+    const rvmb = e.target.closest('[data-rvmenu]');
+    if (rvmb) { const pop = rvmb.nextElementSibling, open = pop.hidden; $$('.rvc-pop').forEach((p) => { p.hidden = true; }); pop.hidden = !open; rvmb.setAttribute('aria-expanded', String(open)); return; }
+    const rva = e.target.closest('[data-rvdev],[data-rvsignout],[data-rvdel],[data-rvvote],[data-rvreport]');
+    if (rva) { rvAction(rva); return; }
+    const rvs = e.target.closest('[data-rvsort],[data-rvstar]');
+    if (rvs) {
+      if (rvs.dataset.rvsort) rvSort = rvs.dataset.rvsort; else rvStar = rvStar === +rvs.dataset.rvstar ? 0 : +rvs.dataset.rvstar;
+      $$('[data-rvsort]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.rvsort === rvSort)));
+      $$('[data-rvstar]').forEach((b) => b.setAttribute('aria-pressed', String(+b.dataset.rvstar === rvStar)));
+      const l = $('#rvp-list'); if (l) l.innerHTML = revPageList();
+      return;
+    }
     if (e.target.closest('[data-rv-close]') || e.target.id === 'rvm') { closeReview(); return; }
     const sp = e.target.closest('[data-star]');
     const rvd = e.target.closest('[data-rvf-del]');
     if (rvd) { rvPhotos.splice(+rvd.dataset.rvfDel, 1); rvDraw(); return; }
     const rvp = e.target.closest('[data-rvp]');
-    if (rvp) { const r = reviewsList().find((x) => x.id === rvp.dataset.rvp); if (r) openLB(r.photos, +rvp.dataset.k || 0, r.photos.map(() => r.name)); return; }
+    if (rvp) { const r = allRevs().find((x) => x.id === rvp.dataset.rvp); if (r) openLB(r.photos, +rvp.dataset.k || 0, r.photos.map(() => r.name)); return; }
     if (sp) { const n = +sp.dataset.star; $('#rvm').dataset.rating = String(n); $$('[data-star]').forEach((b) => { const on = +b.dataset.star <= n; b.classList.toggle('on', on); b.setAttribute('aria-checked', String(+b.dataset.star === n)); }); return; }
     if ($('#help') && $('#help').classList.contains('open')) setHelp(false);
     const ls = e.target.closest('.lsel-btn');
@@ -1672,5 +1957,6 @@
   setupLB();
   render();
   route(true);
+  rvLoadMe();
 
 })();

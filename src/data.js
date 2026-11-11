@@ -158,6 +158,8 @@ export const DEFAULT_SITE = {
   quoteSettings: { currency: '€', vat: '', validity: '', payment: '', delivery: '', terms: '' },
   // Published customer reviews: { id, name, place, rating 1-5, text, ts }. New ones arrive through the website and are approved in the admin panel.
   reviews: [],
+  // Google sign-in for reviews: paste the OAuth Client ID (not a secret) in the admin panel. Empty = reviews wait for approval instead.
+  reviewSettings: { googleClientId: '' },
   systems: [
     {
       slug: 'motorized-sliding', icon: 'motor', visible: true, kind: 'slide', motor: true, configs: [2, 3, 4, 6],
