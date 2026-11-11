@@ -793,8 +793,11 @@ export default {
       if (path === '/admin.js') return text(ADMIN_JS, 'text/javascript; charset=utf-8', 'public, max-age=31536000, immutable');
 
       if (path.startsWith('/img/')) {
-        const hit = IMAGES[path.slice(5)];
-        if (hit) return new Response(hit[0], { headers: { 'content-type': hit[1], 'cache-control': 'public, max-age=604800', ...BASE_HEADERS } });
+        const name = path.slice(5);
+        // JPG photos have a smaller WebP twin; browsers that accept WebP get it (link previews keep the JPG)
+        const webp = /\.jpe?g$/i.test(name) && /image\/webp/.test(req.headers.get('accept') || '') && IMAGES[name.replace(/\.jpe?g$/i, '.webp')];
+        const hit = webp || IMAGES[name];
+        if (hit) return new Response(hit[0], { headers: { 'content-type': hit[1], 'cache-control': 'public, max-age=604800', vary: 'Accept', ...BASE_HEADERS } });
       }
 
       if (path.startsWith('/media/')) {

@@ -5,7 +5,7 @@ workers_dev = true
 
 rules = [
   { type = "Text", globs = ["**/*.html", "**/*.css", "**/*.client.js"], fallthrough = true },
-  { type = "Data", globs = ["**/*.jpg", "**/*.png"], fallthrough = true },
+  { type = "Data", globs = ["**/*.jpg", "**/*.png", "**/*.webp"], fallthrough = true },
 ]
 
 # Website content, uploaded images, quote requests and the admin password hash.
