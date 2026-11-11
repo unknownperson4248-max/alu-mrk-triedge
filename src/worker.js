@@ -50,6 +50,7 @@ function mergeSite(stored) {
     company: { ...d.company, ...(stored.company || {}), socials: { ...d.company.socials, ...((stored.company || {}).socials || {}) } },
     text: { ...d.text, ...(stored.text || {}) },
     founder: { ...d.founder, ...(stored.founder || {}) },
+    quoteSettings: { ...d.quoteSettings, ...(stored.quoteSettings || {}) },
   };
 }
 
@@ -177,6 +178,13 @@ const sameOrigin = (req, url) => {
 
 /* ---------- handlers ---------- */
 
+const Q_CATS = ['doors', 'sliding-doors', 'windows', 'sliding-windows', 'thermal', 'glass', 'custom'];
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const quoteRef = () => {
+  const d = new Date(), a = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789', r = crypto.getRandomValues(new Uint8Array(4));
+  return 'AMT-' + String(d.getFullYear()).slice(2) + String(d.getMonth() + 1).padStart(2, '0') + String(d.getDate()).padStart(2, '0') + '-' + [...r].map((x) => a[x % a.length]).join('');
+};
+
 async function handleQuote(req, env, url) {
   if (!sameOrigin(req, url)) return json({ ok: false }, 403);
   let b;
@@ -185,115 +193,131 @@ async function handleQuote(req, env, url) {
   } catch {
     return json({ ok: false, error: 'bad_request' }, 400);
   }
-  if (b && b.website) return json({ ok: true }); // honeypot field filled: silently ignore bots
-  const c = (v, n) => String(v ?? '').trim().slice(0, n);
-  const q = {
-    name: c(b.name, 100),
-    phone: c(b.phone, 40),
-    email: c(b.email, 120),
-    area: c(b.area, 80),
-    system: c(b.system, 120),
-    message: c(b.message, 2000),
-    lang: c(b.lang, 4),
-    ts: Date.now(),
+  if (b && b.website) return json({ ok: true, ref: 'AMT-000000-0000' }); // honeypot: pretend success to bots
+  const sid = clip(b.sid, 40);
+  if (/^[a-z0-9-]{8,40}$/i.test(sid)) {
+    const prev = await env.KV.get('qsub:' + sid);
+    if (prev) return json({ ok: true, ref: prev, duplicate: true });
+  }
+  const c = b.customer || {};
+  const customer = {
+    name: clip(c.name, 100), email: clip(c.email, 120).toLowerCase(), phone: clip(c.phone, 40),
+    company: clip(c.company, 120), location: clip(c.location, 120), type: clip(c.type, 60), message: clip(c.message, 2000),
   };
-  if (!q.name || !q.phone) return json({ ok: false, error: 'required' }, 400);
-  const key = `q:${String(9e15 - q.ts).padStart(16, '0')}:${crypto.randomUUID().slice(0, 8)}`;
-  await env.KV.put(key, JSON.stringify(q), { metadata: { name: q.name, ts: q.ts }, expirationTtl: 60 * 60 * 24 * 400 });
-  return json({ ok: true });
+  const errs = [];
+  if (!customer.name) errs.push('name');
+  if (!EMAIL_RE.test(customer.email)) errs.push('email');
+  if (customer.phone.replace(/\D/g, '').length < 8 || !/^\s*(\+|00)/.test(customer.phone)) errs.push('phone');
+  if (!c.privacy) errs.push('privacy');
+  const raw = Array.isArray(b.items) ? b.items.slice(0, 30) : [];
+  if (!raw.length) errs.push('items');
+  const items = [];
+  for (const it of raw) {
+    const w = Math.round(+it.width), h = Math.round(+it.height), q = Math.round(+it.qty);
+    if (!Q_CATS.includes(it.cat) || !(w > 0 && w <= 30000) || !(h > 0 && h <= 30000) || !(q >= 1 && q <= 999)) { errs.push('item'); break; }
+    const files = [];
+    for (const f of Array.isArray(it.files) ? it.files.slice(0, 3) : []) {
+      const id = String(f && f.id || '');
+      if (!FILE_ID.test(id)) continue;
+      const meta = (await env.KV.getWithMetadata('qf:' + id, { type: 'stream' })).metadata;
+      if (meta) files.push({ id, name: meta.name, type: meta.type, size: meta.size });
+    }
+    items.push({
+      cat: it.cat, catName: clip(it.catName, 60), model: clip(it.model, 80), width: w, height: h, qty: q,
+      colour: clip(it.colour, 60), glass: clip(it.glass, 60), glassThk: clip(it.glassThk, 40), opening: clip(it.opening, 60),
+      specs: clip(it.specs, 500), notes: clip(it.notes, 1000), files,
+    });
+  }
+  if (errs.length) return json({ ok: false, error: 'invalid', fields: [...new Set(errs)] }, 400);
+  if (!(await bump(env, 'quote', 200))) return json({ ok: false, error: 'busy' }, 429);
+
+  const ts = Date.now(), ref = quoteRef();
+  const rec = { ref, ts, lang: clip(b.lang, 4), customer, items };
+  const site = await getSite(env);
+  const lines = items.map((it, k) => `${k + 1}. ${it.model || it.catName} (${it.catName}) ${it.width} x ${it.height} mm, qty ${it.qty}`
+    + [it.colour && `colour ${it.colour}`, it.glass && `glass ${it.glass}${it.glassThk ? ' ' + it.glassThk : ''}`, it.opening && `opening ${it.opening}`].filter(Boolean).map((x) => ', ' + x).join('')
+    + (it.specs ? `\n   Specs: ${it.specs}` : '') + (it.notes ? `\n   Notes: ${it.notes}` : '') + (it.files.length ? `\n   Attachments: ${it.files.map((f) => f.name).join(', ')}` : '')).join('\n');
+  const when = new Date(ts).toLocaleString('en-GB', { timeZone: 'Asia/Nicosia', dateStyle: 'medium', timeStyle: 'short' });
+  const html = mailShell(`Quotation request ${ref}`,
+    `<p style="margin:0 0 12px">New quotation request from the website, ${escMail(when)} (Cyprus time).</p>
+     <table role="presentation" cellpadding="0" cellspacing="0" style="font-size:15px;margin-bottom:14px">${row('Reference', ref)}${row('Name', customer.name)}${row('Email', customer.email)}${row('Phone', customer.phone)}${row('Company', customer.company)}${row('Location', customer.location)}${row('Project type', customer.type)}</table>
+     ${customer.message ? `<p style="margin:0 0 14px;padding:10px;background:#f7f7f8;border-radius:6px;white-space:pre-line">${escMail(customer.message)}</p>` : ''}
+     <h3 style="font-size:16px;margin:16px 0 8px">Products (${items.length})</h3>
+     ${items.map((it, k) => `<div style="border:1px solid #e3e5e8;border-radius:8px;padding:10px 12px;margin-bottom:8px">
+       <div style="font-weight:bold">${k + 1}. ${escMail(it.model || it.catName)}</div>
+       <table role="presentation" cellpadding="0" cellspacing="0" style="font-size:14px">${row('Category', it.catName)}${row('Size', `${it.width} x ${it.height} mm`)}${row('Quantity', String(it.qty))}${row('Colour', it.colour)}${row('Glass', [it.glass, it.glassThk].filter(Boolean).join(', '))}${row('Opening', it.opening)}${row('Specifications', it.specs)}${row('Notes', it.notes)}${row('Attachments', it.files.map((f) => f.name).join(', ') + (it.files.length ? ' (open in the admin panel)' : ''))}</table></div>`).join('')}`, url.origin);
+  const plain = `Quotation request ${ref}\n${when}\n\nName: ${customer.name}\nEmail: ${customer.email}\nPhone: ${customer.phone}\n${customer.company ? 'Company: ' + customer.company + '\n' : ''}${customer.location ? 'Location: ' + customer.location + '\n' : ''}${customer.type ? 'Project type: ' + customer.type + '\n' : ''}${customer.message ? '\nMessage:\n' + customer.message + '\n' : ''}\nProducts:\n${lines}\n\nAdmin panel: ${url.origin}/admin`;
+  rec.email = await sendMail(env, site, { subject: `Quotation request ${ref} · ${customer.name} · ${items.length} item${items.length > 1 ? 's' : ''}`, html, text: plain, replyTo: customer.email });
+  const key = `q:${String(9e15 - ts).padStart(16, '0')}:${rid(4)}`;
+  await env.KV.put(key, JSON.stringify(rec), { metadata: { name: customer.name, ts }, ...KEEP });
+  if (sid) await env.KV.put('qsub:' + sid, ref, { expirationTtl: 60 * 60 * 24 * 3 });
+  return json({ ok: true, ref });
 }
 
-/* ---------- messages (price questions with replies) and reviews ----------
-   KV keys: chat:<id> one conversation; chat-index a short list of all conversations for the admin panel,
-   which also carries simple daily limits; rev-pending reviews waiting for approval. */
-const CHAT_ID = /^[a-f0-9]{16}$/;
-const KEEP = { expirationTtl: 60 * 60 * 24 * 400 };
+/* ---------- shared helpers for quotes, uploads and reviews ---------- */
 const clip = (v, n) => String(v ?? '').replace(/\r/g, '').trim().slice(0, n);
 const today = () => new Date().toISOString().slice(0, 10);
 const rid = (n) => [...crypto.getRandomValues(new Uint8Array(n))].map((b) => b.toString(16).padStart(2, '0')).join('');
+const KEEP = { expirationTtl: 60 * 60 * 24 * 400 };
+const FILE_ID = /^[a-f0-9]{20}$/;
+const UP_TYPES = { 'image/jpeg': 1, 'image/png': 1, 'image/webp': 1, 'application/pdf': 1 };
+const UP_MAX = 10 * 1024 * 1024;
 
-async function chatIndex(env) {
-  const ix = (await env.KV.get('chat-index', 'json')) || {};
-  if (ix.day !== today()) { ix.day = today(); ix.threads = 0; ix.msgs = 0; }
-  ix.items = Array.isArray(ix.items) ? ix.items : [];
-  return ix;
+// Simple daily counters so the public forms cannot be used to fill the store.
+async function bump(env, name, limit) {
+  const key = `cnt:${name}:${today()}`;
+  const n = +((await env.KV.get(key)) || 0);
+  if (n >= limit) return false;
+  await env.KV.put(key, String(n + 1), { expirationTtl: 60 * 60 * 48 });
+  return true;
 }
-function indexPut(ix, th, keepPlace) {
-  const last = th.msgs[th.msgs.length - 1] || {};
-  const row = { id: th.id, name: th.name, phone: th.phone, last: String(last.text || '').slice(0, 90), from: last.from || 'user', updated: th.updated, ua: th.ua || 0, n: th.msgs.length };
-  const i = ix.items.findIndex((x) => x.id === th.id);
-  if (keepPlace && i >= 0) ix.items[i] = row;
-  else ix.items = [row, ...ix.items.filter((x) => x.id !== th.id)].slice(0, 300);
-}
-// The item a message is about is looked up on the server, so the title and photo always come from the site itself.
-async function resolveRef(env, ref) {
-  if (!ref || typeof ref !== 'object') return null;
-  const site = await getSite(env);
-  const id = clip(ref.id, 60), img = clip(ref.img, 160);
-  if (ref.type === 'work') {
-    const w = (site.works || []).find((x) => x.id === id);
-    if (!w) return null;
-    return { type: 'work', id, title: (w.title && (w.title.en || w.title.el)) || '', img: (w.images || []).includes(img) ? img : (w.images || [])[0] || '' };
-  }
-  if (ref.type === 'system') {
-    const sy = (site.systems || []).find((x) => x.slug === id);
-    if (!sy) return null;
-    return { type: 'system', id, title: (sy.name && (sy.name.en || sy.name.el)) || '', img: sy.image || '' };
-  }
-  return null;
-}
-const publicThread = (th) => ({ id: th.id, name: th.name, msgs: th.msgs, uu: th.uu || 0 });
 
-async function handleChatPost(req, env, url) {
+// Private uploads (quote drawings, review photos). Never served publicly; the admin reads them through /api/admin/file/.
+async function handleUpload(req, env, url) {
   if (!sameOrigin(req, url)) return json({ ok: false }, 403);
-  let b;
-  try {
-    b = await req.json();
-  } catch {
-    return json({ ok: false, error: 'bad_request' }, 400);
-  }
-  if (b && b.website) return json({ ok: true });
-  const text = clip(b.text, 1000);
-  if (!text) return json({ ok: false, error: 'empty' }, 400);
-  const ix = await chatIndex(env);
-  if (ix.msgs >= 400) return json({ ok: false, error: 'busy' }, 429);
-  let th = null;
-  if (CHAT_ID.test(b.thread || '')) {
-    th = await env.KV.get('chat:' + b.thread, 'json');
-    if (!th || !safeEq(th.token, String(b.token || ''))) th = null;
-  }
-  const now = Date.now();
-  if (!th) {
-    const name = clip(b.name, 80), phone = clip(b.phone, 30);
-    if (!name || phone.replace(/\D/g, '').length < 6) return json({ ok: false, error: 'contact' }, 400);
-    if (ix.threads >= 150) return json({ ok: false, error: 'busy' }, 429);
-    th = { id: rid(8), token: rid(16), name, phone, lang: clip(b.lang, 4), created: now, msgs: [], ua: 0, uu: 0 };
-    ix.threads++;
-  }
-  if (th.msgs.length >= 300) return json({ ok: false, error: 'full' }, 400);
-  const ref = await resolveRef(env, b.ref);
-  th.msgs.push({ id: rid(4), from: 'user', text, ts: now, ...(ref ? { ref } : {}) });
-  th.updated = now;
-  th.ua = (th.ua || 0) + 1;
-  th.uu = 0;
-  ix.msgs++;
-  indexPut(ix, th);
-  await Promise.all([env.KV.put('chat:' + th.id, JSON.stringify(th), KEEP), env.KV.put('chat-index', JSON.stringify(ix))]);
-  return json({ ok: true, thread: { ...publicThread(th), token: th.token } });
+  const type = (req.headers.get('content-type') || '').split(';')[0].trim();
+  if (!UP_TYPES[type]) return json({ ok: false, error: 'type' }, 415);
+  const purpose = url.searchParams.get('for') === 'review' ? 'review' : 'quote';
+  if (purpose === 'review' && type === 'application/pdf') return json({ ok: false, error: 'type' }, 415);
+  const len = +(req.headers.get('content-length') || 0);
+  if (len > UP_MAX) return json({ ok: false, error: 'size' }, 413);
+  const buf = await req.arrayBuffer();
+  if (!buf.byteLength) return json({ ok: false, error: 'empty' }, 400);
+  if (buf.byteLength > UP_MAX) return json({ ok: false, error: 'size' }, 413);
+  if (!(await bump(env, 'upload', 300))) return json({ ok: false, error: 'busy' }, 429);
+  const id = rid(10);
+  const name = clip(decodeURIComponent(req.headers.get('x-filename') || 'file'), 100).replace(/[^\w.\- ()]/g, '_');
+  await env.KV.put('qf:' + id, buf, { metadata: { type, name, size: buf.byteLength, purpose, ts: Date.now() }, ...KEEP });
+  return json({ ok: true, id, name, size: buf.byteLength, type });
 }
 
-async function handleChatGet(env, url) {
-  const id = url.searchParams.get('thread') || '', token = url.searchParams.get('token') || '';
-  if (!CHAT_ID.test(id)) return json({ ok: false }, 400);
-  const th = await env.KV.get('chat:' + id, 'json');
-  if (!th || !safeEq(th.token, token)) return json({ ok: false, error: 'not_found' }, 404);
-  const out = publicThread(th);
-  if (url.searchParams.get('seen') === '1' && th.uu) {
-    th.uu = 0;
-    await env.KV.put('chat:' + id, JSON.stringify(th), KEEP);
+/* ---------- email (Resend). Works once RESEND_API_KEY is set as a Worker secret; otherwise skipped. ---------- */
+const escMail = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+async function sendMail(env, site, { subject, html, text: plain, replyTo }) {
+  if (!env.RESEND_API_KEY) return 'not-configured';
+  const to = env.MAIL_TO || (site.company && site.company.email);
+  if (!to) return 'no-recipient';
+  try {
+    const r = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: { authorization: 'Bearer ' + env.RESEND_API_KEY, 'content-type': 'application/json' },
+      body: JSON.stringify({ from: env.MAIL_FROM || 'Alu MRK TriEdge Website <onboarding@resend.dev>', to: [to], subject, html, text: plain, ...(replyTo ? { reply_to: replyTo } : {}) }),
+    });
+    return r.ok ? 'sent' : 'failed-' + r.status;
+  } catch (e) {
+    return 'failed';
   }
-  return json({ ok: true, thread: out });
 }
+function mailShell(title, inner, url) {
+  return `<!doctype html><html><body style="margin:0;background:#f2f3f5;font-family:Arial,Helvetica,sans-serif;color:#14171a">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f2f3f5;padding:16px 8px"><tr><td align="center">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:640px;background:#ffffff;border-radius:10px;overflow:hidden">
+<tr><td style="background:#17191d;color:#ffffff;padding:18px 20px;font-size:18px;font-weight:bold">${escMail(title)}</td></tr>
+<tr><td style="padding:18px 20px;font-size:15px;line-height:1.5">${inner}</td></tr>
+<tr><td style="padding:14px 20px;background:#f7f7f8;font-size:12px;color:#5f6873">Open the admin panel: <a href="${escMail(url)}/admin">${escMail(url)}/admin</a></td></tr>
+</table></td></tr></table></body></html>`;
+}
+const row = (k, v) => (v ? `<tr><td style="padding:4px 10px 4px 0;color:#5f6873;vertical-align:top;white-space:nowrap">${escMail(k)}</td><td style="padding:4px 0">${escMail(v)}</td></tr>` : '');
 
 async function handleReviewPost(req, env, url) {
   if (!sameOrigin(req, url)) return json({ ok: false }, 403);
@@ -304,12 +328,24 @@ async function handleReviewPost(req, env, url) {
     return json({ ok: false, error: 'bad_request' }, 400);
   }
   if (b && b.website) return json({ ok: true });
-  const r = { id: rid(6), name: clip(b.name, 60), place: clip(b.place, 60), rating: Math.round(+b.rating), text: clip(b.text, 800), lang: clip(b.lang, 4), ts: Date.now() };
+  const r = { id: rid(6), name: clip(b.name, 60), place: clip(b.place, 60), title: clip(b.title, 100), project: clip(b.project, 100), rating: Math.round(+b.rating), text: clip(b.text, 1200), lang: clip(b.lang, 4), ts: Date.now(), photos: [] };
   if (!r.name || r.text.length < 10 || !(r.rating >= 1 && r.rating <= 5)) return json({ ok: false, error: 'required' }, 400);
+  for (const id of Array.isArray(b.photos) ? b.photos.slice(0, 3) : []) {
+    if (!FILE_ID.test(String(id))) continue;
+    const meta = (await env.KV.getWithMetadata('qf:' + id, { type: 'stream' })).metadata;
+    if (meta && meta.type && meta.type.startsWith('image/')) r.photos.push(String(id));
+  }
+  if (!(await bump(env, 'review', 60))) return json({ ok: false, error: 'busy' }, 429);
   const list = (await env.KV.get('rev-pending', 'json')) || [];
   if (list.length >= 200) return json({ ok: false, error: 'busy' }, 429);
   list.unshift(r);
   await env.KV.put('rev-pending', JSON.stringify(list));
+  const site = await getSite(env);
+  await sendMail(env, site, {
+    subject: `New review waiting for approval · ${'★'.repeat(r.rating)} · ${r.name}`,
+    html: mailShell('New review waiting for approval', `<p style="margin:0 0 10px;font-size:20px;color:#c99a3c">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</p><table role="presentation" cellpadding="0" cellspacing="0">${row('Name', r.name)}${row('Area', r.place)}${row('Title', r.title)}${row('Project', r.project)}${row('Photos', r.photos.length ? String(r.photos.length) : '')}</table><p style="white-space:pre-line">${escMail(r.text)}</p><p>It is not shown on the website until you approve it in the admin panel (Reviews).</p>`, url.origin),
+    text: `New review from ${r.name} (${r.rating}/5)\n${r.title ? r.title + '\n' : ''}${r.text}\n\nApprove or delete it in the admin panel: ${url.origin}/admin`,
+  });
   return json({ ok: true });
 }
 
@@ -420,51 +456,30 @@ async function handleAdminApi(req, env, url, path) {
     return json({ ok: true }, 200, { 'set-cookie': await sessionCookie(env, ver, url.protocol === 'https:') });
   }
 
-  if (path === '/api/admin/chats' && method === 'GET') {
-    const [ix, pend] = await Promise.all([chatIndex(env), env.KV.get('rev-pending', 'json')]);
-    return json({ items: ix.items, pendingReviews: (pend || []).length });
+  const fm = /^\/api\/admin\/file\/([a-f0-9]{20})$/.exec(path);
+  if (fm && method === 'GET') {
+    const { value, metadata } = await env.KV.getWithMetadata('qf:' + fm[1], { type: 'arrayBuffer' });
+    if (!value) return json({ ok: false, error: 'File not found' }, 404);
+    const nm = String((metadata && metadata.name) || 'file').replace(/[^\w.\- ]/g, '_');
+    return new Response(value, { headers: { 'content-type': (metadata && metadata.type) || 'application/octet-stream', 'content-disposition': `inline; filename="${nm}"`, 'cache-control': 'private, no-store', 'x-content-type-options': 'nosniff' } });
   }
-  const cm = /^\/api\/admin\/chats\/([a-f0-9]{16})$/.exec(path);
-  if (cm) {
-    const key = 'chat:' + cm[1];
-    const th = await env.KV.get(key, 'json');
-    if (method === 'DELETE') {
-      const ix = await chatIndex(env);
-      ix.items = ix.items.filter((x) => x.id !== cm[1]);
-      await Promise.all([env.KV.delete(key), env.KV.put('chat-index', JSON.stringify(ix))]);
-      return json({ ok: true });
+  const am = /^\/api\/admin\/reviews\/([a-f0-9]{12})\/publish$/.exec(path);
+  if (am && method === 'POST') {
+    const list = (await env.KV.get('rev-pending', 'json')) || [];
+    const r = list.find((x) => x.id === am[1]);
+    if (!r) return json({ ok: false, error: 'This review is no longer waiting' }, 404);
+    const photos = [];
+    for (const id of r.photos || []) {
+      const { value, metadata } = await env.KV.getWithMetadata('qf:' + id, { type: 'arrayBuffer' });
+      if (!value || !metadata) continue;
+      const ext = { 'image/jpeg': '.jpg', 'image/png': '.png', 'image/webp': '.webp' }[metadata.type];
+      if (!ext) continue;
+      const mid = rid(8) + ext;
+      await env.KV.put('media:' + mid, value, { metadata: { type: metadata.type, name: 'review-' + (metadata.name || mid), size: value.byteLength, ts: Date.now() } });
+      photos.push('media/' + mid);
     }
-    if (!th) return json({ ok: false, error: 'This conversation no longer exists' }, 404);
-    if (method === 'GET') {
-      if (th.ua) {
-        th.ua = 0;
-        const ix = await chatIndex(env);
-        indexPut(ix, th, true);
-        await Promise.all([env.KV.put(key, JSON.stringify(th), KEEP), env.KV.put('chat-index', JSON.stringify(ix))]);
-      }
-      const { token, ...safe } = th;
-      return json({ ok: true, thread: safe });
-    }
-    if (method === 'POST') {
-      let b = {};
-      try {
-        b = await req.json();
-      } catch {}
-      const text = clip(b.text, 1000);
-      if (!text) return json({ ok: false, error: 'Write a reply first' }, 400);
-      const now = Date.now();
-      th.msgs.push({ id: rid(4), from: 'admin', text, ts: now });
-      th.updated = now;
-      th.ua = 0;
-      th.uu = (th.uu || 0) + 1;
-      const ix = await chatIndex(env);
-      indexPut(ix, th);
-      await Promise.all([env.KV.put(key, JSON.stringify(th), KEEP), env.KV.put('chat-index', JSON.stringify(ix))]);
-      const { token, ...safe } = th;
-      return json({ ok: true, thread: safe });
-    }
+    return json({ ok: true, review: { id: r.id, name: r.name, place: r.place || '', title: r.title || '', project: r.project || '', rating: r.rating, text: r.text, ts: r.ts, photos } });
   }
-
   if (path === '/api/admin/reviews' && method === 'GET') {
     return json({ items: (await env.KV.get('rev-pending', 'json')) || [] });
   }
@@ -485,8 +500,7 @@ export default {
     try {
       if (path.startsWith('/api/admin/')) return await handleAdminApi(req, env, url, path);
       if (path === '/api/quote' && req.method === 'POST') return await handleQuote(req, env, url);
-      if (path === '/api/chat' && req.method === 'POST') return await handleChatPost(req, env, url);
-      if (path === '/api/chat' && req.method === 'GET') return await handleChatGet(env, url);
+      if (path === '/api/upload' && req.method === 'POST') return await handleUpload(req, env, url);
       if (path === '/api/review' && req.method === 'POST') return await handleReviewPost(req, env, url);
 
       if (req.method !== 'GET' && req.method !== 'HEAD') return text('Method not allowed', 'text/plain', 'no-store', 405);
@@ -530,6 +544,24 @@ export default {
         }
       }
 
+      const pm = /^\/p\/(w|s|m)\/([a-z0-9-]{1,60})$/.exec(path);
+      if (pm) {
+        const site = await getSite(env);
+        const t = (o) => (o && (o.en || o.el)) || '';
+        let item = null;
+        if (pm[1] === 'w') { const w = (site.works || []).find((x) => x.id === pm[2]); if (w) item = { title: t(w.title), desc: [t(w.place)].filter(Boolean).join(' · '), img: (w.images || [])[0], to: '/#gallery' }; }
+        if (pm[1] === 's') { const x = (site.systems || []).find((y) => y.slug === pm[2] && y.visible !== false); if (x) item = { title: t(x.name), desc: t(x.short), img: x.image, to: '/#' + x.slug }; }
+        if (pm[1] === 'm') { const x = (site.products || []).find((y) => y.id === pm[2] && y.visible !== false); if (x) item = { title: `${x.model} · ${t(x.name)}`, desc: t(x.short), img: x.image, to: '/#' + x.id }; }
+        if (!item) return Response.redirect(url.origin + '/', 302);
+        const img = item.img ? new URL('/' + String(item.img).replace(/^\//, ''), url).href : '';
+        const title = `${item.title} · ${site.company.name}`;
+        return text(`<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>${escHtml(title)}</title><meta name="description" content="${escHtml(item.desc)}">
+<meta property="og:type" content="website"><meta property="og:site_name" content="${escHtml(site.company.name)}"><meta property="og:title" content="${escHtml(title)}"><meta property="og:description" content="${escHtml(item.desc || t(site.text.tagline))}">
+${img ? `<meta property="og:image" content="${escHtml(img)}"><meta name="twitter:card" content="summary_large_image">` : ''}<meta property="og:url" content="${escHtml(url.href)}">
+<meta http-equiv="refresh" content="0;url=${escHtml(item.to)}"><link rel="canonical" href="${escHtml(url.origin + '/')}"></head>
+<body style="background:#0a0b0d;color:#fff;font-family:sans-serif;padding:24px"><a style="color:#d4b36e" href="${escHtml(item.to)}">${escHtml(title)}</a><script>location.replace(${JSON.stringify(item.to)})</script></body></html>`, 'text/html; charset=utf-8', 'public, max-age=300');
+      }
       if (path === '/robots.txt') {
         return text(`User-agent: *\nDisallow: /admin\nDisallow: /api/\nSitemap: ${url.origin}/sitemap.xml\n`, 'text/plain; charset=utf-8', 'public, max-age=3600');
       }

@@ -9,15 +9,15 @@
 
   let site = null, media = [], builtin = [], presets = {}, defaults = null;
   let pvMode = innerWidth < 700 ? 'mob' : 'desk';
-  let chats = null, chatCur = null, chatUnread = 0, pendRev = null, pendCount = 0;
+  let pendRev = null, pendCount = 0, editProd = null;
   let dirty = false, tab = 'works', editIdx = null, editWork = null, quotes = null, quoteCount = 0, previewReady = false;
 
-  const TABS = [['works', 'Latest work'], ['messages', 'Messages'], ['inbox', 'Quote requests'], ['reviews', 'Reviews'], ['hero', 'Hero'], ['company', 'Company & About'], ['systems', 'Systems'], ['content', 'Key points & numbers'], ['design', 'Colours'], ['media', 'Images & files'], ['account', 'Password']];
+  const TABS = [['works', 'Latest work'], ['inbox', 'Quote requests'], ['reviews', 'Reviews'], ['hero', 'Hero'], ['company', 'Company & About'], ['products', 'Products'], ['systems', 'Systems'], ['content', 'Key points & numbers'], ['design', 'Colours'], ['media', 'Images & files'], ['account', 'Password']];
   // the ⋮ menu: every part of the website under its own heading
   const MENU = [
     ['Your work', [['works', 'Latest work', 'Add photos of finished jobs'], ['cats', 'Gallery categories', 'Sliding, Windows, Doors…']]],
-    ['Customers', [['messages', 'Messages', 'Price questions and replies'], ['inbox', 'Quote requests', 'Requests from the quote form'], ['reviews', 'Reviews', 'Approve and manage customer reviews']]],
-    ['Website pages', [['content', 'Key points & numbers', 'About points and counters'], ['hero', 'Hero', 'Top photo or video and headline'], ['company', 'Company & About', 'Phone, address, About text, owner profile'], ['systems', 'Systems', 'Your nine product categories']]],
+    ['Customers', [['inbox', 'Quote requests', 'Requests from the quote form'], ['reviews', 'Reviews', 'Approve and manage customer reviews']]],
+    ['Website pages', [['content', 'Key points & numbers', 'About points and counters'], ['hero', 'Hero', 'Top photo or video and headline'], ['company', 'Company & About', 'Phone, address, About text, owner profile'], ['products', 'Products (MUSKITA)', 'MU 2000, MU 3200, MU 3000, MU 2075…'], ['systems', 'Systems', 'Your nine product categories']]],
     ['Look & files', [['design', 'Colours', 'Website colours'], ['media', 'Images & files', 'All uploaded photos, videos and PDFs']]],
     ['Account', [['account', 'Password', 'Change the admin password']]],
   ];
@@ -32,6 +32,7 @@
     app: () => T(),
     hero: () => ({ img: 'img/house-windows.jpg', caption: T() }),
     cat: () => ({ id: 'c' + Date.now().toString(36), name: T() }),
+    pspec: () => ({ label: T(), value: '' }),
     review: () => ({ id: 'r' + Date.now().toString(36), name: '', place: '', rating: 5, text: '', ts: Date.now() }),
     stat: () => ({ value: '', label: T() }),
     value: () => ({ icon: 'sparkle', title: T(), body: T() }),
@@ -175,33 +176,49 @@
   const ago = (ts) => { const m = Math.round((Date.now() - ts) / 60000); return m < 1 ? 'now' : m < 60 ? m + ' min' : m < 1440 ? Math.round(m / 60) + ' h' : new Date(ts).toLocaleDateString(); };
   const waNum = (ph) => { let d = String(ph || '').replace(/\D/g, '').replace(/^00/, ''); if (d.length === 8) d = '357' + d; return d; };
   const stars = (n) => '★★★★★'.slice(0, n) + '☆☆☆☆☆'.slice(0, 5 - n);
-  function threadMsgs(th) {
-    return th.msgs.map((m) => `<div class="tmsg ${m.from === 'admin' ? 'me' : 'them'}">${m.ref ? `<div class="tref">${m.ref.img ? `<img src="${esc(src(m.ref.img))}" alt="">` : ''}<span><small>Asked about this ${m.ref.type === 'system' ? 'system' : 'work'}</small><b>${esc(m.ref.title)}</b></span></div>` : ''}<p>${esc(m.text)}</p><time>${esc(new Date(m.ts).toLocaleString())}</time></div>`).join('');
-  }
-  function vMessages() {
-    if (chatCur) {
-      const th = chatCur;
-      return `<div class="crumb"><button type="button" class="b b-sm" data-act="back-chat">← All messages</button><h2>${esc(th.name)} <small class="muted">${esc(th.phone)}</small></h2></div>
-        <div class="card"><div class="thread" id="thread-msgs">${threadMsgs(th)}</div>
-          <form id="reply-form" class="list"><textarea id="reply-t" rows="3" maxlength="1000" placeholder="Write your reply. The customer sees it on the website."></textarea>
-            <div class="pick"><button type="submit" class="b b-pri">Send reply</button><a class="b b-sm" href="tel:${esc(th.phone)}">Call</a><a class="b b-sm" href="https://wa.me/${esc(waNum(th.phone))}" target="_blank" rel="noopener">WhatsApp</a><span style="flex:1"></span><button type="button" class="b b-sm b-danger" data-act="del-chat" data-id="${esc(th.id)}">Delete</button></div></form>
-          <p class="hint" style="margin:0">The customer sees your reply when they open the website again. For a fast answer, call or use WhatsApp as well.</p></div>`;
-    }
-    if (!chats) { loadChats(); return '<div class="card"><p class="muted">Loading…</p></div>'; }
-    return `<div class="card"><div class="item-head"><h2 class="grow">Messages (${chats.length})</h2><button type="button" class="b b-sm" data-act="reload-chats">Refresh</button></div>
-      <p class="hint">Questions sent from “Ask the price” and “Ask a question” on the website. New ones are marked.</p>
-      <div class="list">${chats.map((c) => `<button type="button" class="chat-row${c.ua ? ' unread' : ''}" data-act="open-chat" data-id="${esc(c.id)}"><span class="av">${esc((c.name || '?').trim().charAt(0).toUpperCase())}</span><span class="grow"><b>${esc(c.name)}</b><small>${esc(c.phone)}</small><em>${c.from === 'admin' ? 'You: ' : ''}${esc(c.last)}</em></span><span class="meta"><time>${esc(ago(c.updated))}</time>${c.ua ? `<span class="badge">${c.ua}</span>` : ''}</span></button>`).join('') || '<p class="empty">No messages yet.</p>'}</div></div>`;
-  }
-  /* ---------- reviews ---------- */
   function vReviews() {
     if (!pendRev) loadReviews();
     const P = pendRev || [], L = site.reviews;
     return `<div class="card"><div class="item-head"><h2 class="grow">Waiting for approval (${P.length})</h2><button type="button" class="b b-sm" data-act="reload-rev">Refresh</button></div>
         <p class="hint">Reviews sent from the website. Nothing is shown publicly until you approve it. Approving also saves your other unsaved changes.</p>
-        <div class="list">${P.map((r) => `<div class="q"><div class="q-top"><b>${esc(r.name)}</b><span class="rstars">${stars(+r.rating || 5)}</span><time>${esc(new Date(r.ts).toLocaleDateString())}</time></div>${r.place ? `<div class="muted">${esc(r.place)}</div>` : ''}<p style="margin:4px 0;white-space:pre-line">${esc(r.text)}</p><div class="acts"><button type="button" class="b b-sm b-pri" data-act="rev-ok" data-id="${esc(r.id)}">Approve & publish</button><button type="button" class="b b-sm b-danger" data-act="rev-no" data-id="${esc(r.id)}">Delete</button></div></div>`).join('') || `<p class="empty">${pendRev ? 'No reviews waiting.' : 'Loading…'}</p>`}</div></div>
+        <div class="list">${P.map((r) => `<div class="q"><div class="q-top"><b>${esc(r.name)}</b><span class="rstars">${stars(+r.rating || 5)}</span><time>${esc(new Date(r.ts).toLocaleDateString())}</time></div>${r.place ? `<div class="muted">${esc(r.place)}</div>` : ''}${r.title ? `<b style="display:block;margin-top:4px">${esc(r.title)}</b>` : ''}<p style="margin:4px 0;white-space:pre-line">${esc(r.text)}</p>${r.project ? `<div class="muted">Project: ${esc(r.project)}</div>` : ''}${(r.photos || []).length ? `<div class="thumbs">${r.photos.map((id) => `<a class="thumb" href="/api/admin/file/${esc(id)}" target="_blank" rel="noopener"><img src="/api/admin/file/${esc(id)}" alt=""></a>`).join('')}</div>` : ''}<div class="acts"><button type="button" class="b b-sm b-pri" data-act="rev-ok" data-id="${esc(r.id)}">Approve & publish</button><button type="button" class="b b-sm b-danger" data-act="rev-no" data-id="${esc(r.id)}">Delete</button></div></div>`).join('') || `<p class="empty">${pendRev ? 'No reviews waiting.' : 'Loading…'}</p>`}</div></div>
       <div class="card"><h2>Published reviews (${L.length})</h2><p class="hint">Shown on the website with the average rating. Only add reviews from real customers.</p>
-        <div class="list">${L.map((r, i) => `<div class="item">${itemHead('reviews', i, L.length, (r.name || 'Review ' + (i + 1)) + '  ' + stars(+r.rating || 5))}<div class="row">${txt(`reviews.${i}.name`, 'Customer name')}${txt(`reviews.${i}.place`, 'Area / city (optional)')}${sel(`reviews.${i}.rating`, 'Rating', [5, 4, 3, 2, 1].map((n) => [n, stars(n)]))}</div>${area(`reviews.${i}.text`, 'Review')}</div>`).join('') || '<p class="empty">No published reviews yet.</p>'}</div>
+        <div class="list">${L.map((r, i) => `<div class="item">${itemHead('reviews', i, L.length, (r.name || 'Review ' + (i + 1)) + '  ' + stars(+r.rating || 5))}<div class="row">${txt(`reviews.${i}.name`, 'Customer name')}${txt(`reviews.${i}.place`, 'Area / city (optional)')}${txt(`reviews.${i}.title`, 'Title (optional)')}${txt(`reviews.${i}.project`, 'Project (optional)')}${sel(`reviews.${i}.rating`, 'Rating', [5, 4, 3, 2, 1].map((n) => [n, stars(n)]))}</div>${area(`reviews.${i}.text`, 'Review')}</div>`).join('') || '<p class="empty">No published reviews yet.</p>'}</div>
         ${addBtn('reviews', 'review', 'Add a review yourself')}</div>`;
+  }
+  /* ---------- products (MUSKITA) ---------- */
+  function vProducts() {
+    if (editProd != null && site.products[editProd]) return vProductEdit(editProd);
+    const L = site.products;
+    const catName = (id) => { const c = site.productCats.find((x) => x.id === id); return c ? c.name.en : id; };
+    return `<div class="card"><h2>Products (MUSKITA profile systems)</h2><p class="hint">Shown in the Products section and in the quotation form. Only enter specifications that come from MUSKITA’s catalogue. Hidden products (unticked) are not shown.</p>
+      <div class="list">${L.map((x, i) => `<div class="sys-row${x.visible === false ? ' off' : ''}">
+        <input type="checkbox" data-path="products.${i}.visible" ${x.visible !== false ? 'checked' : ''} aria-label="Show on website" style="width:18px;height:18px;accent-color:#0e1b2e">
+        <img src="${esc(src(x.image))}" alt="">
+        <div style="min-width:0"><div class="nm">${esc(x.model)} · ${esc(x.name?.en || '')}</div><div class="sub">${esc(catName(x.cat))} · ${x.visible === false ? 'Hidden' : 'Shown'}${(x.specs || []).filter((r) => r.value).length ? '' : ' · no specs yet'}</div></div>
+        <div class="acts"><button type="button" class="b b-sm b-icon" data-act="move" data-path="products" data-i="${i}" data-d="-1" ${i === 0 ? 'disabled' : ''} aria-label="Move up">↑</button><button type="button" class="b b-sm b-icon" data-act="move" data-path="products" data-i="${i}" data-d="1" ${i === L.length - 1 ? 'disabled' : ''} aria-label="Move down">↓</button><button type="button" class="b b-sm b-pri" data-act="edit-prod" data-i="${i}">Edit</button></div>
+      </div>`).join('')}</div>
+      <div><button type="button" class="b b-sm" data-act="add-prod">+ Add product</button></div></div>
+      <div class="card"><h2>Product categories</h2><p class="hint">Used for the product filter and the first question of the quotation form.</p>
+        <div class="list">${site.productCats.map((c, i) => `<div class="item">${itemHead('productCats', i, site.productCats.length, c.name?.en || 'Category')}${pair(`productCats.${i}.name`, 'Name')}</div>`).join('')}</div>
+        ${addBtn('productCats', 'cat', 'Add category')}</div>`;
+  }
+  function vProductEdit(i) {
+    const x = site.products[i], p = `products.${i}`;
+    return `<div class="crumb"><button type="button" class="b b-sm" data-act="back-prod">← All products</button><h2>${esc(x.model || 'New product')}</h2></div>
+      <div class="card"><h2>Basics</h2>${check(`${p}.visible`, 'Show on website')}
+        <div class="row">${txt(`${p}.model`, 'Model, e.g. MU 2000')}${sel(`${p}.cat`, 'Category', site.productCats.map((c) => [c.id, c.name.en]))}</div>
+        ${pair(`${p}.name`, 'Name, e.g. Sliding window system')}
+        ${pair(`${p}.short`, 'Short description (card)', true)}
+        ${pair(`${p}.desc`, 'Full description', true)}
+        ${imgPick(`${p}.image`, 'Photo')}</div>
+      <div class="card"><h2>Technical specifications</h2><p class="hint">Copy only from MUSKITA’s catalogue. Rows without a value are hidden.</p>
+        <div class="list">${(x.specs || []).map((r, k) => `<div class="item">${itemHead(`${p}.specs`, k, x.specs.length, r.label?.en || 'Row ' + (k + 1))}${pair(`${p}.specs.${k}.label`, 'Label')}${txt(`${p}.specs.${k}.value`, 'Value', 'text', 'e.g. 200 kg')}</div>`).join('') || '<p class="empty">No specifications yet. The page says “Technical details on request”.</p>'}</div>
+        ${addBtn(`${p}.specs`, 'pspec', 'Add row')}</div>
+      <div class="card"><h2>Colours, applications and source</h2>${pair(`${p}.colours`, 'Colours & finishes', true)}
+        <div class="list">${(x.applications || []).map((a, k) => `<div class="item">${itemHead(`${p}.applications`, k, x.applications.length, a.en || 'Application')}${pair(`${p}.applications.${k}`, 'Text')}</div>`).join('')}</div>${addBtn(`${p}.applications`, 'app', 'Add application')}
+        ${txt(`${p}.source`, 'Source link (MUSKITA product page)', 'url', 'https://')}</div>
+      <div class="card"><h2>Delete</h2><div><button type="button" class="b b-danger" data-act="del-prod" data-i="${i}">Delete ${esc(x.model || 'product')}</button></div></div>`;
   }
   function vSystems() {
     if (editIdx != null && site.systems[editIdx]) return vSystemEdit(editIdx);
@@ -248,16 +265,55 @@
       <div class="card"><h2>Numbers (optional)</h2><p class="hint">Shown under the About text and counted up when they scroll into view, e.g. “15+” Years of experience. Use real numbers only. Hidden when empty.</p>
         <div class="list">${st.map((x, i) => `<div class="item">${itemHead('stats', i, st.length, x.value || 'Number ' + (i + 1))}<div class="row">${txt(`stats.${i}.value`, 'Number', 'text', '15+')}${sel(`stats.${i}.icon`, 'Icon', [['', 'none'], ...ICONS.map((k) => [k, k])])}</div>${pair(`stats.${i}.label`, 'Label')}</div>`).join('') || '<p class="empty">No numbers. The section is hidden.</p>'}</div>${addBtn('stats', 'stat', 'Add number')}</div>`;
   }
+  const fmtD = (ts) => new Date(ts).toLocaleString('en-GB', { dateStyle: 'medium', timeStyle: 'short' });
+  const qCust = (q) => q.customer || { name: q.name, email: q.email, phone: q.phone, location: q.area, message: q.message };
   function vInbox() {
     if (!quotes) { loadQuotes(); return '<div class="card"><p class="muted">Loading…</p></div>'; }
-    const fmt = (ts) => new Date(ts).toLocaleString();
-    const wa = (ph) => 'https://wa.me/' + String(ph || '').replace(/\D/g, '').replace(/^00/, '');
-    return `<div class="card"><div class="item-head"><h2 class="grow">Quote requests (${quotes.length})</h2><button type="button" class="b b-sm" data-act="reload-q">Refresh</button></div>
-      <p class="hint">Requests sent from the form on the website. They are kept for about a year.</p>
-      <div class="list">${quotes.map((q) => `<div class="q"><div class="q-top"><b>${esc(q.name)}</b>${q.system ? `<span class="tag">${esc(q.system)}</span>` : ''}<time>${esc(fmt(q.ts))}</time></div>
-        <dl><dt>Phone</dt><dd>${esc(q.phone)}</dd>${q.email ? `<dt>Email</dt><dd>${esc(q.email)}</dd>` : ''}${q.area ? `<dt>Area</dt><dd>${esc(q.area)}</dd>` : ''}${q.message ? `<dt>Message</dt><dd>${esc(q.message)}</dd>` : ''}${q.lang ? `<dt>Language</dt><dd>${q.lang === 'el' ? 'Greek' : 'English'}</dd>` : ''}</dl>
-        <div class="acts"><a class="b b-sm" href="tel:${esc(q.phone)}">Call</a><a class="b b-sm" href="${esc(wa(q.phone))}" target="_blank" rel="noopener">WhatsApp</a>${q.email ? `<a class="b b-sm" href="mailto:${esc(q.email)}">Email</a>` : ''}<button type="button" class="b b-sm b-danger" data-act="q-del" data-key="${esc(q.key)}">Delete</button></div></div>`).join('') || '<p class="empty">No requests yet.</p>'}</div></div>`;
+    const mailNote = (q) => !q.email ? '' : q.email === 'sent' ? '<span class="tag" style="background:#e2f3e8;color:#1f7a4a">emailed</span>' : q.email === 'not-configured' ? '<span class="tag">email not set up</span>' : `<span class="tag" style="background:#fbe9e7;color:#b3261e">email ${esc(q.email)}</span>`;
+    return `<div class="card"><div class="item-head"><h2 class="grow">Quotation requests (${quotes.length})</h2><button type="button" class="b b-sm" data-act="reload-q">Refresh</button></div>
+      <p class="hint">Requests from the quotation form. Open “Create quotation” to prepare a priced quotation and save it as PDF. Requests are kept for about a year.</p>
+      <div class="list">${quotes.map((q) => { const c = qCust(q); const items = q.items || []; return `<div class="q"><div class="q-top"><b>${esc(c.name)}</b>${q.ref ? `<span class="tag mono">${esc(q.ref)}</span>` : ''}${mailNote(q)}<time>${esc(fmtD(q.ts))}</time></div>
+        <dl><dt>Phone</dt><dd>${esc(c.phone)}</dd>${c.email ? `<dt>Email</dt><dd>${esc(c.email)}</dd>` : ''}${c.company ? `<dt>Company</dt><dd>${esc(c.company)}</dd>` : ''}${c.location ? `<dt>Location</dt><dd>${esc(c.location)}</dd>` : ''}${c.type ? `<dt>Project</dt><dd>${esc(c.type)}</dd>` : ''}${c.message ? `<dt>Message</dt><dd>${esc(c.message)}</dd>` : ''}${q.system ? `<dt>System</dt><dd>${esc(q.system)}</dd>` : ''}</dl>
+        ${items.length ? `<table class="qtab"><thead><tr><th>#</th><th>Product</th><th>W × H (mm)</th><th>Qty</th><th>Details</th></tr></thead><tbody>${items.map((it, k) => `<tr><td>${k + 1}</td><td><b>${esc(it.model || '—')}</b><br><small>${esc(it.catName)}</small></td><td>${it.width} × ${it.height}</td><td>${it.qty}</td><td><small>${esc([it.colour, it.glass, it.glassThk, it.opening].filter(Boolean).join(' · '))}${it.specs ? '<br>' + esc(it.specs) : ''}${it.notes ? '<br>' + esc(it.notes) : ''}</small>${(it.files || []).map((f) => `<br><a href="/api/admin/file/${esc(f.id)}" target="_blank" rel="noopener">📎 ${esc(f.name)}</a>`).join('')}</td></tr>`).join('')}</tbody></table>` : ''}
+        <div class="acts">${items.length ? `<button type="button" class="b b-sm b-pri" data-act="q-doc" data-key="${esc(q.key)}">Create quotation (PDF)</button>` : ''}<a class="b b-sm" href="tel:${esc(c.phone)}">Call</a><a class="b b-sm" href="https://wa.me/${esc(waNum(c.phone))}" target="_blank" rel="noopener">WhatsApp</a>${c.email ? `<a class="b b-sm" href="mailto:${esc(c.email)}?subject=${encodeURIComponent('Quotation ' + (q.ref || ''))}">Email</a>` : ''}<button type="button" class="b b-sm b-danger" data-act="q-del" data-key="${esc(q.key)}">Delete</button></div></div>`; }).join('') || '<p class="empty">No requests yet.</p>'}</div></div>
+      <div class="card"><h2>Quotation document defaults</h2><p class="hint">Filled into every new quotation. Leave empty what you have not decided; you can still type it on each quotation.</p>
+        <div class="row">${txt('quoteSettings.currency', 'Currency symbol', 'text', '€')}${txt('quoteSettings.vat', 'VAT rate %', 'text', 'e.g. 19')}${txt('quoteSettings.validity', 'Valid for', 'text', 'e.g. 30 days')}</div>
+        ${area('quoteSettings.payment', 'Payment terms')}${area('quoteSettings.delivery', 'Delivery / installation')}${area('quoteSettings.terms', 'Terms and conditions')}</div>`;
   }
+  // printable quotation (Save as PDF from the browser's print dialog)
+  function quoteDoc(q) {
+    const c = qCust(q), st = site.quoteSettings || {}, co = site.company, cur = st.currency || '€';
+    const addr = (co.address && (co.address.en || co.address.el)) || '';
+    const today = new Date().toISOString().slice(0, 10);
+    const rows = (q.items || []).map((it, k) => `<tr data-row><td>${k + 1}</td><td><div contenteditable="true" class="qd-ed"><b>${esc(it.model || it.catName)}</b> · ${esc(it.catName)}<br><small>${esc([it.colour, it.glass, it.glassThk, it.opening, it.specs].filter(Boolean).join(' · '))}</small></div></td><td class="num">${it.width} × ${it.height}</td><td class="num"><input class="qd-qty" type="number" min="0" step="1" value="${it.qty}"></td><td class="num"><input class="qd-price" type="number" min="0" step="0.01" placeholder="0.00"></td><td class="num qd-line">–</td></tr>`).join('');
+    return `<div class="qd-tools no-print"><b>Quotation ${esc(q.ref || '')}</b><span class="sp"></span><button type="button" class="b b-sm" data-act="qd-row">+ Add line</button><button type="button" class="b b-sm b-pri" data-act="qd-print">Save as PDF / Print</button><button type="button" class="b b-sm" data-act="qd-close">Close</button></div>
+      <article class="qdoc" id="qdoc">
+        <header class="qd-head"><img src="/img/logo-dark.png" alt="${esc(co.name)}"><div class="qd-co"><b>${esc(co.name)}</b>${addr ? `<span>${esc(addr)}</span>` : ''}${co.phone ? `<span>${esc(co.phone)}</span>` : ''}${co.email ? `<span>${esc(co.email)}</span>` : ''}</div></header>
+        <h1>QUOTATION</h1>
+        <div class="qd-meta"><div><small>Quotation no.</small><input value="${esc(q.ref || '')}"></div><div><small>Date</small><input type="date" value="${today}"></div><div><small>Valid for</small><input value="${esc(st.validity || '')}" placeholder="e.g. 30 days"></div></div>
+        <div class="qd-to"><small>Prepared for</small><b>${esc(c.name)}</b>${c.company ? `<span>${esc(c.company)}</span>` : ''}${c.location ? `<span>${esc(c.location)}</span>` : ''}<span>${esc(c.phone || '')}${c.email ? ' · ' + esc(c.email) : ''}</span></div>
+        <table class="qd-tab"><thead><tr><th>#</th><th>Description</th><th class="num">Size (mm)</th><th class="num">Qty</th><th class="num">Unit price (${esc(cur)})</th><th class="num">Total (${esc(cur)})</th></tr></thead><tbody id="qd-rows">${rows}</tbody></table>
+        <div class="qd-sum"><div><span>Subtotal</span><b id="qd-sub">–</b></div><div><span>VAT <input id="qd-vat" type="number" min="0" step="0.1" value="${esc(st.vat || '')}" placeholder="–">%</span><b id="qd-vatv">–</b></div><div class="qd-total"><span>Total (${esc(cur)})</span><b id="qd-tot">–</b></div></div>
+        <section class="qd-terms">${[['Payment terms', st.payment], ['Delivery / installation', st.delivery], ['Terms and conditions', st.terms]].map(([h, v]) => `<div><h3>${h}</h3><div class="qd-ed" contenteditable="true">${esc(v || '')}</div></div>`).join('')}</section>
+        <footer class="qd-foot"><div><small>For ${esc(co.name)}</small><div class="qd-sign" contenteditable="true"></div></div><span>${esc([co.name, co.phone, co.email].filter(Boolean).join(' · '))}</span></footer>
+      </article>`;
+  }
+  function qdCalc() {
+    const cur = (site.quoteSettings || {}).currency || '€', f = (n) => n.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    let sub = 0, any = false;
+    $$('#qd-rows [data-row]').forEach((tr) => {
+      const q = +(tr.querySelector('.qd-qty') || {}).value || 0, pr = (tr.querySelector('.qd-price') || {}).value;
+      const line = q * (+pr || 0);
+      if (pr !== '' && pr != null) any = true;
+      sub += line;
+      tr.querySelector('.qd-line').textContent = pr === '' ? '–' : f(line);
+    });
+    const vr = $('#qd-vat') ? $('#qd-vat').value : '', vat = vr === '' ? 0 : sub * (+vr / 100);
+    $('#qd-sub').textContent = any ? cur + ' ' + f(sub) : '–';
+    $('#qd-vatv').textContent = any && vr !== '' ? cur + ' ' + f(vat) : '–';
+    $('#qd-tot').textContent = any ? cur + ' ' + f(sub + vat) : '–';
+  }
+
   function usedPaths() { return JSON.stringify(site); }
   function vMedia() {
     const used = usedPaths();
@@ -321,7 +377,7 @@
   function renderMenu() {
     const m = $('#amenu');
     if (!m) return;
-    m.innerHTML = MENU.map(([head, items]) => `<div class="amenu-g"><p>${esc(head)}</p>${items.map(([k, l, d]) => `<button type="button" data-act="goto" data-tab="${k}" class="${(k === 'cats' ? 'works' : k) === tab && k !== 'cats' ? 'on' : ''}"><b>${esc(l)}${k === 'inbox' && quoteCount ? ` <span class="badge">${quoteCount}</span>` : ''}${k === 'messages' && chatUnread ? ` <span class="badge">${chatUnread}</span>` : ''}${k === 'reviews' && pendCount ? ` <span class="badge">${pendCount}</span>` : ''}</b><small>${esc(d)}</small></button>`).join('')}</div>`).join('')
+    m.innerHTML = MENU.map(([head, items]) => `<div class="amenu-g"><p>${esc(head)}</p>${items.map(([k, l, d]) => `<button type="button" data-act="goto" data-tab="${k}" class="${(k === 'cats' ? 'works' : k) === tab && k !== 'cats' ? 'on' : ''}"><b>${esc(l)}${k === 'inbox' && quoteCount ? ` <span class="badge">${quoteCount}</span>` : ''}${k === 'reviews' && pendCount ? ` <span class="badge">${pendCount}</span>` : ''}</b><small>${esc(d)}</small></button>`).join('')}</div>`).join('')
       + `<div class="amenu-g"><p>More</p><a href="/" target="_blank" rel="noopener"><b>View website</b><small>Opens in a new tab</small></a><button type="button" data-act="logout"><b>Sign out</b><small></small></button></div>`;
   }
   function setMenu(open) {
@@ -336,66 +392,38 @@
     tab = toCats ? 'works' : k;
     editIdx = null;
     editWork = null;
-    chatCur = null;
+    editProd = null;
     renderTabs();
     renderEditor();
     scrollTo(0, 0);
     if (toCats) requestAnimationFrame(() => { const c = $('#cats-card'); if (c) c.scrollIntoView({ block: 'start' }); });
     if (tab === 'inbox') loadQuotes();
-    if (tab === 'messages') loadChats();
     if (tab === 'reviews') loadReviews();
-    previewGo(tab === 'reviews' ? 'reviews' : tab === 'systems' ? 'systems' : tab === 'works' ? 'projects' : tab === 'content' || tab === 'company' ? 'about' : 'top');
+    previewGo(tab === 'products' ? 'products' : tab === 'inbox' ? 'quote' : tab === 'reviews' ? 'reviews' : tab === 'systems' ? 'systems' : tab === 'works' ? 'projects' : tab === 'content' || tab === 'company' ? 'about' : 'top');
     const on = $('#tabs .on');
     if (on && on.scrollIntoView) on.scrollIntoView({ block: 'nearest', inline: 'center' });
   }
   function renderTabs() {
-    $('#tabs').innerHTML = TABS.map(([k, l]) => `<button type="button" data-act="tab" data-tab="${k}" class="${k === tab ? 'on' : ''}">${esc(l)}${k === 'inbox' && quoteCount ? `<span class="badge">${quoteCount}</span>` : ''}${k === 'messages' && chatUnread ? `<span class="badge">${chatUnread}</span>` : ''}${k === 'reviews' && pendCount ? `<span class="badge">${pendCount}</span>` : ''}</button>`).join('');
-    document.title = (chatUnread ? '(' + chatUnread + ') ' : '') + 'Admin · Alu MRK TriEdge';
+    $('#tabs').innerHTML = TABS.map(([k, l]) => `<button type="button" data-act="tab" data-tab="${k}" class="${k === tab ? 'on' : ''}">${esc(l)}${k === 'inbox' && quoteCount ? `<span class="badge">${quoteCount}</span>` : ''}${k === 'reviews' && pendCount ? `<span class="badge">${pendCount}</span>` : ''}</button>`).join('');
+    document.title = (quoteCount ? '(' + quoteCount + ') ' : '') + 'Admin · Alu MRK TriEdge';
   }
   function renderEditor() {
-    const views = { design: vDesign, company: vCompany, hero: vHero, systems: vSystems, works: vWorks, messages: vMessages, reviews: vReviews, content: vContent, inbox: vInbox, media: vMedia, account: vAccount };
+    const views = { design: vDesign, company: vCompany, hero: vHero, systems: vSystems, works: vWorks, products: vProducts, reviews: vReviews, content: vContent, inbox: vInbox, media: vMedia, account: vAccount };
     const y = scrollY;
     $('#editor').innerHTML = views[tab]();
-    $('#main').classList.toggle('no-prev', tab === 'inbox' || tab === 'media' || tab === 'account' || tab === 'messages');
-    if (tab === 'messages' && chatCur) { const t = $('#thread-msgs'); if (t) t.scrollTop = t.scrollHeight; }
+    $('#main').classList.toggle('no-prev', tab === 'inbox' || tab === 'media' || tab === 'account');
     requestAnimationFrame(fitPreview);
     scrollTo(0, y);
   }
 
   /* ---------- data actions ---------- */
-  async function loadQuotes() {
+  async function loadQuotes(quiet) {
     try {
       const j = await api('/api/admin/quotes');
       quotes = j.items || [];
       quoteCount = quotes.length;
       renderTabs();
       if (tab === 'inbox') renderEditor();
-    } catch (e) { toast(e.message, 'err'); }
-  }
-  async function loadChats(quiet) {
-    try {
-      const j = await api('/api/admin/chats');
-      const before = chatUnread;
-      chats = j.items || [];
-      chatUnread = chats.reduce((a, c) => a + (c.ua || 0), 0);
-      pendCount = j.pendingReviews || 0;
-      renderTabs();
-      if (tab === 'messages' && !chatCur) renderEditor();
-      if (quiet && chatUnread > before) toast('New message from a customer.', 'ok');
-      if (chatCur) {
-        const row = chats.find((c) => c.id === chatCur.id);
-        if (row && row.n > chatCur.msgs.length) openChat(chatCur.id, true);
-      }
-    } catch (e) { if (!quiet) toast(e.message, 'err'); }
-  }
-  async function openChat(id, keepText) {
-    try {
-      const j = await api('/api/admin/chats/' + id);
-      const typed = keepText && $('#reply-t') ? $('#reply-t').value : '';
-      chatCur = j.thread;
-      if (chats) { const row = chats.find((c) => c.id === id); if (row) row.ua = 0; chatUnread = chats.reduce((a, c) => a + (c.ua || 0), 0); }
-      renderTabs();
-      if (tab === 'messages') { renderEditor(); if (typed && $('#reply-t')) $('#reply-t').value = typed; }
     } catch (e) { toast(e.message, 'err'); }
   }
   async function loadReviews() {
@@ -501,6 +529,7 @@
   /* ---------- events ---------- */
   document.addEventListener('input', (e) => {
     const el = e.target;
+    if (el.closest && el.closest('#qdoc')) { qdCalc(); return; }
     const p = el.dataset && el.dataset.path;
     if (!p || !site) return;
     let v;
@@ -512,7 +541,7 @@
     setP(site, p, v);
     if (p.startsWith('theme.')) $$(`[data-path="${p}"]`).forEach((x) => { if (x !== el) x.value = v; });
     markDirty();
-    if (el.type === 'checkbox' && tab === 'systems' && editIdx == null) renderEditor();
+    if (el.type === 'checkbox' && ((tab === 'systems' && editIdx == null) || (tab === 'products' && editProd == null))) renderEditor();
   });
   document.addEventListener('change', (e) => {
     const p = e.target.dataset && e.target.dataset.path;
@@ -531,20 +560,26 @@
         goTab(b.dataset.tab);
         break;
       case 'menu': setMenu($('#amenu').hidden); break;
-      case 'open-chat': await openChat(b.dataset.id); scrollTo(0, 0); break;
-      case 'back-chat': chatCur = null; renderEditor(); loadChats(true); break;
-      case 'reload-chats': chats = null; renderEditor(); break;
-      case 'del-chat': {
-        if (!b.dataset.armed) { b.dataset.armed = '1'; b.textContent = 'Sure?'; break; }
-        try { await api('/api/admin/chats/' + b.dataset.id, { method: 'DELETE' }); chatCur = null; chats = null; renderEditor(); toast('Conversation deleted.', 'ok'); } catch (err) { toast(err.message, 'err'); }
-        break;
+      case 'edit-prod': editProd = +b.dataset.i; renderEditor(); scrollTo(0, 0); previewGo(site.products[editProd].id); break;
+      case 'back-prod': editProd = null; renderEditor(); previewGo('products'); break;
+      case 'add-prod': {
+        let n = site.products.length + 1, id = 'product-' + n;
+        while (site.products.some((x) => x.id === id)) id = 'product-' + ++n;
+        site.products.push({ id, model: '', visible: false, cat: (site.productCats[0] || {}).id || '', image: 'img/house-windows.jpg', name: T(), short: T(), desc: T(), colours: T(), specs: [], applications: [], source: '' });
+        editProd = site.products.length - 1; markDirty(); renderEditor(); scrollTo(0, 0); break;
+      }
+      case 'del-prod': {
+        if (!b.dataset.armed) { b.dataset.armed = '1'; b.textContent = 'Click again to delete'; break; }
+        site.products.splice(+b.dataset.i, 1); editProd = null; markDirty(); renderEditor(); break;
       }
       case 'reload-rev': pendRev = null; renderEditor(); break;
       case 'rev-ok': {
-        const r = (pendRev || []).find((x) => x.id === b.dataset.id);
-        if (!r) break;
+        const r0 = (pendRev || []).find((x) => x.id === b.dataset.id);
+        if (!r0) break;
         b.disabled = true;
-        site.reviews.unshift({ id: r.id, name: r.name, place: r.place || '', rating: +r.rating || 5, text: r.text, ts: r.ts });
+        let r;
+        try { r = (await api('/api/admin/reviews/' + r0.id + '/publish', { method: 'POST' })).review; } catch (err) { toast(err.message, 'err'); b.disabled = false; break; }
+        site.reviews.unshift(r);
         if (await save()) {
           try { await api('/api/admin/reviews/' + r.id, { method: 'DELETE' }); } catch (err) {}
           pendRev = pendRev.filter((x) => x.id !== r.id);
@@ -640,6 +675,25 @@
         try { await api('/api/admin/' + path.replace(/^media\//, 'media/'), { method: 'DELETE' }); media = media.filter((m) => m.path !== path); renderEditor(); toast('Deleted.', 'ok'); } catch (err) { toast(err.message, 'err'); }
         break;
       }
+      case 'q-doc': {
+        const q = (quotes || []).find((x) => x.key === b.dataset.key);
+        if (!q) break;
+        const m = $('#qdoc-wrap') || Object.assign(document.createElement('div'), { id: 'qdoc-wrap', className: 'qdoc-wrap' });
+        document.body.appendChild(m);
+        m.innerHTML = quoteDoc(q);
+        m.hidden = false;
+        document.documentElement.classList.add('qd-open');
+        qdCalc();
+        break;
+      }
+      case 'qd-close': { const m = $('#qdoc-wrap'); if (m) { m.hidden = true; m.innerHTML = ''; } document.documentElement.classList.remove('qd-open'); break; }
+      case 'qd-print': window.print(); break;
+      case 'qd-row': {
+        const tb = $('#qd-rows'), n = tb.children.length + 1;
+        tb.insertAdjacentHTML('beforeend', `<tr data-row class="qd-added"><td>${n}</td><td><div contenteditable="true" class="qd-ed" data-ph="Description"></div></td><td class="num" contenteditable="true"></td><td class="num"><input class="qd-qty" type="number" min="0" step="1" value="1"></td><td class="num"><input class="qd-price" type="number" min="0" step="0.01" placeholder="0.00"></td><td class="num qd-line">–</td></tr>`);
+        qdCalc();
+        break;
+      }
       case 'reload-q': quotes = null; renderEditor(); break;
       case 'q-del': {
         if (!b.dataset.armed) { b.dataset.armed = '1'; b.textContent = 'Sure?'; break; }
@@ -662,18 +716,6 @@
       try { await api('/api/admin/login', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ password: $('#pw').value }) }); $('#pw').value = ''; await boot(); }
       catch (err) { msg.textContent = err.message === 'Signed out' ? 'Wrong password' : err.message; }
       finally { btn.disabled = false; }
-    }
-    if (e.target.id === 'reply-form') {
-      e.preventDefault();
-      const ta = $('#reply-t'), text = ta.value.trim(), btn = e.target.querySelector('button[type=submit]');
-      if (!text || !chatCur) return;
-      btn.disabled = true;
-      try {
-        const j = await api('/api/admin/chats/' + chatCur.id, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ text }) });
-        chatCur = j.thread;
-        renderEditor();
-        toast('Reply sent.', 'ok');
-      } catch (err) { toast(err.message, 'err'); btn.disabled = false; }
     }
     if (e.target.id === 'pw-form') {
       e.preventDefault();
@@ -703,12 +745,15 @@
     if (!Array.isArray(site.works)) site.works = clone(defaults.works || []);
     if (!Array.isArray(site.galleryCats)) site.galleryCats = clone(defaults.galleryCats || []);
     if (!Array.isArray(site.reviews)) site.reviews = [];
+    if (!Array.isArray(site.products)) site.products = clone(defaults.products || []);
+    if (!Array.isArray(site.productCats)) site.productCats = clone(defaults.productCats || []);
+    site.quoteSettings = { ...(defaults.quoteSettings || {}), ...(site.quoteSettings || {}) };
     if (!site.heroBadge) site.heroBadge = { en: '', el: '' };
     shell();
     loadQuotes();
-    loadChats(true);
+    loadReviews();
     clearInterval(pollT);
-    pollT = setInterval(() => { if (!document.hidden && site) loadChats(true); }, 20000);
+    pollT = setInterval(() => { if (!document.hidden && site && tab !== 'inbox') loadQuotes(true); }, 60000);
   }
   let pollT = null;
   boot();

@@ -21,10 +21,16 @@ hash are stored in Workers KV (binding `KV`).
   "On request" on the site.
 - **Why us & reviews**: the four "Why choose us" items, optional numbers and client reviews
   (sections are hidden when empty).
-- **Messages**: price questions sent from "Ask the price" / "Ask a question", each with the photo or system
-  it is about; reply from the panel and the visitor sees the answer on the website.
-- **Reviews**: reviews sent from the website wait for approval; published ones show with the average rating.
-- **Quote requests**: everything sent from the website form.
+- **Products (MUSKITA)**: profile models (MU 2000, MU 3200, MU 3000, MU 2075, MU 114) with category,
+  description, colours, specifications and photo. Hidden products do not show on the site.
+- **Reviews**: reviews (rating, title, text, project, up to 3 photos) wait for approval; publishing copies
+  the photos to the public site.
+- **Quote requests**: multi-product requests from the quotation builder, each with a reference number
+  (AMT-YYMMDD-XXXX) and private attachments. "Create quotation (PDF)" opens an editable, printable
+  quotation; prices, VAT, validity and terms are typed in by hand (defaults are editable, empty by default).
+
+"Ask the price" buttons open WhatsApp with the item's name and a link to its page (the link preview shows
+the photo). Nothing is sent automatically.
 - **Images & files**: upload photos (resized in the browser before upload) and PDFs.
 - **Password**: change the admin password.
 
@@ -62,4 +68,14 @@ npx wrangler secret put SESSION_SECRET
 ```
 
 `ADMIN_PASSWORD` is only used until a new password is set in the admin panel.
+
+Email notifications for new quote requests and reviews (optional, via [Resend](https://resend.com)):
+
+```
+npx wrangler secret put RESEND_API_KEY
+```
+
+Optional variables: `MAIL_TO` (default: company email from the admin panel) and `MAIL_FROM`
+(default `onboarding@resend.dev`, which only delivers to the Resend account's own address until a
+domain is verified). Without the key, requests are still saved and shown in the admin panel.
 After adding or removing files in `src/img`, run `npm run images`.

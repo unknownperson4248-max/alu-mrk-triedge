@@ -28,11 +28,26 @@
       systems: 'Systems', engineering: 'Engineering', about: 'About', contact: 'Contact', quote: 'Request a quote', menu: 'Menu', search: 'Search', close: 'Close',
       main_menu: 'Main menu', m_systems: 'Aluminium Systems', m_engineering: 'Engineering & Quality', m_about: 'About Us', m_contact: 'Contact', view_all: 'View all systems',
       call: 'Call', leadership: 'Leadership',
-      help_chat: 'Ask a question', ask_price: 'Ask the price', chat_title: 'Messages', chat_sub: 'Ask about prices or anything else. We reply here.',
-      chat_hello: 'Hello! Send us your question and we will reply here. Leave your phone number so we can also reach you.',
-      chat_name: 'Your name', chat_phone: 'Phone or WhatsApp', chat_ph: 'Write your message…', chat_about: 'Asking about', chat_send: 'Send',
-      chat_price_q: 'Hello, what is the price for this?', chat_need_contact: 'Please add your name and phone number.', chat_busy: 'We cannot take more messages right now. Please message us on WhatsApp.',
-      chat_remove: 'Remove', chat_reply_note: 'We reply here. Come back to this page to see our answer.',
+      ask_price: 'Ask the price', ask_wa_msg: 'Hello {c}, I would like the price for this:', wa_note: 'Opens WhatsApp with the message ready. You only need to press send.',
+      products: 'Products', m_products: 'MUSKITA Systems', prod_eyebrow: 'MUSKITA profile systems', prod_title: 'Profile systems we work with', prod_sub: 'We fabricate and install with MUSKITA aluminium profile systems, made in Cyprus.',
+      details: 'Details', add_quote: 'Add to quotation', added_quote: 'Added to your quotation', tech_data: 'Technical data', tech_source: 'Source: MUSKITA product information. Values vary by version and configuration; we confirm the exact figures for your project.', tech_on_request: 'Technical details on request.', colours: 'Colours & finishes', all_products: 'All products',
+      qb_title: 'Request a quotation', qb_sub: 'Add every door, window or system you need. We review the measurements and send you a written quotation.',
+      qb_step1: 'Products', qb_step2: 'Your details', qb_step3: 'Review', qb_product: 'Product {n}', qb_edit_product: 'Edit product {n}',
+      qb_cat: 'Product category', qb_model: 'Model', qb_model_other: 'Other / not sure', qb_choose: 'Choose…', qb_width: 'Width (mm)', qb_height: 'Height (mm)', qb_qty: 'Quantity',
+      qb_colour: 'Colour / finish', qb_glass: 'Glass type', qb_glass_thk: 'Glass thickness', qb_glass_thk_ph: 'e.g. 4-16-4', qb_opening: 'Opening type', qb_specs: 'Additional specifications', qb_specs_ph: 'Handles, locks, mosquito nets, thresholds…', qb_notes: 'Notes', qb_notes_ph: 'Anything else we should know about this item',
+      qb_files: 'Photo or drawing (optional)', qb_files_hint: 'JPG, PNG or PDF, up to 10 MB, max 3 files.', qb_add_file: 'Add file', qb_uploading: 'Uploading…',
+      qb_add: 'Add to quotation', qb_save: 'Save changes', qb_cancel: 'Cancel', qb_add_more: 'Add another product', qb_edit: 'Edit', qb_remove: 'Remove', qb_continue: 'Continue', qb_back: 'Back', qb_review: 'Review request', qb_submit: 'Send quotation request',
+      qb_list: 'Your quotation ({n})', qb_empty: 'No products added yet.', qb_need: 'Please choose a category and enter width, height and quantity.', qb_need_items: 'Add at least one product first.',
+      qb_fullname: 'Full name', qb_email: 'Email', qb_phone: 'Phone (with country code)', qb_phone_ph: '+357 99 000000', qb_company: 'Company name', qb_location: 'Project location', qb_ptype: 'Project type', qb_msg: 'Additional message', optional: 'optional',
+      qb_privacy: 'I agree that {c} uses these details only to answer my quotation request.', qb_privacy_note: 'We use your details only to prepare and send your quotation. We do not share them with anyone else.',
+      qb_err_name: 'Please enter your full name.', qb_err_email: 'Please enter a valid email address.', qb_err_phone: 'Please enter your phone number with the country code, e.g. +357.', qb_err_privacy: 'Please accept the privacy notice.',
+      qb_customer: 'Customer details', qb_done_title: 'Thank you, your request has been sent.', qb_done_body: 'Your reference is {r}. We will review your products and measurements and contact you with a written quotation.', qb_done_wa: 'Also send it on WhatsApp', qb_new: 'Start a new request', qb_wa_msg: 'Hello {c}, I have sent quotation request {r}.',
+      qb_sending: 'Sending…', qb_err_send: 'Your request could not be sent. Please try again, or contact us by phone or WhatsApp.', qb_err_file: 'This file could not be uploaded. Use JPG, PNG or PDF up to 10 MB.', qb_items_n: '{n} products', qb_item_1: '1 product',
+      colour_opts: ['White', 'Black', 'Anthracite grey', 'Silver (anodised)', 'Bronze', 'Wood effect', 'Other RAL colour (write in notes)', 'Not sure'],
+      glass_opts: ['Double glazed', 'Triple glazed', 'Single glass', 'Laminated safety glass', 'Tempered glass', 'Frosted glass', 'No glass', 'Not sure'],
+      opening_opts: ['Sliding', 'Lift & slide', 'Hinged / casement', 'Tilt & turn', 'Folding', 'Fixed', 'Not sure'],
+      ptype_opts: ['New house', 'Renovation', 'Apartment building', 'Office / commercial', 'Other'],
+      rev_title_f: 'Review title', rev_project: 'Project or product (optional)', rev_photos: 'Project photos (optional)', rev_photos_hint: 'Up to 3 photos.',
       reviews: 'Reviews', rev_title: 'What our clients say', rev_title_empty: 'Worked with us?', rev_empty: 'Tell others about your experience. Your review appears here after we check it.',
       rev_write: 'Write a review', rev_count: '{n} reviews', rev_one: '1 review', rev_form_title: 'Your review', rev_rating: 'Your rating', rev_text: 'Your experience', rev_place: 'Area / city (optional)',
       rev_send: 'Send review', rev_thanks: 'Thank you! Your review will appear on the website after we check it.', rev_need: 'Please choose a rating, add your name and write a few words.',
@@ -69,11 +84,26 @@
       systems: 'Συστήματα', engineering: 'Τεχνολογία', about: 'Εταιρεία', contact: 'Επικοινωνία', quote: 'Ζητήστε προσφορά', menu: 'Μενού', search: 'Αναζήτηση', close: 'Κλείσιμο',
       main_menu: 'Κύριο μενού', m_systems: 'Συστήματα αλουμινίου', m_engineering: 'Τεχνολογία & ποιότητα', m_about: 'Η εταιρεία', m_contact: 'Επικοινωνία', view_all: 'Όλα τα συστήματα',
       call: 'Κλήση', leadership: 'Διοίκηση',
-      help_chat: 'Κάντε μια ερώτηση', ask_price: 'Ρωτήστε τιμή', chat_title: 'Μηνύματα', chat_sub: 'Ρωτήστε για τιμές ή οτιδήποτε άλλο. Απαντάμε εδώ.',
-      chat_hello: 'Γεια σας! Στείλτε μας την ερώτησή σας και θα σας απαντήσουμε εδώ. Αφήστε το τηλέφωνό σας για να επικοινωνήσουμε μαζί σας.',
-      chat_name: 'Το όνομά σας', chat_phone: 'Τηλέφωνο ή WhatsApp', chat_ph: 'Γράψτε το μήνυμά σας…', chat_about: 'Ερώτηση για', chat_send: 'Αποστολή',
-      chat_price_q: 'Γεια σας, ποια είναι η τιμή για αυτό;', chat_need_contact: 'Συμπληρώστε όνομα και τηλέφωνο.', chat_busy: 'Δεν μπορούμε να δεχτούμε άλλα μηνύματα αυτή τη στιγμή. Στείλτε μας στο WhatsApp.',
-      chat_remove: 'Αφαίρεση', chat_reply_note: 'Απαντάμε εδώ. Επιστρέψτε σε αυτή τη σελίδα για να δείτε την απάντησή μας.',
+      ask_price: 'Ρωτήστε τιμή', ask_wa_msg: 'Γεια σας, θα ήθελα την τιμή για αυτό:', wa_note: 'Ανοίγει το WhatsApp με έτοιμο μήνυμα. Πατήστε μόνο αποστολή.',
+      products: 'Προϊόντα', m_products: 'Συστήματα MUSKITA', prod_eyebrow: 'Συστήματα προφίλ MUSKITA', prod_title: 'Τα συστήματα προφίλ που χρησιμοποιούμε', prod_sub: 'Κατασκευάζουμε και τοποθετούμε με συστήματα προφίλ αλουμινίου MUSKITA, κατασκευασμένα στην Κύπρο.',
+      details: 'Λεπτομέρειες', add_quote: 'Προσθήκη στην προσφορά', added_quote: 'Προστέθηκε στην προσφορά σας', tech_data: 'Τεχνικά στοιχεία', tech_source: 'Πηγή: στοιχεία προϊόντος MUSKITA. Οι τιμές διαφέρουν ανά έκδοση και διαμόρφωση· επιβεβαιώνουμε τα ακριβή στοιχεία για το έργο σας.', tech_on_request: 'Τεχνικά στοιχεία κατόπιν αιτήματος.', colours: 'Χρώματα & φινιρίσματα', all_products: 'Όλα τα προϊόντα',
+      qb_title: 'Ζητήστε προσφορά', qb_sub: 'Προσθέστε κάθε πόρτα, παράθυρο ή σύστημα που χρειάζεστε. Ελέγχουμε τις διαστάσεις και σας στέλνουμε γραπτή προσφορά.',
+      qb_step1: 'Προϊόντα', qb_step2: 'Τα στοιχεία σας', qb_step3: 'Έλεγχος', qb_product: 'Προϊόν {n}', qb_edit_product: 'Επεξεργασία προϊόντος {n}',
+      qb_cat: 'Κατηγορία προϊόντος', qb_model: 'Μοντέλο', qb_model_other: 'Άλλο / δεν είμαι σίγουρος', qb_choose: 'Επιλέξτε…', qb_width: 'Πλάτος (mm)', qb_height: 'Ύψος (mm)', qb_qty: 'Ποσότητα',
+      qb_colour: 'Χρώμα / φινίρισμα', qb_glass: 'Τύπος γυαλιού', qb_glass_thk: 'Πάχος γυαλιού', qb_glass_thk_ph: 'π.χ. 4-16-4', qb_opening: 'Τύπος ανοίγματος', qb_specs: 'Επιπλέον προδιαγραφές', qb_specs_ph: 'Χερούλια, κλειδαριές, σήτες, κατωκάσια…', qb_notes: 'Σημειώσεις', qb_notes_ph: 'Οτιδήποτε άλλο πρέπει να γνωρίζουμε για αυτό το προϊόν',
+      qb_files: 'Φωτογραφία ή σχέδιο (προαιρετικά)', qb_files_hint: 'JPG, PNG ή PDF, έως 10 MB, έως 3 αρχεία.', qb_add_file: 'Προσθήκη αρχείου', qb_uploading: 'Μεταφόρτωση…',
+      qb_add: 'Προσθήκη στην προσφορά', qb_save: 'Αποθήκευση αλλαγών', qb_cancel: 'Ακύρωση', qb_add_more: 'Προσθήκη άλλου προϊόντος', qb_edit: 'Επεξεργασία', qb_remove: 'Αφαίρεση', qb_continue: 'Συνέχεια', qb_back: 'Πίσω', qb_review: 'Έλεγχος αιτήματος', qb_submit: 'Αποστολή αιτήματος προσφοράς',
+      qb_list: 'Η προσφορά σας ({n})', qb_empty: 'Δεν έχετε προσθέσει προϊόντα ακόμη.', qb_need: 'Επιλέξτε κατηγορία και συμπληρώστε πλάτος, ύψος και ποσότητα.', qb_need_items: 'Προσθέστε πρώτα τουλάχιστον ένα προϊόν.',
+      qb_fullname: 'Ονοματεπώνυμο', qb_email: 'Email', qb_phone: 'Τηλέφωνο (με κωδικό χώρας)', qb_phone_ph: '+357 99 000000', qb_company: 'Εταιρεία', qb_location: 'Τοποθεσία έργου', qb_ptype: 'Είδος έργου', qb_msg: 'Επιπλέον μήνυμα', optional: 'προαιρετικό',
+      qb_privacy: 'Συμφωνώ η {c} να χρησιμοποιήσει αυτά τα στοιχεία μόνο για να απαντήσει στο αίτημα προσφοράς μου.', qb_privacy_note: 'Χρησιμοποιούμε τα στοιχεία σας μόνο για να ετοιμάσουμε και να σας στείλουμε την προσφορά. Δεν τα μοιραζόμαστε με κανέναν.',
+      qb_err_name: 'Συμπληρώστε το ονοματεπώνυμό σας.', qb_err_email: 'Συμπληρώστε έγκυρη διεύθυνση email.', qb_err_phone: 'Συμπληρώστε τηλέφωνο με κωδικό χώρας, π.χ. +357.', qb_err_privacy: 'Αποδεχτείτε τη σημείωση απορρήτου.',
+      qb_customer: 'Στοιχεία πελάτη', qb_done_title: 'Ευχαριστούμε, το αίτημά σας στάλθηκε.', qb_done_body: 'Ο αριθμός αναφοράς σας είναι {r}. Θα ελέγξουμε τα προϊόντα και τις διαστάσεις και θα επικοινωνήσουμε μαζί σας με γραπτή προσφορά.', qb_done_wa: 'Στείλτε το και στο WhatsApp', qb_new: 'Νέο αίτημα', qb_wa_msg: 'Γεια σας, έστειλα το αίτημα προσφοράς {r}.',
+      qb_sending: 'Αποστολή…', qb_err_send: 'Το αίτημα δεν στάλθηκε. Δοκιμάστε ξανά ή επικοινωνήστε μαζί μας τηλεφωνικά ή στο WhatsApp.', qb_err_file: 'Το αρχείο δεν ανέβηκε. Χρησιμοποιήστε JPG, PNG ή PDF έως 10 MB.', qb_items_n: '{n} προϊόντα', qb_item_1: '1 προϊόν',
+      colour_opts: ['Λευκό', 'Μαύρο', 'Ανθρακί', 'Ασημί (ανοδίωση)', 'Μπρονζέ', 'Απομίμηση ξύλου', 'Άλλο χρώμα RAL (γράψτε στις σημειώσεις)', 'Δεν είμαι σίγουρος'],
+      glass_opts: ['Διπλό τζάμι', 'Τριπλό τζάμι', 'Μονό τζάμι', 'Laminated γυαλί ασφαλείας', 'Σκληρυμένο γυαλί', 'Αμμοβολή / θαμπό', 'Χωρίς γυαλί', 'Δεν είμαι σίγουρος'],
+      opening_opts: ['Συρόμενο', 'Ανυψούμενο-συρόμενο', 'Ανοιγόμενο', 'Ανοιγοανακλινόμενο', 'Πτυσσόμενο', 'Σταθερό', 'Δεν είμαι σίγουρος'],
+      ptype_opts: ['Νέα κατοικία', 'Ανακαίνιση', 'Πολυκατοικία', 'Γραφείο / επαγγελματικός χώρος', 'Άλλο'],
+      rev_title_f: 'Τίτλος κριτικής', rev_project: 'Έργο ή προϊόν (προαιρετικά)', rev_photos: 'Φωτογραφίες έργου (προαιρετικά)', rev_photos_hint: 'Έως 3 φωτογραφίες.',
       reviews: 'Κριτικές', rev_title: 'Τι λένε οι πελάτες μας', rev_title_empty: 'Συνεργαστήκατε μαζί μας;', rev_empty: 'Μοιραστείτε την εμπειρία σας. Η κριτική σας εμφανίζεται εδώ μετά από έλεγχο.',
       rev_write: 'Γράψτε κριτική', rev_count: '{n} κριτικές', rev_one: '1 κριτική', rev_form_title: 'Η κριτική σας', rev_rating: 'Η βαθμολογία σας', rev_text: 'Η εμπειρία σας', rev_place: 'Περιοχή / πόλη (προαιρετικά)',
       rev_send: 'Αποστολή κριτικής', rev_thanks: 'Ευχαριστούμε! Η κριτική σας θα εμφανιστεί στην ιστοσελίδα μετά από έλεγχο.', rev_need: 'Επιλέξτε βαθμολογία, γράψτε το όνομά σας και λίγα λόγια.',
@@ -109,6 +139,7 @@
   };
   const u = (k, v) => {
     let s = (UI[lang] && UI[lang][k]) || UI.en[k] || k;
+    if (Array.isArray(s)) return s;
     if (v) for (const x in v) s = s.split('{' + x + '}').join(v[x]);
     return s;
   };
@@ -177,6 +208,8 @@
     const n = digits(S.company.whatsapp || S.company.phone);
     return n ? `https://wa.me/${n}${msg ? '?text=' + encodeURIComponent(msg) : ''}` : '';
   };
+  // WhatsApp message about one item; the /p/ link shows the photo and title as a preview card inside WhatsApp
+  const askWa = (kind, id, title) => waLink(`${u('ask_wa_msg', { c: S.company.name })}\n${title}\n${location.origin}/p/${kind}/${encodeURIComponent(id)}`);
   const telLink = () => (S.company.phone ? 'tel:+' + digits(S.company.phone).replace(/^00/, '') : '');
 
   /* ---------- header, mega menu, search, mobile menu ---------- */
@@ -206,7 +239,7 @@
         <nav class="links" aria-label="Main">
           <a href="#top" class="is-home">${u('home')}</a>
           <button type="button" class="mega-btn" aria-expanded="false" aria-controls="mega">${u('m_systems')}${icon('chev')}</button>
-          <a href="#projects">${u('m_projects')}</a><a href="#about">${u('m_about')}</a><a href="#quote">${u('contact')}</a>
+          ${prods().length ? `<a href="#products">${u('products')}</a>` : ''}<a href="#projects">${u('m_projects')}</a><a href="#about">${u('m_about')}</a><a href="#quote">${u('contact')}</a>
         </nav>
         <button type="button" class="icon-btn srch-btn" aria-expanded="false" aria-controls="srch" aria-label="${u('search')}">${icon('search')}</button>
         ${langSelect()}
@@ -226,6 +259,7 @@
         <ul class="mnav-main">
           <li><button type="button" class="acc" aria-expanded="false" aria-controls="acc-sys"><span>${u('m_systems')}</span>${icon('chev')}</button>
             <div class="acc-panel" id="acc-sys"><ul>${list.map((s, i) => `<li><a href="#${esc(s.slug)}"><small>${pad(i + 1)}</small>${esc(t(s.name))}</a></li>`).join('')}</ul></div></li>
+          ${prods().length ? `<li><a href="#products"><span>${u('m_products')}</span>${icon('right')}</a></li>` : ''}
           <li><a href="#projects"><span>${u('m_projects')}</span>${icon('right')}</a></li>
           <li><a href="#about"><span>${u('m_about')}</span>${icon('right')}</a></li>
           <li><a href="#engineering"><span>${u('m_engineering')}</span>${icon('right')}</a></li>
@@ -293,6 +327,64 @@
         <div class="rail-prog" aria-hidden="true"><i></i></div>
       </div>
     </section>`;
+  }
+
+  /* ---------- MUSKITA product catalogue ---------- */
+  const prods = () => (S.products || []).filter((x) => x && x.visible !== false && x.model);
+  const byProd = (id) => prods().find((x) => x.id === id);
+  const pcat = (id) => { const c = (S.productCats || []).find((x) => x.id === id); return c ? t(c.name) : ''; };
+  let pf = 'all';
+  function prodCards() {
+    const L = prods().filter((x) => pf === 'all' || x.cat === pf);
+    return L.map((x, i) => `<article class="prod" style="--i:${i}">
+      <a class="prod-img" href="#${esc(x.id)}" tabindex="-1" aria-hidden="true"><img src="${esc(src(x.image))}" alt="" loading="lazy"><span>${esc(pcat(x.cat))}</span></a>
+      <div class="prod-b"><p class="prod-m">${esc(x.model)}</p><h3><a href="#${esc(x.id)}">${esc(t(x.name))}</a></h3><p>${esc(t(x.short))}</p>
+      <div class="prod-acts"><a class="link-sm" href="#${esc(x.id)}">${u('details')}${icon('arrow')}</a><button type="button" class="btn btn-sm btn-accent" data-addq="${esc(x.id)}">${icon('file')}${u('add_quote')}</button></div></div>
+    </article>`).join('');
+  }
+  function products() {
+    const L = prods();
+    if (!L.length) return '';
+    const used = new Set(L.map((x) => x.cat));
+    const cats = (S.productCats || []).filter((c) => used.has(c.id));
+    return `<section class="prods" id="products"><div class="wrap">
+      <div class="proj-head rv"><div><p class="eyebrow">${u('prod_eyebrow')}</p><h2>${u('prod_title')}</h2><p class="prods-sub">${u('prod_sub')}</p></div></div>
+      ${cats.length > 1 ? `<div class="chips" role="group" aria-label="${u('products')}">${[{ id: 'all', name: u('all_products') }, ...cats.map((c) => ({ id: c.id, name: t(c.name) }))].map((c) => `<button type="button" data-pf="${esc(c.id)}" aria-pressed="${pf === c.id}">${esc(c.name)}</button>`).join('')}</div>` : ''}
+      <div class="prod-grid rv-kids" id="prod-grid">${prodCards()}</div>
+    </div></section>`;
+  }
+  function productPage(x) {
+    const specs = (x.specs || []).filter((r) => t(r.label) && String(r.value || '').trim());
+    const apps = (x.applications || []).map(t).filter(Boolean);
+    return `<div class="sp-bar"><div class="wrap">
+        <a class="sp-back" href="#products">${icon('back')}${u('products')}</a>
+        <span class="sp-title">${esc(x.model)}</span>
+        <button type="button" class="btn btn-accent" data-addq="${esc(x.id)}">${u('add_quote')}</button>
+      </div></div>
+      <section class="sp-hero"><div class="wrap sp-hero-grid">
+        <div>
+          <p class="eyebrow">${esc(pcat(x.cat))} · MUSKITA</p>
+          <h1>${esc(x.model)}</h1>
+          <p class="lead">${esc(t(x.name))}</p>
+          ${t(x.desc) ? `<p class="prod-desc">${esc(t(x.desc))}</p>` : ''}
+          <div class="sp-cta">
+            <button type="button" class="btn btn-navy" data-addq="${esc(x.id)}">${icon('file')}${u('add_quote')}</button>
+            ${waLink() ? `<a class="btn btn-wa" href="${esc(askWa('m', x.id, x.model + ' · ' + t(x.name)))}" target="_blank" rel="noopener">${waIcon}${u('ask_price')}</a>` : ''}
+          </div>
+          ${apps.length ? `<ul class="sp-apps" aria-label="${u('applications')}">${apps.map((a) => `<li>${esc(a)}</li>`).join('')}</ul>` : ''}
+        </div>
+        ${x.image ? `<figure class="sp-hero-img"><img src="${esc(src(x.image))}" alt="${esc(x.model)}"></figure>` : ''}
+      </div></section>
+      <section class="sp-sec"><div class="wrap sp-two">
+        <div><p class="eyebrow">${u('tech_data')}</p><h2>${u('specs')}</h2></div>
+        <div>${specs.length ? `<table class="spec-table"><tbody>${specs.map((r) => `<tr><th scope="row">${esc(t(r.label))}</th><td>${esc(r.value)}</td></tr>`).join('')}</tbody></table>` : `<p class="prod-desc">${u('tech_on_request')}</p>`}
+          ${t(x.colours) ? `<h3 class="prod-h3">${u('colours')}</h3><p class="prod-desc">${esc(t(x.colours))}</p>` : ''}
+          ${specs.length || t(x.colours) ? `<p class="spec-note">${icon('info')}<span>${u('tech_source')}${x.source ? ` <a href="${esc(x.source)}" target="_blank" rel="noopener">MUSKITA</a>` : ''}</span></p>` : ''}
+        </div>
+      </div></section>
+      <section class="sp-band"><div class="wrap"><div><h2>${u('cta_title')}</h2><p>${u('cta_body')}</p></div>
+        <div class="btns"><button type="button" class="btn btn-accent" data-addq="${esc(x.id)}">${u('add_quote')}</button>${S.company.phone ? `<a class="btn btn-ghost" href="${telLink()}">${icon('phone')}${esc(S.company.phone)}</a>` : ''}</div></div></section>
+      ${footerMini()}`;
   }
 
   /* ---------- about: image (with video button), text, key points ---------- */
@@ -381,7 +473,7 @@
       <div class="rev-head rv"><div><p class="eyebrow">${u('reviews')}</p><h2>${L.length ? u('rev_title') : u('rev_title_empty')}</h2>
         ${L.length ? `<p class="rev-avg">${stars(Math.round(avg))}<b>${avg.toFixed(1)}</b><span>${L.length === 1 ? u('rev_one') : u('rev_count', { n: L.length })}</span></p>` : `<p class="rev-sub">${u('rev_empty')}</p>`}</div>
         <button type="button" class="btn btn-ghost" data-review>${icon('star')}${u('rev_write')}</button></div>
-      ${L.length ? `<div class="rev-grid rv-kids">${L.slice(0, 6).map((r, i) => `<blockquote class="rev" style="--i:${i}">${stars(Math.min(5, Math.max(1, +r.rating || 5)))}<p>${esc(r.text)}</p><cite><b>${esc(r.name)}</b>${esc([r.place, revDate(r)].filter(Boolean).join(' · '))}</cite></blockquote>`).join('')}</div>` : ''}
+      ${L.length ? `<div class="rev-grid rv-kids">${L.slice(0, 6).map((r, i) => `<blockquote class="rev" style="--i:${i}">${stars(Math.min(5, Math.max(1, +r.rating || 5)))}${r.title ? `<h3>${esc(r.title)}</h3>` : ''}<p>${esc(r.text)}</p>${(r.photos || []).length ? `<div class="rev-ph">${r.photos.map((ph, k) => `<button type="button" data-rvp="${esc(r.id)}" data-k="${k}" aria-label="${u('zoom')}"><img src="${esc(src(ph))}" alt="" loading="lazy"></button>`).join('')}</div>` : ''}${r.project ? `<small class="rev-proj">${esc(r.project)}</small>` : ''}<cite><b>${esc(r.name)}</b>${esc([r.place, revDate(r)].filter(Boolean).join(' · '))}</cite></blockquote>`).join('')}</div>` : ''}
     </div></section>`;
   }
   function openReview() {
@@ -393,20 +485,49 @@
       <h3>${u('rev_form_title')}</h3>
       <div class="f"><span class="lbl">${u('rev_rating')}</span><div class="star-pick" role="radiogroup" aria-label="${u('rev_rating')}">${[1, 2, 3, 4, 5].map((i) => `<button type="button" role="radio" aria-checked="false" data-star="${i}" aria-label="${i} / 5"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="${STAR}"/></svg></button>`).join('')}</div></div>
       <div class="q-row"><div class="f"><label for="rv-name">${u('name')} *</label><input id="rv-name" autocomplete="name" maxlength="60" required></div><div class="f"><label for="rv-place">${u('rev_place')}</label><input id="rv-place" maxlength="60"></div></div>
-      <div class="f"><label for="rv-text">${u('rev_text')} *</label><textarea id="rv-text" maxlength="800" required></textarea></div>
+      <div class="f"><label for="rv-title">${u('rev_title_f')}</label><input id="rv-title" maxlength="100"></div>
+      <div class="f"><label for="rv-text">${u('rev_text')} *</label><textarea id="rv-text" maxlength="1200" required></textarea></div>
+      <div class="f"><label for="rv-project">${u('rev_project')}</label><input id="rv-project" maxlength="100"></div>
+      <div class="f"><span class="lbl">${u('rev_photos')}</span><div class="qb-files" id="rv-files"></div><label class="btn btn-sm btn-ghost qb-up">${icon('images')}<span id="rv-up-t">${u('qb_add_file')}</span><input type="file" id="rv-file" accept="image/jpeg,image/png,image/webp,image/heic" multiple></label><small class="qb-hint">${u('rev_photos_hint')}</small></div>
       <div class="hp" aria-hidden="true"><input id="rv-web" tabindex="-1" autocomplete="off"></div>
       <div class="q-actions"><button type="submit" class="btn btn-accent" id="rv-send">${u('rev_send')}${icon('arrow')}</button></div>
       <p class="q-status" id="rv-status" role="status" aria-live="polite"></p>
     </form>`;
     m.hidden = false;
     m.dataset.rating = '0';
+    rvPhotos = [];
     lock(true, 'rvm');
     setTimeout(() => $('#rv-name') && $('#rv-name').focus({ preventScroll: true }), 50);
+  }
+  let rvPhotos = [];
+  function rvDraw() { const b = $('#rv-files'); if (b) b.innerHTML = rvPhotos.map((f, k) => `<span class="qb-file">${icon('images')}<b>${esc(f.name)}</b><button type="button" data-rvf-del="${k}" aria-label="${u('qb_remove')}">&times;</button></span>`).join(''); }
+  async function rvUpload(files) {
+    const tx = $('#rv-up-t');
+    for (const file of files.slice(0, 3 - rvPhotos.length)) {
+      if (tx) tx.textContent = u('qb_uploading');
+      try {
+        const bmp = await createImageBitmap(file);
+        const k = Math.min(1, 1800 / Math.max(bmp.width, bmp.height)), c = document.createElement('canvas');
+        c.width = Math.round(bmp.width * k); c.height = Math.round(bmp.height * k);
+        c.getContext('2d').drawImage(bmp, 0, 0, c.width, c.height);
+        const blob = await new Promise((r) => c.toBlob(r, 'image/jpeg', 0.82));
+        let id = 'preview';
+        if (!PREVIEW) {
+          const r = await fetch('/api/upload?for=review', { method: 'POST', headers: { 'content-type': 'image/jpeg', 'x-filename': encodeURIComponent(file.name) }, body: blob });
+          const j = await r.json().catch(() => ({}));
+          if (!r.ok || !j.ok) throw new Error('up');
+          id = j.id;
+        }
+        rvPhotos.push({ id, name: file.name });
+      } catch (e) { const st = $('#rv-status'); if (st) { st.textContent = u('qb_err_file'); st.className = 'q-status err'; } }
+    }
+    if (tx) tx.textContent = u('qb_add_file');
+    rvDraw();
   }
   function closeReview() { const m = $('#rvm'); if (m) { m.hidden = true; m.innerHTML = ''; } lock(false, 'rvm'); }
   async function submitReview() {
     const m = $('#rvm'), st = $('#rv-status'), btn = $('#rv-send');
-    const d = { rating: +m.dataset.rating, name: $('#rv-name').value.trim(), place: $('#rv-place').value.trim(), text: $('#rv-text').value.trim(), website: $('#rv-web').value, lang };
+    const d = { rating: +m.dataset.rating, name: $('#rv-name').value.trim(), place: $('#rv-place').value.trim(), title: $('#rv-title').value.trim(), project: $('#rv-project').value.trim(), text: $('#rv-text').value.trim(), photos: rvPhotos.map((f) => f.id), website: $('#rv-web').value, lang };
     st.className = 'q-status';
     if (!d.rating || !d.name || d.text.length < 10) { st.textContent = u('rev_need'); st.classList.add('err'); return; }
     btn.disabled = true;
@@ -421,135 +542,6 @@
       st.textContent = u('send_err');
       st.classList.add('err');
       btn.disabled = false;
-    }
-  }
-
-  /* ---------- messages: ask the price or anything else, replies show here ---------- */
-  let chat = null, chatMsgs = [], chatRef = null, chatOpen = false, chatTimer = null, chatUnread = 0, chatSending = false;
-  try { const c = JSON.parse(localStorage.getItem('chat') || 'null'); if (c && c.id && c.token) chat = c; } catch (e) {}
-  const refInfo = (ref) => {
-    if (!ref) return null;
-    if (ref.type === 'work') { const w = (S.works || []).find((x) => x.id === ref.id); return { title: w ? t(w.title) : ref.title || '', img: ref.img || (w && w.images && w.images[0]) || '', href: '#gallery' }; }
-    if (ref.type === 'system') { const sy = (S.systems || []).find((x) => x.slug === ref.id); return { title: sy ? t(sy.name) : ref.title || '', img: ref.img || (sy && sy.image) || '', href: '#' + ref.id }; }
-    return null;
-  };
-  const refCard = (ref, removable) => {
-    const r = refInfo(ref);
-    if (!r) return '';
-    return `<div class="msg-ref">${r.img ? `<img src="${esc(src(r.img))}" alt="">` : ''}<span><small>${u('chat_about')}</small><b>${esc(r.title)}</b></span>${removable ? `<button type="button" data-chat-noref aria-label="${u('chat_remove')}">&times;</button>` : ''}</div>`;
-  };
-  const msgTime = (ts) => { const d = new Date(ts), now = new Date(); const sameDay = d.toDateString() === now.toDateString(); return d.toLocaleString(lang === 'el' ? 'el-GR' : 'en-GB', sameDay ? { hour: '2-digit', minute: '2-digit' } : { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }); };
-  function chatPanel() {
-    let p = $('#chat');
-    if (!p) { p = document.createElement('div'); p.id = 'chat'; p.className = 'chat'; p.setAttribute('role', 'dialog'); document.body.appendChild(p); }
-    return p;
-  }
-  function drawChat() {
-    const p = chatPanel();
-    p.setAttribute('aria-label', u('chat_title'));
-    const keep = $('#chat-t') ? $('#chat-t').value : '';
-    const who = !chat ? { n: $('#chat-name') ? $('#chat-name').value : '', p: $('#chat-phone') ? $('#chat-phone').value : '' } : null;
-    p.innerHTML = `<div class="chat-h"><span class="chat-av">${icon('headset')}</span><div><b>${esc(S.company.name)}</b><small>${u('chat_sub')}</small></div><button type="button" class="chat-x" data-chat-close aria-label="${u('close')}">&times;</button></div>
-      <div class="chat-b" id="chat-b"></div>
-      <form class="chat-f" id="chat-f" novalidate>
-        <div id="chat-ref">${refCard(chatRef, true)}</div>
-        ${!chat ? `<div class="chat-who"><input id="chat-name" placeholder="${esc(u('chat_name'))} *" aria-label="${esc(u('chat_name'))}" autocomplete="name" maxlength="80" value="${esc(who.n)}"><input id="chat-phone" type="tel" placeholder="${esc(u('chat_phone'))} *" aria-label="${esc(u('chat_phone'))}" autocomplete="tel" maxlength="30" value="${esc(who.p)}"></div>` : ''}
-        <div class="chat-in"><textarea id="chat-t" rows="1" maxlength="1000" placeholder="${esc(u('chat_ph'))}" aria-label="${esc(u('chat_ph'))}"></textarea><button type="submit" class="chat-send" aria-label="${u('chat_send')}">${icon('send')}</button></div>
-        <div class="hp" aria-hidden="true"><input id="chat-web" tabindex="-1" autocomplete="off"></div>
-        <p class="chat-err" id="chat-err" role="alert"></p>
-      </form>`;
-    $('#chat-t').value = keep;
-    drawChatMsgs(true);
-  }
-  function drawChatMsgs(toEnd) {
-    const b = $('#chat-b');
-    if (!b) return;
-    const atEnd = toEnd || b.scrollHeight - b.scrollTop - b.clientHeight < 60;
-    b.innerHTML = `<div class="msg admin"><p>${u('chat_hello')}</p></div>` + chatMsgs.map((m) => `<div class="msg ${m.from === 'admin' ? 'admin' : 'user'}">${refCard(m.ref)}<p>${esc(m.text)}</p><time>${msgTime(m.ts)}</time></div>`).join('')
-      + (chatMsgs.length && chatMsgs[chatMsgs.length - 1].from !== 'admin' ? `<p class="chat-note">${u('chat_reply_note')}</p>` : '');
-    if (atEnd) b.scrollTop = b.scrollHeight;
-  }
-  function chatBadge() {
-    const h = $('#help');
-    if (h) h.classList.toggle('unread', chatUnread > 0 && !chatOpen);
-  }
-  function chatSchedule() {
-    clearTimeout(chatTimer);
-    if (!chat || PREVIEW) return;
-    chatTimer = setTimeout(() => { if (document.hidden) chatSchedule(); else chatPoll(); }, chatOpen ? 6000 : 60000);
-  }
-  async function chatPoll() {
-    if (!chat || PREVIEW) return;
-    try {
-      const r = await fetch(`/api/chat?thread=${chat.id}&token=${chat.token}${chatOpen ? '&seen=1' : ''}`);
-      if (r.status === 404) { chat = null; chatMsgs = []; try { localStorage.removeItem('chat'); } catch (e) {} if (chatOpen) drawChat(); return; }
-      const j = await r.json();
-      if (j.ok && j.thread) {
-        // never drop messages the visitor already sees (the store can briefly return an older copy)
-        if (j.thread.msgs.length >= chatMsgs.length) { const grew = j.thread.msgs.length > chatMsgs.length; chatMsgs = j.thread.msgs; if (chatOpen && grew) drawChatMsgs(); }
-        chatUnread = chatOpen ? 0 : j.thread.uu || 0;
-        chatBadge();
-      }
-    } catch (e) {}
-    chatSchedule();
-  }
-  function openChat(ref) {
-    if (ref) chatRef = ref;
-    chatOpen = true;
-    drawChat();
-    const p = chatPanel();
-    requestAnimationFrame(() => p.classList.add('open'));
-    if (mobile()) lock(true, 'chat');
-    setHelp(false);
-    chatUnread = 0;
-    chatBadge();
-    const ta = $('#chat-t');
-    if (ref && !ta.value) ta.value = u('chat_price_q');
-    setTimeout(() => { const first = !chat && $('#chat-name') && !$('#chat-name').value ? $('#chat-name') : ta; first.focus({ preventScroll: true }); }, 250);
-    chatPoll();
-  }
-  function closeChat() {
-    chatOpen = false;
-    const p = $('#chat');
-    if (p) p.classList.remove('open');
-    lock(false, 'chat');
-    chatSchedule();
-  }
-  async function sendChat() {
-    if (chatSending) return;
-    const err = $('#chat-err'), ta = $('#chat-t');
-    const text = ta.value.trim();
-    err.textContent = '';
-    if (!text) { ta.focus(); return; }
-    const body = { text, lang, website: $('#chat-web').value, ref: chatRef ? { type: chatRef.type, id: chatRef.id, img: chatRef.img || '' } : null };
-    if (chat) { body.thread = chat.id; body.token = chat.token; }
-    else {
-      body.name = $('#chat-name').value.trim();
-      body.phone = $('#chat-phone').value.trim();
-      if (!body.name || body.phone.replace(/\D/g, '').length < 6) { err.textContent = u('chat_need_contact'); (body.name ? $('#chat-phone') : $('#chat-name')).focus(); return; }
-    }
-    if (PREVIEW) { chatMsgs.push({ id: 'p' + Date.now(), from: 'user', text, ts: Date.now(), ref: body.ref }); chatRef = null; ta.value = ''; drawChat(); return; }
-    chatSending = true;
-    $('.chat-send').disabled = true;
-    try {
-      const r = await fetch('/api/chat', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) });
-      const j = await r.json().catch(() => ({}));
-      if (!r.ok || !j.ok) { const e = new Error(j.error || 'send'); throw e; }
-      if (j.thread) {
-        chat = { id: j.thread.id, token: j.thread.token, name: j.thread.name };
-        try { localStorage.setItem('chat', JSON.stringify(chat)); } catch (e) {}
-        chatMsgs = j.thread.msgs;
-      }
-      chatRef = null;
-      ta.value = '';
-      drawChat();
-    } catch (e) {
-      err.textContent = e.message === 'contact' ? u('chat_need_contact') : e.message === 'busy' ? u('chat_busy') : u('send_err');
-    } finally {
-      chatSending = false;
-      const b = $('.chat-send');
-      if (b) b.disabled = false;
-      chatSchedule();
     }
   }
 
@@ -596,6 +588,196 @@
     </div></section>`;
   }
 
+  /* ---------- multi-product quotation builder ---------- */
+  const QB_KEY = 'qb2';
+  const SYS_CAT = { 'motorized-sliding': 'sliding-doors', 'vertical-sliding': 'glass', 'aluminium-windows': 'windows', 'aluminium-doors': 'doors', 'folding-systems': 'doors', 'sliding-glass': 'sliding-doors', 'curtain-wall': 'glass', 'glass-facade': 'glass', 'custom-solutions': 'custom' };
+  const newSid = () => (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(16).slice(2));
+  let QB = { step: 'items', items: [], edit: -1, draft: null, cust: {}, sid: newSid(), ref: '', err: '' };
+  try { const q = JSON.parse(localStorage.getItem(QB_KEY) || 'null'); if (q && Array.isArray(q.items)) QB = { ...QB, ...q, err: '', busy: false }; } catch (e) {}
+  const qbSave = () => { try { const { err, busy, ...keep } = QB; localStorage.setItem(QB_KEY, JSON.stringify(keep)); } catch (e) {} };
+  const blankItem = (o) => ({ cat: '', model: '', width: '', height: '', qty: 1, colour: '', glass: '', glassThk: '', opening: '', specs: '', notes: '', files: [], ...(o || {}) });
+  const catOpts = () => (S.productCats || []).filter((c) => t(c.name));
+  const modelsFor = (cat) => prods().filter((x) => x.cat === cat);
+  const optList = (vals, cur, blank) => (blank ? `<option value="">${esc(blank)}</option>` : '') + vals.map((v) => `<option ${v === cur ? 'selected' : ''}>${esc(v)}</option>`).join('');
+  const itemLine = (it) => [it.model || u('qb_model_other'), `${it.width} × ${it.height} mm`, `× ${it.qty}`, it.colour].filter(Boolean).join(' · ');
+
+  function qbItemForm() {
+    const d = QB.draft || blankItem(), n = QB.edit >= 0 ? QB.edit + 1 : QB.items.length + 1;
+    const ms = modelsFor(d.cat);
+    return `<div class="qb-card qb-edit" id="qb-edit">
+      <div class="qb-card-h"><h4>${u(QB.edit >= 0 ? 'qb_edit_product' : 'qb_product', { n })}</h4></div>
+      <div class="q-row">
+        <div class="f"><label for="qi-cat">${u('qb_cat')} *</label><select id="qi-cat" data-qi="cat"><option value="">${u('qb_choose')}</option>${catOpts().map((c) => `<option value="${esc(c.id)}" ${c.id === d.cat ? 'selected' : ''}>${esc(t(c.name))}</option>`).join('')}</select></div>
+        <div class="f"><label for="qi-model">${u('qb_model')}</label><select id="qi-model" data-qi="model">${ms.map((x) => `<option value="${esc(x.model)}" ${x.model === d.model ? 'selected' : ''}>${esc(x.model)} · ${esc(t(x.name))}</option>`).join('')}<option value="" ${!d.model || !ms.some((x) => x.model === d.model) ? 'selected' : ''}>${u('qb_model_other')}</option></select></div>
+      </div>
+      <div class="q-row three">
+        <div class="f"><label for="qi-w">${u('qb_width')} *</label><input id="qi-w" data-qi="width" type="number" inputmode="numeric" min="1" max="30000" step="1" value="${esc(d.width)}"></div>
+        <div class="f"><label for="qi-h">${u('qb_height')} *</label><input id="qi-h" data-qi="height" type="number" inputmode="numeric" min="1" max="30000" step="1" value="${esc(d.height)}"></div>
+        <div class="f"><label for="qi-q">${u('qb_qty')} *</label><input id="qi-q" data-qi="qty" type="number" inputmode="numeric" min="1" max="999" step="1" value="${esc(d.qty)}"></div>
+      </div>
+      <div class="q-row">
+        <div class="f"><label for="qi-col">${u('qb_colour')}</label><select id="qi-col" data-qi="colour">${optList(u('colour_opts'), d.colour, u('qb_choose'))}</select></div>
+        <div class="f"><label for="qi-open">${u('qb_opening')}</label><select id="qi-open" data-qi="opening">${optList(u('opening_opts'), d.opening, u('qb_choose'))}</select></div>
+      </div>
+      <div class="q-row">
+        <div class="f"><label for="qi-gl">${u('qb_glass')}</label><select id="qi-gl" data-qi="glass">${optList(u('glass_opts'), d.glass, u('qb_choose'))}</select></div>
+        <div class="f"><label for="qi-glt">${u('qb_glass_thk')}</label><input id="qi-glt" data-qi="glassThk" maxlength="40" placeholder="${esc(u('qb_glass_thk_ph'))}" value="${esc(d.glassThk)}"></div>
+      </div>
+      <div class="f"><label for="qi-sp">${u('qb_specs')}</label><textarea id="qi-sp" data-qi="specs" maxlength="500" rows="2" placeholder="${esc(u('qb_specs_ph'))}">${esc(d.specs)}</textarea></div>
+      <div class="f"><label for="qi-no">${u('qb_notes')}</label><textarea id="qi-no" data-qi="notes" maxlength="1000" rows="2" placeholder="${esc(u('qb_notes_ph'))}">${esc(d.notes)}</textarea></div>
+      <div class="f"><span class="lbl">${u('qb_files')}</span>
+        <div class="qb-files">${(d.files || []).map((f, k) => `<span class="qb-file">${icon(f.type === 'application/pdf' ? 'file' : 'images')}<b>${esc(f.name)}</b><button type="button" data-qf-del="${k}" aria-label="${u('qb_remove')}">&times;</button></span>`).join('')}
+          ${(d.files || []).length < 3 ? `<label class="btn btn-sm btn-ghost qb-up">${icon('download')}<span id="qb-up-t">${u('qb_add_file')}</span><input type="file" id="qb-file" accept="image/jpeg,image/png,image/webp,application/pdf,image/heic"></label>` : ''}</div>
+        <small class="qb-hint">${u('qb_files_hint')}</small></div>
+      <p class="q-status err" id="qb-ierr" role="alert"></p>
+      <div class="qb-actions"><button type="button" class="btn btn-accent" data-qb="save-item">${icon(QB.edit >= 0 ? 'check' : 'arrow')}${u(QB.edit >= 0 ? 'qb_save' : 'qb_add')}</button>${QB.items.length ? `<button type="button" class="btn btn-ghost" data-qb="cancel-item">${u('qb_cancel')}</button>` : ''}</div>
+    </div>`;
+  }
+  function qbList(editable) {
+    if (!QB.items.length) return '';
+    return `<div class="qb-list"><p class="qb-list-h">${u('qb_list', { n: QB.items.length })}</p>${QB.items.map((it, k) => `<div class="qb-item">
+      <span class="qb-n">${k + 1}</span>
+      <div class="qb-i-b"><b>${esc(it.catName || '')}</b><span>${esc(itemLine(it))}</span>${[it.glass, it.glassThk, it.opening].filter(Boolean).length ? `<small>${esc([it.glass, it.glassThk, it.opening].filter(Boolean).join(' · '))}</small>` : ''}${it.files && it.files.length ? `<small>${icon('images')} ${it.files.length}</small>` : ''}</div>
+      ${editable ? `<div class="qb-i-a"><button type="button" class="btn btn-sm btn-ghost" data-qb="edit" data-k="${k}">${u('qb_edit')}</button><button type="button" class="btn btn-sm btn-ghost qb-del" data-qb="del" data-k="${k}">${u('qb_remove')}</button></div>` : ''}
+    </div>`).join('')}</div>`;
+  }
+  function qbSteps() {
+    const order = ['items', 'details', 'review'];
+    const at = order.indexOf(QB.step);
+    return `<ol class="qb-steps">${['qb_step1', 'qb_step2', 'qb_step3'].map((k, i) => `<li class="${i < at ? 'done' : i === at ? 'on' : ''}"><span>${i + 1}</span>${u(k)}</li>`).join('')}</ol>`;
+  }
+  function qbBody() {
+    const c = QB.cust || {};
+    if (QB.step === 'done') {
+      const wa = waLink(u('qb_wa_msg', { c: S.company.name, r: QB.ref }) + `\n${u('name')}: ${c.name || ''}\n${u('phone')}: ${c.phone || ''}\n` + QB.doneItems.map((it, k) => `${k + 1}. ${it.catName} · ${itemLine(it)}`).join('\n'));
+      return `<div class="qb-done"><span class="qb-tick">${icon('check')}</span><h3>${u('qb_done_title')}</h3><p>${esc(u('qb_done_body', { r: QB.ref }))}</p><p class="qb-ref">${esc(QB.ref)}</p>
+        <div class="qb-actions">${wa ? `<a class="btn btn-wa" href="${esc(wa)}" target="_blank" rel="noopener">${waIcon}${u('qb_done_wa')}</a>` : ''}<button type="button" class="btn btn-ghost" data-qb="new">${u('qb_new')}</button></div>${wa ? `<small class="qb-hint">${u('wa_note')}</small>` : ''}</div>`;
+    }
+    if (QB.step === 'details') {
+      const fld = (k, lbl, type, ac, req, extra) => `<div class="f"><label for="qc-${k}">${u(lbl)}${req ? ' *' : ` <small>(${u('optional')})</small>`}</label><input id="qc-${k}" data-qc="${k}" type="${type}" autocomplete="${ac}" maxlength="120" value="${esc(c[k] || '')}" ${extra || ''}></div>`;
+      return `${qbSteps()}<div class="qb-card">
+        <div class="q-row">${fld('name', 'qb_fullname', 'text', 'name', 1)}${fld('email', 'qb_email', 'email', 'email', 1)}</div>
+        <div class="q-row">${fld('phone', 'qb_phone', 'tel', 'tel', 1, `placeholder="${esc(u('qb_phone_ph'))}"`)}${fld('company', 'qb_company', 'text', 'organization', 0)}</div>
+        <div class="q-row">${fld('location', 'qb_location', 'text', 'address-level2', 0)}<div class="f"><label for="qc-type">${u('qb_ptype')} <small>(${u('optional')})</small></label><select id="qc-type" data-qc="type">${optList(u('ptype_opts'), c.type, u('qb_choose'))}</select></div></div>
+        <div class="f"><label for="qc-message">${u('qb_msg')} <small>(${u('optional')})</small></label><textarea id="qc-message" data-qc="message" maxlength="2000" rows="3">${esc(c.message || '')}</textarea></div>
+        <label class="qb-check"><input type="checkbox" id="qc-privacy" data-qc="privacy" ${c.privacy ? 'checked' : ''}><span>${esc(u('qb_privacy', { c: S.company.name }))}</span></label>
+        <p class="qb-hint">${u('qb_privacy_note')}</p>
+        <p class="q-status err" id="qb-cerr" role="alert"></p>
+        <div class="qb-actions"><button type="button" class="btn btn-ghost" data-qb="to-items">${icon('back')}${u('qb_back')}</button><button type="button" class="btn btn-accent" data-qb="to-review">${u('qb_review')}${icon('arrow')}</button></div>
+      </div>`;
+    }
+    if (QB.step === 'review') {
+      const r = (k, v) => (v ? `<div><dt>${u(k)}</dt><dd>${esc(v)}</dd></div>` : '');
+      return `${qbSteps()}<div class="qb-card">
+        <div class="qb-rev-h"><h4>${u('qb_list', { n: QB.items.length })}</h4><button type="button" class="link-sm" data-qb="to-items">${u('qb_edit')}</button></div>
+        ${QB.items.map((it, k) => `<div class="qb-rev-item"><b>${k + 1}. ${esc(it.catName)}${it.model ? ' · ' + esc(it.model) : ''}</b><span>${esc(`${it.width} × ${it.height} mm · × ${it.qty}`)}</span><small>${esc([it.colour, it.glass, it.glassThk, it.opening].filter(Boolean).join(' · '))}</small>${it.specs ? `<small>${esc(it.specs)}</small>` : ''}${it.notes ? `<small>${esc(it.notes)}</small>` : ''}${it.files.length ? `<small>${icon('images')} ${esc(it.files.map((f) => f.name).join(', '))}</small>` : ''}</div>`).join('')}
+        <div class="qb-rev-h"><h4>${u('qb_customer')}</h4><button type="button" class="link-sm" data-qb="to-details">${u('qb_edit')}</button></div>
+        <dl class="qb-dl">${r('qb_fullname', c.name)}${r('qb_email', c.email)}${r('qb_phone', c.phone)}${r('qb_company', c.company)}${r('qb_location', c.location)}${r('qb_ptype', c.type)}${r('qb_msg', c.message)}</dl>
+        <div class="hp" aria-hidden="true"><input id="qb-web" tabindex="-1" autocomplete="off"></div>
+        <p class="q-status" id="qb-serr" role="status" aria-live="polite">${esc(QB.err || '')}</p>
+        <div class="qb-actions"><button type="button" class="btn btn-ghost" data-qb="to-details">${icon('back')}${u('qb_back')}</button><button type="button" class="btn btn-accent" id="qb-send" data-qb="submit" ${QB.busy ? 'disabled' : ''}>${u(QB.busy ? 'qb_sending' : 'qb_submit')}${icon('arrow')}</button></div>
+      </div>`;
+    }
+    const editing = QB.edit >= 0 || QB.draft || !QB.items.length;
+    return `${qbSteps()}${editing ? qbItemForm() : ''}${qbList(true)}
+      ${!editing ? `<div class="qb-actions"><button type="button" class="btn btn-ghost" data-qb="add-more">+ ${u('qb_add_more')}</button><button type="button" class="btn btn-accent" data-qb="to-details">${u('qb_continue')}${icon('arrow')}</button></div>` : ''}
+      <p class="q-status err" id="qb-lerr" role="alert"></p>`;
+  }
+  function qbRender(focus) {
+    const b = $('#qb');
+    if (!b) return;
+    b.innerHTML = qbBody();
+    qbSave();
+    if (focus) { const el = $(focus); if (el) el.focus({ preventScroll: true }); }
+  }
+  function qbReadItem() {
+    const d = QB.draft || (QB.draft = blankItem());
+    $$('[data-qi]').forEach((el) => { d[el.dataset.qi] = el.value; });
+    return d;
+  }
+  function qbReadCust() {
+    const c = QB.cust || (QB.cust = {});
+    $$('[data-qc]').forEach((el) => { c[el.dataset.qc] = el.type === 'checkbox' ? el.checked : el.value.trim(); });
+    return c;
+  }
+  function qbScrollTop() { const q = $('#quote'); if (q && q.getBoundingClientRect().top < 0) q.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }); }
+  function qbStart(preset) {
+    QB.step = 'items';
+    QB.edit = -1;
+    QB.draft = blankItem(preset);
+    qbRender();
+    if (location.hash === '#quote') route(); else location.hash = 'quote';
+    setTimeout(() => { const w = $('#qi-w'); if (w) w.focus({ preventScroll: true }); }, 900);
+  }
+  async function qbUpload(file) {
+    const tx = $('#qb-up-t');
+    if (tx) tx.textContent = u('qb_uploading');
+    try {
+      let blob = file, type = file.type;
+      if (/^image\//.test(type) && type !== 'image/png') {
+        const bmp = await createImageBitmap(file).catch(() => null);
+        if (bmp) {
+          const k = Math.min(1, 2000 / Math.max(bmp.width, bmp.height)), c = document.createElement('canvas');
+          c.width = Math.round(bmp.width * k); c.height = Math.round(bmp.height * k);
+          c.getContext('2d').drawImage(bmp, 0, 0, c.width, c.height);
+          blob = await new Promise((r) => c.toBlob(r, 'image/jpeg', 0.84)); type = 'image/jpeg';
+        }
+      }
+      if (!/^(image\/(jpeg|png|webp)|application\/pdf)$/.test(type) || blob.size > 10 * 1024 * 1024) throw new Error('type');
+      if (PREVIEW) return { id: 'preview', name: file.name, type, size: blob.size };
+      const r = await fetch('/api/upload?for=quote', { method: 'POST', headers: { 'content-type': type, 'x-filename': encodeURIComponent(file.name) }, body: blob });
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok || !j.ok) throw new Error(j.error || 'upload');
+      return { id: j.id, name: j.name, type: j.type, size: j.size };
+    } catch (e) {
+      const er = $('#qb-ierr');
+      if (er) er.textContent = u('qb_err_file');
+      if (tx) tx.textContent = u('qb_add_file');
+      return null;
+    }
+  }
+  async function qbAction(a, el) {
+    if (a === 'save-item') {
+      const d = qbReadItem();
+      d.width = Math.round(+d.width); d.height = Math.round(+d.height); d.qty = Math.round(+d.qty);
+      if (!d.cat || !(d.width > 0) || !(d.height > 0) || !(d.qty >= 1)) { $('#qb-ierr').textContent = u('qb_need'); return; }
+      d.catName = pcat(d.cat);
+      if (QB.edit >= 0) QB.items[QB.edit] = d; else QB.items.push(d);
+      QB.edit = -1; QB.draft = null;
+      qbRender();
+      const l = $('.qb-list'); if (l) l.scrollIntoView({ block: 'nearest', behavior: reduce ? 'auto' : 'smooth' });
+    } else if (a === 'cancel-item') { QB.edit = -1; QB.draft = null; qbRender(); }
+    else if (a === 'add-more') { QB.edit = -1; QB.draft = blankItem(); qbRender('#qi-cat'); }
+    else if (a === 'edit') { QB.edit = +el.dataset.k; QB.draft = JSON.parse(JSON.stringify(QB.items[QB.edit])); qbRender('#qi-cat'); }
+    else if (a === 'del') { QB.items.splice(+el.dataset.k, 1); if (!QB.items.length) { QB.draft = blankItem(); QB.edit = -1; } qbRender(); }
+    else if (a === 'to-items') { if (QB.step === 'details') qbReadCust(); QB.step = 'items'; qbRender(); qbScrollTop(); }
+    else if (a === 'to-details') {
+      if (QB.step === 'items' && !QB.items.length) { const er = $('#qb-lerr'); if (er) er.textContent = u('qb_need_items'); return; }
+      QB.edit = -1; QB.draft = null;
+      QB.step = 'details'; qbRender('#qc-name'); qbScrollTop();
+    } else if (a === 'to-review') {
+      const c = qbReadCust(), er = $('#qb-cerr');
+      const bad = !c.name ? ['qb_err_name', '#qc-name'] : !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(c.email || '') ? ['qb_err_email', '#qc-email'] : !/^\s*(\+|00)/.test(c.phone || '') || (c.phone || '').replace(/\D/g, '').length < 8 ? ['qb_err_phone', '#qc-phone'] : !c.privacy ? ['qb_err_privacy', '#qc-privacy'] : null;
+      if (bad) { er.textContent = u(bad[0]); $(bad[1]).focus(); return; }
+      QB.step = 'review'; QB.err = ''; qbRender(); qbScrollTop();
+    } else if (a === 'submit') {
+      if (QB.busy) return;
+      QB.busy = true; QB.err = ''; qbRender();
+      try {
+        let ref = 'AMT-PREVIEW';
+        if (!PREVIEW) {
+          const body = { sid: QB.sid, lang, website: ($('#qb-web') || {}).value || '', customer: QB.cust, items: QB.items.map((it) => ({ ...it, files: (it.files || []).map((f) => ({ id: f.id })) })) };
+          const r = await fetch('/api/quote', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) });
+          const j = await r.json().catch(() => ({}));
+          if (!r.ok || !j.ok) throw new Error(j.error || 'send');
+          ref = j.ref;
+        }
+        QB.doneItems = QB.items; QB.ref = ref; QB.step = 'done'; QB.items = []; QB.draft = null; QB.edit = -1; QB.sid = newSid();
+      } catch (e) { QB.err = u('qb_err_send'); }
+      QB.busy = false; qbRender(); qbScrollTop();
+    } else if (a === 'new') { QB = { step: 'items', items: [], edit: -1, draft: blankItem(), cust: QB.cust, sid: newSid(), ref: '', err: '' }; qbRender(); }
+  }
+
   function quote() {
     const c = S.company;
     const lines = [];
@@ -605,26 +787,8 @@
     if (t(c.address)) lines.push(`<div class="q-line">${icon('pin')}<div><small>${u('address')}</small><span>${esc(t(c.address))}</span></div></div>`);
     if (t(c.hours)) lines.push(`<div class="q-line">${icon('clock')}<div><small>${u('hours')}</small><span>${esc(t(c.hours))}</span></div></div>`);
     return `<section class="quote" id="quote"><div class="wrap q-grid">
-      <div class="rv"><p class="eyebrow">${u('quote_eyebrow')}</p><h2>${u('quote_title')}</h2><p class="lead">${u('quote_body')}</p><div class="q-lines">${lines.join('')}</div></div>
-      <form class="q-form rv" id="qform" novalidate>
-        <h3>${u('form_title')}</h3>
-        <div class="q-row">
-          <div class="f"><label for="q-name">${u('name')} *</label><input id="q-name" name="name" autocomplete="name" required maxlength="100"></div>
-          <div class="f"><label for="q-phone">${u('phone')} *</label><input id="q-phone" name="phone" type="tel" autocomplete="tel" required maxlength="40"></div>
-        </div>
-        <div class="q-row">
-          <div class="f"><label for="q-email">${u('email')}</label><input id="q-email" name="email" type="email" autocomplete="email" maxlength="120"></div>
-          <div class="f"><label for="q-area">${u('area')}</label><input id="q-area" name="area" autocomplete="address-level2" maxlength="80"></div>
-        </div>
-        <div class="f"><label for="q-system">${u('system')}</label><select id="q-system" name="system">${sys().map((s) => `<option value="${esc(t(s.name))}" data-slug="${esc(s.slug)}">${esc(t(s.name))}</option>`).join('')}<option value="${esc(u('other'))}">${u('other')}</option></select></div>
-        <div class="f"><label for="q-msg">${u('message')}</label><textarea id="q-msg" name="message" maxlength="2000" placeholder="${esc(u('msg_ph'))}"></textarea></div>
-        <div class="hp" aria-hidden="true"><label for="q-web">Website</label><input id="q-web" name="website" tabindex="-1" autocomplete="off"></div>
-        <div class="q-actions">
-          <button type="submit" class="btn btn-navy" id="q-send">${u('send')}${icon('arrow')}</button>
-          ${waLink() ? `<a class="btn btn-wa" id="q-wa" href="${esc(waLink())}" target="_blank" rel="noopener">${WA_SVG.replace('<svg', '<svg class="ic"')}${u('or_wa')}</a>` : ''}
-        </div>
-        <p class="q-status" id="q-status" role="status" aria-live="polite"></p>
-      </form>
+      <div class="rv q-side"><p class="eyebrow">${u('quote_eyebrow')}</p><h2>${u('qb_title')}</h2><p class="lead">${u('qb_sub')}</p><div class="q-lines">${lines.join('')}</div></div>
+      <div class="qb rv" id="qb">${qbBody()}</div>
     </div></section>`;
   }
 
@@ -633,7 +797,7 @@
     const soc = socialLinks('socials');
     return `<footer class="foot"><div class="wrap foot-top${soc ? ' has-soc' : ''}">
       <div class="foot-brand"><img src="/img/logo-light.png" alt="${esc(c.name)}" width="111" height="52"><p>${esc(t(S.text.tagline))}</p></div>
-      <div><h4>${u('quick_links')}</h4><ul><li><a href="#top">${u('home')}</a></li><li><a href="#about">${u('about')}</a></li><li><a href="#systems">${u('systems')}</a></li><li><a href="#projects">${u('gallery')}</a></li><li><a href="#reviews">${u('reviews')}</a></li><li><a href="#quote">${u('contact')}</a></li></ul></div>
+      <div><h4>${u('quick_links')}</h4><ul><li><a href="#top">${u('home')}</a></li><li><a href="#about">${u('about')}</a></li><li><a href="#systems">${u('systems')}</a></li>${prods().length ? `<li><a href="#products">${u('products')}</a></li>` : ''}<li><a href="#projects">${u('gallery')}</a></li><li><a href="#reviews">${u('reviews')}</a></li><li><a href="#quote">${u('contact')}</a></li></ul></div>
       <div><h4>${u('systems')}</h4><ul>${list.slice(0, 6).map((s) => `<li><a href="#${esc(s.slug)}">${esc(t(s.name))}</a></li>`).join('')}</ul></div>
       <div><h4>${u('contact_info')}</h4><ul class="foot-contact">
         ${t(c.address) ? `<li>${icon('pin')}<span>${esc(t(c.address))}</span></li>` : ''}
@@ -650,7 +814,6 @@
   function helpButton() {
     const c = S.company;
     const items = [
-      `<button type="button" class="help-item" data-chat><span>${u('help_chat')}</span><i class="hi chat-i">${icon('chat')}</i></button>`,
       `<a class="help-item" href="#quote"><span>${u('help_quote')}</span><i class="hi">${icon('file')}</i></a>`,
       waLink() ? `<a class="help-item" href="${esc(waLink(u('wa_hello', { c: c.name })))}" target="_blank" rel="noopener"><span>WhatsApp</span><i class="hi wa">${waIcon}</i></a>` : '',
       c.email ? `<a class="help-item" href="mailto:${esc(c.email)}"><span>${u('help_email')}</span><i class="hi">${icon('mail')}</i></a>` : '',
@@ -693,7 +856,7 @@
           <p class="lead">${esc(t(s.short))}</p>
           <div class="sp-cta">
             <button type="button" class="btn btn-navy" data-consult="${esc(s.slug)}">${u('consult')}${icon('arrow')}</button>
-            <button type="button" class="btn btn-ghost" data-ask="system" data-id="${esc(s.slug)}">${icon('chat')}${u('ask_price')}</button>
+            ${waLink() ? `<a class="btn btn-ghost" href="${esc(askWa('s', s.slug, t(s.name)))}" target="_blank" rel="noopener">${waIcon}${u('ask_price')}</a>` : ''}
             ${s.brochure ? `<a class="btn btn-ghost" href="${esc(src(s.brochure))}" target="_blank" rel="noopener">${icon('download')}${u('brochure')}</a>` : ''}
             ${waLink() ? `<a class="btn btn-wa" href="${esc(waLink(msg))}" target="_blank" rel="noopener">${WA_SVG.replace('<svg', '<svg class="ic"')}WhatsApp</a>` : ''}
           </div>
@@ -845,15 +1008,12 @@
 
   function render() {
     document.documentElement.lang = lang;
-    $('#app').innerHTML = header() + '<main>' + hero() + cats() + about() + projects() + reviews() + engineering() + band() + quote() + '</main>' + footer();
+    $('#app').innerHTML = header() + '<main>' + hero() + cats() + products() + about() + projects() + reviews() + engineering() + band() + quote() + '</main>' + footer();
     tstStart();
     hsShow(hsI);
     railArrows();
     syncPanels();
-    if (pendingSystem) selectSystem(pendingSystem);
-    updateWa();
     reveal($('#app'), renders++ > 0);
-    chatBadge();
   }
 
   // scroll reveal + count-up. Content is visible unless the script turns the effect on.
@@ -1057,6 +1217,7 @@
     items.push(
       page('#engineering', 'layers', UI[lang].m_engineering, u('eng_title'), 'engineering quality thermal break profile glazing seals drainage insulation τεχνολογια ποιοτητα θερμοδιακοπη μονωση'),
       page('#about', 'home', UI[lang].m_about, t(S.text.introTitle), 'about company team founder owner εταιρεια ομαδα ιδρυτης'),
+      ...prods().map((x) => ({ href: '#' + x.id, img: x.image, ic: 'layers', title: x.model + ' · ' + t(x.name), sub: t(x.short), title_n: norm(x.model + ' ' + x.model.replace(/\s/g, '') + ' ' + [x.name.en, x.name.el].join(' ')), hay: norm([x.model, x.model.replace(/\s/g, ''), 'muskita', pcat(x.cat), x.name.en, x.name.el, x.short.en, x.short.el, x.desc.en, x.desc.el].join(' ')) })),
       page('#reviews', 'star', u('reviews'), u('rev_title'), 'reviews review rating testimonials clients κριτικες αξιολογησεις πελατες'),
       page('#gallery', 'images', u('gal_page_title'), u('gal_page_sub'), 'gallery projects photos work latest portfolio εργα φωτογραφιες γκαλερι'),
       page('#quote', 'file', u('quote'), u('quote_body'), 'contact quote price cost phone whatsapp email survey measure επικοινωνια προσφορα τιμη τηλεφωνο αυτοψια')
@@ -1094,6 +1255,7 @@
   function openSystem(slug, instant) {
     const s = bySlug(slug);
     if (!s) return;
+    prodCur = null;
     current = s;
     const sp = $('#sp');
     sp.innerHTML = systemPage(s);
@@ -1119,9 +1281,40 @@
     sp.classList.remove('open');
     lock(false, 'sp');
     document.title = `${S.company.name} · ${t(S.text.tagline)}`;
-    setTimeout(() => { if (!current && !galOpen) { sp.hidden = true; sp.innerHTML = ''; } }, reduce ? 0 : 720);
+    setTimeout(() => { if (!layerBusy()) { sp.hidden = true; sp.innerHTML = ''; } }, reduce ? 0 : 720);
   }
-  let galOpen = false;
+  let galOpen = false, prodCur = null;
+  const layerBusy = () => current || galOpen || prodCur;
+  function openProduct(id, instant) {
+    const x = byProd(id);
+    if (!x) return;
+    current = null;
+    galOpen = false;
+    prodCur = x;
+    const sp = $('#sp');
+    sp.innerHTML = productPage(x);
+    sp.setAttribute('role', 'dialog');
+    sp.setAttribute('aria-modal', 'true');
+    sp.setAttribute('aria-label', x.model);
+    sp.hidden = false;
+    sp.scrollTop = 0;
+    if (instant || reduce) sp.classList.add('open');
+    else requestAnimationFrame(() => requestAnimationFrame(() => sp.classList.add('open')));
+    lock(true, 'sp');
+    reveal(sp, instant && renders > 1);
+    document.title = `${x.model} · ${t(x.name)} · ${S.company.name}`;
+    sp.setAttribute('tabindex', '-1');
+    setTimeout(() => sp.focus({ preventScroll: true }), 50);
+  }
+  function closeProduct() {
+    if (!prodCur) return;
+    prodCur = null;
+    const sp = $('#sp');
+    sp.classList.remove('open');
+    lock(false, 'sp');
+    document.title = `${S.company.name} · ${t(S.text.tagline)}`;
+    setTimeout(() => { if (!layerBusy()) { sp.hidden = true; sp.innerHTML = ''; } }, reduce ? 0 : 720);
+  }
   function openGallery(instant) {
     current = null;
     galOpen = true;
@@ -1146,57 +1339,19 @@
     sp.classList.remove('open');
     lock(false, 'sp');
     document.title = `${S.company.name} · ${t(S.text.tagline)}`;
-    setTimeout(() => { if (!current && !galOpen) { sp.hidden = true; sp.innerHTML = ''; } }, reduce ? 0 : 720);
+    setTimeout(() => { if (!layerBusy()) { sp.hidden = true; sp.innerHTML = ''; } }, reduce ? 0 : 720);
   }
   function route(first) {
     const h = decodeURIComponent(location.hash.slice(1));
     if (panel) setPanel(null);
     setHelp(false);
-    if (h === 'gallery' && works().length) { openGallery(first); return; }
-    if (h && bySlug(h)) { galOpen = false; openSystem(h, first); return; }
+    if (h === 'gallery' && works().length) { prodCur = null; openGallery(first); return; }
+    if (h && byProd(h)) { openProduct(h, first); return; }
+    if (h && bySlug(h)) { galOpen = false; prodCur = null; openSystem(h, first); return; }
+    if (prodCur) closeProduct();
     if (galOpen) closeGallery();
     if (current) closeSystem();
     if (h && !first) { const el = document.getElementById(h); if (el) setTimeout(() => el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }), 20); }
-  }
-
-  // quote form
-  function selectSystem(slug) {
-    const sel = $('#q-system');
-    if (!sel) return;
-    const opt = [...sel.options].find((o) => o.dataset.slug === slug);
-    if (opt) sel.value = opt.value;
-    updateWa();
-  }
-  function updateWa() {
-    const a = $('#q-wa'), f = $('#qform');
-    if (!a || !f) return;
-    const d = Object.fromEntries(new FormData(f));
-    const lines = [u('wa_hello', { c: S.company.name }), d.name && `${u('name')}: ${d.name}`, d.area && `${u('area')}: ${d.area}`, d.system && `${u('system')}: ${d.system}`, d.message && `${u('message')}: ${d.message}`].filter(Boolean);
-    a.href = waLink(lines.join('\n'));
-  }
-  async function submitQuote(form) {
-    const st = $('#q-status'), btn = $('#q-send');
-    const d = Object.fromEntries(new FormData(form));
-    st.className = 'q-status';
-    if (!String(d.name || '').trim() || !String(d.phone || '').trim()) { st.textContent = u('required'); st.classList.add('err'); return; }
-    if (PREVIEW) { st.textContent = u('sent'); st.classList.add('ok'); return; }
-    btn.disabled = true;
-    st.textContent = u('sending');
-    try {
-      const r = await fetch('/api/quote', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ ...d, lang }) });
-      const j = await r.json().catch(() => ({}));
-      if (!r.ok || !j.ok) throw new Error('send');
-      form.reset();
-      pendingSystem = null;
-      st.textContent = u('sent');
-      st.classList.add('ok');
-    } catch (e) {
-      st.textContent = u('send_err');
-      st.classList.add('err');
-    } finally {
-      btn.disabled = false;
-      updateWa();
-    }
   }
 
   // lightbox
@@ -1218,9 +1373,10 @@
     lb.querySelector('.lb-cap').textContent = (cap ? cap + ' · ' : '') + (lbI + 1) + ' / ' + lbList.length;
     lb.querySelector('.lb-pv').hidden = lb.querySelector('.lb-nx').hidden = lbList.length < 2;
     let ask = lb.querySelector('.lb-ask');
-    if (!ask) { ask = document.createElement('button'); ask.type = 'button'; ask.className = 'btn btn-accent lb-ask'; lb.appendChild(ask); }
-    ask.hidden = !lbWork;
-    ask.innerHTML = icon('chat') + u('ask_price');
+    if (!ask) { ask = document.createElement('a'); ask.className = 'btn btn-wa lb-ask'; ask.target = '_blank'; ask.rel = 'noopener'; lb.appendChild(ask); }
+    ask.hidden = !lbWork || !waLink();
+    if (lbWork) ask.href = askWa('w', lbWork.id, t(lbWork.title));
+    ask.innerHTML = waIcon + u('ask_price');
   }
   function closeLB() { $('#lb').hidden = true; lock(false, 'lb'); }
   function stepLB(d) { lbI = (lbI + d + lbList.length) % lbList.length; showLB(); }
@@ -1262,7 +1418,7 @@
     if (keep) setPanel(keep);
     if (current) { const slug = current.slug, top = $('#sp').scrollTop; openSystem(slug, true); $('#sp').scrollTop = top; }
     else if (galOpen) { const top = $('#sp').scrollTop; openGallery(true); $('#sp').scrollTop = top; }
-    if (chatOpen) drawChat();
+    else if (prodCur) { const top = $('#sp').scrollTop; openProduct(prodCur.id, true); $('#sp').scrollTop = top; }
   }
 
   /* ---------- events (delegated, bound once) ---------- */
@@ -1270,15 +1426,13 @@
     const lb = e.target.closest('[data-lang]');
     if (lb) { setLang(lb.dataset.lang); return; }
     if (e.target.closest('.help-btn')) { setHelp(!$('#help').classList.contains('open')); return; }
-    if (e.target.closest('[data-chat]')) { openChat(); return; }
-    if (e.target.closest('[data-chat-close]')) { closeChat(); return; }
-    if (e.target.closest('[data-chat-noref]')) { chatRef = null; const c = $('#chat-ref'); if (c) c.innerHTML = ''; return; }
-    if (e.target.closest('.lb-ask')) { const w = lbWork, img = lbList[lbI]; closeLB(); if (w) openChat({ type: 'work', id: w.id, img }); return; }
-    const ask = e.target.closest('[data-ask]');
-    if (ask) { openChat({ type: ask.dataset.ask, id: ask.dataset.id }); return; }
     if (e.target.closest('[data-review]')) { openReview(); return; }
     if (e.target.closest('[data-rv-close]') || e.target.id === 'rvm') { closeReview(); return; }
     const sp = e.target.closest('[data-star]');
+    const rvd = e.target.closest('[data-rvf-del]');
+    if (rvd) { rvPhotos.splice(+rvd.dataset.rvfDel, 1); rvDraw(); return; }
+    const rvp = e.target.closest('[data-rvp]');
+    if (rvp) { const r = reviewsList().find((x) => x.id === rvp.dataset.rvp); if (r) openLB(r.photos, +rvp.dataset.k || 0, r.photos.map(() => r.name)); return; }
     if (sp) { const n = +sp.dataset.star; $('#rvm').dataset.rating = String(n); $$('[data-star]').forEach((b) => { const on = +b.dataset.star <= n; b.classList.toggle('on', on); b.setAttribute('aria-checked', String(+b.dataset.star === n)); }); return; }
     if ($('#help') && $('#help').classList.contains('open')) setHelp(false);
     const ls = e.target.closest('.lsel-btn');
@@ -1317,13 +1471,15 @@
     if (pt) { focusPart(pt.classList.contains('on') && !canHover() ? null : pt.dataset.p); return; }
 
     const consult = e.target.closest('[data-consult]');
-    if (consult) {
-      pendingSystem = consult.dataset.consult;
-      selectSystem(pendingSystem);
-      if (location.hash === '#quote') route(); else location.hash = 'quote';
-      setTimeout(() => $('#q-name') && $('#q-name').focus({ preventScroll: true }), 800);
-      return;
-    }
+    if (consult) { const sy = bySlug(consult.dataset.consult); qbStart({ cat: SYS_CAT[consult.dataset.consult] || 'custom', specs: sy ? t(sy.name) : '' }); return; }
+    const addq = e.target.closest('[data-addq]');
+    if (addq) { const x = byProd(addq.dataset.addq); if (x) qbStart({ cat: x.cat, model: x.model }); return; }
+    const qa = e.target.closest('[data-qb]');
+    if (qa) { qbAction(qa.dataset.qb, qa); return; }
+    const qfd = e.target.closest('[data-qf-del]');
+    if (qfd) { const d = qbReadItem(); d.files.splice(+qfd.dataset.qfDel, 1); qbRender(); return; }
+    const pfb = e.target.closest('[data-pf]');
+    if (pfb) { pf = pfb.dataset.pf; $$('[data-pf]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.pf === pf))); const g = $('#prod-grid'); if (g) { g.innerHTML = prodCards(); g.classList.remove('in', 'now'); void g.offsetWidth; g.classList.add('in'); } return; }
     const go = e.target.closest('.sp-tabs [data-go]');
     if (go) { const el = document.getElementById(go.dataset.go); if (el) el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }); return; }
     const z = e.target.closest('[data-zoom]');
@@ -1342,19 +1498,20 @@
   document.addEventListener('input', (e) => {
     if (e.target.classList.contains('sq')) { runSearch(e.target.closest('[data-search]')); return; }
     if (e.target.id === 'cfg-p' && current) { const st = CFG[current.slug]; st.touched = true; st.p = e.target.value / 100; drawCfg(current); }
-    if (e.target.closest('#qform')) updateWa();
   });
   document.addEventListener('focusin', (e) => { if (e.target.classList.contains('sq')) runSearch(e.target.closest('[data-search]')); });
-  document.addEventListener('change', (e) => { if (e.target.closest('#qform')) updateWa(); });
+  document.addEventListener('change', async (e) => {
+    if (e.target.id === 'qi-cat') { const d = qbReadItem(); d.model = (modelsFor(d.cat)[0] || {}).model || ''; qbRender('#qi-cat'); return; }
+    if (e.target.dataset && e.target.dataset.qi) { qbReadItem(); qbSave(); return; }
+    if (e.target.dataset && e.target.dataset.qc) { qbReadCust(); qbSave(); return; }
+    if (e.target.id === 'qb-file' && e.target.files[0]) { const d = qbReadItem(); const f = await qbUpload(e.target.files[0]); if (f) { d.files = [...(d.files || []), f].slice(0, 3); qbRender(); } return; }
+    if (e.target.id === 'rv-file' && e.target.files.length) { rvUpload([...e.target.files]); return; }
+  });
   document.addEventListener('submit', (e) => {
-    if (e.target.id === 'qform') { e.preventDefault(); submitQuote(e.target); }
-    if (e.target.id === 'chat-f') { e.preventDefault(); sendChat(); }
     if (e.target.id === 'rv-form') { e.preventDefault(); submitReview(); }
   });
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' && !e.shiftKey && e.target.id === 'chat-t' && !mobile()) { e.preventDefault(); sendChat(); return; }
     if (e.key === 'Escape' && $('#rvm') && !$('#rvm').hidden) { closeReview(); return; }
-    if (e.key === 'Escape' && chatOpen && $('#lb').hidden) { closeChat(); return; }
     if (e.key === 'Enter' && e.target.classList.contains('sq')) { const first = e.target.closest('[data-search]').querySelector('.sr'); if (first) { e.preventDefault(); first.click(); } return; }
     if (e.key === 'Enter' && e.target.matches('[data-zoom][role=button]')) e.target.click();
     if ($('#vm') && !$('#vm').hidden && e.key === 'Escape') { closeVideo(); return; }
@@ -1368,6 +1525,7 @@
       if (panel) setPanel(null);
       else if ($('#help') && $('#help').classList.contains('open')) setHelp(false);
       else if (galOpen) location.hash = 'projects';
+      else if (prodCur) location.hash = 'products';
       else if (current) location.hash = 'systems';
     }
   });
@@ -1412,6 +1570,7 @@
       if (slug && bySlug(slug)) openSystem(slug, true);
       else if (slug) closeSystem();
       else if (galOpen) openGallery(true);
+      else if (prodCur && byProd(prodCur.id)) openProduct(prodCur.id, true);
     });
     if (parent !== window) parent.postMessage({ type: 'preview-ready' }, location.origin);
   }
@@ -1419,6 +1578,5 @@
   setupLB();
   render();
   route(true);
-  if (chat) chatPoll();
-  document.addEventListener('visibilitychange', () => { if (!document.hidden && chat) chatPoll(); });
+
 })();
