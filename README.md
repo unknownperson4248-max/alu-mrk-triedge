@@ -21,6 +21,9 @@ hash are stored in Workers KV (binding `KV`).
   "On request" on the site.
 - **Why us & reviews**: the four "Why choose us" items, optional numbers and client reviews
   (sections are hidden when empty).
+- **Messages**: price questions sent from "Ask the price" / "Ask a question", each with the photo or system
+  it is about; reply from the panel and the visitor sees the answer on the website.
+- **Reviews**: reviews sent from the website wait for approval; published ones show with the average rating.
 - **Quote requests**: everything sent from the website form.
 - **Images & files**: upload photos (resized in the browser before upload) and PDFs.
 - **Password**: change the admin password.

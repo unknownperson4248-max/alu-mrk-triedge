@@ -9,14 +9,15 @@
 
   let site = null, media = [], builtin = [], presets = {}, defaults = null;
   let pvMode = innerWidth < 700 ? 'mob' : 'desk';
+  let chats = null, chatCur = null, chatUnread = 0, pendRev = null, pendCount = 0;
   let dirty = false, tab = 'works', editIdx = null, editWork = null, quotes = null, quoteCount = 0, previewReady = false;
 
-  const TABS = [['works', 'Latest work'], ['inbox', 'Quote requests'], ['hero', 'Hero'], ['company', 'Company & About'], ['systems', 'Systems'], ['content', 'Key points, numbers & reviews'], ['design', 'Colours'], ['media', 'Images & files'], ['account', 'Password']];
+  const TABS = [['works', 'Latest work'], ['messages', 'Messages'], ['inbox', 'Quote requests'], ['reviews', 'Reviews'], ['hero', 'Hero'], ['company', 'Company & About'], ['systems', 'Systems'], ['content', 'Key points & numbers'], ['design', 'Colours'], ['media', 'Images & files'], ['account', 'Password']];
   // the ⋮ menu: every part of the website under its own heading
   const MENU = [
     ['Your work', [['works', 'Latest work', 'Add photos of finished jobs'], ['cats', 'Gallery categories', 'Sliding, Windows, Doors…']]],
-    ['Customers', [['inbox', 'Quote requests', 'Messages from the website form'], ['content', 'Key points, numbers & reviews', 'About points, counters, client reviews']]],
-    ['Website pages', [['hero', 'Hero', 'Top photo or video and headline'], ['company', 'Company & About', 'Phone, address, About text, owner profile'], ['systems', 'Systems', 'Your nine product categories']]],
+    ['Customers', [['messages', 'Messages', 'Price questions and replies'], ['inbox', 'Quote requests', 'Requests from the quote form'], ['reviews', 'Reviews', 'Approve and manage customer reviews']]],
+    ['Website pages', [['content', 'Key points & numbers', 'About points and counters'], ['hero', 'Hero', 'Top photo or video and headline'], ['company', 'Company & About', 'Phone, address, About text, owner profile'], ['systems', 'Systems', 'Your nine product categories']]],
     ['Look & files', [['design', 'Colours', 'Website colours'], ['media', 'Images & files', 'All uploaded photos, videos and PDFs']]],
     ['Account', [['account', 'Password', 'Change the admin password']]],
   ];
@@ -31,6 +32,7 @@
     app: () => T(),
     hero: () => ({ img: 'img/house-windows.jpg', caption: T() }),
     cat: () => ({ id: 'c' + Date.now().toString(36), name: T() }),
+    review: () => ({ id: 'r' + Date.now().toString(36), name: '', place: '', rating: 5, text: '', ts: Date.now() }),
     stat: () => ({ value: '', label: T() }),
     value: () => ({ icon: 'sparkle', title: T(), body: T() }),
     testimonial: () => ({ name: '', role: T(), quote: T() }),
@@ -169,6 +171,38 @@
         <label class="check"><input type="checkbox" data-act="toggle-new" ${isNew(w) ? 'checked' : ''}>Show the NEW label (${NEW_DAYS} days from today)</label></div>
       <div class="card"><h2>Delete</h2><div><button type="button" class="b b-danger" data-act="del-work" data-i="${i}">Delete this work</button></div></div>`;
   }
+  /* ---------- messages ---------- */
+  const ago = (ts) => { const m = Math.round((Date.now() - ts) / 60000); return m < 1 ? 'now' : m < 60 ? m + ' min' : m < 1440 ? Math.round(m / 60) + ' h' : new Date(ts).toLocaleDateString(); };
+  const waNum = (ph) => { let d = String(ph || '').replace(/\D/g, '').replace(/^00/, ''); if (d.length === 8) d = '357' + d; return d; };
+  const stars = (n) => '★★★★★'.slice(0, n) + '☆☆☆☆☆'.slice(0, 5 - n);
+  function threadMsgs(th) {
+    return th.msgs.map((m) => `<div class="tmsg ${m.from === 'admin' ? 'me' : 'them'}">${m.ref ? `<div class="tref">${m.ref.img ? `<img src="${esc(src(m.ref.img))}" alt="">` : ''}<span><small>Asked about this ${m.ref.type === 'system' ? 'system' : 'work'}</small><b>${esc(m.ref.title)}</b></span></div>` : ''}<p>${esc(m.text)}</p><time>${esc(new Date(m.ts).toLocaleString())}</time></div>`).join('');
+  }
+  function vMessages() {
+    if (chatCur) {
+      const th = chatCur;
+      return `<div class="crumb"><button type="button" class="b b-sm" data-act="back-chat">← All messages</button><h2>${esc(th.name)} <small class="muted">${esc(th.phone)}</small></h2></div>
+        <div class="card"><div class="thread" id="thread-msgs">${threadMsgs(th)}</div>
+          <form id="reply-form" class="list"><textarea id="reply-t" rows="3" maxlength="1000" placeholder="Write your reply. The customer sees it on the website."></textarea>
+            <div class="pick"><button type="submit" class="b b-pri">Send reply</button><a class="b b-sm" href="tel:${esc(th.phone)}">Call</a><a class="b b-sm" href="https://wa.me/${esc(waNum(th.phone))}" target="_blank" rel="noopener">WhatsApp</a><span style="flex:1"></span><button type="button" class="b b-sm b-danger" data-act="del-chat" data-id="${esc(th.id)}">Delete</button></div></form>
+          <p class="hint" style="margin:0">The customer sees your reply when they open the website again. For a fast answer, call or use WhatsApp as well.</p></div>`;
+    }
+    if (!chats) { loadChats(); return '<div class="card"><p class="muted">Loading…</p></div>'; }
+    return `<div class="card"><div class="item-head"><h2 class="grow">Messages (${chats.length})</h2><button type="button" class="b b-sm" data-act="reload-chats">Refresh</button></div>
+      <p class="hint">Questions sent from “Ask the price” and “Ask a question” on the website. New ones are marked.</p>
+      <div class="list">${chats.map((c) => `<button type="button" class="chat-row${c.ua ? ' unread' : ''}" data-act="open-chat" data-id="${esc(c.id)}"><span class="av">${esc((c.name || '?').trim().charAt(0).toUpperCase())}</span><span class="grow"><b>${esc(c.name)}</b><small>${esc(c.phone)}</small><em>${c.from === 'admin' ? 'You: ' : ''}${esc(c.last)}</em></span><span class="meta"><time>${esc(ago(c.updated))}</time>${c.ua ? `<span class="badge">${c.ua}</span>` : ''}</span></button>`).join('') || '<p class="empty">No messages yet.</p>'}</div></div>`;
+  }
+  /* ---------- reviews ---------- */
+  function vReviews() {
+    if (!pendRev) loadReviews();
+    const P = pendRev || [], L = site.reviews;
+    return `<div class="card"><div class="item-head"><h2 class="grow">Waiting for approval (${P.length})</h2><button type="button" class="b b-sm" data-act="reload-rev">Refresh</button></div>
+        <p class="hint">Reviews sent from the website. Nothing is shown publicly until you approve it. Approving also saves your other unsaved changes.</p>
+        <div class="list">${P.map((r) => `<div class="q"><div class="q-top"><b>${esc(r.name)}</b><span class="rstars">${stars(+r.rating || 5)}</span><time>${esc(new Date(r.ts).toLocaleDateString())}</time></div>${r.place ? `<div class="muted">${esc(r.place)}</div>` : ''}<p style="margin:4px 0;white-space:pre-line">${esc(r.text)}</p><div class="acts"><button type="button" class="b b-sm b-pri" data-act="rev-ok" data-id="${esc(r.id)}">Approve & publish</button><button type="button" class="b b-sm b-danger" data-act="rev-no" data-id="${esc(r.id)}">Delete</button></div></div>`).join('') || `<p class="empty">${pendRev ? 'No reviews waiting.' : 'Loading…'}</p>`}</div></div>
+      <div class="card"><h2>Published reviews (${L.length})</h2><p class="hint">Shown on the website with the average rating. Only add reviews from real customers.</p>
+        <div class="list">${L.map((r, i) => `<div class="item">${itemHead('reviews', i, L.length, (r.name || 'Review ' + (i + 1)) + '  ' + stars(+r.rating || 5))}<div class="row">${txt(`reviews.${i}.name`, 'Customer name')}${txt(`reviews.${i}.place`, 'Area / city (optional)')}${sel(`reviews.${i}.rating`, 'Rating', [5, 4, 3, 2, 1].map((n) => [n, stars(n)]))}</div>${area(`reviews.${i}.text`, 'Review')}</div>`).join('') || '<p class="empty">No published reviews yet.</p>'}</div>
+        ${addBtn('reviews', 'review', 'Add a review yourself')}</div>`;
+  }
   function vSystems() {
     if (editIdx != null && site.systems[editIdx]) return vSystemEdit(editIdx);
     const L = site.systems;
@@ -212,9 +246,7 @@
     return `<div class="card"><h2>About: key points</h2><p class="hint">The short points with gold icons next to the About text.</p>
         <div class="list">${v.map((x, i) => `<div class="item">${itemHead('values', i, v.length, x.title?.en || 'Item ' + (i + 1))}<div class="row">${sel(`values.${i}.icon`, 'Icon', ICONS.map((k) => [k, k]))}</div>${pair(`values.${i}.title`, 'Title')}${pair(`values.${i}.body`, 'Text', true)}</div>`).join('')}</div>${addBtn('values', 'value', 'Add item')}</div>
       <div class="card"><h2>Numbers (optional)</h2><p class="hint">Shown under the About text and counted up when they scroll into view, e.g. “15+” Years of experience. Use real numbers only. Hidden when empty.</p>
-        <div class="list">${st.map((x, i) => `<div class="item">${itemHead('stats', i, st.length, x.value || 'Number ' + (i + 1))}<div class="row">${txt(`stats.${i}.value`, 'Number', 'text', '15+')}${sel(`stats.${i}.icon`, 'Icon', [['', 'none'], ...ICONS.map((k) => [k, k])])}</div>${pair(`stats.${i}.label`, 'Label')}</div>`).join('') || '<p class="empty">No numbers. The section is hidden.</p>'}</div>${addBtn('stats', 'stat', 'Add number')}</div>
-      <div class="card"><h2>Client reviews (optional)</h2><p class="hint">Only add real reviews with the client’s permission. Hidden when empty.</p>
-        <div class="list">${ts.map((x, i) => `<div class="item">${itemHead('testimonials', i, ts.length, x.name || 'Review ' + (i + 1))}${txt(`testimonials.${i}.name`, 'Client name')}${pair(`testimonials.${i}.role`, 'Role or place (optional)')}${pair(`testimonials.${i}.quote`, 'Review', true)}</div>`).join('') || '<p class="empty">No reviews. The section is hidden.</p>'}</div>${addBtn('testimonials', 'testimonial', 'Add review')}</div>`;
+        <div class="list">${st.map((x, i) => `<div class="item">${itemHead('stats', i, st.length, x.value || 'Number ' + (i + 1))}<div class="row">${txt(`stats.${i}.value`, 'Number', 'text', '15+')}${sel(`stats.${i}.icon`, 'Icon', [['', 'none'], ...ICONS.map((k) => [k, k])])}</div>${pair(`stats.${i}.label`, 'Label')}</div>`).join('') || '<p class="empty">No numbers. The section is hidden.</p>'}</div>${addBtn('stats', 'stat', 'Add number')}</div>`;
   }
   function vInbox() {
     if (!quotes) { loadQuotes(); return '<div class="card"><p class="muted">Loading…</p></div>'; }
@@ -289,7 +321,7 @@
   function renderMenu() {
     const m = $('#amenu');
     if (!m) return;
-    m.innerHTML = MENU.map(([head, items]) => `<div class="amenu-g"><p>${esc(head)}</p>${items.map(([k, l, d]) => `<button type="button" data-act="goto" data-tab="${k}" class="${(k === 'cats' ? 'works' : k) === tab && k !== 'cats' ? 'on' : ''}"><b>${esc(l)}${k === 'inbox' && quoteCount ? ` <span class="badge">${quoteCount}</span>` : ''}</b><small>${esc(d)}</small></button>`).join('')}</div>`).join('')
+    m.innerHTML = MENU.map(([head, items]) => `<div class="amenu-g"><p>${esc(head)}</p>${items.map(([k, l, d]) => `<button type="button" data-act="goto" data-tab="${k}" class="${(k === 'cats' ? 'works' : k) === tab && k !== 'cats' ? 'on' : ''}"><b>${esc(l)}${k === 'inbox' && quoteCount ? ` <span class="badge">${quoteCount}</span>` : ''}${k === 'messages' && chatUnread ? ` <span class="badge">${chatUnread}</span>` : ''}${k === 'reviews' && pendCount ? ` <span class="badge">${pendCount}</span>` : ''}</b><small>${esc(d)}</small></button>`).join('')}</div>`).join('')
       + `<div class="amenu-g"><p>More</p><a href="/" target="_blank" rel="noopener"><b>View website</b><small>Opens in a new tab</small></a><button type="button" data-act="logout"><b>Sign out</b><small></small></button></div>`;
   }
   function setMenu(open) {
@@ -304,23 +336,28 @@
     tab = toCats ? 'works' : k;
     editIdx = null;
     editWork = null;
+    chatCur = null;
     renderTabs();
     renderEditor();
     scrollTo(0, 0);
     if (toCats) requestAnimationFrame(() => { const c = $('#cats-card'); if (c) c.scrollIntoView({ block: 'start' }); });
     if (tab === 'inbox') loadQuotes();
-    previewGo(tab === 'systems' ? 'systems' : tab === 'works' ? 'projects' : tab === 'content' || tab === 'company' ? 'about' : 'top');
+    if (tab === 'messages') loadChats();
+    if (tab === 'reviews') loadReviews();
+    previewGo(tab === 'reviews' ? 'reviews' : tab === 'systems' ? 'systems' : tab === 'works' ? 'projects' : tab === 'content' || tab === 'company' ? 'about' : 'top');
     const on = $('#tabs .on');
     if (on && on.scrollIntoView) on.scrollIntoView({ block: 'nearest', inline: 'center' });
   }
   function renderTabs() {
-    $('#tabs').innerHTML = TABS.map(([k, l]) => `<button type="button" data-act="tab" data-tab="${k}" class="${k === tab ? 'on' : ''}">${esc(l)}${k === 'inbox' && quoteCount ? `<span class="badge">${quoteCount}</span>` : ''}</button>`).join('');
+    $('#tabs').innerHTML = TABS.map(([k, l]) => `<button type="button" data-act="tab" data-tab="${k}" class="${k === tab ? 'on' : ''}">${esc(l)}${k === 'inbox' && quoteCount ? `<span class="badge">${quoteCount}</span>` : ''}${k === 'messages' && chatUnread ? `<span class="badge">${chatUnread}</span>` : ''}${k === 'reviews' && pendCount ? `<span class="badge">${pendCount}</span>` : ''}</button>`).join('');
+    document.title = (chatUnread ? '(' + chatUnread + ') ' : '') + 'Admin · Alu MRK TriEdge';
   }
   function renderEditor() {
-    const views = { design: vDesign, company: vCompany, hero: vHero, systems: vSystems, works: vWorks, content: vContent, inbox: vInbox, media: vMedia, account: vAccount };
+    const views = { design: vDesign, company: vCompany, hero: vHero, systems: vSystems, works: vWorks, messages: vMessages, reviews: vReviews, content: vContent, inbox: vInbox, media: vMedia, account: vAccount };
     const y = scrollY;
     $('#editor').innerHTML = views[tab]();
-    $('#main').classList.toggle('no-prev', tab === 'inbox' || tab === 'media' || tab === 'account');
+    $('#main').classList.toggle('no-prev', tab === 'inbox' || tab === 'media' || tab === 'account' || tab === 'messages');
+    if (tab === 'messages' && chatCur) { const t = $('#thread-msgs'); if (t) t.scrollTop = t.scrollHeight; }
     requestAnimationFrame(fitPreview);
     scrollTo(0, y);
   }
@@ -335,6 +372,41 @@
       if (tab === 'inbox') renderEditor();
     } catch (e) { toast(e.message, 'err'); }
   }
+  async function loadChats(quiet) {
+    try {
+      const j = await api('/api/admin/chats');
+      const before = chatUnread;
+      chats = j.items || [];
+      chatUnread = chats.reduce((a, c) => a + (c.ua || 0), 0);
+      pendCount = j.pendingReviews || 0;
+      renderTabs();
+      if (tab === 'messages' && !chatCur) renderEditor();
+      if (quiet && chatUnread > before) toast('New message from a customer.', 'ok');
+      if (chatCur) {
+        const row = chats.find((c) => c.id === chatCur.id);
+        if (row && row.n > chatCur.msgs.length) openChat(chatCur.id, true);
+      }
+    } catch (e) { if (!quiet) toast(e.message, 'err'); }
+  }
+  async function openChat(id, keepText) {
+    try {
+      const j = await api('/api/admin/chats/' + id);
+      const typed = keepText && $('#reply-t') ? $('#reply-t').value : '';
+      chatCur = j.thread;
+      if (chats) { const row = chats.find((c) => c.id === id); if (row) row.ua = 0; chatUnread = chats.reduce((a, c) => a + (c.ua || 0), 0); }
+      renderTabs();
+      if (tab === 'messages') { renderEditor(); if (typed && $('#reply-t')) $('#reply-t').value = typed; }
+    } catch (e) { toast(e.message, 'err'); }
+  }
+  async function loadReviews() {
+    try {
+      const j = await api('/api/admin/reviews');
+      pendRev = j.items || [];
+      pendCount = pendRev.length;
+      renderTabs();
+      if (tab === 'reviews') renderEditor();
+    } catch (e) { toast(e.message, 'err'); }
+  }
   async function save() {
     const b = $('#save');
     b.disabled = true;
@@ -346,8 +418,10 @@
       s.textContent = 'All changes saved';
       s.classList.remove('dirty');
       toast('Saved. The live website is updated.', 'ok');
+      return true;
     } catch (e) {
       toast('Not saved: ' + e.message, 'err');
+      return false;
     } finally {
       b.disabled = false;
       b.textContent = 'Save';
@@ -457,6 +531,34 @@
         goTab(b.dataset.tab);
         break;
       case 'menu': setMenu($('#amenu').hidden); break;
+      case 'open-chat': await openChat(b.dataset.id); scrollTo(0, 0); break;
+      case 'back-chat': chatCur = null; renderEditor(); loadChats(true); break;
+      case 'reload-chats': chats = null; renderEditor(); break;
+      case 'del-chat': {
+        if (!b.dataset.armed) { b.dataset.armed = '1'; b.textContent = 'Sure?'; break; }
+        try { await api('/api/admin/chats/' + b.dataset.id, { method: 'DELETE' }); chatCur = null; chats = null; renderEditor(); toast('Conversation deleted.', 'ok'); } catch (err) { toast(err.message, 'err'); }
+        break;
+      }
+      case 'reload-rev': pendRev = null; renderEditor(); break;
+      case 'rev-ok': {
+        const r = (pendRev || []).find((x) => x.id === b.dataset.id);
+        if (!r) break;
+        b.disabled = true;
+        site.reviews.unshift({ id: r.id, name: r.name, place: r.place || '', rating: +r.rating || 5, text: r.text, ts: r.ts });
+        if (await save()) {
+          try { await api('/api/admin/reviews/' + r.id, { method: 'DELETE' }); } catch (err) {}
+          pendRev = pendRev.filter((x) => x.id !== r.id);
+          pendCount = pendRev.length;
+          toast('Review published on the website.', 'ok');
+        } else site.reviews.shift();
+        renderTabs(); renderEditor(); schedulePreview();
+        break;
+      }
+      case 'rev-no': {
+        if (!b.dataset.armed) { b.dataset.armed = '1'; b.textContent = 'Sure?'; break; }
+        try { await api('/api/admin/reviews/' + b.dataset.id, { method: 'DELETE' }); pendRev = (pendRev || []).filter((x) => x.id !== b.dataset.id); pendCount = pendRev.length; renderTabs(); renderEditor(); } catch (err) { toast(err.message, 'err'); }
+        break;
+      }
       case 'add-work': {
         const files = await chooseFiles('image/*', true);
         if (!files.length) break;
@@ -561,6 +663,18 @@
       catch (err) { msg.textContent = err.message === 'Signed out' ? 'Wrong password' : err.message; }
       finally { btn.disabled = false; }
     }
+    if (e.target.id === 'reply-form') {
+      e.preventDefault();
+      const ta = $('#reply-t'), text = ta.value.trim(), btn = e.target.querySelector('button[type=submit]');
+      if (!text || !chatCur) return;
+      btn.disabled = true;
+      try {
+        const j = await api('/api/admin/chats/' + chatCur.id, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ text }) });
+        chatCur = j.thread;
+        renderEditor();
+        toast('Reply sent.', 'ok');
+      } catch (err) { toast(err.message, 'err'); btn.disabled = false; }
+    }
     if (e.target.id === 'pw-form') {
       e.preventDefault();
       const cur = $('#pw-cur').value, nw = $('#pw-new').value, rep = $('#pw-rep').value;
@@ -588,9 +702,14 @@
     if (!site.founder) site.founder = clone(defaults.founder);
     if (!Array.isArray(site.works)) site.works = clone(defaults.works || []);
     if (!Array.isArray(site.galleryCats)) site.galleryCats = clone(defaults.galleryCats || []);
+    if (!Array.isArray(site.reviews)) site.reviews = [];
     if (!site.heroBadge) site.heroBadge = { en: '', el: '' };
     shell();
     loadQuotes();
+    loadChats(true);
+    clearInterval(pollT);
+    pollT = setInterval(() => { if (!document.hidden && site) loadChats(true); }, 20000);
   }
+  let pollT = null;
   boot();
 })();

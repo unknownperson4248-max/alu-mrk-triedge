@@ -28,6 +28,14 @@
       systems: 'Systems', engineering: 'Engineering', about: 'About', contact: 'Contact', quote: 'Request a quote', menu: 'Menu', search: 'Search', close: 'Close',
       main_menu: 'Main menu', m_systems: 'Aluminium Systems', m_engineering: 'Engineering & Quality', m_about: 'About Us', m_contact: 'Contact', view_all: 'View all systems',
       call: 'Call', leadership: 'Leadership',
+      help_chat: 'Ask a question', ask_price: 'Ask the price', chat_title: 'Messages', chat_sub: 'Ask about prices or anything else. We reply here.',
+      chat_hello: 'Hello! Send us your question and we will reply here. Leave your phone number so we can also reach you.',
+      chat_name: 'Your name', chat_phone: 'Phone or WhatsApp', chat_ph: 'Write your message…', chat_about: 'Asking about', chat_send: 'Send',
+      chat_price_q: 'Hello, what is the price for this?', chat_need_contact: 'Please add your name and phone number.', chat_busy: 'We cannot take more messages right now. Please message us on WhatsApp.',
+      chat_remove: 'Remove', chat_reply_note: 'We reply here. Come back to this page to see our answer.',
+      reviews: 'Reviews', rev_title: 'What our clients say', rev_title_empty: 'Worked with us?', rev_empty: 'Tell others about your experience. Your review appears here after we check it.',
+      rev_write: 'Write a review', rev_count: '{n} reviews', rev_one: '1 review', rev_form_title: 'Your review', rev_rating: 'Your rating', rev_text: 'Your experience', rev_place: 'Area / city (optional)',
+      rev_send: 'Send review', rev_thanks: 'Thank you! Your review will appear on the website after we check it.', rev_need: 'Please choose a rating, add your name and write a few words.',
       help: 'Need help?', help_quote: 'Request a quote', help_email: 'Email us', help_call: 'Call us', close_help: 'Close',
       gal_eyebrow: 'Latest work', gal_title: 'Recently completed projects', gal_view: 'View full gallery', gallery: 'Gallery', all: 'All', new_label: 'New',
       gal_page_title: 'Our work', gal_page_sub: 'New projects are added here as we complete them.', back_home: 'Back to website', no_work: 'No projects in this category yet.', photos: 'photos', home: 'Home', projects: 'Projects', m_projects: 'Gallery', get_quote: 'Get a quote',
@@ -61,6 +69,14 @@
       systems: 'Συστήματα', engineering: 'Τεχνολογία', about: 'Εταιρεία', contact: 'Επικοινωνία', quote: 'Ζητήστε προσφορά', menu: 'Μενού', search: 'Αναζήτηση', close: 'Κλείσιμο',
       main_menu: 'Κύριο μενού', m_systems: 'Συστήματα αλουμινίου', m_engineering: 'Τεχνολογία & ποιότητα', m_about: 'Η εταιρεία', m_contact: 'Επικοινωνία', view_all: 'Όλα τα συστήματα',
       call: 'Κλήση', leadership: 'Διοίκηση',
+      help_chat: 'Κάντε μια ερώτηση', ask_price: 'Ρωτήστε τιμή', chat_title: 'Μηνύματα', chat_sub: 'Ρωτήστε για τιμές ή οτιδήποτε άλλο. Απαντάμε εδώ.',
+      chat_hello: 'Γεια σας! Στείλτε μας την ερώτησή σας και θα σας απαντήσουμε εδώ. Αφήστε το τηλέφωνό σας για να επικοινωνήσουμε μαζί σας.',
+      chat_name: 'Το όνομά σας', chat_phone: 'Τηλέφωνο ή WhatsApp', chat_ph: 'Γράψτε το μήνυμά σας…', chat_about: 'Ερώτηση για', chat_send: 'Αποστολή',
+      chat_price_q: 'Γεια σας, ποια είναι η τιμή για αυτό;', chat_need_contact: 'Συμπληρώστε όνομα και τηλέφωνο.', chat_busy: 'Δεν μπορούμε να δεχτούμε άλλα μηνύματα αυτή τη στιγμή. Στείλτε μας στο WhatsApp.',
+      chat_remove: 'Αφαίρεση', chat_reply_note: 'Απαντάμε εδώ. Επιστρέψτε σε αυτή τη σελίδα για να δείτε την απάντησή μας.',
+      reviews: 'Κριτικές', rev_title: 'Τι λένε οι πελάτες μας', rev_title_empty: 'Συνεργαστήκατε μαζί μας;', rev_empty: 'Μοιραστείτε την εμπειρία σας. Η κριτική σας εμφανίζεται εδώ μετά από έλεγχο.',
+      rev_write: 'Γράψτε κριτική', rev_count: '{n} κριτικές', rev_one: '1 κριτική', rev_form_title: 'Η κριτική σας', rev_rating: 'Η βαθμολογία σας', rev_text: 'Η εμπειρία σας', rev_place: 'Περιοχή / πόλη (προαιρετικά)',
+      rev_send: 'Αποστολή κριτικής', rev_thanks: 'Ευχαριστούμε! Η κριτική σας θα εμφανιστεί στην ιστοσελίδα μετά από έλεγχο.', rev_need: 'Επιλέξτε βαθμολογία, γράψτε το όνομά σας και λίγα λόγια.',
       help: 'Χρειάζεστε βοήθεια;', help_quote: 'Ζητήστε προσφορά', help_email: 'Στείλτε email', help_call: 'Καλέστε μας', close_help: 'Κλείσιμο',
       gal_eyebrow: 'Πρόσφατα έργα', gal_title: 'Έργα που ολοκληρώσαμε πρόσφατα', gal_view: 'Δείτε όλα τα έργα', gallery: 'Έργα', all: 'Όλα', new_label: 'Νέο',
       gal_page_title: 'Τα έργα μας', gal_page_sub: 'Εδώ προσθέτουμε τα νέα έργα μόλις ολοκληρωθούν.', back_home: 'Πίσω στην ιστοσελίδα', no_work: 'Δεν υπάρχουν ακόμη έργα σε αυτή την κατηγορία.', photos: 'φωτογραφίες', home: 'Αρχική', projects: 'Έργα', m_projects: 'Έργα', get_quote: 'Ζητήστε προσφορά',
@@ -131,6 +147,9 @@
     right: '<path d="M9 6l6 6-6 6"/>',
     search: '<circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/>',
     play: '<path d="M9 6.5v11l9-5.5z"/>',
+    chat: '<path d="M4 5h16v11H10l-5 4v-4H4z"/><path d="M8 9h8M8 12h5"/>',
+    star: '<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/>',
+    send: '<path d="M4 12l16-8-6 16-3-7z"/><path d="M11 13l9-9"/>',
     headset: '<path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="2.5" y="13" width="4" height="6.5" rx="1.6"/><rect x="17.5" y="13" width="4" height="6.5" rx="1.6"/><path d="M19.5 19.5a4 4 0 0 1-4 3H13"/>',
     images: '<rect x="3" y="6" width="15" height="13" rx="1.5"/><path d="M7 3h12a2 2 0 0 1 2 2v10M3 16l4.5-4.5 3.5 3.5 2.5-2.5 4.5 4.5"/>',
     file: '<path d="M14 3H6v18h12V7z"/><path d="M14 3v4h4M9 12h6M9 16h6"/>',
@@ -345,11 +364,193 @@
   }
 
   function band() {
-    const list = (S.testimonials || []).filter((x) => t(x.quote));
-    return `<section class="band"><div class="wrap band-grid${list.length ? ' two' : ''}">
-      ${list.length ? `<div class="tst" id="tst"><span class="tst-q" aria-hidden="true">“</span><div class="tst-slides">${list.map((x, i) => `<blockquote class="${i ? '' : 'on'}"><p>${esc(t(x.quote))}</p><cite>— ${esc(x.name)}${t(x.role) ? ', ' + esc(t(x.role)) : ''}</cite></blockquote>`).join('')}</div>${list.length > 1 ? `<div class="tst-dots">${list.map((x, i) => `<button type="button" data-tst="${i}" class="${i ? '' : 'on'}" aria-label="${i + 1}"></button>`).join('')}</div>` : ''}</div>` : ''}
+    return `<section class="band"><div class="wrap band-grid">
       <div class="band-cta rv"><span class="band-ic">${icon('handshake')}</span><div><h3>${u('band_title')}</h3><p>${u('band_body')}</p></div><a class="btn btn-accent" href="#quote">${u('contact_us')}${icon('arrow')}</a></div>
     </div></section>`;
+  }
+
+  /* ---------- reviews ---------- */
+  const reviewsList = () => (S.reviews || []).filter((r) => r && String(r.text || '').trim() && String(r.name || '').trim());
+  const STAR = 'M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z';
+  const stars = (n) => `<span class="stars" role="img" aria-label="${n} / 5">${[1, 2, 3, 4, 5].map((i) => `<svg viewBox="0 0 24 24" class="${i <= n ? 'on' : ''}" aria-hidden="true"><path d="${STAR}"/></svg>`).join('')}</span>`;
+  const revDate = (r) => (r.ts ? new Date(r.ts).toLocaleDateString(lang === 'el' ? 'el-GR' : 'en-GB', { month: 'short', year: 'numeric' }) : '');
+  function reviews() {
+    const L = reviewsList();
+    const avg = L.length ? L.reduce((a, r) => a + Math.min(5, Math.max(1, +r.rating || 5)), 0) / L.length : 0;
+    return `<section class="reviews" id="reviews"><div class="wrap">
+      <div class="rev-head rv"><div><p class="eyebrow">${u('reviews')}</p><h2>${L.length ? u('rev_title') : u('rev_title_empty')}</h2>
+        ${L.length ? `<p class="rev-avg">${stars(Math.round(avg))}<b>${avg.toFixed(1)}</b><span>${L.length === 1 ? u('rev_one') : u('rev_count', { n: L.length })}</span></p>` : `<p class="rev-sub">${u('rev_empty')}</p>`}</div>
+        <button type="button" class="btn btn-ghost" data-review>${icon('star')}${u('rev_write')}</button></div>
+      ${L.length ? `<div class="rev-grid rv-kids">${L.slice(0, 6).map((r, i) => `<blockquote class="rev" style="--i:${i}">${stars(Math.min(5, Math.max(1, +r.rating || 5)))}<p>${esc(r.text)}</p><cite><b>${esc(r.name)}</b>${esc([r.place, revDate(r)].filter(Boolean).join(' · '))}</cite></blockquote>`).join('')}</div>` : ''}
+    </div></section>`;
+  }
+  function openReview() {
+    let m = $('#rvm');
+    if (!m) { m = document.createElement('div'); m.id = 'rvm'; m.className = 'rvm'; m.setAttribute('role', 'dialog'); m.setAttribute('aria-modal', 'true'); document.body.appendChild(m); }
+    m.setAttribute('aria-label', u('rev_form_title'));
+    m.innerHTML = `<form class="rvm-card" id="rv-form" novalidate>
+      <button type="button" class="rvm-x" data-rv-close aria-label="${u('close')}">&times;</button>
+      <h3>${u('rev_form_title')}</h3>
+      <div class="f"><span class="lbl">${u('rev_rating')}</span><div class="star-pick" role="radiogroup" aria-label="${u('rev_rating')}">${[1, 2, 3, 4, 5].map((i) => `<button type="button" role="radio" aria-checked="false" data-star="${i}" aria-label="${i} / 5"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="${STAR}"/></svg></button>`).join('')}</div></div>
+      <div class="q-row"><div class="f"><label for="rv-name">${u('name')} *</label><input id="rv-name" autocomplete="name" maxlength="60" required></div><div class="f"><label for="rv-place">${u('rev_place')}</label><input id="rv-place" maxlength="60"></div></div>
+      <div class="f"><label for="rv-text">${u('rev_text')} *</label><textarea id="rv-text" maxlength="800" required></textarea></div>
+      <div class="hp" aria-hidden="true"><input id="rv-web" tabindex="-1" autocomplete="off"></div>
+      <div class="q-actions"><button type="submit" class="btn btn-accent" id="rv-send">${u('rev_send')}${icon('arrow')}</button></div>
+      <p class="q-status" id="rv-status" role="status" aria-live="polite"></p>
+    </form>`;
+    m.hidden = false;
+    m.dataset.rating = '0';
+    lock(true, 'rvm');
+    setTimeout(() => $('#rv-name') && $('#rv-name').focus({ preventScroll: true }), 50);
+  }
+  function closeReview() { const m = $('#rvm'); if (m) { m.hidden = true; m.innerHTML = ''; } lock(false, 'rvm'); }
+  async function submitReview() {
+    const m = $('#rvm'), st = $('#rv-status'), btn = $('#rv-send');
+    const d = { rating: +m.dataset.rating, name: $('#rv-name').value.trim(), place: $('#rv-place').value.trim(), text: $('#rv-text').value.trim(), website: $('#rv-web').value, lang };
+    st.className = 'q-status';
+    if (!d.rating || !d.name || d.text.length < 10) { st.textContent = u('rev_need'); st.classList.add('err'); return; }
+    btn.disabled = true;
+    try {
+      if (!PREVIEW) {
+        const r = await fetch('/api/review', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(d) });
+        const j = await r.json().catch(() => ({}));
+        if (!r.ok || !j.ok) throw new Error('send');
+      }
+      $('#rv-form').innerHTML = `<button type="button" class="rvm-x" data-rv-close aria-label="${u('close')}">&times;</button><div class="rvm-ok">${stars(d.rating)}<h3>${u('rev_thanks')}</h3><button type="button" class="btn btn-ghost" data-rv-close>${u('close')}</button></div>`;
+    } catch (e) {
+      st.textContent = u('send_err');
+      st.classList.add('err');
+      btn.disabled = false;
+    }
+  }
+
+  /* ---------- messages: ask the price or anything else, replies show here ---------- */
+  let chat = null, chatMsgs = [], chatRef = null, chatOpen = false, chatTimer = null, chatUnread = 0, chatSending = false;
+  try { const c = JSON.parse(localStorage.getItem('chat') || 'null'); if (c && c.id && c.token) chat = c; } catch (e) {}
+  const refInfo = (ref) => {
+    if (!ref) return null;
+    if (ref.type === 'work') { const w = (S.works || []).find((x) => x.id === ref.id); return { title: w ? t(w.title) : ref.title || '', img: ref.img || (w && w.images && w.images[0]) || '', href: '#gallery' }; }
+    if (ref.type === 'system') { const sy = (S.systems || []).find((x) => x.slug === ref.id); return { title: sy ? t(sy.name) : ref.title || '', img: ref.img || (sy && sy.image) || '', href: '#' + ref.id }; }
+    return null;
+  };
+  const refCard = (ref, removable) => {
+    const r = refInfo(ref);
+    if (!r) return '';
+    return `<div class="msg-ref">${r.img ? `<img src="${esc(src(r.img))}" alt="">` : ''}<span><small>${u('chat_about')}</small><b>${esc(r.title)}</b></span>${removable ? `<button type="button" data-chat-noref aria-label="${u('chat_remove')}">&times;</button>` : ''}</div>`;
+  };
+  const msgTime = (ts) => { const d = new Date(ts), now = new Date(); const sameDay = d.toDateString() === now.toDateString(); return d.toLocaleString(lang === 'el' ? 'el-GR' : 'en-GB', sameDay ? { hour: '2-digit', minute: '2-digit' } : { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }); };
+  function chatPanel() {
+    let p = $('#chat');
+    if (!p) { p = document.createElement('div'); p.id = 'chat'; p.className = 'chat'; p.setAttribute('role', 'dialog'); document.body.appendChild(p); }
+    return p;
+  }
+  function drawChat() {
+    const p = chatPanel();
+    p.setAttribute('aria-label', u('chat_title'));
+    const keep = $('#chat-t') ? $('#chat-t').value : '';
+    const who = !chat ? { n: $('#chat-name') ? $('#chat-name').value : '', p: $('#chat-phone') ? $('#chat-phone').value : '' } : null;
+    p.innerHTML = `<div class="chat-h"><span class="chat-av">${icon('headset')}</span><div><b>${esc(S.company.name)}</b><small>${u('chat_sub')}</small></div><button type="button" class="chat-x" data-chat-close aria-label="${u('close')}">&times;</button></div>
+      <div class="chat-b" id="chat-b"></div>
+      <form class="chat-f" id="chat-f" novalidate>
+        <div id="chat-ref">${refCard(chatRef, true)}</div>
+        ${!chat ? `<div class="chat-who"><input id="chat-name" placeholder="${esc(u('chat_name'))} *" aria-label="${esc(u('chat_name'))}" autocomplete="name" maxlength="80" value="${esc(who.n)}"><input id="chat-phone" type="tel" placeholder="${esc(u('chat_phone'))} *" aria-label="${esc(u('chat_phone'))}" autocomplete="tel" maxlength="30" value="${esc(who.p)}"></div>` : ''}
+        <div class="chat-in"><textarea id="chat-t" rows="1" maxlength="1000" placeholder="${esc(u('chat_ph'))}" aria-label="${esc(u('chat_ph'))}"></textarea><button type="submit" class="chat-send" aria-label="${u('chat_send')}">${icon('send')}</button></div>
+        <div class="hp" aria-hidden="true"><input id="chat-web" tabindex="-1" autocomplete="off"></div>
+        <p class="chat-err" id="chat-err" role="alert"></p>
+      </form>`;
+    $('#chat-t').value = keep;
+    drawChatMsgs(true);
+  }
+  function drawChatMsgs(toEnd) {
+    const b = $('#chat-b');
+    if (!b) return;
+    const atEnd = toEnd || b.scrollHeight - b.scrollTop - b.clientHeight < 60;
+    b.innerHTML = `<div class="msg admin"><p>${u('chat_hello')}</p></div>` + chatMsgs.map((m) => `<div class="msg ${m.from === 'admin' ? 'admin' : 'user'}">${refCard(m.ref)}<p>${esc(m.text)}</p><time>${msgTime(m.ts)}</time></div>`).join('')
+      + (chatMsgs.length && chatMsgs[chatMsgs.length - 1].from !== 'admin' ? `<p class="chat-note">${u('chat_reply_note')}</p>` : '');
+    if (atEnd) b.scrollTop = b.scrollHeight;
+  }
+  function chatBadge() {
+    const h = $('#help');
+    if (h) h.classList.toggle('unread', chatUnread > 0 && !chatOpen);
+  }
+  function chatSchedule() {
+    clearTimeout(chatTimer);
+    if (!chat || PREVIEW) return;
+    chatTimer = setTimeout(() => { if (document.hidden) chatSchedule(); else chatPoll(); }, chatOpen ? 6000 : 60000);
+  }
+  async function chatPoll() {
+    if (!chat || PREVIEW) return;
+    try {
+      const r = await fetch(`/api/chat?thread=${chat.id}&token=${chat.token}${chatOpen ? '&seen=1' : ''}`);
+      if (r.status === 404) { chat = null; chatMsgs = []; try { localStorage.removeItem('chat'); } catch (e) {} if (chatOpen) drawChat(); return; }
+      const j = await r.json();
+      if (j.ok && j.thread) {
+        // never drop messages the visitor already sees (the store can briefly return an older copy)
+        if (j.thread.msgs.length >= chatMsgs.length) { const grew = j.thread.msgs.length > chatMsgs.length; chatMsgs = j.thread.msgs; if (chatOpen && grew) drawChatMsgs(); }
+        chatUnread = chatOpen ? 0 : j.thread.uu || 0;
+        chatBadge();
+      }
+    } catch (e) {}
+    chatSchedule();
+  }
+  function openChat(ref) {
+    if (ref) chatRef = ref;
+    chatOpen = true;
+    drawChat();
+    const p = chatPanel();
+    requestAnimationFrame(() => p.classList.add('open'));
+    if (mobile()) lock(true, 'chat');
+    setHelp(false);
+    chatUnread = 0;
+    chatBadge();
+    const ta = $('#chat-t');
+    if (ref && !ta.value) ta.value = u('chat_price_q');
+    setTimeout(() => { const first = !chat && $('#chat-name') && !$('#chat-name').value ? $('#chat-name') : ta; first.focus({ preventScroll: true }); }, 250);
+    chatPoll();
+  }
+  function closeChat() {
+    chatOpen = false;
+    const p = $('#chat');
+    if (p) p.classList.remove('open');
+    lock(false, 'chat');
+    chatSchedule();
+  }
+  async function sendChat() {
+    if (chatSending) return;
+    const err = $('#chat-err'), ta = $('#chat-t');
+    const text = ta.value.trim();
+    err.textContent = '';
+    if (!text) { ta.focus(); return; }
+    const body = { text, lang, website: $('#chat-web').value, ref: chatRef ? { type: chatRef.type, id: chatRef.id, img: chatRef.img || '' } : null };
+    if (chat) { body.thread = chat.id; body.token = chat.token; }
+    else {
+      body.name = $('#chat-name').value.trim();
+      body.phone = $('#chat-phone').value.trim();
+      if (!body.name || body.phone.replace(/\D/g, '').length < 6) { err.textContent = u('chat_need_contact'); (body.name ? $('#chat-phone') : $('#chat-name')).focus(); return; }
+    }
+    if (PREVIEW) { chatMsgs.push({ id: 'p' + Date.now(), from: 'user', text, ts: Date.now(), ref: body.ref }); chatRef = null; ta.value = ''; drawChat(); return; }
+    chatSending = true;
+    $('.chat-send').disabled = true;
+    try {
+      const r = await fetch('/api/chat', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) });
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok || !j.ok) { const e = new Error(j.error || 'send'); throw e; }
+      if (j.thread) {
+        chat = { id: j.thread.id, token: j.thread.token, name: j.thread.name };
+        try { localStorage.setItem('chat', JSON.stringify(chat)); } catch (e) {}
+        chatMsgs = j.thread.msgs;
+      }
+      chatRef = null;
+      ta.value = '';
+      drawChat();
+    } catch (e) {
+      err.textContent = e.message === 'contact' ? u('chat_need_contact') : e.message === 'busy' ? u('chat_busy') : u('send_err');
+    } finally {
+      chatSending = false;
+      const b = $('.chat-send');
+      if (b) b.disabled = false;
+      chatSchedule();
+    }
   }
 
   function founder() {
@@ -432,7 +633,7 @@
     const soc = socialLinks('socials');
     return `<footer class="foot"><div class="wrap foot-top${soc ? ' has-soc' : ''}">
       <div class="foot-brand"><img src="/img/logo-light.png" alt="${esc(c.name)}" width="111" height="52"><p>${esc(t(S.text.tagline))}</p></div>
-      <div><h4>${u('quick_links')}</h4><ul><li><a href="#top">${u('home')}</a></li><li><a href="#about">${u('about')}</a></li><li><a href="#systems">${u('systems')}</a></li><li><a href="#projects">${u('projects')}</a></li><li><a href="#quote">${u('contact')}</a></li></ul></div>
+      <div><h4>${u('quick_links')}</h4><ul><li><a href="#top">${u('home')}</a></li><li><a href="#about">${u('about')}</a></li><li><a href="#systems">${u('systems')}</a></li><li><a href="#projects">${u('gallery')}</a></li><li><a href="#reviews">${u('reviews')}</a></li><li><a href="#quote">${u('contact')}</a></li></ul></div>
       <div><h4>${u('systems')}</h4><ul>${list.slice(0, 6).map((s) => `<li><a href="#${esc(s.slug)}">${esc(t(s.name))}</a></li>`).join('')}</ul></div>
       <div><h4>${u('contact_info')}</h4><ul class="foot-contact">
         ${t(c.address) ? `<li>${icon('pin')}<span>${esc(t(c.address))}</span></li>` : ''}
@@ -449,6 +650,7 @@
   function helpButton() {
     const c = S.company;
     const items = [
+      `<button type="button" class="help-item" data-chat><span>${u('help_chat')}</span><i class="hi chat-i">${icon('chat')}</i></button>`,
       `<a class="help-item" href="#quote"><span>${u('help_quote')}</span><i class="hi">${icon('file')}</i></a>`,
       waLink() ? `<a class="help-item" href="${esc(waLink(u('wa_hello', { c: c.name })))}" target="_blank" rel="noopener"><span>WhatsApp</span><i class="hi wa">${waIcon}</i></a>` : '',
       c.email ? `<a class="help-item" href="mailto:${esc(c.email)}"><span>${u('help_email')}</span><i class="hi">${icon('mail')}</i></a>` : '',
@@ -491,6 +693,7 @@
           <p class="lead">${esc(t(s.short))}</p>
           <div class="sp-cta">
             <button type="button" class="btn btn-navy" data-consult="${esc(s.slug)}">${u('consult')}${icon('arrow')}</button>
+            <button type="button" class="btn btn-ghost" data-ask="system" data-id="${esc(s.slug)}">${icon('chat')}${u('ask_price')}</button>
             ${s.brochure ? `<a class="btn btn-ghost" href="${esc(src(s.brochure))}" target="_blank" rel="noopener">${icon('download')}${u('brochure')}</a>` : ''}
             ${waLink() ? `<a class="btn btn-wa" href="${esc(waLink(msg))}" target="_blank" rel="noopener">${WA_SVG.replace('<svg', '<svg class="ic"')}WhatsApp</a>` : ''}
           </div>
@@ -642,7 +845,7 @@
 
   function render() {
     document.documentElement.lang = lang;
-    $('#app').innerHTML = header() + '<main>' + hero() + cats() + about() + projects() + engineering() + band() + quote() + '</main>' + footer();
+    $('#app').innerHTML = header() + '<main>' + hero() + cats() + about() + projects() + reviews() + engineering() + band() + quote() + '</main>' + footer();
     tstStart();
     hsShow(hsI);
     railArrows();
@@ -650,6 +853,7 @@
     if (pendingSystem) selectSystem(pendingSystem);
     updateWa();
     reveal($('#app'), renders++ > 0);
+    chatBadge();
   }
 
   // scroll reveal + count-up. Content is visible unless the script turns the effect on.
@@ -853,6 +1057,7 @@
     items.push(
       page('#engineering', 'layers', UI[lang].m_engineering, u('eng_title'), 'engineering quality thermal break profile glazing seals drainage insulation τεχνολογια ποιοτητα θερμοδιακοπη μονωση'),
       page('#about', 'home', UI[lang].m_about, t(S.text.introTitle), 'about company team founder owner εταιρεια ομαδα ιδρυτης'),
+      page('#reviews', 'star', u('reviews'), u('rev_title'), 'reviews review rating testimonials clients κριτικες αξιολογησεις πελατες'),
       page('#gallery', 'images', u('gal_page_title'), u('gal_page_sub'), 'gallery projects photos work latest portfolio εργα φωτογραφιες γκαλερι'),
       page('#quote', 'file', u('quote'), u('quote_body'), 'contact quote price cost phone whatsapp email survey measure επικοινωνια προσφορα τιμη τηλεφωνο αυτοψια')
     );
@@ -995,9 +1200,9 @@
   }
 
   // lightbox
-  let lbList = [], lbI = 0, lbCaps = [];
-  function openLB(list, i, caps) {
-    lbList = list; lbI = i; lbCaps = caps || [];
+  let lbList = [], lbI = 0, lbCaps = [], lbWork = null;
+  function openLB(list, i, caps, work) {
+    lbList = list; lbI = i; lbCaps = caps || []; lbWork = work || null;
     const lb = $('#lb');
     lb.hidden = false;
     lock(true, 'lb');
@@ -1012,6 +1217,10 @@
     img.alt = cap;
     lb.querySelector('.lb-cap').textContent = (cap ? cap + ' · ' : '') + (lbI + 1) + ' / ' + lbList.length;
     lb.querySelector('.lb-pv').hidden = lb.querySelector('.lb-nx').hidden = lbList.length < 2;
+    let ask = lb.querySelector('.lb-ask');
+    if (!ask) { ask = document.createElement('button'); ask.type = 'button'; ask.className = 'btn btn-accent lb-ask'; lb.appendChild(ask); }
+    ask.hidden = !lbWork;
+    ask.innerHTML = icon('chat') + u('ask_price');
   }
   function closeLB() { $('#lb').hidden = true; lock(false, 'lb'); }
   function stepLB(d) { lbI = (lbI + d + lbList.length) % lbList.length; showLB(); }
@@ -1053,6 +1262,7 @@
     if (keep) setPanel(keep);
     if (current) { const slug = current.slug, top = $('#sp').scrollTop; openSystem(slug, true); $('#sp').scrollTop = top; }
     else if (galOpen) { const top = $('#sp').scrollTop; openGallery(true); $('#sp').scrollTop = top; }
+    if (chatOpen) drawChat();
   }
 
   /* ---------- events (delegated, bound once) ---------- */
@@ -1060,6 +1270,16 @@
     const lb = e.target.closest('[data-lang]');
     if (lb) { setLang(lb.dataset.lang); return; }
     if (e.target.closest('.help-btn')) { setHelp(!$('#help').classList.contains('open')); return; }
+    if (e.target.closest('[data-chat]')) { openChat(); return; }
+    if (e.target.closest('[data-chat-close]')) { closeChat(); return; }
+    if (e.target.closest('[data-chat-noref]')) { chatRef = null; const c = $('#chat-ref'); if (c) c.innerHTML = ''; return; }
+    if (e.target.closest('.lb-ask')) { const w = lbWork, img = lbList[lbI]; closeLB(); if (w) openChat({ type: 'work', id: w.id, img }); return; }
+    const ask = e.target.closest('[data-ask]');
+    if (ask) { openChat({ type: ask.dataset.ask, id: ask.dataset.id }); return; }
+    if (e.target.closest('[data-review]')) { openReview(); return; }
+    if (e.target.closest('[data-rv-close]') || e.target.id === 'rvm') { closeReview(); return; }
+    const sp = e.target.closest('[data-star]');
+    if (sp) { const n = +sp.dataset.star; $('#rvm').dataset.rating = String(n); $$('[data-star]').forEach((b) => { const on = +b.dataset.star <= n; b.classList.toggle('on', on); b.setAttribute('aria-checked', String(+b.dataset.star === n)); }); return; }
     if ($('#help') && $('#help').classList.contains('open')) setHelp(false);
     const ls = e.target.closest('.lsel-btn');
     $$('.lsel-menu').forEach((m) => { if (!ls || !ls.parentElement.contains(m)) { m.hidden = true; m.previousElementSibling.setAttribute('aria-expanded', 'false'); } });
@@ -1080,7 +1300,7 @@
     if (rb) { const r = $('#rail'); const card = r.querySelector('.card'); r.scrollBy({ left: +rb.dataset.rail * ((card ? card.offsetWidth : 300) + 16), behavior: reduce ? 'auto' : 'smooth' }); return; }
     if (e.target.closest('[data-video]')) { openVideo(); return; }
     const wk = e.target.closest('[data-work]');
-    if (wk) { const w = works().find((x) => x.id === wk.dataset.work); if (w) openLB(w.images, 0, w.images.map(() => t(w.title))); return; }
+    if (wk) { const w = works().find((x) => x.id === wk.dataset.work); if (w) openLB(w.images, 0, w.images.map(() => t(w.title)), w); return; }
     const gchip = e.target.closest('[data-gf]');
     if (gchip) {
       const where = gchip.dataset.gf;
@@ -1126,8 +1346,15 @@
   });
   document.addEventListener('focusin', (e) => { if (e.target.classList.contains('sq')) runSearch(e.target.closest('[data-search]')); });
   document.addEventListener('change', (e) => { if (e.target.closest('#qform')) updateWa(); });
-  document.addEventListener('submit', (e) => { if (e.target.id === 'qform') { e.preventDefault(); submitQuote(e.target); } });
+  document.addEventListener('submit', (e) => {
+    if (e.target.id === 'qform') { e.preventDefault(); submitQuote(e.target); }
+    if (e.target.id === 'chat-f') { e.preventDefault(); sendChat(); }
+    if (e.target.id === 'rv-form') { e.preventDefault(); submitReview(); }
+  });
   document.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey && e.target.id === 'chat-t' && !mobile()) { e.preventDefault(); sendChat(); return; }
+    if (e.key === 'Escape' && $('#rvm') && !$('#rvm').hidden) { closeReview(); return; }
+    if (e.key === 'Escape' && chatOpen && $('#lb').hidden) { closeChat(); return; }
     if (e.key === 'Enter' && e.target.classList.contains('sq')) { const first = e.target.closest('[data-search]').querySelector('.sr'); if (first) { e.preventDefault(); first.click(); } return; }
     if (e.key === 'Enter' && e.target.matches('[data-zoom][role=button]')) e.target.click();
     if ($('#vm') && !$('#vm').hidden && e.key === 'Escape') { closeVideo(); return; }
@@ -1192,4 +1419,6 @@
   setupLB();
   render();
   route(true);
+  if (chat) chatPoll();
+  document.addEventListener('visibilitychange', () => { if (!document.hidden && chat) chatPoll(); });
 })();

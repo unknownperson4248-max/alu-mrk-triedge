@@ -203,6 +203,116 @@ async function handleQuote(req, env, url) {
   return json({ ok: true });
 }
 
+/* ---------- messages (price questions with replies) and reviews ----------
+   KV keys: chat:<id> one conversation; chat-index a short list of all conversations for the admin panel,
+   which also carries simple daily limits; rev-pending reviews waiting for approval. */
+const CHAT_ID = /^[a-f0-9]{16}$/;
+const KEEP = { expirationTtl: 60 * 60 * 24 * 400 };
+const clip = (v, n) => String(v ?? '').replace(/\r/g, '').trim().slice(0, n);
+const today = () => new Date().toISOString().slice(0, 10);
+const rid = (n) => [...crypto.getRandomValues(new Uint8Array(n))].map((b) => b.toString(16).padStart(2, '0')).join('');
+
+async function chatIndex(env) {
+  const ix = (await env.KV.get('chat-index', 'json')) || {};
+  if (ix.day !== today()) { ix.day = today(); ix.threads = 0; ix.msgs = 0; }
+  ix.items = Array.isArray(ix.items) ? ix.items : [];
+  return ix;
+}
+function indexPut(ix, th, keepPlace) {
+  const last = th.msgs[th.msgs.length - 1] || {};
+  const row = { id: th.id, name: th.name, phone: th.phone, last: String(last.text || '').slice(0, 90), from: last.from || 'user', updated: th.updated, ua: th.ua || 0, n: th.msgs.length };
+  const i = ix.items.findIndex((x) => x.id === th.id);
+  if (keepPlace && i >= 0) ix.items[i] = row;
+  else ix.items = [row, ...ix.items.filter((x) => x.id !== th.id)].slice(0, 300);
+}
+// The item a message is about is looked up on the server, so the title and photo always come from the site itself.
+async function resolveRef(env, ref) {
+  if (!ref || typeof ref !== 'object') return null;
+  const site = await getSite(env);
+  const id = clip(ref.id, 60), img = clip(ref.img, 160);
+  if (ref.type === 'work') {
+    const w = (site.works || []).find((x) => x.id === id);
+    if (!w) return null;
+    return { type: 'work', id, title: (w.title && (w.title.en || w.title.el)) || '', img: (w.images || []).includes(img) ? img : (w.images || [])[0] || '' };
+  }
+  if (ref.type === 'system') {
+    const sy = (site.systems || []).find((x) => x.slug === id);
+    if (!sy) return null;
+    return { type: 'system', id, title: (sy.name && (sy.name.en || sy.name.el)) || '', img: sy.image || '' };
+  }
+  return null;
+}
+const publicThread = (th) => ({ id: th.id, name: th.name, msgs: th.msgs, uu: th.uu || 0 });
+
+async function handleChatPost(req, env, url) {
+  if (!sameOrigin(req, url)) return json({ ok: false }, 403);
+  let b;
+  try {
+    b = await req.json();
+  } catch {
+    return json({ ok: false, error: 'bad_request' }, 400);
+  }
+  if (b && b.website) return json({ ok: true });
+  const text = clip(b.text, 1000);
+  if (!text) return json({ ok: false, error: 'empty' }, 400);
+  const ix = await chatIndex(env);
+  if (ix.msgs >= 400) return json({ ok: false, error: 'busy' }, 429);
+  let th = null;
+  if (CHAT_ID.test(b.thread || '')) {
+    th = await env.KV.get('chat:' + b.thread, 'json');
+    if (!th || !safeEq(th.token, String(b.token || ''))) th = null;
+  }
+  const now = Date.now();
+  if (!th) {
+    const name = clip(b.name, 80), phone = clip(b.phone, 30);
+    if (!name || phone.replace(/\D/g, '').length < 6) return json({ ok: false, error: 'contact' }, 400);
+    if (ix.threads >= 150) return json({ ok: false, error: 'busy' }, 429);
+    th = { id: rid(8), token: rid(16), name, phone, lang: clip(b.lang, 4), created: now, msgs: [], ua: 0, uu: 0 };
+    ix.threads++;
+  }
+  if (th.msgs.length >= 300) return json({ ok: false, error: 'full' }, 400);
+  const ref = await resolveRef(env, b.ref);
+  th.msgs.push({ id: rid(4), from: 'user', text, ts: now, ...(ref ? { ref } : {}) });
+  th.updated = now;
+  th.ua = (th.ua || 0) + 1;
+  th.uu = 0;
+  ix.msgs++;
+  indexPut(ix, th);
+  await Promise.all([env.KV.put('chat:' + th.id, JSON.stringify(th), KEEP), env.KV.put('chat-index', JSON.stringify(ix))]);
+  return json({ ok: true, thread: { ...publicThread(th), token: th.token } });
+}
+
+async function handleChatGet(env, url) {
+  const id = url.searchParams.get('thread') || '', token = url.searchParams.get('token') || '';
+  if (!CHAT_ID.test(id)) return json({ ok: false }, 400);
+  const th = await env.KV.get('chat:' + id, 'json');
+  if (!th || !safeEq(th.token, token)) return json({ ok: false, error: 'not_found' }, 404);
+  const out = publicThread(th);
+  if (url.searchParams.get('seen') === '1' && th.uu) {
+    th.uu = 0;
+    await env.KV.put('chat:' + id, JSON.stringify(th), KEEP);
+  }
+  return json({ ok: true, thread: out });
+}
+
+async function handleReviewPost(req, env, url) {
+  if (!sameOrigin(req, url)) return json({ ok: false }, 403);
+  let b;
+  try {
+    b = await req.json();
+  } catch {
+    return json({ ok: false, error: 'bad_request' }, 400);
+  }
+  if (b && b.website) return json({ ok: true });
+  const r = { id: rid(6), name: clip(b.name, 60), place: clip(b.place, 60), rating: Math.round(+b.rating), text: clip(b.text, 800), lang: clip(b.lang, 4), ts: Date.now() };
+  if (!r.name || r.text.length < 10 || !(r.rating >= 1 && r.rating <= 5)) return json({ ok: false, error: 'required' }, 400);
+  const list = (await env.KV.get('rev-pending', 'json')) || [];
+  if (list.length >= 200) return json({ ok: false, error: 'busy' }, 429);
+  list.unshift(r);
+  await env.KV.put('rev-pending', JSON.stringify(list));
+  return json({ ok: true });
+}
+
 async function listMedia(env) {
   const out = [];
   let cursor;
@@ -310,6 +420,61 @@ async function handleAdminApi(req, env, url, path) {
     return json({ ok: true }, 200, { 'set-cookie': await sessionCookie(env, ver, url.protocol === 'https:') });
   }
 
+  if (path === '/api/admin/chats' && method === 'GET') {
+    const [ix, pend] = await Promise.all([chatIndex(env), env.KV.get('rev-pending', 'json')]);
+    return json({ items: ix.items, pendingReviews: (pend || []).length });
+  }
+  const cm = /^\/api\/admin\/chats\/([a-f0-9]{16})$/.exec(path);
+  if (cm) {
+    const key = 'chat:' + cm[1];
+    const th = await env.KV.get(key, 'json');
+    if (method === 'DELETE') {
+      const ix = await chatIndex(env);
+      ix.items = ix.items.filter((x) => x.id !== cm[1]);
+      await Promise.all([env.KV.delete(key), env.KV.put('chat-index', JSON.stringify(ix))]);
+      return json({ ok: true });
+    }
+    if (!th) return json({ ok: false, error: 'This conversation no longer exists' }, 404);
+    if (method === 'GET') {
+      if (th.ua) {
+        th.ua = 0;
+        const ix = await chatIndex(env);
+        indexPut(ix, th, true);
+        await Promise.all([env.KV.put(key, JSON.stringify(th), KEEP), env.KV.put('chat-index', JSON.stringify(ix))]);
+      }
+      const { token, ...safe } = th;
+      return json({ ok: true, thread: safe });
+    }
+    if (method === 'POST') {
+      let b = {};
+      try {
+        b = await req.json();
+      } catch {}
+      const text = clip(b.text, 1000);
+      if (!text) return json({ ok: false, error: 'Write a reply first' }, 400);
+      const now = Date.now();
+      th.msgs.push({ id: rid(4), from: 'admin', text, ts: now });
+      th.updated = now;
+      th.ua = 0;
+      th.uu = (th.uu || 0) + 1;
+      const ix = await chatIndex(env);
+      indexPut(ix, th);
+      await Promise.all([env.KV.put(key, JSON.stringify(th), KEEP), env.KV.put('chat-index', JSON.stringify(ix))]);
+      const { token, ...safe } = th;
+      return json({ ok: true, thread: safe });
+    }
+  }
+
+  if (path === '/api/admin/reviews' && method === 'GET') {
+    return json({ items: (await env.KV.get('rev-pending', 'json')) || [] });
+  }
+  const rm = /^\/api\/admin\/reviews\/([a-f0-9]{12})$/.exec(path);
+  if (rm && method === 'DELETE') {
+    const list = ((await env.KV.get('rev-pending', 'json')) || []).filter((x) => x.id !== rm[1]);
+    await env.KV.put('rev-pending', JSON.stringify(list));
+    return json({ ok: true });
+  }
+
   return json({ ok: false, error: 'not_found' }, 404);
 }
 
@@ -320,6 +485,9 @@ export default {
     try {
       if (path.startsWith('/api/admin/')) return await handleAdminApi(req, env, url, path);
       if (path === '/api/quote' && req.method === 'POST') return await handleQuote(req, env, url);
+      if (path === '/api/chat' && req.method === 'POST') return await handleChatPost(req, env, url);
+      if (path === '/api/chat' && req.method === 'GET') return await handleChatGet(env, url);
+      if (path === '/api/review' && req.method === 'POST') return await handleReviewPost(req, env, url);
 
       if (req.method !== 'GET' && req.method !== 'HEAD') return text('Method not allowed', 'text/plain', 'no-store', 405);
 

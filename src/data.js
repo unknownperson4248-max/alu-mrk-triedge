@@ -79,6 +79,8 @@ export const DEFAULT_SITE = {
     { icon: 'users', title: T('One team, start to finish', 'Μία ομάδα, από την αρχή ως το τέλος'), body: T('Survey, fabrication and installation by the same people.', 'Αυτοψία, κατασκευή και τοποθέτηση από τους ίδιους ανθρώπους.') },
   ],
   testimonials: [],
+  // Published customer reviews: { id, name, place, rating 1-5, text, ts }. New ones arrive through the website and are approved in the admin panel.
+  reviews: [],
   systems: [
     {
       slug: 'motorized-sliding', icon: 'motor', visible: true, kind: 'slide', motor: true, configs: [2, 3, 4, 6],
