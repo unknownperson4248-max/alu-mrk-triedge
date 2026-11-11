@@ -446,8 +446,8 @@
   }
   // short WhatsApp text; the details are in the PDF sent in the same chat
   function qdMessage(q) {
-    const d = q.doc || qdRead(), c = qCust(q), co = site.company;
-    return [`Hello ${c.name || ''},`, '', `Thank you for your request. Please find attached our quotation ${d.no || q.ref || ''} (PDF).`, '', 'If you have any questions, just reply here.', '', [co.name, co.phone].filter(Boolean).join(' · ')].join('\n');
+    const c = qCust(q), co = site.company;
+    return [`Hello ${c.name || ''},`, 'Here is your quotation PDF.', '', [co.name, co.phone].filter(Boolean).join(' · ')].join('\n');
   }
   function qdCalc() {
     const cur = (site.quoteSettings || {}).currency || '€', f = (n) => n.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
