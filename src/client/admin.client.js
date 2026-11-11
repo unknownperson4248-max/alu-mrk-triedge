@@ -388,7 +388,8 @@
       <div class="list">${quotes.map((q) => { const c = qCust(q); const items = q.items || []; return `<div class="q"><div class="q-top"><b>${esc(c.name)}</b>${q.ref ? `<span class="tag mono">${esc(q.ref)}</span>` : ''}${mailNote(q)}<time>${esc(fmtD(q.ts))}</time></div>
         <dl><dt>Phone</dt><dd>${esc(c.phone)}</dd>${c.email ? `<dt>Email</dt><dd>${esc(c.email)}</dd>` : ''}${c.company ? `<dt>Company</dt><dd>${esc(c.company)}</dd>` : ''}${c.location ? `<dt>Location</dt><dd>${esc(c.location)}</dd>` : ''}${c.type ? `<dt>Project</dt><dd>${esc(c.type)}</dd>` : ''}${c.message ? `<dt>Message</dt><dd>${esc(c.message)}</dd>` : ''}${q.system ? `<dt>System</dt><dd>${esc(q.system)}</dd>` : ''}</dl>
         ${items.length ? `<table class="qtab"><thead><tr><th>#</th><th>Product</th><th>W × H (mm)</th><th>Qty</th><th>Details</th></tr></thead><tbody>${items.map((it, k) => `<tr><td>${k + 1}</td><td><b>${esc(it.model || '—')}</b><br><small>${esc(it.catName)}</small></td><td>${it.width} × ${it.height}</td><td>${it.qty}</td><td><small>${esc([it.colour, it.glass, it.glassThk, it.opening].filter(Boolean).join(' · '))}${it.specs ? '<br>' + esc(it.specs) : ''}${it.notes ? '<br>' + esc(it.notes) : ''}</small>${(it.files || []).map((f) => `<br><a href="/api/admin/file/${esc(f.id)}" target="_blank" rel="noopener">📎 ${esc(f.name)}</a>`).join('')}</td></tr>`).join('')}</tbody></table>` : ''}
-        <div class="acts">${items.length ? `<button type="button" class="b b-sm b-pri" data-act="q-doc" data-key="${esc(q.key)}">Create quotation (PDF)</button>` : ''}<a class="b b-sm" href="tel:${esc(c.phone)}">Call</a><a class="b b-sm" href="https://wa.me/${esc(waNum(c.phone))}" target="_blank" rel="noopener">WhatsApp</a>${c.email ? `<a class="b b-sm" href="mailto:${esc(c.email)}?subject=${encodeURIComponent('Quotation ' + (q.ref || ''))}">Email</a>` : ''}<button type="button" class="b b-sm b-danger" data-act="q-del" data-key="${esc(q.key)}">Delete</button></div></div>`; }).join('') || '<p class="empty">No requests yet.</p>'}</div></div>
+        ${q.doc ? `<p class="q-quoted">Quotation saved · <b>${esc((q.doc.currency || '€') + ' ' + qdFmt(q.doc.total || 0))}</b> · ${esc(fmtD(q.doc.savedAt))}</p>` : ''}
+        <div class="acts">${items.length ? `<button type="button" class="b b-sm b-pri" data-act="q-doc" data-key="${esc(q.key)}">${q.doc ? 'Open quotation' : 'Create quotation (PDF)'}</button>` : ''}<a class="b b-sm" href="tel:${esc(c.phone)}">Call</a><a class="b b-sm" href="https://wa.me/${esc(waNum(c.phone))}" target="_blank" rel="noopener">WhatsApp</a>${c.email ? `<a class="b b-sm" href="mailto:${esc(c.email)}?subject=${encodeURIComponent('Quotation ' + (q.ref || ''))}">Email</a>` : ''}<button type="button" class="b b-sm b-danger" data-act="q-del" data-key="${esc(q.key)}">Delete</button></div></div>`; }).join('') || '<p class="empty">No requests yet.</p>'}</div></div>
       <div class="card"><h2>Quotation document defaults</h2><p class="hint">Filled into every new quotation. Leave empty what you have not decided; you can still type it on each quotation.</p>
         <div class="row">${txt('quoteSettings.currency', 'Currency symbol', 'text', '€')}${txt('quoteSettings.vat', 'VAT rate %', 'text', 'e.g. 19')}${txt('quoteSettings.validity', 'Valid for', 'text', 'e.g. 30 days')}</div>
         ${area('quoteSettings.payment', 'Payment terms')}${area('quoteSettings.delivery', 'Delivery / installation')}${area('quoteSettings.terms', 'Terms and conditions')}</div>`;
@@ -397,19 +398,65 @@
   function quoteDoc(q) {
     const c = qCust(q), st = site.quoteSettings || {}, co = site.company, cur = st.currency || '€';
     const addr = (co.address && (co.address.en || co.address.el)) || '';
-    const today = new Date().toISOString().slice(0, 10);
-    const rows = (q.items || []).map((it, k) => `<tr data-row><td>${k + 1}</td><td><div contenteditable="true" class="qd-ed"><b>${esc(it.model || it.catName)}</b> · ${esc(it.catName)}<br><small>${esc([it.colour, it.glass, it.glassThk, it.opening, it.specs].filter(Boolean).join(' · '))}</small></div></td><td class="num">${it.width} × ${it.height}</td><td class="num"><input class="qd-qty" type="number" min="0" step="1" value="${it.qty}"></td><td class="num"><input class="qd-price" type="number" min="0" step="0.01" placeholder="0.00"></td><td class="num qd-line">–</td></tr>`).join('');
-    return `<div class="qd-tools no-print"><b>Quotation ${esc(q.ref || '')}</b><span class="sp"></span><button type="button" class="b b-sm" data-act="qd-row">+ Add line</button><button type="button" class="b b-sm b-pri" data-act="qd-print">Save as PDF / Print</button><button type="button" class="b b-sm" data-act="qd-close">Close</button></div>
-      <article class="qdoc" id="qdoc">
+    const today = new Date().toISOString().slice(0, 10), d = q.doc;
+    const lines = (t) => esc(t).split('\n');
+    const row = (k, desc, size, qty, price, added) => `<tr data-row${added ? ' class="qd-added"' : ''}><td>${k + 1}</td><td><div contenteditable="true" class="qd-ed"${added ? ' data-ph="Description"' : ''}>${desc}</div></td><td class="num qd-size"${added ? ' contenteditable="true"' : ''}>${esc(size)}</td><td class="num"><input class="qd-qty" type="number" min="0" step="1" value="${esc(qty)}"></td><td class="num"><input class="qd-price" type="number" min="0" step="0.01" placeholder="0.00" value="${esc(price)}"></td><td class="num qd-line">–</td></tr>`;
+    if (d) {
+      const rowsD = (d.rows || []).map((r, k) => { const l = r.desc ? lines(r.desc) : []; return row(k, l.length ? `<b>${l[0]}</b>${l.length > 1 ? `<br><small>${l.slice(1).join('<br>')}</small>` : ''}` : '', r.size || '', r.qty, r.price, k >= (q.items || []).length); }).join('');
+      return qdShell(q, c, co, addr, cur, rowsD, d.no || q.ref || '', d.date || today, d.validity || '', d.vat, d.payment, d.delivery, d.terms, d.sign);
+    }
+    const rows = (q.items || []).map((it, k) => `<tr data-row><td>${k + 1}</td><td><div contenteditable="true" class="qd-ed"><b>${esc(it.model || it.catName)}</b> · ${esc(it.catName)}<br><small>${esc([it.colour, it.glass, it.glassThk, it.opening, it.specs].filter(Boolean).join(' · '))}</small></div></td><td class="num qd-size">${it.width} × ${it.height}</td><td class="num"><input class="qd-qty" type="number" min="0" step="1" value="${it.qty}"></td><td class="num"><input class="qd-price" type="number" min="0" step="0.01" placeholder="0.00"></td><td class="num qd-line">–</td></tr>`).join('');
+    return qdShell(q, c, co, addr, cur, rows, q.ref || '', today, st.validity || '', st.vat || '', st.payment, st.delivery, st.terms, '');
+  }
+  function qdShell(q, c, co, addr, cur, rows, no, date, validity, vat, payment, delivery, terms, sign) {
+    return `<div class="qd-tools no-print"><b>Quotation ${esc(q.ref || '')}</b><span class="qd-state" id="qd-state">${q.doc ? 'Saved ' + esc(fmtD(q.doc.savedAt)) : 'Not saved yet'}</span><span class="sp"></span><button type="button" class="b b-sm" data-act="qd-row">+ Add line</button><button type="button" class="b b-sm b-acc" data-act="qd-save" data-key="${esc(q.key)}">Save</button><button type="button" class="b b-sm b-wa" data-act="qd-wa" data-key="${esc(q.key)}">WhatsApp</button><button type="button" class="b b-sm b-pri" data-act="qd-print" data-key="${esc(q.key)}">PDF / Print</button><button type="button" class="b b-sm" data-act="qd-close" data-key="${esc(q.key)}">Close</button></div>
+      <article class="qdoc" id="qdoc" data-key="${esc(q.key)}">
         <header class="qd-head"><img src="/img/logo-dark.png" alt="${esc(co.name)}"><div class="qd-co"><b>${esc(co.name)}</b>${addr ? `<span>${esc(addr)}</span>` : ''}${co.phone ? `<span>${esc(co.phone)}</span>` : ''}${co.email ? `<span>${esc(co.email)}</span>` : ''}</div></header>
         <h1>QUOTATION</h1>
-        <div class="qd-meta"><div><small>Quotation no.</small><input value="${esc(q.ref || '')}"></div><div><small>Date</small><input type="date" value="${today}"></div><div><small>Valid for</small><input value="${esc(st.validity || '')}" placeholder="e.g. 30 days"></div></div>
+        <div class="qd-meta"><div><small>Quotation no.</small><input id="qd-no" value="${esc(no)}"></div><div><small>Date</small><input id="qd-date" type="date" value="${esc(date)}"></div><div><small>Valid for</small><input id="qd-valid" value="${esc(validity)}" placeholder="e.g. 30 days"></div></div>
         <div class="qd-to"><small>Prepared for</small><b>${esc(c.name)}</b>${c.company ? `<span>${esc(c.company)}</span>` : ''}${c.location ? `<span>${esc(c.location)}</span>` : ''}<span>${esc(c.phone || '')}${c.email ? ' · ' + esc(c.email) : ''}</span></div>
-        <table class="qd-tab"><thead><tr><th>#</th><th>Description</th><th class="num">Size (mm)</th><th class="num">Qty</th><th class="num">Unit price (${esc(cur)})</th><th class="num">Total (${esc(cur)})</th></tr></thead><tbody id="qd-rows">${rows}</tbody></table>
-        <div class="qd-sum"><div><span>Subtotal</span><b id="qd-sub">–</b></div><div><span>VAT <input id="qd-vat" type="number" min="0" step="0.1" value="${esc(st.vat || '')}" placeholder="–">%</span><b id="qd-vatv">–</b></div><div class="qd-total"><span>Total (${esc(cur)})</span><b id="qd-tot">–</b></div></div>
-        <section class="qd-terms">${[['Payment terms', st.payment], ['Delivery / installation', st.delivery], ['Terms and conditions', st.terms]].map(([h, v]) => `<div><h3>${h}</h3><div class="qd-ed" contenteditable="true">${esc(v || '')}</div></div>`).join('')}</section>
-        <footer class="qd-foot"><div><small>For ${esc(co.name)}</small><div class="qd-sign" contenteditable="true"></div></div><span>${esc([co.name, co.phone, co.email].filter(Boolean).join(' · '))}</span></footer>
+        <div class="qd-tabw"><table class="qd-tab"><thead><tr><th>#</th><th>Description</th><th class="num">Size (mm)</th><th class="num">Qty</th><th class="num">Unit price (${esc(cur)})</th><th class="num">Total (${esc(cur)})</th></tr></thead><tbody id="qd-rows">${rows}</tbody></table></div>
+        <div class="qd-sum"><div><span>Subtotal</span><b id="qd-sub">–</b></div><div><span>VAT <input id="qd-vat" type="number" min="0" step="0.1" value="${esc(vat == null ? '' : vat)}" placeholder="–">%</span><b id="qd-vatv">–</b></div><div class="qd-total"><span>Total (${esc(cur)})</span><b id="qd-tot">–</b></div></div>
+        <section class="qd-terms">${[['payment', 'Payment terms', payment], ['delivery', 'Delivery / installation', delivery], ['terms', 'Terms and conditions', terms]].map(([k, h, v]) => `<div><h3>${h}</h3><div class="qd-ed" contenteditable="true" data-term="${k}">${esc(v || '')}</div></div>`).join('')}</section>
+        <footer class="qd-foot"><div><small>For ${esc(co.name)}</small><div class="qd-sign" contenteditable="true">${esc(sign || '')}</div></div><span>${esc([co.name, co.phone, co.email].filter(Boolean).join(' · '))}</span></footer>
       </article>`;
+  }
+  const qdFmt = (n) => (+n || 0).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  let qdIsDirty = false;
+  function qdDirty(v) { qdIsDirty = v; const s = $('#qd-state'); if (s && v) { s.textContent = 'Unsaved changes'; s.classList.add('dirty'); } }
+  // reads what is typed in the open quotation
+  function qdRead() {
+    const cur = (site.quoteSettings || {}).currency || '€';
+    const rows = $$('#qd-rows [data-row]').map((tr) => ({ desc: (tr.querySelector('.qd-ed') || {}).innerText.replace(/\n{2,}/g, '\n').trim(), size: ((tr.querySelector('.qd-size') || {}).innerText || '').trim(), qty: (tr.querySelector('.qd-qty') || {}).value, price: (tr.querySelector('.qd-price') || {}).value })).filter((r) => r.desc || r.price !== '');
+    const sub = rows.reduce((a, r) => a + (+r.qty || 0) * (+r.price || 0), 0), vat = ($('#qd-vat') || {}).value || '';
+    const term = (k) => ((document.querySelector(`[data-term="${k}"]`) || {}).innerText || '').trim();
+    return { no: $('#qd-no').value, date: $('#qd-date').value, validity: $('#qd-valid').value, vat, currency: cur, rows, payment: term('payment'), delivery: term('delivery'), terms: term('terms'), sign: (($('.qd-sign') || {}).innerText || '').trim(), subtotal: sub, total: sub + (vat === '' ? 0 : sub * (+vat / 100)) };
+  }
+  async function qdSave(key, quiet) {
+    const q = (quotes || []).find((x) => x.key === key);
+    if (!q || !$('#qdoc')) return false;
+    try {
+      const j = await api('/api/admin/quotes/' + encodeURIComponent(key) + '/doc', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ doc: qdRead() }) });
+      q.doc = j.doc;
+      qdIsDirty = false;
+      const s = $('#qd-state'); if (s) { s.textContent = 'Saved ' + fmtD(j.doc.savedAt); s.classList.remove('dirty'); }
+      if (!quiet) toast('Quotation saved.', 'ok');
+      return true;
+    } catch (e) { toast('Quotation not saved: ' + e.message, 'err'); return false; }
+  }
+  // WhatsApp text for the customer: products, prices and total
+  function qdMessage(q) {
+    const d = q.doc || qdRead(), c = qCust(q), co = site.company, cur = d.currency || '€';
+    const priced = d.rows.filter((r) => r.desc || r.price);
+    const L = [`Hello ${c.name || ''},`, '', `Thank you for your request. Here is our quotation ${d.no || q.ref || ''}:`, ''];
+    priced.forEach((r, k) => { const first = String(r.desc || '').split('\n')[0]; const line = (+r.qty || 0) * (+r.price || 0); L.push(`${k + 1}. ${first}${r.size ? ` (${r.size} mm)` : ''} × ${r.qty || 1}${r.price !== '' ? ` = ${cur} ${qdFmt(line)}` : ''}`); });
+    L.push('');
+    if (d.vat !== '' && d.vat != null) { L.push(`Subtotal: ${cur} ${qdFmt(d.subtotal)}`); L.push(`VAT ${d.vat}%: ${cur} ${qdFmt(d.total - d.subtotal)}`); }
+    L.push(`Total: ${cur} ${qdFmt(d.total)}`);
+    if (d.validity) L.push(`Valid for: ${d.validity}`);
+    if (d.payment) L.push(`Payment: ${d.payment}`);
+    L.push('', 'I am also sending the PDF quotation here.', '', [co.name, co.phone].filter(Boolean).join(' · '));
+    return L.join('\n');
   }
   function qdCalc() {
     const cur = (site.quoteSettings || {}).currency || '€', f = (n) => n.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -682,7 +729,7 @@
   /* ---------- events ---------- */
   document.addEventListener('input', (e) => {
     const el = e.target;
-    if (el.closest && el.closest('#qdoc')) { qdCalc(); return; }
+    if (el.closest && el.closest('#qdoc')) { qdCalc(); qdDirty(true); return; }
     const p = el.dataset && el.dataset.path;
     if (!p || !site) return;
     let v;
@@ -877,16 +924,35 @@
         const m = $('#qdoc-wrap') || Object.assign(document.createElement('div'), { id: 'qdoc-wrap', className: 'qdoc-wrap' });
         document.body.appendChild(m);
         m.innerHTML = quoteDoc(q);
+        qdIsDirty = false;
         m.hidden = false;
         document.documentElement.classList.add('qd-open');
         qdCalc();
         break;
       }
-      case 'qd-close': { const m = $('#qdoc-wrap'); if (m) { m.hidden = true; m.innerHTML = ''; } document.documentElement.classList.remove('qd-open'); break; }
-      case 'qd-print': window.print(); break;
+      case 'qd-save': await qdSave(b.dataset.key); break;
+      case 'qd-wa': {
+        const q = (quotes || []).find((x) => x.key === b.dataset.key);
+        if (!q) break;
+        const num = waNum(qCust(q).phone);
+        if (!num) { toast('This customer has no phone number.', 'err'); break; }
+        const w = window.open('about:blank', '_blank');
+        await qdSave(b.dataset.key, true);
+        const url = 'https://wa.me/' + num + '?text=' + encodeURIComponent(qdMessage(q));
+        if (w) w.location.href = url; else location.href = url;
+        break;
+      }
+      case 'qd-close': {
+        if (qdIsDirty) await qdSave(b.dataset.key, true);
+        const m = $('#qdoc-wrap'); if (m) { m.hidden = true; m.innerHTML = ''; } document.documentElement.classList.remove('qd-open');
+        if (tab === 'inbox') renderEditor();
+        break;
+      }
+      case 'qd-print': if (qdIsDirty) await qdSave(b.dataset.key, true); window.print(); break;
       case 'qd-row': {
         const tb = $('#qd-rows'), n = tb.children.length + 1;
-        tb.insertAdjacentHTML('beforeend', `<tr data-row class="qd-added"><td>${n}</td><td><div contenteditable="true" class="qd-ed" data-ph="Description"></div></td><td class="num" contenteditable="true"></td><td class="num"><input class="qd-qty" type="number" min="0" step="1" value="1"></td><td class="num"><input class="qd-price" type="number" min="0" step="0.01" placeholder="0.00"></td><td class="num qd-line">–</td></tr>`);
+        qdDirty(true);
+        tb.insertAdjacentHTML('beforeend', `<tr data-row class="qd-added"><td>${n}</td><td><div contenteditable="true" class="qd-ed" data-ph="Description"></div></td><td class="num qd-size" contenteditable="true"></td><td class="num"><input class="qd-qty" type="number" min="0" step="1" value="1"></td><td class="num"><input class="qd-price" type="number" min="0" step="0.01" placeholder="0.00"></td><td class="num qd-line">–</td></tr>`);
         qdCalc();
         break;
       }

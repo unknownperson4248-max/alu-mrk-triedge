@@ -655,6 +655,26 @@ async function handleAdminApi(req, env, url, path) {
     return json({ items });
   }
 
+  const qdm = /^\/api\/admin\/quotes\/(.+)\/doc$/.exec(path);
+  if (qdm && method === 'POST') {
+    const key = decodeURIComponent(qdm[1]);
+    if (!/^q:\d{16}:[a-f0-9-]{8}$/.test(key)) return json({ ok: false, error: 'Bad request' }, 400);
+    const { value: rec, metadata } = await env.KV.getWithMetadata(key, 'json');
+    if (!rec) return json({ ok: false, error: 'This request no longer exists' }, 404);
+    let b;
+    try { b = await req.json(); } catch { return json({ ok: false, error: 'Bad request' }, 400); }
+    const d = (b && b.doc) || {};
+    const num = (v) => (v === '' || v == null || !Number.isFinite(+v) ? '' : String(+v));
+    const doc = {
+      no: clip(d.no, 40), date: clip(d.date, 20), validity: clip(d.validity, 80), vat: num(d.vat), currency: clip(d.currency, 4),
+      rows: (Array.isArray(d.rows) ? d.rows : []).slice(0, 60).map((r) => ({ desc: clip(r && r.desc, 600), size: clip(r && r.size, 40), qty: num(r && r.qty), price: num(r && r.price) })),
+      payment: clip(d.payment, 3000), delivery: clip(d.delivery, 3000), terms: clip(d.terms, 3000), sign: clip(d.sign, 200),
+      subtotal: +num(d.subtotal) || 0, total: +num(d.total) || 0, savedAt: Date.now(),
+    };
+    rec.doc = doc;
+    await env.KV.put(key, JSON.stringify(rec), { metadata: metadata || {}, ...KEEP });
+    return json({ ok: true, doc });
+  }
   if (path.startsWith('/api/admin/quotes/') && method === 'DELETE') {
     const key = decodeURIComponent(path.slice('/api/admin/quotes/'.length));
     if (!/^q:\d{16}:[a-f0-9-]{8}$/.test(key)) return json({ ok: false }, 400);

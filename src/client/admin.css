@@ -304,3 +304,16 @@ button.drow:hover{background:#fafbfc}
 .cat-row input[type=text]{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:8px;background:#fff}
 .cat-row .acts{display:flex;gap:6px;padding-top:2px}
 .b-icon .ni{width:16px;height:16px}
+
+/* quotation: saved state and WhatsApp */
+.qd-state{font-size:12px;color:var(--muted)}
+.qd-state.dirty{color:#b26a00;font-weight:600}
+.b-wa{background:#1f8f55;border-color:#1f8f55;color:#fff}
+.b-wa:hover{background:#187846}
+.q-quoted{margin:6px 0 0;font-size:13px;color:#1f7a4a}
+@media (max-width:640px){.qd-tools{gap:6px}.qd-tools>b{width:100%}.qd-tools .sp{display:none}}
+.qd-tabw{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -2px}
+.qdoc{width:100%;min-width:0}
+.qdoc-wrap{overflow-x:hidden}
+@media (max-width:640px){.qd-tab{min-width:560px}.qd-tab .qd-price{width:76px}.qd-tab .qd-qty{width:48px}.qd-sum{width:100%}}
+@media print{.qd-tabw{overflow:visible}.qd-tab{min-width:0}}
