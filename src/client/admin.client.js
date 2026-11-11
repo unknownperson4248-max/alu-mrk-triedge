@@ -10,17 +10,41 @@
   let site = null, media = [], builtin = [], presets = {}, defaults = null;
   let pvMode = innerWidth < 700 ? 'mob' : 'desk';
   let pendRev = null, pendCount = 0, editProd = null, uRev = null;
-  let dirty = false, tab = 'works', editIdx = null, editWork = null, quotes = null, quoteCount = 0, previewReady = false;
+  let dirty = false, tab = 'dash', editIdx = null, editWork = null, quotes = null, quoteCount = 0, previewReady = false;
 
-  const TABS = [['works', 'Latest work'], ['inbox', 'Quote requests'], ['reviews', 'Reviews'], ['hero', 'Hero'], ['company', 'Company & About'], ['products', 'Profile Systems'], ['systems', 'Systems'], ['content', 'Key points & numbers'], ['design', 'Colours'], ['media', 'Images & files'], ['account', 'Password']];
-  // the ⋮ menu: every part of the website under its own heading
-  const MENU = [
-    ['Your work', [['works', 'Latest work', 'Add photos of finished jobs'], ['cats', 'Gallery categories', 'Sliding, Windows, Doors…']]],
-    ['Customers', [['inbox', 'Quote requests', 'Requests from the quote form'], ['reviews', 'Reviews', 'Approve and manage customer reviews']]],
-    ['Website pages', [['content', 'Key points & numbers', 'About points and counters'], ['hero', 'Hero', 'Top photo or video and headline'], ['company', 'Company & About', 'Phone, address, About text, owner profile'], ['products', 'Profile Systems', 'MU 2000, MU 3200, MU 3000, MU 2075…'], ['systems', 'Systems', 'Your nine product categories']]],
-    ['Look & files', [['design', 'Colours', 'Website colours'], ['media', 'Images & files', 'All uploaded photos, videos and PDFs']]],
-    ['Account', [['account', 'Password', 'Change the admin password']]],
+  // sidebar: every part of the website under its own heading
+  const NAV = [
+    ['Overview', [['dash', 'Dashboard', 'dash']]],
+    ['Customers', [['inbox', 'Quote requests', 'inbox'], ['reviews', 'Reviews', 'star']]],
+    ['Your work', [['works', 'Latest work', 'images'], ['cats', 'Gallery categories', 'tag']]],
+    ['Website', [['hero', 'Hero', 'home'], ['company', 'Company & About', 'building'], ['products', 'Profile Systems', 'layers'], ['systems', 'Aluminium Systems', 'grid'], ['content', 'Key points & numbers', 'chart']]],
+    ['Design & files', [['design', 'Colours', 'palette'], ['media', 'Images & files', 'folder']]],
+    ['Account', [['account', 'Password', 'key']]],
   ];
+  const NAV_NAME = Object.fromEntries(NAV.flatMap(([, items]) => items.map(([k, l]) => [k, l])));
+  const NI = {
+    dash: '<rect x="3" y="3" width="7" height="8" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="15" width="7" height="6" rx="1.5"/>',
+    inbox: '<path d="M4 13l2.5-7h11L20 13v6H4z"/><path d="M4 13h4.5l1 2h5l1-2H20"/>',
+    star: '<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/>',
+    images: '<rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M21 16l-5-5-8 8"/>',
+    tag: '<path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.4"/>',
+    home: '<path d="M4 11l8-7 8 7v9H4z"/><path d="M10 20v-5h4v5"/>',
+    building: '<rect x="5" y="3" width="14" height="18" rx="1.5"/><path d="M9 7h2M13 7h2M9 11h2M13 11h2M10 21v-4h4v4"/>',
+    layers: '<path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/>',
+    grid: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/>',
+    chart: '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
+    palette: '<path d="M12 3a9 9 0 1 0 0 18c1.2 0 1.8-.9 1.4-2-.5-1.3.4-2.5 1.8-2.5H18a3 3 0 0 0 3-3C21 7 17 3 12 3z"/><circle cx="7.5" cy="11" r="1.2"/><circle cx="10" cy="7" r="1.2"/><circle cx="15" cy="7" r="1.2"/>',
+    folder: '<path d="M3 6a1 1 0 0 1 1-1h5l2 2h9a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/>',
+    key: '<circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M17 6l3 3M15 8l2 2"/>',
+    ext: '<path d="M14 4h6v6M20 4l-9 9"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/>',
+    out: '<path d="M10 4H5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h5"/><path d="M15 8l4 4-4 4M19 12H9"/>',
+    menu: '<path d="M4 7h16M4 12h16M4 17h16"/>',
+    x: '<path d="M6 6l12 12M18 6L6 18"/>',
+    eye: '<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
+    plus: '<path d="M12 5v14M5 12h14"/>',
+    right: '<path d="M9 6l6 6-6 6"/>',
+  };
+  const ni = (n) => `<svg class="ni" viewBox="0 0 24 24" aria-hidden="true">${NI[n] || ''}</svg>`;
   const ICONS = ['motor', 'remote', 'maximize', 'shield', 'thermo', 'droplet', 'lock', 'sun', 'wind', 'layers', 'ruler', 'sparkle', 'building', 'fold', 'arrowsV', 'arrowsH', 'grid', 'window', 'door', 'palette', 'key', 'home', 'check', 'diamond', 'globe', 'users', 'handshake'];
   const KINDS = [['slide', 'Sliding panels'], ['vertical', 'Vertical sliding'], ['fold', 'Folding'], ['swing', 'Doors (swing)'], ['window', 'Windows'], ['grid', 'Curtain wall / facade grid'], ['none', 'No configurator']];
   const COLORS = [['navy', 'Navy (dark sections)'], ['accent', 'Accent (buttons, highlights)'], ['bg', 'Background'], ['surface', 'Light panels'], ['ink', 'Text']];
@@ -207,6 +231,32 @@
         <div class="list">${L.map((r, i) => `<div class="item">${itemHead('reviews', i, L.length, (r.name || 'Review ' + (i + 1)) + '  ' + stars(+r.rating || 5))}<div class="row">${txt(`reviews.${i}.name`, 'Customer name')}${txt(`reviews.${i}.place`, 'Area / city (optional)')}${txt(`reviews.${i}.title`, 'Title (optional)')}${txt(`reviews.${i}.project`, 'Project (optional)')}${sel(`reviews.${i}.rating`, 'Rating', [5, 4, 3, 2, 1].map((n) => [n, stars(n)]))}</div>${area(`reviews.${i}.text`, 'Review')}</div>`).join('') || '<p class="empty">No published reviews yet.</p>'}</div>
         ${addBtn('reviews', 'review', 'Add a review yourself')}</div>`;
   }
+  /* ---------- dashboard ---------- */
+  function vDash() {
+    const Q = quotes || [], U = (uRev || []).filter((r) => !r.hidden), L = site.reviews || [];
+    const all = [...U, ...L], avg = all.length ? all.reduce((a, r) => a + (+r.rating || 5), 0) / all.length : 0;
+    const week = Q.filter((q) => Date.now() - q.ts < 7 * 864e5).length;
+    const reported = (uRev || []).filter((r) => r.reports && !r.hidden).length;
+    const works = (site.works || []).length, prods = (site.products || []).filter((x) => x.visible !== false).length;
+    const gOn = !!String((site.reviewSettings || {}).googleClientId || '').trim();
+    const mail = Q.length ? Q[0].email : '';
+    const card = (k, ic, label, big, sub, tone) => `<button type="button" class="dcard ${tone || ''}" data-act="goto" data-tab="${k}"><span class="dcard-ic">${ni(ic)}</span><span class="dcard-l">${esc(label)}</span><b>${big}</b><small>${sub}</small></button>`;
+    const when = (ts) => new Date(ts).toLocaleString('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+    return `<div class="dash-hi"><h2>Hello 👋</h2><p class="hint">Here is what is happening on your website.</p></div>
+      <div class="dgrid">
+        ${card('inbox', 'inbox', 'Quote requests', quotes ? Q.length : '…', `${week} in the last 7 days`, 'gold')}
+        ${card('reviews', 'star', 'Reviews', uRev ? all.length : '…', all.length ? `★ ${avg.toFixed(1)} average${pendCount ? ` · ${pendCount} waiting` : ''}${reported ? ` · ${reported} reported` : ''}` : 'No reviews yet', 'blue')}
+        ${card('works', 'images', 'Latest work', works, 'Projects in the gallery', 'green')}
+        ${card('products', 'layers', 'Profile Systems', prods, 'Models on the website', 'violet')}
+      </div>
+      <div class="card"><div class="item-head"><h2 class="grow">Latest quote requests</h2><button type="button" class="b b-sm" data-act="goto" data-tab="inbox">View all${ni('right')}</button></div>
+        ${Q.length ? `<div class="dlist">${Q.slice(0, 5).map((q) => { const c = qCust(q); return `<button type="button" class="drow" data-act="goto" data-tab="inbox"><span class="drow-av">${esc((c.name || '?').trim().charAt(0).toUpperCase())}</span><span class="drow-b"><b>${esc(c.name || 'Customer')}</b><small>${esc(q.ref || '')} · ${(q.items || []).length} product${(q.items || []).length === 1 ? '' : 's'}${c.location ? ' · ' + esc(c.location) : ''}</small></span><time>${esc(when(q.ts))}</time></button>`; }).join('')}</div>` : `<p class="empty">${quotes ? 'No quote requests yet. They appear here as soon as a customer sends one.' : 'Loading…'}</p>`}</div>
+      <div class="card"><h2>Setup</h2><div class="dlist">
+        <button type="button" class="drow" data-act="goto" data-tab="reviews"><span class="dot ${gOn ? 'ok' : 'warn'}"></span><span class="drow-b"><b>Google sign-in for reviews</b><small>${gOn ? 'On: customers post reviews with their Google account.' : 'Off: reviews wait for your approval. Add a Google Client ID to turn it on.'}</small></span>${ni('right')}</button>
+        <div class="drow"><span class="dot ${mail === 'sent' ? 'ok' : mail ? 'warn' : ''}"></span><span class="drow-b"><b>Email notifications</b><small>${mail === 'sent' ? 'On: new requests are emailed to you.' : mail === 'not-configured' ? 'Not set up yet: requests are only shown here. Add RESEND_API_KEY in Cloudflare to get emails.' : mail ? 'The last email could not be sent (' + esc(mail) + ').' : 'Shown after the first quote request.'}</small></span></div>
+        <button type="button" class="drow" data-act="goto" data-tab="account"><span class="dot"></span><span class="drow-b"><b>Admin password</b><small>Use your own password that only you know.</small></span>${ni('right')}</button>
+      </div></div>`;
+  }
   /* ---------- aluminium profile systems (models) ---------- */
   function vProducts() {
     if (editProd != null && site.products[editProd]) return vProductEdit(editProd);
@@ -370,15 +420,25 @@
     $('#login').hidden = true;
     const app = $('#app');
     app.hidden = false;
-    app.innerHTML = `<div class="top"><div class="top-in"><img src="/img/logo-light.png" alt=""><span class="title">Website admin</span><span class="state" id="state">All changes saved</span><span class="sp"></span>
-        <a class="b b-sm hide-m" href="/" target="_blank" rel="noopener">View website</a>
-        <button type="button" class="b b-sm prev-toggle" data-act="prev-toggle">Preview</button>
-        <button type="button" class="b b-acc" data-act="save" id="save">Save</button>
-        <button type="button" class="b b-icon menu-btn" data-act="menu" aria-expanded="false" aria-controls="amenu" aria-label="Menu">⋮</button></div>
-        <div class="amenu" id="amenu" hidden></div></div>
-      <nav class="tabs" id="tabs" aria-label="Sections"></nav>
-      <div class="main" id="main"><div class="editor" id="editor"></div>
-        <aside class="preview" id="preview" aria-label="Preview"><div class="preview-bar"><span>Live preview</span><span class="sp"></span><div class="pv-mode" role="group" aria-label="Preview size"><button type="button" data-act="pv-mode" data-m="desk" aria-pressed="${pvMode === 'desk'}">Desktop</button><button type="button" data-act="pv-mode" data-m="mob" aria-pressed="${pvMode === 'mob'}">Mobile</button></div><button type="button" class="b b-sm prev-toggle" data-act="prev-toggle">Close</button></div><div class="pv-wrap" id="pv-wrap"><iframe id="pv" src="/?preview=1" title="Website preview"></iframe></div></aside></div>`;
+    app.innerHTML = `<aside class="side" id="side" aria-label="Admin menu">
+        <div class="side-top"><span>Menu</span><button type="button" class="side-x" data-act="side-close" aria-label="Close menu">${ni('x')}</button></div>
+        <div class="side-brand"><img src="/img/icon-dark.png" alt=""><div><b>${esc((site.company && site.company.name) || 'Alu MRK TriEdge Ltd')}</b><small>Admin Panel</small></div></div>
+        <nav class="side-nav" id="side-nav" aria-label="Sections"></nav>
+        <div class="side-foot"><a href="/" target="_blank" rel="noopener">${ni('ext')}<span>View website</span></a><button type="button" class="out" data-act="logout">${ni('out')}<span>Logout</span></button></div>
+      </aside>
+      <div class="scrim" id="scrim" data-act="side-close"></div>
+      <div class="shell">
+        <header class="top"><div class="top-in">
+          <button type="button" class="b b-icon side-btn" data-act="side-open" aria-label="Open menu" aria-controls="side" aria-expanded="false">${ni('menu')}</button>
+          <div class="top-t"><h1 id="page-title">${esc(NAV_NAME[tab] || '')}</h1><span class="state" id="state">All changes saved</span></div>
+          <span class="sp"></span>
+          <a class="b b-sm hide-m" href="/" target="_blank" rel="noopener">${ni('ext')}View site</a>
+          <button type="button" class="b b-sm prev-toggle" data-act="prev-toggle">${ni('eye')}<span class="hide-s">Preview</span></button>
+          <button type="button" class="b b-acc" data-act="save" id="save">Save</button>
+        </div></header>
+        <div class="main" id="main"><div class="editor" id="editor"></div>
+          <aside class="preview" id="preview" aria-label="Preview"><div class="preview-bar"><span>Live preview</span><span class="sp"></span><div class="pv-mode" role="group" aria-label="Preview size"><button type="button" data-act="pv-mode" data-m="desk" aria-pressed="${pvMode === 'desk'}">Desktop</button><button type="button" data-act="pv-mode" data-m="mob" aria-pressed="${pvMode === 'mob'}">Mobile</button></div><button type="button" class="b b-sm prev-toggle" data-act="prev-toggle">Close</button></div><div class="pv-wrap" id="pv-wrap"><iframe id="pv" src="/?preview=1" title="Website preview"></iframe></div></aside></div>
+      </div>`;
     fitPreview();
     renderTabs();
     renderEditor();
@@ -395,18 +455,10 @@
     f.style.transform = 'scale(' + k + ')';
   }
   addEventListener('resize', () => requestAnimationFrame(fitPreview));
-  function renderMenu() {
-    const m = $('#amenu');
-    if (!m) return;
-    m.innerHTML = MENU.map(([head, items]) => `<div class="amenu-g"><p>${esc(head)}</p>${items.map(([k, l, d]) => `<button type="button" data-act="goto" data-tab="${k}" class="${(k === 'cats' ? 'works' : k) === tab && k !== 'cats' ? 'on' : ''}"><b>${esc(l)}${k === 'inbox' && quoteCount ? ` <span class="badge">${quoteCount}</span>` : ''}${k === 'reviews' && pendCount ? ` <span class="badge">${pendCount}</span>` : ''}</b><small>${esc(d)}</small></button>`).join('')}</div>`).join('')
-      + `<div class="amenu-g"><p>More</p><a href="/" target="_blank" rel="noopener"><b>View website</b><small>Opens in a new tab</small></a><button type="button" data-act="logout"><b>Sign out</b><small></small></button></div>`;
-  }
-  function setMenu(open) {
-    const m = $('#amenu'), b = $('.menu-btn');
-    if (!m) return;
-    if (open) renderMenu();
-    m.hidden = !open;
-    b.setAttribute('aria-expanded', String(open));
+  function setSide(open) {
+    document.documentElement.classList.toggle('side-open', open);
+    const b = $('.side-btn');
+    if (b) b.setAttribute('aria-expanded', String(open));
   }
   function goTab(k) {
     const toCats = k === 'cats';
@@ -419,20 +471,24 @@
     scrollTo(0, 0);
     if (toCats) requestAnimationFrame(() => { const c = $('#cats-card'); if (c) c.scrollIntoView({ block: 'start' }); });
     if (tab === 'inbox') loadQuotes();
-    if (tab === 'reviews') loadReviews();
+    if (tab === 'reviews') { loadReviews(); loadUReviews(); }
+    if (tab === 'dash') { loadQuotes(true); loadReviews(); loadUReviews(); }
     previewGo(tab === 'products' ? 'products' : tab === 'inbox' ? 'quote' : tab === 'reviews' ? 'reviews' : tab === 'systems' ? 'systems' : tab === 'works' ? 'projects' : tab === 'content' || tab === 'company' ? 'about' : 'top');
-    const on = $('#tabs .on');
-    if (on && on.scrollIntoView) on.scrollIntoView({ block: 'nearest', inline: 'center' });
+    const pt = $('#page-title');
+    if (pt) pt.textContent = toCats ? NAV_NAME.cats : NAV_NAME[tab] || '';
   }
   function renderTabs() {
-    $('#tabs').innerHTML = TABS.map(([k, l]) => `<button type="button" data-act="tab" data-tab="${k}" class="${k === tab ? 'on' : ''}">${esc(l)}${k === 'inbox' && quoteCount ? `<span class="badge">${quoteCount}</span>` : ''}${k === 'reviews' && pendCount ? `<span class="badge">${pendCount}</span>` : ''}</button>`).join('');
+    const nav = $('#side-nav');
+    const reported = (uRev || []).filter((r) => r.reports && !r.hidden).length;
+    const badge = (k) => (k === 'inbox' && quoteCount ? quoteCount : k === 'reviews' && pendCount + reported ? pendCount + reported : 0);
+    if (nav) nav.innerHTML = NAV.map(([head, items]) => `<div class="side-g"><p>${esc(head)}</p>${items.map(([k, l, ic]) => `<button type="button" data-act="goto" data-tab="${k}" class="${k === tab ? 'on' : ''}"${k === tab ? ' aria-current="page"' : ''}>${ni(ic)}<span>${esc(l)}</span>${badge(k) ? `<em class="badge">${badge(k)}</em>` : ''}</button>`).join('')}</div>`).join('');
     document.title = (quoteCount ? '(' + quoteCount + ') ' : '') + 'Admin · Alu MRK TriEdge';
   }
   function renderEditor() {
-    const views = { design: vDesign, company: vCompany, hero: vHero, systems: vSystems, works: vWorks, products: vProducts, reviews: vReviews, content: vContent, inbox: vInbox, media: vMedia, account: vAccount };
+    const views = { dash: vDash, design: vDesign, company: vCompany, hero: vHero, systems: vSystems, works: vWorks, products: vProducts, reviews: vReviews, content: vContent, inbox: vInbox, media: vMedia, account: vAccount };
     const y = scrollY;
     $('#editor').innerHTML = views[tab]();
-    $('#main').classList.toggle('no-prev', tab === 'inbox' || tab === 'media' || tab === 'account');
+    $('#main').classList.toggle('no-prev', tab === 'dash' || tab === 'inbox' || tab === 'media' || tab === 'account');
     requestAnimationFrame(fitPreview);
     scrollTo(0, y);
   }
@@ -444,14 +500,15 @@
       quotes = j.items || [];
       quoteCount = quotes.length;
       renderTabs();
-      if (tab === 'inbox') renderEditor();
+      if (tab === 'inbox' || tab === 'dash') renderEditor();
     } catch (e) { toast(e.message, 'err'); }
   }
   async function loadUReviews() {
     try {
       const j = await api('/api/admin/ureviews');
       uRev = j.items || [];
-      if (tab === 'reviews') renderEditor();
+      renderTabs();
+      if (tab === 'reviews' || tab === 'dash') renderEditor();
     } catch (e) { toast(e.message, 'err'); }
   }
   async function loadReviews() {
@@ -460,7 +517,7 @@
       pendRev = j.items || [];
       pendCount = pendRev.length;
       renderTabs();
-      if (tab === 'reviews') renderEditor();
+      if (tab === 'reviews' || tab === 'dash') renderEditor();
     } catch (e) { toast(e.message, 'err'); }
   }
   async function save() {
@@ -578,16 +635,16 @@
 
   document.addEventListener('click', async (e) => {
     const b = e.target.closest('[data-act]');
-    if ((!b || b.dataset.act !== 'menu') && $('#amenu') && !$('#amenu').hidden && !e.target.closest('#amenu')) setMenu(false);
     if (!b || !site) return;
     const act = b.dataset.act, p = b.dataset.path;
     switch (act) {
       case 'tab':
       case 'goto':
-        setMenu(false);
+        setSide(false);
         goTab(b.dataset.tab);
         break;
-      case 'menu': setMenu($('#amenu').hidden); break;
+      case 'side-open': setSide(true); break;
+      case 'side-close': setSide(false); break;
       case 'edit-prod': editProd = +b.dataset.i; renderEditor(); scrollTo(0, 0); previewGo(site.products[editProd].id); break;
       case 'back-prod': editProd = null; renderEditor(); previewGo('products'); break;
       case 'add-prod': {
@@ -795,9 +852,11 @@
     shell();
     loadQuotes();
     loadReviews();
+    loadUReviews();
     clearInterval(pollT);
     pollT = setInterval(() => { if (!document.hidden && site && tab !== 'inbox') loadQuotes(true); }, 60000);
   }
   let pollT = null;
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && document.documentElement.classList.contains('side-open')) setSide(false); });
   boot();
 })();
