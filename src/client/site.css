@@ -1117,24 +1117,8 @@ html.pv .hero-copy>*,html.pv .hs-count{animation:none}
 .hi-call{--c:#0f9b8e;--g:rgba(15,155,142,.45)}
 .help-item:hover .hi,.help-item:focus-visible .hi{box-shadow:0 8px 20px rgba(0,0,0,.4),0 0 0 6px var(--g)}
 
-/* hero as a live wallpaper: slow drift, a light sweep across the glass and soft rising light specks */
-.slide:only-child.on img{animation:kb 22s ease-in-out infinite alternate}
-@keyframes kb{from{transform:scale(1.03) translate3d(0,0,0)}to{transform:scale(1.13) translate3d(-2%,-1.4%,0)}}
-.hero-live{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
-.hero-live .sweep{position:absolute;top:-25%;bottom:-25%;left:0;width:26%;background:linear-gradient(100deg,transparent 0%,rgba(255,255,255,0) 30%,rgba(255,244,220,.17) 50%,rgba(255,255,255,0) 70%,transparent 100%);mix-blend-mode:screen;transform:translateX(-160%) skewX(-14deg);animation:hero-sweep 10s cubic-bezier(.45,0,.25,1) 1.2s infinite;will-change:transform}
-@keyframes hero-sweep{0%{transform:translateX(-160%) skewX(-14deg)}55%,100%{transform:translateX(480%) skewX(-14deg)}}
-.hero-live b{position:absolute;bottom:-12px;left:var(--x);width:var(--s);height:var(--s);border-radius:50%;background:radial-gradient(circle,rgba(255,226,170,.95) 0%,rgba(255,226,170,0) 70%);opacity:0;animation:hero-float var(--d) linear var(--dl) infinite;will-change:transform,opacity}
-@keyframes hero-float{0%{transform:translate3d(0,0,0);opacity:0}12%{opacity:.75}80%{opacity:.35}100%{transform:translate3d(28px,-105vh,0);opacity:0}}
-@media (max-width:760px){.hero-live b:nth-child(2n+1){display:none}}
-@media (prefers-reduced-motion:reduce){.hero-live{display:none}}
-/* minimal hero: two lines and a scroll-down arrow */
+
+/* minimal hero: two lines; on phones the next section peeks in so people scroll */
 .hero h1{font-size:clamp(40px,5.2vw,78px);line-height:1.04}
-.hero-down{position:absolute;z-index:4;left:max(20px,env(safe-area-inset-left,0px));bottom:calc(28px + env(safe-area-inset-bottom,0px));width:52px;height:52px;display:grid;place-items:center;background:rgba(12,14,17,.72);color:#fff;border:1px solid rgba(255,255,255,.18);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transition:background .25s}
-.hero-down .ic{width:20px;height:20px;transform:rotate(90deg);animation:hero-nudge 2.4s ease-in-out infinite}
-.hero-down:hover{background:var(--accent);color:#14171a}
-@keyframes hero-nudge{0%,100%{transform:rotate(90deg) translateX(0)}50%{transform:rotate(90deg) translateX(5px)}}
-@media (min-width:1321px){.hero-down{left:calc((100vw - 1320px)/2 + 20px)}}
-@media (prefers-reduced-motion:reduce){.hero-down .ic{animation:none}}
 .hero h1{font-size:clamp(34px,5.2vw,78px)}
-@media (max-width:1100px){.hero-copy{padding-bottom:76px}}
-@media (min-width:1101px){.hero-down{display:none}}
+@media (max-width:760px){.hero{height:84svh;min-height:520px}}

@@ -331,7 +331,6 @@
           (s, i) => `<div class="slide${i ? '' : ' on'}" aria-hidden="${i ? 'true' : 'false'}"><img src="${esc(src(s.img))}" alt="" ${i ? 'loading="lazy"' : 'fetchpriority="high"'}>${s.video && !reduce ? `<video src="${esc(src(s.video))}" muted loop playsinline preload="${i ? 'none' : 'auto'}" aria-hidden="true"></video>` : ''}</div>`
         )
         .join('')}</div>
-      <div class="hero-live" aria-hidden="true"><i class="sweep"></i>${[[8, 6, 14, 0], [18, 4, 18, 3], [27, 7, 16, 7], [39, 5, 20, 1.5], [52, 6, 15, 5], [61, 4, 19, 9], [70, 8, 17, 2.5], [78, 5, 21, 6], [86, 6, 15, 4], [94, 4, 18, 8]].map(([x, s, d, dl]) => `<b style="--x:${x}%;--s:${s}px;--d:${d}s;--dl:${dl}s"></b>`).join('')}</div>
       <div class="hero-shade"></div>
       ${badge ? `<span class="seal"><span>${esc(badge)}</span></span>` : ''}
       ${many ? `<button type="button" class="hs-arrow prev" data-slide="-1" aria-label="Previous slide">${icon('back')}</button><button type="button" class="hs-arrow next" data-slide="1" aria-label="Next slide">${icon('arrow')}</button>` : ''}
@@ -339,7 +338,7 @@
         ${showText ? `<div class="hero-copy">
           <h1>${esc(t(S.text.heroTitle))}<span class="silver">${esc(t(S.text.heroAccent))}</span></h1>
         </div>
-        <a class="hero-down" href="#systems" aria-label="${u('explore_systems')}">${icon('arrow')}</a>` : ''}
+` : ''}
         ${many ? `<div class="hs-count"><b id="hs-n">01</b><span>/ ${pad(sl.length)}</span><i class="hs-bar"><i id="hs-fill"></i></i><span class="hs-mini"><button type="button" data-slide="-1" aria-label="Previous slide">${icon('back')}</button><button type="button" data-slide="1" aria-label="Next slide">${icon('arrow')}</button></span></div>` : ''}
       </div>
     </section>`;
