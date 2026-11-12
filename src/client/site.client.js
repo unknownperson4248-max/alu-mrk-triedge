@@ -332,6 +332,7 @@
         )
         .join('')}</div>
       <div class="hero-shade"></div>
+      <span class="scroll-cue" aria-hidden="true"><i></i><i></i><b></b></span>
       ${badge ? `<span class="seal"><span>${esc(badge)}</span></span>` : ''}
       ${many ? `<button type="button" class="hs-arrow prev" data-slide="-1" aria-label="Previous slide">${icon('back')}</button><button type="button" class="hs-arrow next" data-slide="1" aria-label="Next slide">${icon('arrow')}</button>` : ''}
       <div class="wrap hero-in">
@@ -1514,7 +1515,12 @@
     lock(panel === 'menu' || (panel === 'search' && mobile()), 'panel');
     onScroll();
   }
+  // scroll cue: appears 2.5s after the hero entrance, hides on scroll, returns only at the very top
+  let cueReady = false;
+  setTimeout(() => { cueReady = true; syncCue(); }, 1600 + 2500);
+  function syncCue() { const c = $('.scroll-cue'); if (c) c.classList.toggle('show', cueReady && scrollY <= 2 && !layerBusy()); }
   function onScroll() {
+    syncCue();
     const h = $('#hdr');
     if (!h) return;
     h.classList.toggle('solid', scrollY > 40 && !panel);
