@@ -1385,3 +1385,4 @@ html.pv .hero-copy>*,html.pv .hs-count{animation:none}
 .qb-measure b{display:block;font-size:15px;color:#fff}
 .qb-measure small{display:block;margin-top:3px;font-size:13px;line-height:1.45;color:var(--on-navy-muted)}
 .qb-qonly{grid-template-columns:minmax(0,140px)}
+.qb-opt{font:inherit;font-size:11px;opacity:.6;text-transform:none;letter-spacing:0;margin-left:4px}
