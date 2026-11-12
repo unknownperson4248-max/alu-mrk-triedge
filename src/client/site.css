@@ -1141,3 +1141,49 @@ html.pv .hero-copy>*,html.pv .hs-count{animation:none}
 @keyframes cue-glow{0%,100%{opacity:.45;transform:translateX(-50%) scaleX(.7)}55%{opacity:.9;transform:translateX(-50%) scaleX(1)}}
 @media (min-width:761px){.scroll-cue{bottom:226px}}
 @media (max-width:760px){.hero-copy{padding-bottom:64px}}
+
+/* ---------- About us page ---------- */
+.ab-hero{position:relative;min-height:clamp(260px,42vw,420px);display:flex;align-items:flex-end;color:#fff;overflow:hidden;background:var(--navy-deep)}
+.ab-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.55;transform:scale(1.04);animation:kb 26s ease-in-out infinite alternate}
+.ab-hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,11,13,.15),rgba(10,11,13,.85))}
+.ab-hero .wrap{position:relative;z-index:1;padding-block:40px}
+.ab-hero .eyebrow{color:var(--accent)}
+.ab-hero h1{font:600 clamp(34px,5vw,64px)/1.05 var(--display);letter-spacing:-.02em;margin-top:12px}
+.ab-intro,.ab-values,.ab-how,.ab-stats-w,.ab-founder,.ab-partner{background:var(--navy);color:#fff;padding-block:clamp(48px,6vw,88px)}
+.ab-values,.ab-stats-w{background:var(--navy-deep)}
+.ab-two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,5vw,72px);align-items:center}
+@media (max-width:860px){.ab-two{grid-template-columns:1fr}}
+.ab-intro h2,.ab-h{font:600 clamp(26px,3vw,40px)/1.15 var(--display);letter-spacing:-.02em}
+.ab-intro p,.ab-sub{color:var(--on-navy-muted);font-size:16.5px;line-height:1.7}
+.ab-tag{margin-top:16px;color:var(--accent)!important;font-weight:500}
+.ab-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:28px}
+.ab-card{padding:24px;border:1px solid rgba(214,220,226,.14);border-radius:14px;background:var(--navy);display:grid;gap:10px;align-content:start;transition:border-color .25s,transform .25s}
+.ab-card:hover{border-color:color-mix(in srgb,var(--accent) 50%,transparent);transform:translateY(-3px)}
+.ab-ic{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--accent)}
+.ab-ic .ic{width:22px;height:22px}
+.ab-card h3{font:600 17px/1.3 var(--display)}
+.ab-card p{color:var(--on-navy-muted);font-size:14.5px;line-height:1.6}
+.ab-img{margin:0;border-radius:16px;overflow:hidden;aspect-ratio:4/3}
+.ab-img img{width:100%;height:100%;object-fit:cover}
+.ab-steps{list-style:none;margin:22px 0 0;padding:0;display:grid;gap:16px}
+.ab-steps li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:16px;align-items:start}
+.ab-n{position:relative;width:48px;height:48px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(214,220,226,.25);color:var(--accent)}
+.ab-n .ic{width:20px;height:20px}
+.ab-n small{position:absolute;right:-6px;top:-6px;font:600 11px var(--mono);background:var(--accent);color:#14171a;border-radius:999px;padding:1px 5px}
+.ab-steps b{display:block;font:600 17px var(--display);margin-top:2px}
+.ab-steps p{color:var(--on-navy-muted);font-size:14.5px;line-height:1.55;margin-top:2px}
+.ab-partner .ab-two{align-items:center}
+.ab-partner .link-sm{justify-self:end;color:var(--accent)}
+@media (max-width:860px){.ab-partner .link-sm{justify-self:start}}
+.ab-cta{position:relative;overflow:hidden;color:#fff;background:var(--navy-deep);padding-block:clamp(56px,7vw,96px)}
+.ab-cta img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.3}
+.ab-cta .wrap{position:relative;z-index:1;display:grid;gap:12px;justify-items:start}
+.ab-cta h2{font:600 clamp(26px,3.2vw,44px)/1.15 var(--display);max-width:22ch}
+.ab-cta p{color:rgba(255,255,255,.8)}
+.ab-cta-b{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+.about-more{margin-top:14px;color:var(--accent)}
+
+/* ---------- mobile menu: slides down from the top ---------- */
+.mnav{opacity:1;visibility:hidden;transform:translateY(-100%);transition:transform .55s cubic-bezier(.7,0,.2,1),visibility 0s linear .55s;box-shadow:0 30px 60px -20px rgba(0,0,0,.6)}
+.mnav.open{visibility:visible;transform:none;transition:transform .55s cubic-bezier(.7,0,.2,1),visibility 0s}
+@media (prefers-reduced-motion:reduce){.mnav,.mnav.open{transition:none}}

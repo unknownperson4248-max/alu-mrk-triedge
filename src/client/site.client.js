@@ -72,7 +72,7 @@
       band_title: 'Let’s build something great together', band_body: 'Get a free consultation and quote today.', contact_us: 'Contact us', quick_links: 'Quick links', follow: 'Follow us', contact_info: 'Contact info',
       search_ph: 'Search, e.g. sliding doors', no_results: 'No results for “{q}”.', popular: 'Popular searches', chips: ['Sliding', 'Windows', 'Doors', 'Folding', 'Glass'],
       hero_eyebrow: 'Windows · Doors · Glass', explore_systems: 'Explore our products', watch: 'Watch video',
-      about_eyebrow: 'About', survey: 'Book a free site survey', systems_eyebrow: 'Aluminium systems', explore: 'Explore system',
+      ab_title: 'About us', ab_more: 'More about us', ab_values: 'What we stand for', ab_how: 'How we work', ab_how_sub: 'One team from the first measurement to the final seal.', ab_s1: 'Measure', ab_s1b: 'We visit, survey and measure every opening on site.', ab_s2: 'Design', ab_s2b: 'We choose the right system, glass and finish with you.', ab_s3: 'Fabricate', ab_s3b: 'Your windows and doors are made to measure.', ab_s4: 'Install', ab_s4b: 'Our own team installs and seals everything.', ab_partner: 'Our profiles', ab_partner_b: 'We work with aluminium profile systems supplied by MUSKITA.', ab_partner_l: 'See the profile systems', ab_cta_b: 'Tell us about your project and get a written quotation.', about_eyebrow: 'About', survey: 'Book a free site survey', systems_eyebrow: 'Aluminium systems', explore: 'Explore system',
       all_systems: 'All systems', system_n: 'System {n} / {t}', overview: 'Overview', features: 'Features', specs: 'Specifications',
       config: 'Configurator', gallery: 'Gallery', related: 'Related systems', applications: 'Applications',
       on_request: 'On request', specs_note: 'Values depend on the size and design of each project. Ask us for the technical sheet.',
@@ -142,7 +142,7 @@
       band_title: 'Ας φτιάξουμε κάτι σπουδαίο μαζί', band_body: 'Ζητήστε δωρεάν συμβουλή και προσφορά σήμερα.', contact_us: 'Επικοινωνία', quick_links: 'Σύνδεσμοι', follow: 'Ακολουθήστε μας', contact_info: 'Στοιχεία επικοινωνίας',
       search_ph: 'Αναζήτηση, π.χ. συρόμενες πόρτες', no_results: 'Δεν βρέθηκαν αποτελέσματα για «{q}».', popular: 'Δημοφιλείς αναζητήσεις', chips: ['Συρόμενα', 'Παράθυρα', 'Πόρτες', 'Πτυσσόμενα', 'Γυαλί'],
       hero_eyebrow: 'Παράθυρα · Πόρτες · Γυαλί', explore_systems: 'Δείτε τα προϊόντα μας', watch: 'Δείτε το βίντεο',
-      about_eyebrow: 'Σχετικά με την', survey: 'Κλείστε δωρεάν αυτοψία', systems_eyebrow: 'Συστήματα αλουμινίου', explore: 'Δείτε το σύστημα',
+      ab_title: 'Η εταιρεία', ab_more: 'Περισσότερα για εμάς', ab_values: 'Τι πρεσβεύουμε', ab_how: 'Πώς δουλεύουμε', ab_how_sub: 'Μία ομάδα από την πρώτη μέτρηση μέχρι την τελική σφράγιση.', ab_s1: 'Μέτρηση', ab_s1b: 'Επισκεπτόμαστε τον χώρο και μετράμε κάθε άνοιγμα.', ab_s2: 'Σχεδιασμός', ab_s2b: 'Επιλέγουμε μαζί σας σύστημα, γυαλί και φινίρισμα.', ab_s3: 'Κατασκευή', ab_s3b: 'Τα παράθυρα και οι πόρτες σας κατασκευάζονται στα μέτρα σας.', ab_s4: 'Τοποθέτηση', ab_s4b: 'Η δική μας ομάδα τοποθετεί και σφραγίζει τα πάντα.', ab_partner: 'Τα προφίλ μας', ab_partner_b: 'Συνεργαζόμαστε με συστήματα προφίλ αλουμινίου της MUSKITA.', ab_partner_l: 'Δείτε τα συστήματα προφίλ', ab_cta_b: 'Πείτε μας για το έργο σας και λάβετε γραπτή προσφορά.', about_eyebrow: 'Σχετικά με την', survey: 'Κλείστε δωρεάν αυτοψία', systems_eyebrow: 'Συστήματα αλουμινίου', explore: 'Δείτε το σύστημα',
       all_systems: 'Όλα τα συστήματα', system_n: 'Σύστημα {n} / {t}', overview: 'Επισκόπηση', features: 'Χαρακτηριστικά', specs: 'Τεχνικά στοιχεία',
       config: 'Διαμόρφωση', gallery: 'Φωτογραφίες', related: 'Σχετικά συστήματα', applications: 'Εφαρμογές',
       on_request: 'Κατόπιν αιτήματος', specs_note: 'Οι τιμές εξαρτώνται από το μέγεθος και τον σχεδιασμό κάθε έργου. Ζητήστε μας το τεχνικό φυλλάδιο.',
@@ -273,7 +273,7 @@
         <nav class="links" aria-label="Main">
           <a href="#top" class="is-home">${u('home')}</a>
           <button type="button" class="mega-btn" data-p="mega" aria-expanded="false" aria-controls="mega">${u('m_systems')}${icon('chev')}</button>
-          ${prods().length ? `<button type="button" class="mega-btn" data-p="pmega" aria-expanded="false" aria-controls="pmega">${u('products')}${icon('chev')}</button>` : ''}<a href="#projects">${u('m_projects')}</a><a href="#about">${u('m_about')}</a><a href="#quote">${u('contact')}</a>
+          ${prods().length ? `<button type="button" class="mega-btn" data-p="pmega" aria-expanded="false" aria-controls="pmega">${u('products')}${icon('chev')}</button>` : ''}<a href="#projects">${u('m_projects')}</a><a href="#about-us">${u('m_about')}</a><a href="#quote">${u('contact')}</a>
         </nav>
         <button type="button" class="icon-btn srch-btn" aria-expanded="false" aria-controls="srch" aria-label="${u('search')}">${icon('search')}</button>
         ${langSelect()}
@@ -302,7 +302,7 @@
             <div class="acc-panel" id="acc-prof"><ul>${prods().map((x) => `<li><a href="#${esc(x.id)}"><small class="mdl">${esc(x.model)}</small>${esc(t(x.name))}</a></li>`).join('')}<li><a class="acc-all" href="#products">${u('view_all_prof')}${icon('arrow')}</a></li></ul></div></li>` : ''}
           <li><a href="#projects"><span><i class="mi">${icon('images')}</i>${u('m_projects')}</span>${icon('right')}</a></li>
           <li><a href="#reviews"><span><i class="mi">${icon('star')}</i>${u('reviews')}</span>${icon('right')}</a></li>
-          <li><a href="#about"><span><i class="mi">${icon('users')}</i>${u('m_about')}</span>${icon('right')}</a></li>
+          <li><a href="#about-us"><span><i class="mi">${icon('users')}</i>${u('m_about')}</span>${icon('right')}</a></li>
           <li><a href="#quote"><span><i class="mi">${icon('mail')}</i>${u('m_contact')}</span>${icon('right')}</a></li>
         </ul>
         <div class="mnav-short">
@@ -439,11 +439,41 @@
           <p class="eyebrow">${u('about_eyebrow')} ${esc(S.company.name)}</p>
           <h2>${esc(t(S.text.introTitle))}</h2>
           <p>${esc(t(S.text.introBody))}</p>
+          <a class="link-sm about-more" href="#about-us">${u('ab_more')}${icon('arrow')}</a>
         </div>
         ${v.length ? `<ul class="about-feats rv-kids">${v.slice(0, 4).map((x, i) => `<li style="--i:${i}">${icon(x.icon)}<span>${esc(t(x.title))}</span></li>`).join('')}</ul>` : ''}
       </div>
       <div class="wrap">${stats.length ? `<ul class="about-stats rv-kids">${stats.map((x, i) => `<li style="--i:${i}"><b data-count="${esc(x.value)}">${esc(x.value)}</b><span>${esc(t(x.label))}</span></li>`).join('')}</ul>` : ''}${founder()}</div>
     </section>`;
+  }
+
+  /* ---------- About us page ---------- */
+  function aboutPage() {
+    const img = S.aboutImage || 'img/alu-profiles.jpg', banner = S.heroImage || 'img/glass-room.jpg';
+    const v = (S.values || []).filter((x) => t(x.title));
+    const stats = (S.stats || []).filter((x) => String(x.value || '').trim());
+    const steps = [['ab_s1', 'ab_s1b', 'ruler'], ['ab_s2', 'ab_s2b', 'palette'], ['ab_s3', 'ab_s3b', 'layers'], ['ab_s4', 'ab_s4b', 'check']];
+    return `<div class="sp-bar"><div class="wrap">
+        <a class="sp-back" href="#about">${icon('back')}${u('back_home')}</a>
+        <span class="sp-title">${u('ab_title')}</span>
+        <a class="btn btn-accent" href="#quote">${u('quote')}</a>
+      </div></div>
+      <section class="ab-hero"><img src="${esc(src(banner))}" alt=""><div class="wrap"><p class="eyebrow">${u('ab_title')}</p><h1>${esc(S.company.name)}</h1></div></section>
+      <section class="ab-intro"><div class="wrap ab-two">
+        <h2>${esc(t(S.text.introTitle))}</h2>
+        <div><p>${esc(t(S.text.introBody))}</p>${t(S.text.tagline) ? `<p class="ab-tag">${esc(t(S.text.tagline))}</p>` : ''}</div>
+      </div></section>
+      ${v.length ? `<section class="ab-values"><div class="wrap"><h2 class="ab-h">${u('ab_values')}</h2><div class="ab-grid">${v.map((x) => `<article class="ab-card"><span class="ab-ic">${icon(x.icon)}</span><h3>${esc(t(x.title))}</h3>${t(x.body) ? `<p>${esc(t(x.body))}</p>` : ''}</article>`).join('')}</div></div></section>` : ''}
+      <section class="ab-how"><div class="wrap ab-two">
+        <figure class="ab-img"><img src="${esc(src(img))}" alt="" loading="lazy"></figure>
+        <div><h2 class="ab-h">${u('ab_how')}</h2><p class="ab-sub">${u('ab_how_sub')}</p>
+          <ol class="ab-steps">${steps.map(([h, b, ic], k) => `<li><span class="ab-n">${icon(ic)}<small>${pad(k + 1)}</small></span><div><b>${u(h)}</b><p>${u(b)}</p></div></li>`).join('')}</ol></div>
+      </div></section>
+      ${stats.length ? `<section class="ab-stats-w"><div class="wrap"><ul class="about-stats">${stats.map((x) => `<li><b>${esc(x.value)}</b><span>${esc(t(x.label))}</span></li>`).join('')}</ul></div></section>` : ''}
+      ${String((S.founder || {}).name || '').trim() ? `<section class="ab-founder"><div class="wrap">${founder()}</div></section>` : ''}
+      ${prods().length ? `<section class="ab-partner"><div class="wrap ab-two"><div><p class="eyebrow">${u('ab_partner')}</p><p class="ab-sub">${u('ab_partner_b')}</p></div><a class="link-sm" href="#products">${u('ab_partner_l')}${icon('arrow')}</a></div></section>` : ''}
+      <section class="ab-cta"><img src="${esc(src(S.heroImage || 'img/house-windows.jpg'))}" alt="" loading="lazy"><div class="wrap"><h2>${u('band_title')}</h2><p>${u('ab_cta_b')}</p><div class="ab-cta-b"><a class="btn btn-accent" href="#quote">${u('get_quote')}${icon('arrow')}</a>${waLink() ? `<a class="btn btn-wa" href="${esc(waLink(u('wa_hello', { c: S.company.name })))}" target="_blank" rel="noopener">${waIcon}WhatsApp</a>` : ''}</div></div></section>
+      ${footerMini()}`;
   }
 
   /* ---------- latest work + gallery ---------- */
@@ -1106,7 +1136,7 @@
     const soc = socialLinks('socials');
     return `<footer class="foot"><div class="wrap foot-top${soc ? ' has-soc' : ''}">
       <div class="foot-brand"><img src="/img/logo-light.png" alt="${esc(c.name)}" width="111" height="52"><p>${esc(t(S.text.tagline))}</p></div>
-      <div><h4>${u('quick_links')}</h4><ul><li><a href="#top">${u('home')}</a></li><li><a href="#about">${u('about')}</a></li><li><a href="#systems">${u('systems')}</a></li>${prods().length ? `<li><a href="#products">${u('products')}</a></li>` : ''}<li><a href="#projects">${u('gallery')}</a></li><li><a href="#reviews">${u('reviews')}</a></li><li><a href="#quote">${u('contact')}</a></li></ul></div>
+      <div><h4>${u('quick_links')}</h4><ul><li><a href="#top">${u('home')}</a></li><li><a href="#about-us">${u('about')}</a></li><li><a href="#systems">${u('systems')}</a></li>${prods().length ? `<li><a href="#products">${u('products')}</a></li>` : ''}<li><a href="#projects">${u('gallery')}</a></li><li><a href="#reviews">${u('reviews')}</a></li><li><a href="#quote">${u('contact')}</a></li></ul></div>
       <div><h4>${u('systems')}</h4><ul>${list.slice(0, 6).map((s) => `<li><a href="#${esc(s.slug)}">${esc(t(s.name))}</a></li>`).join('')}</ul></div>
       <div><h4>${u('contact_info')}</h4><ul class="foot-contact">
         ${t(c.address) ? `<li>${icon('pin')}<span>${esc(t(c.address))}</span></li>` : ''}
@@ -1623,8 +1653,34 @@
     document.title = `${S.company.name} · ${t(S.text.tagline)}`;
     setTimeout(() => { if (!layerBusy()) { sp.hidden = true; sp.innerHTML = ''; } }, reduce ? 0 : 720);
   }
-  let galOpen = false, prodCur = null, revOpen = false;
-  const layerBusy = () => current || galOpen || prodCur || revOpen;
+  let galOpen = false, prodCur = null, revOpen = false, abOpen = false;
+  const layerBusy = () => current || galOpen || prodCur || revOpen || abOpen;
+  function openAboutPage(instant) {
+    current = null; galOpen = false; prodCur = null; revOpen = false;
+    abOpen = true;
+    const sp = $('#sp');
+    sp.innerHTML = aboutPage();
+    sp.setAttribute('role', 'dialog');
+    sp.setAttribute('aria-modal', 'true');
+    sp.setAttribute('aria-label', u('ab_title'));
+    sp.hidden = false;
+    sp.scrollTop = 0;
+    if (instant || reduce) sp.classList.add('open');
+    else requestAnimationFrame(() => requestAnimationFrame(() => sp.classList.add('open')));
+    lock(true, 'sp');
+    document.title = `${u('ab_title')} · ${S.company.name}`;
+    sp.setAttribute('tabindex', '-1');
+    setTimeout(() => sp.focus({ preventScroll: true }), 50);
+  }
+  function closeAboutPage() {
+    if (!abOpen) return;
+    abOpen = false;
+    const sp = $('#sp');
+    sp.classList.remove('open');
+    lock(false, 'sp');
+    document.title = `${S.company.name} · ${t(S.text.tagline)}`;
+    setTimeout(() => { if (!layerBusy()) { sp.hidden = true; sp.innerHTML = ''; } }, reduce ? 0 : 720);
+  }
   function openRevPage(instant) {
     current = null; galOpen = false; prodCur = null;
     revOpen = true;
@@ -1711,11 +1767,13 @@
     const h = decodeURIComponent(location.hash.slice(1));
     if (panel) setPanel(null);
     setHelp(false);
-    if (h === 'all-reviews' && allRevs().length) { openRevPage(first); return; }
-    if (h === 'gallery' && works().length) { prodCur = null; revOpen = false; openGallery(first); return; }
-    if (h && byProd(h)) { revOpen = false; openProduct(h, first); return; }
-    if (h && bySlug(h)) { galOpen = false; prodCur = null; revOpen = false; openSystem(h, first); return; }
+    if (h === 'about-us') { openAboutPage(first); return; }
+    if (h === 'all-reviews' && allRevs().length) { abOpen = false; openRevPage(first); return; }
+    if (h === 'gallery' && works().length) { prodCur = null; revOpen = false; abOpen = false; openGallery(first); return; }
+    if (h && byProd(h)) { revOpen = false; abOpen = false; openProduct(h, first); return; }
+    if (h && bySlug(h)) { galOpen = false; prodCur = null; revOpen = false; abOpen = false; openSystem(h, first); return; }
     if (revOpen) closeRevPage();
+    if (abOpen) closeAboutPage();
     if (prodCur) closeProduct();
     if (galOpen) closeGallery();
     if (current) closeSystem();
