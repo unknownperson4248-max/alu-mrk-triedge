@@ -1525,10 +1525,13 @@
     document.documentElement.classList.toggle('past-hero', past);
     const sl = $('.slides');
     if (sl && !reduce && innerWidth > 760) sl.style.transform = scrollY < innerHeight ? `translate3d(0,${Math.round(scrollY * 0.14)}px,0)` : '';
-    if (past && !fabSaid && !reduce && !PREVIEW) {
+    let seen = false;
+    try { seen = !!sessionStorage.getItem('help-said'); } catch (e) {}
+    if (past && !fabSaid && !seen && !reduce && !PREVIEW) {
       fabSaid = true;
+      try { sessionStorage.setItem('help-said', '1'); } catch (e) {}
       try { if (sessionStorage.getItem('fab')) return; sessionStorage.setItem('fab', '1'); } catch (e) {}
-      setTimeout(() => { const f = $('#help'); if (f && !f.classList.contains('open')) { f.classList.add('say'); setTimeout(() => f.classList.remove('say'), 6000); } }, 1200);
+      setTimeout(() => { const f = $('#help'); if (f && !f.classList.contains('open')) { f.classList.add('say'); setTimeout(() => { const g = $('#help'); if (g) g.classList.remove('say'); }, 4000); } }, 1200);
     }
   }
   let fabSaid = false;

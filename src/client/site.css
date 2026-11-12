@@ -780,7 +780,8 @@ html:not(.past-hero) .help{opacity:0;pointer-events:none;transform:translateY(16
 .help.open .help-ic.b{opacity:1;transform:none}
 .help.open .help-btn::before,.help.open .help-btn::after{animation:none}
 .help-t{position:absolute;right:calc(100% + 14px);top:50%;transform:translate(8px,-50%);background:#fff;color:#14171a;font:600 14px var(--body);padding:10px 16px;border-radius:999px;white-space:nowrap;box-shadow:0 10px 24px rgba(0,0,0,.4);opacity:0;pointer-events:none;transition:opacity .3s,transform .3s var(--ease-out)}
-.help.say .help-t,.help:not(.open) .help-btn:hover .help-t{opacity:1;transform:translate(0,-50%)}
+.help.say .help-t{opacity:1;transform:translate(0,-50%)}
+@media (hover:hover) and (pointer:fine){.help:not(.open) .help-btn:hover .help-t{opacity:1;transform:translate(0,-50%)}}
 .help-menu{display:flex;flex-direction:column;align-items:flex-end;gap:10px;padding-right:6px}
 .help-item{display:flex;align-items:center;gap:12px;text-decoration:none;opacity:0;transform:translateY(18px) scale(.92);pointer-events:none;transition:opacity .25s,transform .35s var(--ease-out);transition-delay:0s}
 .help.open .help-item{opacity:1;transform:none;pointer-events:auto;transition-delay:calc(var(--i,0) * 55ms)}
