@@ -985,6 +985,7 @@
     { id: 'custom', cats: ['custom'], img: 'img/alu-profiles.jpg', k: 'qg_custom' },
   ];
   const CC = [['+357', 'CY'], ['+30', 'GR'], ['+44', 'UK'], ['+49', 'DE'], ['+40', 'RO'], ['+359', 'BG'], ['+7', 'RU'], ['+380', 'UA'], ['+972', 'IL'], ['+961', 'LB'], ['+880', 'BD'], ['+91', 'IN'], ['+63', 'PH'], ['+1', 'US/CA']];
+  const qgImg = (g) => (S.quoteTiles && S.quoteTiles[g.id]) || g.img;
   const grpOf = (cat) => QG.find((g) => g.cats.includes(cat)) || null;
   const grpById = (id) => QG.find((g) => g.id === id) || null;
   const grpModels = (g) => (g ? prods().filter((x) => g.cats.includes(x.cat)) : []);
@@ -992,7 +993,7 @@
   const dupModel = (p) => prods().filter((x) => x.model === p.model).length > 1;
   const modelLabel = (p) => (dupModel(p) ? `${p.model} (${t(p.name)})` : p.model);
   const itemP = (it) => (it.pid && byProd(it.pid)) || prodByModel(it.model);
-  const itemImg = (it) => { const p = itemP(it); return src((p && p.image) || (grpOf(it.cat) || QG[4]).img); };
+  const itemImg = (it) => { const p = itemP(it); return src((p && p.image) || qgImg(grpOf(it.cat) || QG[4])); };
   const itemTitle = (it) => { const p = itemP(it); return it.model ? (p && dupModel(p) ? it.model : `${it.model} – ${p ? t(p.name) : it.catName || ''}`) : it.catName || pcat(it.cat); };
   const itemMeta = (it) => [`${it.width} × ${it.height} mm`, it.colour, `${u('qb_qty_s')} ${it.qty}`].filter(Boolean).join(' · ');
   const qbSummary = (list) => { const n = list.length, pcs = list.reduce((s, it) => s + (+it.qty || 0), 0); return `${n === 1 ? u('qb_item_1') : u('qb_items_n', { n })} · ${u('qb_pcs', { n: pcs })}`; };
@@ -1012,10 +1013,10 @@
     const ready = g && (!ms.length || d.mp);
     let h = `<div class="qb-sec" id="qb-edit"><div class="qb-sec-h"><h3>${QB.edit >= 0 ? u('qb_edit_product', { n }) : g ? u('qb_product', { n }) : u('qb_choose_prod')}</h3>${QB.items.length ? `<button type="button" class="qb-link" data-qb="cancel-item">${u('qb_cancel')}</button>` : ''}</div>`;
     if (!g) {
-      h += `<div class="qb-cats">${QG.slice(0, 4).map((x) => `<button type="button" class="qb-cat" style="--i:${QG.indexOf(x)}" data-qb="grp" data-g="${x.id}"><span class="qb-cat-im"><img src="${esc(src(x.img))}" alt="" loading="lazy"><span class="pcat-ic">${catArt(x.id === 'windows' ? 'windows' : x.cats[0])}</span></span><b>${u(x.k)}</b><small>${esc(grpModels(x).length ? [...new Set(grpModels(x).map((m) => m.model))].join(' · ') : u('qb_tile_sub'))}</small></button>`).join('')}</div>
+      h += `<div class="qb-cats">${QG.slice(0, 4).map((x) => `<button type="button" class="qb-cat" style="--i:${QG.indexOf(x)}" data-qb="grp" data-g="${x.id}"><span class="qb-cat-im"><img src="${esc(src(qgImg(x)))}" alt="" loading="lazy"><span class="pcat-ic">${catArt(x.id === 'windows' ? 'windows' : x.cats[0])}</span></span><b>${u(x.k)}</b><small>${esc(grpModels(x).length ? [...new Set(grpModels(x).map((m) => m.model))].join(' · ') : u('qb_tile_sub'))}</small></button>`).join('')}</div>
         <button type="button" class="qb-cat-more" data-qb="grp" data-g="custom"><span>${icon('sparkle')}</span><div><b>${u('qg_custom')}</b><small>${u('qb_other_cat')}</small></div>${icon('right')}</button>`;
     } else {
-      h += `<div class="qb-picked"><img src="${esc(src(g.img))}" alt=""><div><small>${u('qb_cat')}</small><b>${u(g.k)}</b></div><button type="button" class="qb-link" data-qb="grp" data-g="">${u('qb_change')}</button></div>`;
+      h += `<div class="qb-picked"><img src="${esc(src(qgImg(g)))}" alt=""><div><small>${u('qb_cat')}</small><b>${u(g.k)}</b></div><button type="button" class="qb-link" data-qb="grp" data-g="">${u('qb_change')}</button></div>`;
       if (ms.length) {
         h += `<div class="qb-sub-h">${u('qb_choose_model')}</div><div class="qb-models">${ms.map((x) => `<button type="button" class="qb-model${d.mp && (d.pid ? d.pid === x.id : d.model === x.model) ? ' on' : ''}" aria-pressed="${!!(d.mp && (d.pid ? d.pid === x.id : d.model === x.model))}" data-qb="model" data-m="${esc(x.id)}"><span class="qb-model-im"><img src="${esc(src(x.image))}" alt="" loading="lazy"></span><span class="qb-model-t"><b>${esc(x.model)}</b><span>${esc(t(x.name))}</span><small>${esc(pcat(x.cat))}</small></span><span class="qb-radio"></span></button>`).join('')}
           <button type="button" class="qb-model${d.mp && !d.model ? ' on' : ''}" aria-pressed="${!!(d.mp && !d.model)}" data-qb="model" data-m=""><span class="qb-model-im qb-ns">?</span><span class="qb-model-t"><b>${u('qb_not_sure')}</b><span>${u('qb_not_sure_sub')}</span></span><span class="qb-radio"></span></button></div>`;

@@ -104,6 +104,7 @@
   // Preview follows what you are editing: each tab, and each card inside it, points at its part of the website.
   const PV_TAB = { dash: 'top', inbox: '#quote', reviews: '#reviews', works: '#projects', cats: '#projects', hero: 'top', company: '#about', products: '#products', systems: '#systems', content: '#about', design: 'top', media: 'top', account: 'top' };
   const PV_CARD = [
+    [/^Choose product pictures/, '#quote'],
     [/^Company details/, '#quote'], [/^Owner|founder/i, '.founder|#about'], [/^About section image|^Main text/, '#about'],
     [/^Hero/, 'top'], [/^About: key points/, '.about-feats|#about'], [/^Numbers/, '.about-stats|#about'],
     [/^Gallery categories|^Latest work/, '#projects'], [/^Product categories|^Profile Systems/, '#products'],
@@ -224,8 +225,8 @@
   }
   function vCats() {
     const C = site.galleryCats;
-    return `<div class="card" id="cats-card"><h2>Gallery categories</h2><p class="hint">The filter buttons above the gallery. A category shows once a work uses it.</p>
-        <div class="list">${C.map((c, i) => `<div class="cat-row"><div class="cat-in"><input type="text" data-path="galleryCats.${i}.name.en" value="${esc(c.name?.en || '')}" placeholder="Category name" aria-label="Category ${i + 1}">${grLine(`galleryCats.${i}.name`)}</div>
+    return `<div class="card" id="cats-card"><h2>Gallery categories</h2><p class="hint">These are the filter buttons above the gallery. First add the name here. Then tap <b>“+ Add photos”</b> under that name to put a finished job in it (you can also do this from <b>Latest work</b> in the menu). A category shows on the website once it has at least one job.</p>
+        <div class="list">${C.map((c, i) => `<div class="cat-row"><div class="cat-in"><input type="text" data-path="galleryCats.${i}.name.en" value="${esc(c.name?.en || '')}" placeholder="Category name" aria-label="Category ${i + 1}">${grLine(`galleryCats.${i}.name`)}<div class="cat-meta"><span>${(() => { const n = (site.works || []).filter((w) => w.cat === c.id).length; return n ? n + (n === 1 ? ' job' : ' jobs') + ' in this category' : 'No jobs yet'; })()}</span><button type="button" class="b b-sm b-pri" data-act="add-work" data-cat="${esc(c.id)}">+ Add photos</button></div></div>
           <div class="acts"><button type="button" class="b b-sm b-icon" data-act="move" data-path="galleryCats" data-i="${i}" data-d="-1" ${i === 0 ? 'disabled' : ''} aria-label="Move up">↑</button><button type="button" class="b b-sm b-icon" data-act="move" data-path="galleryCats" data-i="${i}" data-d="1" ${i === C.length - 1 ? 'disabled' : ''} aria-label="Move down">↓</button><button type="button" class="b b-sm b-icon b-danger" data-act="del" data-path="galleryCats" data-i="${i}" aria-label="Remove">${ni('trash')}</button></div></div>`).join('') || '<p class="empty">No categories.</p>'}</div>
         ${addBtn('galleryCats', 'cat', 'Add category')}</div>`;
   }
@@ -316,6 +317,8 @@
         <div class="acts"><button type="button" class="b b-sm b-icon" data-act="move" data-path="products" data-i="${i}" data-d="-1" ${i === 0 ? 'disabled' : ''} aria-label="Move up">↑</button><button type="button" class="b b-sm b-icon" data-act="move" data-path="products" data-i="${i}" data-d="1" ${i === L.length - 1 ? 'disabled' : ''} aria-label="Move down">↓</button><button type="button" class="b b-sm b-pri" data-act="edit-prod" data-i="${i}">Edit</button></div>
       </div>`).join('')}</div>
       <div><button type="button" class="b b-sm" data-act="add-prod">+ Add product</button></div></div>
+      <div class="card"><h2>Choose product pictures</h2><p class="hint">The four pictures customers tap in the quotation form (“Choose product”). Tap “Change photo” to use your own picture. “Remove” brings the standard picture back. To add a product itself, use “+ Add product” above.</p>
+        <div class="tile-pick">${[['doors', 'Doors', 'img/tile-doors.jpg'], ['windows', 'Windows', 'img/tile-windows.jpg'], ['sliding', 'Sliding systems', 'img/sliding-door.jpg'], ['glass', 'Glass', 'img/glass-stairs.jpg']].map(([k, l, d]) => { const v = val(`quoteTiles.${k}`); return fld(l + (v ? '' : ' (standard picture)'), `<div class="pick"><img src="${esc(src(v || d))}" alt=""><button type="button" class="b b-sm" data-act="pick" data-path="quoteTiles.${k}">Change photo</button>${v ? `<button type="button" class="b b-sm b-danger" data-act="clear" data-path="quoteTiles.${k}">Remove</button>` : ''}</div>`); }).join('')}</div></div>
       <div class="card"><h2>Product categories</h2><p class="hint">Used for the product filter and the first question of the quotation form.</p>
         <div class="list">${site.productCats.map((c, i) => `<div class="item">${itemHead('productCats', i, site.productCats.length, c.name?.en || 'Category')}${pair(`productCats.${i}.name`, 'Name')}</div>`).join('')}</div>
         ${addBtn('productCats', 'cat', 'Add category')}</div>`;
@@ -862,10 +865,11 @@
         const up = await uploadFiles(files);
         if (!up.length) break;
         const d = new Date();
-        site.works.unshift({ id: 'w' + Date.now().toString(36), title: T(), cat: '', place: T(), date: d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0'), images: up, ts: Date.now() });
+        site.works.unshift({ id: 'w' + Date.now().toString(36), title: T(), cat: b.dataset.cat || '', place: T(), date: d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0'), images: up, ts: Date.now() });
         editWork = 0;
+        if (tab !== 'works') { tab = 'works'; renderTabs(); const pt = $('#page-title'); if (pt) pt.textContent = NAV_NAME.works || ''; }
         markDirty(); renderEditor(); scrollTo(0, 0);
-        toast('Photos added. Add a title and category, then press Save.', 'ok');
+        toast(b.dataset.cat ? 'Photos added to this category. Add a title, then press Save.' : 'Photos added. Add a title and category, then press Save.', 'ok');
         break;
       }
       case 'edit-work': editWork = +b.dataset.i; renderEditor(); pgIn(); scrollTo(0, 0); break;

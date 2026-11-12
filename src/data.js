@@ -155,6 +155,7 @@ export const DEFAULT_SITE = {
     },
   ],
   // Defaults for the quotation document made in the admin panel. Empty until the company confirms them.
+  quoteTiles: { doors: '', windows: '', sliding: '', glass: '' },
   quoteSettings: { currency: '€', vat: '', validity: '', payment: '', delivery: '', terms: '' },
   // Published customer reviews: { id, name, place, rating 1-5, text, ts }. New ones arrive through the website and are approved in the admin panel.
   reviews: [],
