@@ -317,7 +317,7 @@
       </div>`).join('')}</div>
       <div><button type="button" class="b b-sm" data-act="add-prod">+ Add product</button></div></div>
       <div class="card"><h2>Product categories</h2><p class="hint">Used for the product filter and the first question of the quotation form.</p>
-        <div class="list">${site.productCats.map((c, i) => `<div class="item">${itemHead('productCats', i, site.productCats.length, c.name?.en || 'Category')}${pair(`productCats.${i}.name`, 'Name')}</div>`).join('')}</div>
+        <div class="list">${site.productCats.map((c, i) => `<div class="item">${itemHead('productCats', i, site.productCats.length, c.name?.en || 'Category')}${pair(`productCats.${i}.name`, 'Name')}${imgPick(`productCats.${i}.image`, 'Card photo on the website (empty = standard photo)', true)}</div>`).join('')}</div>
         ${addBtn('productCats', 'cat', 'Add category')}</div>`;
   }
   function vProductEdit(i) {

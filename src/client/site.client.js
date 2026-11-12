@@ -385,13 +385,15 @@
   };
   const artKey = (id) => (/door/.test(id) && !/sliding/.test(id) ? 'doors' : /sliding|slide/.test(id) ? 'sliding' : /thermal/.test(id) ? 'thermal' : /glass|rail/.test(id) ? 'glass' : /custom/.test(id) ? 'custom' : 'windows');
   const catArt = (id) => `<svg class="art" viewBox="0 0 400 300" aria-hidden="true">${ART[artKey(id)].map(([c, d]) => `<path class="${c}" d="${d}"${c === 'fill' ? '' : ' pathLength="1"'}/>`).join('')}</svg>`;
+  const CAT_IMG = { doors: 'img/door-window.jpg', sliding: 'img/sliding-window.jpg', thermal: 'img/lift-slide.jpg', glass: 'img/glass-stairs.jpg', windows: 'img/house-windows.jpg', custom: 'img/folding-product.jpg' };
+  const catImg = (id) => { const c = (S.productCats || []).find((x) => x.id === id); return (c && c.image) || CAT_IMG[artKey(id)]; };
   const prodGroups = () => { const L = prods(); return (S.productCats || []).map((c) => ({ id: c.id, name: t(c.name), list: L.filter((x) => x.cat === c.id) })).filter((g) => g.list.length); };
   const nModels = (n) => `${n} ${n === 1 ? u('model1') : u('models')}`;
   function modelsPage(id) {
     const g = prodGroups().find((x) => x.id === id);
     return `${pgBar('products', g.name)}
       <section class="mc-head"><div class="wrap mc-in">
-        <div class="mc-art">${catArt(id)}</div>
+        <div class="mc-art"><img src="${esc(src(catImg(id)))}" alt=""><span class="pcat-ic">${catArt(id)}</span></div>
         <div><p class="eyebrow">${u('prod_eyebrow')} · ${nModels(g.list.length)}</p><h1>${esc(g.name)}</h1><p>${u('choose_model')}</p></div>
       </div></section>
       <section class="pg-body"><div class="wrap"><div class="prod-grid pg-grid rv-kids" id="prod-grid">${prodCards(g.list)}</div></div></section>
@@ -411,7 +413,7 @@
     return `<section class="prods" id="products"><div class="wrap">
       <div class="proj-head rv"><div><p class="eyebrow">${u('prod_eyebrow')}</p><h2>${u('prod_title')}</h2><p class="prods-sub">${u('prod_sub')}</p></div></div>
       <div class="pcat-grid rv-kids">${G.map((g, k) => `<a class="pcat" style="--i:${k}" href="#models-${esc(g.id)}">
-        <span class="pcat-art">${catArt(g.id)}<span class="pcat-n">${nModels(g.list.length)}</span></span>
+        <span class="pcat-art"><img src="${esc(src(catImg(g.id)))}" alt="" loading="lazy"><span class="pcat-n">${nModels(g.list.length)}</span><span class="pcat-ic">${catArt(g.id)}</span></span>
         <span class="pcat-b"><b class="pcat-h">${esc(g.name)}</b><span class="pcat-m">${g.list.map((x) => esc(x.model)).join(' · ')}</span><span class="link-sm">${u('view_models')}${icon('arrow')}</span></span>
       </a>`).join('')}</div>
     </div></section>`;
