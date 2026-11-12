@@ -108,7 +108,7 @@
     [/^Company details/, '#quote'], [/^Owner|founder/i, '.founder|#about'], [/^About section image|^Main text/, '#about'],
     [/^Hero/, 'top'], [/^About: key points/, '.about-feats|#about'], [/^Numbers/, '.about-stats|#about'],
     [/^Gallery categories|^Latest work/, '#projects'], [/^Product categories|^Profile Systems/, '#products'],
-    [/review|Google sign-in/i, '#reviews'], [/^Systems/, '#systems'], [/^Website colours/, 'top'],
+    [/review/i, '#reviews'], [/^Systems/, '#systems'], [/^Website colours/, 'top'],
   ];
   function cardTarget(card) {
     const h = card && card.querySelector('h2');
@@ -250,27 +250,15 @@
   function vReviews() {
     if (!pendRev) loadReviews();
     if (!uRev) loadUReviews();
-    const P = pendRev || [], L = site.reviews, U = uRev || [], on = !!String((site.reviewSettings || {}).googleClientId || '').trim();
-    const origins = [location.origin, 'https://alu-mrk-triedge.rahatwize.workers.dev', 'https://alu-mrk-triedge-preview.rahatwize.workers.dev'].filter((v, i, a) => a.indexOf(v) === i);
-    return `<div class="card"><h2>Google sign-in for reviews ${on ? '<span class="tag ok">On</span>' : '<span class="tag">Off</span>'}</h2>
-        <p class="hint">${on ? 'Customers sign in with Google and their review is shown at once (one review per Google account, which they can edit or delete). You can reply to, hide or delete any review below.' : 'While this is empty, reviews from the website wait below for your approval. Paste a Google Client ID to switch to instant reviews with Google sign-in.'}</p>
-        ${txt('reviewSettings.googleClientId', 'Google OAuth Client ID', 'text', '1234567890-abc...apps.googleusercontent.com')}
-        <details class="howto"><summary>How to get a Client ID (free, about 10 minutes)</summary><ol>
-          <li>Open <b>console.cloud.google.com</b> and sign in with the company Google account.</li>
-          <li>Create a project (any name, e.g. "Alu MRK website").</li>
-          <li>Go to <b>APIs &amp; Services → OAuth consent screen</b>: choose <b>External</b>, enter the app name and the company email, save, then <b>Publish app</b>.</li>
-          <li>Go to <b>Credentials → Create credentials → OAuth client ID</b>, type <b>Web application</b>.</li>
-          <li>Under <b>Authorised JavaScript origins</b> add:<br>${origins.map((o) => `<code>${esc(o)}</code>`).join('<br>')}</li>
-          <li>Create, copy the <b>Client ID</b> (it ends with <code>.apps.googleusercontent.com</code>), paste it above and press <b>Save</b>. The Client ID is not a secret.</li>
-        </ol></details></div>
-      <div class="card"><div class="item-head"><h2 class="grow">Reviews from Google accounts (${U.length})</h2><button type="button" class="b b-sm" data-act="reload-urev">Refresh</button></div>
+    const P = pendRev || [], L = site.reviews, U = uRev || [];
+    return `${U.length ? `<div class="card"><div class="item-head"><h2 class="grow">Reviews from Google accounts (${U.length})</h2><button type="button" class="b b-sm" data-act="reload-urev">Refresh</button></div>
         <p class="hint">Shown on the website at once. Reply as the company, or hide/delete a review only if it is abusive or fake. Emails are private.</p>
         <div class="list">${U.map((r) => `<div class="q${r.hidden ? ' is-hidden' : ''}"><div class="q-top"><b>${esc(r.name)}</b><span class="rstars">${stars(+r.rating || 5)}</span><time>${esc(new Date(r.uts || r.ts).toLocaleDateString())}</time></div>
           <div class="muted">${esc(r.email || '')} ${r.verified ? '<span class="tag ok">Verified customer</span>' : ''} ${r.reports ? `<span class="tag warn">Reported ${r.reports}×</span>` : ''} ${r.hidden ? '<span class="tag">Hidden</span>' : ''} ${r.helpful ? `<span class="tag">${r.helpful} helpful</span>` : ''}</div>
           <p style="margin:6px 0;white-space:pre-line">${esc(r.text)}</p>
           ${(r.photos || []).length ? `<div class="thumbs">${r.photos.map((p) => `<a class="thumb" href="/${esc(p)}" target="_blank" rel="noopener"><img src="/${esc(p)}" alt=""></a>`).join('')}</div>` : ''}
           <div class="fld"><label for="urr-${esc(r.id)}">Your reply (shown under the review)</label><textarea id="urr-${esc(r.id)}" rows="2" maxlength="1500">${esc((r.reply && r.reply.text) || '')}</textarea></div>
-          <div class="acts"><button type="button" class="b b-sm b-pri" data-act="ur-reply" data-id="${esc(r.id)}">Save reply</button><button type="button" class="b b-sm" data-act="ur-hide" data-id="${esc(r.id)}">${r.hidden ? 'Show again' : 'Hide'}</button>${r.reports ? `<button type="button" class="b b-sm" data-act="ur-clear" data-id="${esc(r.id)}">Clear reports</button>` : ''}<button type="button" class="b b-sm b-danger" data-act="ur-del" data-id="${esc(r.id)}">Delete</button></div></div>`).join('') || `<p class="empty">${uRev ? 'No reviews yet.' : 'Loading…'}</p>`}</div></div>
+          <div class="acts"><button type="button" class="b b-sm b-pri" data-act="ur-reply" data-id="${esc(r.id)}">Save reply</button><button type="button" class="b b-sm" data-act="ur-hide" data-id="${esc(r.id)}">${r.hidden ? 'Show again' : 'Hide'}</button>${r.reports ? `<button type="button" class="b b-sm" data-act="ur-clear" data-id="${esc(r.id)}">Clear reports</button>` : ''}<button type="button" class="b b-sm b-danger" data-act="ur-del" data-id="${esc(r.id)}">Delete</button></div></div>`).join('') || `<p class="empty">${uRev ? 'No reviews yet.' : 'Loading…'}</p>`}</div></div>` : ''}
       <div class="card"><div class="item-head"><h2 class="grow">Waiting for approval (${P.length})</h2><button type="button" class="b b-sm" data-act="reload-rev">Refresh</button></div>
         <p class="hint">Reviews sent from the website. Nothing is shown publicly until you approve it. Approving also saves your other unsaved changes.</p>
         <div class="list">${P.map((r) => `<div class="q"><div class="q-top"><b>${esc(r.name)}</b><span class="rstars">${stars(+r.rating || 5)}</span><time>${esc(new Date(r.ts).toLocaleDateString())}</time></div>${r.place ? `<div class="muted">${esc(r.place)}</div>` : ''}${r.title ? `<b style="display:block;margin-top:4px">${esc(r.title)}</b>` : ''}<p style="margin:4px 0;white-space:pre-line">${esc(r.text)}</p>${r.project ? `<div class="muted">Project: ${esc(r.project)}</div>` : ''}${(r.photos || []).length ? `<div class="thumbs">${r.photos.map((id) => `<a class="thumb" href="/api/admin/file/${esc(id)}" target="_blank" rel="noopener"><img src="/api/admin/file/${esc(id)}" alt=""></a>`).join('')}</div>` : ''}<div class="acts"><button type="button" class="b b-sm b-pri" data-act="rev-ok" data-id="${esc(r.id)}">Approve & publish</button><button type="button" class="b b-sm b-danger" data-act="rev-no" data-id="${esc(r.id)}">Delete</button></div></div>`).join('') || `<p class="empty">${pendRev ? 'No reviews waiting.' : 'Loading…'}</p>`}</div></div>
@@ -285,7 +273,6 @@
     const week = Q.filter((q) => Date.now() - q.ts < 7 * 864e5).length;
     const reported = (uRev || []).filter((r) => r.reports && !r.hidden).length;
     const works = (site.works || []).length, prods = (site.products || []).filter((x) => x.visible !== false).length;
-    const gOn = !!String((site.reviewSettings || {}).googleClientId || '').trim();
     const mail = Q.length ? Q[0].email : '';
     const card = (k, ic, label, big, sub, tone) => `<button type="button" class="dcard ${tone || ''}" data-act="goto" data-tab="${k}"><span class="dcard-ic">${ni(ic)}</span><span class="dcard-l">${esc(label)}</span><b>${big}</b><small>${sub}</small></button>`;
     const when = (ts) => new Date(ts).toLocaleString('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
@@ -299,7 +286,6 @@
       <div class="card"><div class="item-head"><h2 class="grow">Latest quote requests</h2><button type="button" class="b b-sm" data-act="goto" data-tab="inbox">View all${ni('right')}</button></div>
         ${Q.length ? `<div class="dlist">${Q.slice(0, 5).map((q) => { const c = qCust(q); return `<button type="button" class="drow" data-act="goto" data-tab="inbox"><span class="drow-av">${esc((c.name || '?').trim().charAt(0).toUpperCase())}</span><span class="drow-b"><b>${esc(c.name || 'Customer')}</b><small>${esc(q.ref || '')} · ${(q.items || []).length} product${(q.items || []).length === 1 ? '' : 's'}${c.location ? ' · ' + esc(c.location) : ''}</small></span><time>${esc(when(q.ts))}</time></button>`; }).join('')}</div>` : `<p class="empty">${quotes ? 'No quote requests yet. They appear here as soon as a customer sends one.' : 'Loading…'}</p>`}</div>
       <div class="card"><h2>Setup</h2><div class="dlist">
-        <button type="button" class="drow" data-act="goto" data-tab="reviews"><span class="dot ${gOn ? 'ok' : 'warn'}"></span><span class="drow-b"><b>Google sign-in for reviews</b><small>${gOn ? 'On: customers post reviews with their Google account.' : 'Off: reviews wait for your approval. Add a Google Client ID to turn it on.'}</small></span>${ni('right')}</button>
         <div class="drow"><span class="dot ${mail === 'sent' ? 'ok' : mail ? 'warn' : ''}"></span><span class="drow-b"><b>Email notifications</b><small>${mail === 'sent' ? 'On: new requests are emailed to you.' : mail === 'not-configured' ? 'Not set up yet: requests are only shown here. Add RESEND_API_KEY in Cloudflare to get emails.' : mail ? 'The last email could not be sent (' + esc(mail) + ').' : 'Shown after the first quote request.'}</small></span></div>
         <button type="button" class="drow" data-act="goto" data-tab="account"><span class="dot"></span><span class="drow-b"><b>Admin password</b><small>Use your own password that only you know.</small></span>${ni('right')}</button>
       </div></div>`;

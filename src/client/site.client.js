@@ -621,7 +621,9 @@
   const rate5 = (r) => Math.min(5, Math.max(1, Math.round(+r.rating) || 5));
   const rvDay = (ts) => (ts ? new Date(ts).toLocaleDateString(lang === 'el' ? 'el-GR' : 'en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : '');
   const GCID = () => String((S.reviewSettings || {}).googleClientId || '').trim();
-  const googleOn = () => !!(GCID() || S.devLogin);
+  // Google sign-in for reviews is switched off for now: reviews use the simple form and wait for approval in the admin.
+  const GOOGLE_REVIEWS = false;
+  const googleOn = () => GOOGLE_REVIEWS && !!(GCID() || S.devLogin);
   let RV = { user: null, mine: null };
   let rvVotes = {};
   try { rvVotes = JSON.parse(localStorage.getItem('rv-votes') || '{}') || {}; } catch (e) {}
