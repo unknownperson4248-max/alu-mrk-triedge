@@ -328,7 +328,9 @@
         ${pair(`${p}.name`, 'Name, e.g. Sliding window system')}
         ${pair(`${p}.short`, 'Short description (card)', true)}
         ${pair(`${p}.desc`, 'Full description', true)}
-        ${imgPick(`${p}.image`, 'Photo')}</div>
+        ${imgPick(`${p}.image`, 'Main photo')}
+        <div class="fld"><span class="lbl">More photos (shown under the main photo)</span><div class="thumbs">${(x.gallery || []).map((g, j) => `<div class="thumb"><img src="${esc(src(g))}" alt=""><button type="button" class="x" data-act="del" data-path="${p}.gallery" data-i="${j}" data-now="1" aria-label="Remove">×</button></div>`).join('')}</div>
+        <div><button type="button" class="b b-sm" data-act="pick-add" data-path="${p}.gallery">+ Add photo</button></div></div></div>
       <div class="card"><h2>Technical specifications</h2><p class="hint">Copy only from the manufacturer’s (MUSKITA) catalogue. Rows without a value are hidden.</p>
         <div class="list">${(x.specs || []).map((r, k) => `<div class="item">${itemHead(`${p}.specs`, k, x.specs.length, r.label?.en || 'Row ' + (k + 1))}${pair(`${p}.specs.${k}.label`, 'Label')}${txt(`${p}.specs.${k}.value`, 'Value', 'text', 'e.g. 200 kg')}</div>`).join('') || '<p class="empty">No specifications yet. The page says “Technical details on request”.</p>'}</div>
         ${addBtn(`${p}.specs`, 'pspec', 'Add row')}</div>

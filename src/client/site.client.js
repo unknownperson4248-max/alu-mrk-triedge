@@ -72,7 +72,7 @@
       band_title: 'Let’s build something great together', band_body: 'Get a free consultation and quote today.', contact_us: 'Contact us', quick_links: 'Quick links', follow: 'Follow us', contact_info: 'Contact info',
       search_ph: 'Search, e.g. sliding doors', no_results: 'No results for “{q}”.', popular: 'Popular searches', chips: ['Sliding', 'Windows', 'Doors', 'Folding', 'Glass'],
       hero_eyebrow: 'Windows · Doors · Glass', explore_systems: 'Explore our products', watch: 'Watch video',
-      discover: 'Discover more', pg_sys_b: 'Windows, doors, sliding systems, glass and more. Pick a system to see how it works.', pg_prod_h: 'Discover our profile systems', pg_gal_h: 'Projects we have completed', ab_title: 'About us', ab_more: 'More about us', ab_values: 'What we stand for', ab_how: 'How we work', ab_how_sub: 'One team from the first measurement to the final seal.', ab_s1: 'Measure', ab_s1b: 'We visit, survey and measure every opening on site.', ab_s2: 'Design', ab_s2b: 'We choose the right system, glass and finish with you.', ab_s3: 'Fabricate', ab_s3b: 'Your windows and doors are made to measure.', ab_s4: 'Install', ab_s4b: 'Our own team installs and seals everything.', ab_partner: 'Our profiles', ab_partner_b: 'We work with aluminium profile systems supplied by MUSKITA.', ab_partner_l: 'See the profile systems', ab_cta_b: 'Tell us about your project and get a written quotation.', about_eyebrow: 'About', survey: 'Book a free site survey', systems_eyebrow: 'Aluminium systems', explore: 'Explore system',
+      discover: 'Discover more', model1: 'model', models: 'models', view_models: 'View models', choose_model: 'Choose a model to see its details or add it to your quotation.', pg_sys_b: 'Windows, doors, sliding systems, glass and more. Pick a system to see how it works.', pg_prod_h: 'Discover our profile systems', pg_gal_h: 'Projects we have completed', ab_title: 'About us', ab_more: 'More about us', ab_values: 'What we stand for', ab_how: 'How we work', ab_how_sub: 'One team from the first measurement to the final seal.', ab_s1: 'Measure', ab_s1b: 'We visit, survey and measure every opening on site.', ab_s2: 'Design', ab_s2b: 'We choose the right system, glass and finish with you.', ab_s3: 'Fabricate', ab_s3b: 'Your windows and doors are made to measure.', ab_s4: 'Install', ab_s4b: 'Our own team installs and seals everything.', ab_partner: 'Our profiles', ab_partner_b: 'We work with aluminium profile systems supplied by MUSKITA.', ab_partner_l: 'See the profile systems', ab_cta_b: 'Tell us about your project and get a written quotation.', about_eyebrow: 'About', survey: 'Book a free site survey', systems_eyebrow: 'Aluminium systems', explore: 'Explore system',
       all_systems: 'All systems', system_n: 'System {n} / {t}', overview: 'Overview', features: 'Features', specs: 'Specifications',
       config: 'Configurator', gallery: 'Gallery', related: 'Related systems', applications: 'Applications',
       on_request: 'On request', specs_note: 'Values depend on the size and design of each project. Ask us for the technical sheet.',
@@ -142,7 +142,7 @@
       band_title: 'Ας φτιάξουμε κάτι σπουδαίο μαζί', band_body: 'Ζητήστε δωρεάν συμβουλή και προσφορά σήμερα.', contact_us: 'Επικοινωνία', quick_links: 'Σύνδεσμοι', follow: 'Ακολουθήστε μας', contact_info: 'Στοιχεία επικοινωνίας',
       search_ph: 'Αναζήτηση, π.χ. συρόμενες πόρτες', no_results: 'Δεν βρέθηκαν αποτελέσματα για «{q}».', popular: 'Δημοφιλείς αναζητήσεις', chips: ['Συρόμενα', 'Παράθυρα', 'Πόρτες', 'Πτυσσόμενα', 'Γυαλί'],
       hero_eyebrow: 'Παράθυρα · Πόρτες · Γυαλί', explore_systems: 'Δείτε τα προϊόντα μας', watch: 'Δείτε το βίντεο',
-      discover: 'Δείτε περισσότερα', pg_sys_b: 'Παράθυρα, πόρτες, συρόμενα, γυαλί και άλλα. Διαλέξτε ένα σύστημα για να δείτε πώς λειτουργεί.', pg_prod_h: 'Ανακαλύψτε τα συστήματα προφίλ μας', pg_gal_h: 'Έργα που έχουμε ολοκληρώσει', ab_title: 'Η εταιρεία', ab_more: 'Περισσότερα για εμάς', ab_values: 'Τι πρεσβεύουμε', ab_how: 'Πώς δουλεύουμε', ab_how_sub: 'Μία ομάδα από την πρώτη μέτρηση μέχρι την τελική σφράγιση.', ab_s1: 'Μέτρηση', ab_s1b: 'Επισκεπτόμαστε τον χώρο και μετράμε κάθε άνοιγμα.', ab_s2: 'Σχεδιασμός', ab_s2b: 'Επιλέγουμε μαζί σας σύστημα, γυαλί και φινίρισμα.', ab_s3: 'Κατασκευή', ab_s3b: 'Τα παράθυρα και οι πόρτες σας κατασκευάζονται στα μέτρα σας.', ab_s4: 'Τοποθέτηση', ab_s4b: 'Η δική μας ομάδα τοποθετεί και σφραγίζει τα πάντα.', ab_partner: 'Τα προφίλ μας', ab_partner_b: 'Συνεργαζόμαστε με συστήματα προφίλ αλουμινίου της MUSKITA.', ab_partner_l: 'Δείτε τα συστήματα προφίλ', ab_cta_b: 'Πείτε μας για το έργο σας και λάβετε γραπτή προσφορά.', about_eyebrow: 'Σχετικά με την', survey: 'Κλείστε δωρεάν αυτοψία', systems_eyebrow: 'Συστήματα αλουμινίου', explore: 'Δείτε το σύστημα',
+      discover: 'Δείτε περισσότερα', model1: 'μοντέλο', models: 'μοντέλα', view_models: 'Δείτε τα μοντέλα', choose_model: 'Επιλέξτε μοντέλο για να δείτε λεπτομέρειες ή να το προσθέσετε στην προσφορά σας.', pg_sys_b: 'Παράθυρα, πόρτες, συρόμενα, γυαλί και άλλα. Διαλέξτε ένα σύστημα για να δείτε πώς λειτουργεί.', pg_prod_h: 'Ανακαλύψτε τα συστήματα προφίλ μας', pg_gal_h: 'Έργα που έχουμε ολοκληρώσει', ab_title: 'Η εταιρεία', ab_more: 'Περισσότερα για εμάς', ab_values: 'Τι πρεσβεύουμε', ab_how: 'Πώς δουλεύουμε', ab_how_sub: 'Μία ομάδα από την πρώτη μέτρηση μέχρι την τελική σφράγιση.', ab_s1: 'Μέτρηση', ab_s1b: 'Επισκεπτόμαστε τον χώρο και μετράμε κάθε άνοιγμα.', ab_s2: 'Σχεδιασμός', ab_s2b: 'Επιλέγουμε μαζί σας σύστημα, γυαλί και φινίρισμα.', ab_s3: 'Κατασκευή', ab_s3b: 'Τα παράθυρα και οι πόρτες σας κατασκευάζονται στα μέτρα σας.', ab_s4: 'Τοποθέτηση', ab_s4b: 'Η δική μας ομάδα τοποθετεί και σφραγίζει τα πάντα.', ab_partner: 'Τα προφίλ μας', ab_partner_b: 'Συνεργαζόμαστε με συστήματα προφίλ αλουμινίου της MUSKITA.', ab_partner_l: 'Δείτε τα συστήματα προφίλ', ab_cta_b: 'Πείτε μας για το έργο σας και λάβετε γραπτή προσφορά.', about_eyebrow: 'Σχετικά με την', survey: 'Κλείστε δωρεάν αυτοψία', systems_eyebrow: 'Συστήματα αλουμινίου', explore: 'Δείτε το σύστημα',
       all_systems: 'Όλα τα συστήματα', system_n: 'Σύστημα {n} / {t}', overview: 'Επισκόπηση', features: 'Χαρακτηριστικά', specs: 'Τεχνικά στοιχεία',
       config: 'Διαμόρφωση', gallery: 'Φωτογραφίες', related: 'Σχετικά συστήματα', applications: 'Εφαρμογές',
       on_request: 'Κατόπιν αιτήματος', specs_note: 'Οι τιμές εξαρτώνται από το μέγεθος και τον σχεδιασμό κάθε έργου. Ζητήστε μας το τεχνικό φυλλάδιο.',
@@ -373,8 +373,32 @@
   const byProd = (id) => prods().find((x) => x.id === id);
   const pcat = (id) => { const c = (S.productCats || []).find((x) => x.id === id); return c ? t(c.name) : ''; };
   let pf = 'all';
-  function prodCards() {
-    const L = prods().filter((x) => pf === 'all' || x.cat === pf);
+
+  /* ---------- one drawing per product category (line art, drawn in on scroll) ---------- */
+  const ART = {
+    doors: [['s', 'M140 270V40H260V270'], ['fill', 'M152 258V52H248V258Z'], ['s', 'M152 258V52H248V258Z'], ['f', 'M90 270H310'], ['g', 'M164 88H236'], ['g', 'M164 122H236'], ['g', 'M164 156H236'], ['g', 'M164 190H236'], ['g', 'M164 224H236'], ['s', 'M241 132V168']],
+    sliding: [['s', 'M70 60H330V240H70Z'], ['s', 'M82 72H206V228H82Z'], ['fill', 'M194 80H318V220H194Z'], ['s', 'M194 80H318V220H194Z'], ['f', 'M100 200L150 110'], ['f', 'M120 205L165 125'], ['f', 'M222 195L267 110'], ['g', 'M150 262H250M238 254L250 262L238 270']],
+    windows: [['s', 'M100 50H300V250H100Z'], ['fill', 'M100 50H300V250H100Z'], ['s', 'M200 50V250'], ['f', 'M112 238L188 150L112 62'], ['g', 'M190 142V166'], ['g', 'M210 142V166'], ['s', 'M86 262H314']],
+    thermal: [['s', 'M100 80H175V220H100Z'], ['f', 'M112 95H163V140H112Z'], ['f', 'M112 160H163V205H112Z'], ['s', 'M225 80H300V220H225Z'], ['f', 'M237 95H288V140H237Z'], ['f', 'M237 160H288V205H237Z'], ['g', 'M175 105H225M175 120H225'], ['g', 'M175 180H225M175 195H225'], ['g', 'M30 120q7.5-10 15 0t15 0t15 0t15 0'], ['g', 'M30 150q7.5-10 15 0t15 0t15 0t15 0'], ['g', 'M30 180q7.5-10 15 0t15 0t15 0t15 0'], ['f', 'M315 120H370M315 150H358M315 180H370']],
+    glass: [['s', 'M60 230H340V252H60Z'], ['fill', 'M76 230V96H150V230Z'], ['fill', 'M163 230V96H237V230Z'], ['fill', 'M250 230V96H324V230Z'], ['s', 'M76 230V96H150V230'], ['s', 'M163 230V96H237V230'], ['s', 'M250 230V96H324V230'], ['f', 'M95 200L130 120'], ['f', 'M182 200L217 120'], ['f', 'M269 200L304 120'], ['g', 'M60 230H340']],
+    custom: [['s', 'M120 70V240H290Z'], ['f', 'M140 125V220H235Z'], ['g', 'M120 95h14M120 120h9M120 145h14M120 170h9M120 195h14M120 220h9'], ['s', 'M200 60L320 180'], ['g', 'M312 172l14 14']],
+  };
+  const artKey = (id) => (/door/.test(id) && !/sliding/.test(id) ? 'doors' : /sliding|slide/.test(id) ? 'sliding' : /thermal/.test(id) ? 'thermal' : /glass|rail/.test(id) ? 'glass' : /custom/.test(id) ? 'custom' : 'windows');
+  const catArt = (id) => `<svg class="art" viewBox="0 0 400 300" aria-hidden="true">${ART[artKey(id)].map(([c, d]) => `<path class="${c}" d="${d}"${c === 'fill' ? '' : ' pathLength="1"'}/>`).join('')}</svg>`;
+  const prodGroups = () => { const L = prods(); return (S.productCats || []).map((c) => ({ id: c.id, name: t(c.name), list: L.filter((x) => x.cat === c.id) })).filter((g) => g.list.length); };
+  const nModels = (n) => `${n} ${n === 1 ? u('model1') : u('models')}`;
+  function modelsPage(id) {
+    const g = prodGroups().find((x) => x.id === id);
+    return `${pgBar('products', g.name)}
+      <section class="mc-head"><div class="wrap mc-in">
+        <div class="mc-art">${catArt(id)}</div>
+        <div><p class="eyebrow">${u('prod_eyebrow')} · ${nModels(g.list.length)}</p><h1>${esc(g.name)}</h1><p>${u('choose_model')}</p></div>
+      </div></section>
+      <section class="pg-body"><div class="wrap"><div class="prod-grid pg-grid rv-kids" id="prod-grid">${prodCards(g.list)}</div></div></section>
+      ${footerMini()}`;
+  }
+  function prodCards(only) {
+    const L = only || prods().filter((x) => pf === 'all' || x.cat === pf);
     return L.map((x, i) => `<article class="prod" style="--i:${i}">
       <a class="prod-img" href="#${esc(x.id)}" tabindex="-1" aria-hidden="true"><img src="${esc(src(x.image))}" alt="" loading="lazy"><span>${esc(pcat(x.cat))}</span></a>
       <div class="prod-b"><p class="prod-m">${esc(x.model)}</p><h3><a href="#${esc(x.id)}">${esc(t(x.name))}</a></h3><p>${esc(t(x.short))}</p>
@@ -382,21 +406,21 @@
     </article>`).join('');
   }
   function products() {
-    const L = prods();
-    if (!L.length) return '';
-    const used = new Set(L.map((x) => x.cat));
-    const cats = (S.productCats || []).filter((c) => used.has(c.id));
+    const G = prodGroups();
+    if (!G.length) return '';
     return `<section class="prods" id="products"><div class="wrap">
       <div class="proj-head rv"><div><p class="eyebrow">${u('prod_eyebrow')}</p><h2>${u('prod_title')}</h2><p class="prods-sub">${u('prod_sub')}</p></div></div>
-      ${cats.length > 1 ? `<div class="chips" role="group" aria-label="${u('products')}">${[{ id: 'all', name: u('all_products') }, ...cats.map((c) => ({ id: c.id, name: t(c.name) }))].map((c) => `<button type="button" data-pf="${esc(c.id)}" aria-pressed="${pf === c.id}">${esc(c.name)}</button>`).join('')}</div>` : ''}
-      <div class="prod-rail"><button type="button" class="rail-btn prev" data-prail="-1" aria-label="Previous">${icon('back')}</button><div class="prod-grid rv-kids" id="prod-grid">${prodCards()}</div><button type="button" class="rail-btn next" data-prail="1" aria-label="Next">${icon('arrow')}</button></div>
+      <div class="pcat-grid rv-kids">${G.map((g, k) => `<a class="pcat" style="--i:${k}" href="#models-${esc(g.id)}">
+        <span class="pcat-art">${catArt(g.id)}<span class="pcat-n">${nModels(g.list.length)}</span></span>
+        <span class="pcat-b"><b class="pcat-h">${esc(g.name)}</b><span class="pcat-m">${g.list.map((x) => esc(x.model)).join(' · ')}</span><span class="link-sm">${u('view_models')}${icon('arrow')}</span></span>
+      </a>`).join('')}</div>
     </div></section>`;
   }
   function productPage(x) {
     const specs = (x.specs || []).filter((r) => t(r.label) && String(r.value || '').trim());
     const apps = (x.applications || []).map(t).filter(Boolean);
     return `<div class="sp-bar"><div class="wrap">
-        <a class="sp-back" href="#products">${icon('back')}${u('products')}</a>
+        <a class="sp-back" href="#models-${esc(x.cat)}">${icon('back')}${esc(pcat(x.cat) || u('products'))}</a>
         <span class="sp-title">${esc(x.model)}</span>
         <button type="button" class="btn btn-accent" data-addq="${esc(x.id)}">${u('add_quote')}</button>
       </div></div>
@@ -413,7 +437,7 @@
           </div>
           ${apps.length ? `<ul class="sp-apps" aria-label="${u('applications')}">${apps.map((a) => `<li>${esc(a)}</li>`).join('')}</ul>` : ''}
         </div>
-        ${x.image ? `<figure class="sp-hero-img"><img src="${esc(src(x.image))}" alt="${esc(x.model)}"></figure>` : ''}
+        ${x.image ? `<div class="sp-hero-media"><figure class="sp-hero-img" data-pzoom="0"><img src="${esc(src(x.image))}" alt="${esc(x.model)}"></figure>${(x.gallery || []).length ? `<div class="sp-thumbs">${[x.image, ...x.gallery].map((g, k) => `<button type="button" data-pzoom="${k}" aria-label="${u('zoom')}"><img src="${esc(src(g))}" alt="" loading="lazy"></button>`).join('')}</div>` : ''}</div>` : ''}
       </div></section>
       <section class="sp-sec"><div class="wrap sp-two">
         <div><p class="eyebrow">${u('tech_data')}</p><h2>${u('specs')}</h2></div>
@@ -1779,8 +1803,9 @@
   function openList(which, instant) {
     current = null; galOpen = false; prodCur = null; revOpen = false; abOpen = false;
     listOpen = which;
-    const title = which === 'systems' ? u('m_systems') : u('products');
-    mount(which === 'systems' ? systemsPage() : productsPage(), title, `${title} · ${S.company.name}`, instant, (sp) => reveal(sp, instant && renders > 1));
+    const c = which.startsWith('models-') ? which.slice(7) : '';
+    const title = which === 'systems' ? u('m_systems') : c ? pcat(c) : u('products');
+    mount(which === 'systems' ? systemsPage() : c ? modelsPage(c) : productsPage(), title, `${title} · ${S.company.name}`, instant, (sp) => reveal(sp, instant && renders > 1));
   }
   function closeList() {
     if (!listOpen) return;
@@ -1807,6 +1832,7 @@
     setHelp(false);
     if (h === 'about-us') { openAboutPage(first); return; }
     if (h === 'systems' && sys().length) { openList('systems', first); return; }
+    if (h.startsWith('models-') && prodGroups().some((g) => 'models-' + g.id === h)) { openList(h, first); return; }
     if (h === 'all-reviews' && allRevs().length) { abOpen = false; openRevPage(first); return; }
     if (h === 'gallery' && works().length) { prodCur = null; revOpen = false; abOpen = false; openGallery(first); return; }
     if (h && byProd(h)) { revOpen = false; abOpen = false; openProduct(h, first); return; }
@@ -1966,6 +1992,8 @@
     if (pfb) { pf = pfb.dataset.pf; $$('[data-pf]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.pf === pf))); const g = $('#prod-grid'); if (g) { g.innerHTML = prodCards(); g.scrollLeft = 0; g.classList.remove('in', 'now'); void g.offsetWidth; g.classList.add('in'); prodArrows(); } return; }
     const go = e.target.closest('.sp-tabs [data-go]');
     if (go) { const el = document.getElementById(go.dataset.go); if (el) el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }); return; }
+    const pz = e.target.closest('[data-pzoom]');
+    if (pz && prodCur) { openLB([prodCur.image, ...(prodCur.gallery || [])].filter(Boolean), +pz.dataset.pzoom); return; }
     const z = e.target.closest('[data-zoom]');
     if (z && current) { openLB([current.image, ...(current.gallery || [])].filter(Boolean), +z.dataset.zoom); return; }
 
