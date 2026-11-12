@@ -318,3 +318,13 @@ button.drow:hover{background:#fafbfc}
 @media (max-width:640px){.qd-tab{min-width:560px}.qd-tab .qd-price{width:76px}.qd-tab .qd-qty{width:48px}.qd-sum{width:100%}}
 @media print{.qd-tabw{overflow:visible}.qd-tab{min-width:0}}
 @media (max-width:640px){.qd-foot{flex-direction:column;align-items:flex-start}.qd-foot>span{overflow-wrap:anywhere}}
+
+/* tab change: blur out, then cards sharpen in one by one (numbers count up on the dashboard) */
+.editor{transition:opacity .19s ease,filter .19s ease,transform .19s ease}
+.editor.pg-out{opacity:0;filter:blur(10px);transform:translateY(6px) scale(.992)}
+.a-in{animation:a-in .7s cubic-bezier(.2,.7,.2,1) backwards;animation-delay:calc(var(--i,0) * 65ms - var(--t,0ms))}
+@keyframes a-in{from{opacity:0;filter:blur(12px);transform:translateY(18px)}to{opacity:1;filter:none;transform:none}}
+.dcard{transition:border-color .2s,box-shadow .2s,transform .25s cubic-bezier(.2,.7,.2,1)}
+.dcard:hover{transform:translateY(-3px)}
+.side-g button{transition:background .25s,color .25s}
+@media (prefers-reduced-motion:reduce){.editor{transition:none}.a-in{animation:none}.dcard:hover{transform:none}}

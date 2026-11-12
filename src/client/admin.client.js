@@ -526,6 +526,7 @@
     fitPreview();
     renderTabs();
     renderEditor();
+    pgIn();
   }
   function fitPreview() {
     const w = $('#pv-wrap'), f = $('#pv');
@@ -544,20 +545,54 @@
     const b = $('.side-btn');
     if (b) b.setAttribute('aria-expanded', String(open));
   }
+  // moving between tabs: the old page blurs out, the new one sharpens in card by card, numbers count up
+  const calm = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let tabTok = 0, counted = new Set(), pgAt = -1e9;
+  // late re-renders (data that arrives after the tab opened) carry on the same entrance instead of restarting it
+  function pgIn(late) {
+    const ed = $('#editor');
+    if (!ed || calm()) return;
+    if (late == null) pgAt = performance.now();
+    ed.style.setProperty('--t', Math.round(late || 0) + 'ms');
+    let i = 0;
+    [...ed.children].forEach((c) => {
+      const kids = c.classList.contains('dgrid') ? [...c.children] : [c];
+      kids.forEach((k) => { k.style.setProperty('--i', Math.min(i++, 9)); k.classList.remove('a-in'); void k.offsetWidth; k.classList.add('a-in'); });
+    });
+  }
+  function countNums() {
+    if (tab !== 'dash' || calm()) return;
+    $$('#editor .dcard').forEach((c) => {
+      const b = c.querySelector('b'), n = parseInt(b && b.textContent, 10), key = c.dataset.tab;
+      if (!b || !isFinite(n) || n < 1 || counted.has(key)) return;
+      counted.add(key);
+      const t0 = performance.now();
+      const step = (now) => { const k = Math.min(1, (now - t0) / 1100), e = 1 - Math.pow(1 - k, 3); b.textContent = String(Math.round(n * e)); if (k < 1 && b.isConnected) requestAnimationFrame(step); else b.textContent = String(n); };
+      requestAnimationFrame(step);
+    });
+  }
   function goTab(k) {
+    const ed = $('#editor'), tok = ++tabTok, anim = !!ed && !calm() && k !== tab;
     tab = k;
     editIdx = null;
     editWork = null;
     editProd = null;
+    counted = new Set();
     renderTabs();
-    renderEditor();
-    scrollTo(0, 0);
-    if (tab === 'inbox') loadQuotes();
-    if (tab === 'reviews') { loadReviews(); loadUReviews(); }
-    if (tab === 'dash') { loadQuotes(true); loadReviews(); loadUReviews(); }
-    previewGo(PV_TAB[tab] || 'top');
     const pt = $('#page-title');
     if (pt) pt.textContent = NAV_NAME[tab] || '';
+    const run = () => {
+      if (tok !== tabTok) return;
+      if (ed) ed.classList.remove('pg-out');
+      renderEditor();
+      pgIn();
+      scrollTo(0, 0);
+      if (tab === 'inbox') loadQuotes();
+      if (tab === 'reviews') { loadReviews(); loadUReviews(); }
+      if (tab === 'dash') { loadQuotes(true); loadReviews(); loadUReviews(); }
+      previewGo(PV_TAB[tab] || 'top');
+    };
+    if (anim) { ed.classList.add('pg-out'); setTimeout(run, 190); } else run();
   }
   function renderTabs() {
     const nav = $('#side-nav');
@@ -574,6 +609,8 @@
     requestAnimationFrame(fitPreview);
     scrollTo(0, y);
     lastCard = null;
+    { const el = performance.now() - pgAt; if (el < 1300) pgIn(el); }
+    countNums();
     // an eye button on every card that has a matching part on the website
     if (!['dash', 'inbox', 'media', 'account'].includes(tab)) $$('#editor .card').forEach((c) => { if (!/Delete|Sign out/.test((c.querySelector('h2') || {}).textContent || '')) c.insertAdjacentHTML('afterbegin', `<button type="button" class="card-pv" data-act="pv-card" title="Show this part in the preview">${ni('eye')}<span>Preview</span></button>`); });
   }
@@ -769,8 +806,8 @@
         break;
       case 'side-open': setSide(true); break;
       case 'side-close': setSide(false); break;
-      case 'edit-prod': editProd = +b.dataset.i; renderEditor(); scrollTo(0, 0); previewGo(site.products[editProd].id); break;
-      case 'back-prod': editProd = null; renderEditor(); previewGo('#products'); break;
+      case 'edit-prod': editProd = +b.dataset.i; renderEditor(); pgIn(); scrollTo(0, 0); previewGo(site.products[editProd].id); break;
+      case 'back-prod': editProd = null; renderEditor(); pgIn(); previewGo('#products'); break;
       case 'add-prod': {
         let n = site.products.length + 1, id = 'product-' + n;
         while (site.products.some((x) => x.id === id)) id = 'product-' + ++n;
@@ -829,8 +866,8 @@
         toast('Photos added. Add a title and category, then press Save.', 'ok');
         break;
       }
-      case 'edit-work': editWork = +b.dataset.i; renderEditor(); scrollTo(0, 0); break;
-      case 'back-work': editWork = null; renderEditor(); break;
+      case 'edit-work': editWork = +b.dataset.i; renderEditor(); pgIn(); scrollTo(0, 0); break;
+      case 'back-work': editWork = null; renderEditor(); pgIn(); break;
       case 'work-photos': {
         const files = await chooseFiles('image/*', true);
         const up = await uploadFiles(files);
@@ -881,8 +918,8 @@
       case 'pick': { const v = await picker('Choose image'); if (v) { setP(site, p, v); markDirty(); renderEditor(); } break; }
       case 'pick-add': { const v = await picker('Add photo to gallery'); if (v) { (getP(site, p) || setP(site, p, []) || getP(site, p)).push(v); markDirty(); renderEditor(); } break; }
       case 'clear': setP(site, p, ''); markDirty(); renderEditor(); break;
-      case 'edit-sys': editIdx = +b.dataset.i; renderEditor(); scrollTo(0, 0); previewGo(site.systems[editIdx].slug); break;
-      case 'back-sys': editIdx = null; renderEditor(); previewGo('#systems'); break;
+      case 'edit-sys': editIdx = +b.dataset.i; renderEditor(); pgIn(); scrollTo(0, 0); previewGo(site.systems[editIdx].slug); break;
+      case 'back-sys': editIdx = null; renderEditor(); pgIn(); previewGo('#systems'); break;
       case 'add-sys': {
         let n = site.systems.length + 1, slug = 'new-system-' + n;
         while (site.systems.some((s) => s.slug === slug)) slug = 'new-system-' + ++n;
