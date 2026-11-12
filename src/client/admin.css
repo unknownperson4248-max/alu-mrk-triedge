@@ -328,3 +328,66 @@ button.drow:hover{background:#fafbfc}
 .dcard:hover{transform:translateY(-3px)}
 .side-g button{transition:background .25s,color .25s}
 @media (prefers-reduced-motion:reduce){.editor{transition:none}.a-in{animation:none}.dcard:hover{transform:none}}
+
+/* ---------- glass look (client's reference video): teal-blue backdrop, floating frosted sidebar, top bar and main panel ---------- */
+html{background:#0d3550}
+body{background:transparent;position:relative}
+body::before{content:'';position:fixed;inset:0;z-index:-1;background:
+  radial-gradient(900px 620px at 12% 8%,rgba(92,190,230,.55),transparent 62%),
+  radial-gradient(800px 640px at 92% 18%,rgba(40,120,170,.55),transparent 60%),
+  radial-gradient(900px 700px at 70% 100%,rgba(26,150,170,.45),transparent 62%),
+  linear-gradient(155deg,#103f5f 0%,#1a6488 48%,#0c2f4a 100%)}
+:root{--glass:rgba(255,255,255,.14);--glass-b:rgba(255,255,255,.26);--glass-blur:blur(22px) saturate(1.35);--cyan:#36b4e5}
+/* login */
+.login-card{background:rgba(255,255,255,.82);border-color:rgba(255,255,255,.7);border-radius:22px;-webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);box-shadow:0 30px 70px -30px rgba(0,20,40,.6)}
+/* sidebar */
+.side{inset:14px auto 14px 14px;border:1px solid var(--glass-b);border-radius:22px;background:var(--glass);-webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);box-shadow:0 20px 50px -20px rgba(0,20,40,.5);color:#fff;overflow:hidden}
+.side-brand,.side-top,.side-foot{border-color:rgba(255,255,255,.16)}
+.side-brand img{background:rgba(255,255,255,.9)}
+.side-brand b{color:#fff}
+.side-brand small{color:#9fe0fa}
+.side-g p{color:rgba(255,255,255,.55)}
+.side-nav button,.side-foot a,.side-foot button{color:rgba(255,255,255,.86)}
+.side-nav button:hover,.side-foot a:hover,.side-foot button:hover{background:rgba(255,255,255,.12);color:#fff}
+.side-nav button.on{background:linear-gradient(180deg,#4cc3ef,#2499cf);color:#fff;box-shadow:0 8px 22px -8px rgba(54,180,229,.9),inset 0 1px 0 rgba(255,255,255,.35)}
+.side-nav button.on .ni{color:#fff}
+.side-nav .badge{background:#fff;color:#1d7fae}
+.side-foot .out{color:#ffb4ac}
+.side-x{color:#fff}
+.side-x:hover{background:rgba(255,255,255,.12)}
+.shell{margin-left:calc(var(--side) + 28px);padding-right:14px}
+/* top bar */
+.top{top:14px;margin-top:14px;border:1px solid var(--glass-b);border-radius:18px;background:var(--glass);-webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);box-shadow:0 16px 40px -22px rgba(0,20,40,.55);color:#fff}
+.top-in{min-height:60px}
+.top .state{color:rgba(255,255,255,.7)}
+.top .state.dirty{color:#ffd28a}
+.top .b:not(.b-acc){background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.28);color:#fff}
+.top .b:not(.b-acc):hover{background:rgba(255,255,255,.24)}
+.top .b-acc{border-radius:999px;box-shadow:0 8px 20px -10px rgba(201,138,60,.9)}
+/* the main frosted panel */
+.main{gap:14px;padding-top:14px;padding-bottom:14px}
+.editor{background:rgba(255,255,255,.13);border:1px solid var(--glass-b);border-radius:26px;-webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);box-shadow:0 30px 70px -40px rgba(0,20,40,.6);padding:22px 20px 40px;max-width:none}
+.main.no-prev .editor{max-width:1100px}
+.card{background:rgba(255,255,255,.8);border-color:rgba(255,255,255,.7);border-radius:20px;box-shadow:0 14px 36px -24px rgba(0,30,60,.45)}
+.dash-hi h2{color:#fff;font-size:26px}
+.dash-hi .hint{color:rgba(255,255,255,.75)}
+.dcard{background:rgba(255,255,255,.72);border-color:rgba(255,255,255,.7);border-radius:20px;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.dcard:hover{background:rgba(255,255,255,.86);box-shadow:0 16px 36px -18px rgba(0,30,60,.5)}
+.b-pri{background:#0d1824;border-color:#0d1824;border-radius:999px}
+/* preview pane */
+.preview{top:88px;height:calc(100vh - 102px);border:1px solid var(--glass-b);border-radius:22px;overflow:hidden;background:rgba(255,255,255,.12);-webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur)}
+.preview-bar{background:rgba(255,255,255,.85)}
+/* page change: the panel stays, its content frosts out and in */
+.editor,.editor.pg-out{opacity:1;filter:none;transform:none}
+.editor>*{transition:opacity .2s ease,filter .2s ease,transform .2s ease}
+.editor.pg-out>*{opacity:0;filter:blur(12px);transform:translateY(8px) scale(.99)}
+@media (max-width:1100px){
+  .side{inset:10px auto 10px 10px;width:min(84vw,310px);background:rgba(16,62,92,.72)}
+  .shell{margin-left:0;padding-inline:10px}
+  .top{top:10px;margin-top:10px}
+  .main{padding-top:10px}
+  .editor{padding:16px 12px 32px;border-radius:22px}
+  .side-btn{background:rgba(255,255,255,.18)!important;color:#fff}
+  .preview{top:auto;height:72vh;border-radius:22px 22px 0 0;background:rgba(255,255,255,.9)}
+}
+@media (prefers-reduced-motion:reduce){.editor>*{transition:none}}
