@@ -71,7 +71,7 @@
       proj_eyebrow: 'Our projects', proj_title: 'Iconic projects. Lasting impact.', proj_body: 'A selection of our aluminium and glass work for homes, offices and shops.', view_projects: 'View all projects',
       band_title: 'Let’s build something great together', band_body: 'Get a free consultation and quote today.', contact_us: 'Contact us', quick_links: 'Quick links', follow: 'Follow us', contact_info: 'Contact info',
       search_ph: 'Search, e.g. sliding doors', no_results: 'No results for “{q}”.', popular: 'Popular searches', chips: ['Sliding', 'Windows', 'Doors', 'Folding', 'Glass'],
-      hero_eyebrow: 'Premium aluminium solutions', explore_systems: 'Explore our products', watch: 'Watch video',
+      hero_eyebrow: 'Windows · Doors · Glass', explore_systems: 'Explore our products', watch: 'Watch video',
       about_eyebrow: 'About', survey: 'Book a free site survey', systems_eyebrow: 'Aluminium systems', explore: 'Explore system',
       all_systems: 'All systems', system_n: 'System {n} / {t}', overview: 'Overview', features: 'Features', specs: 'Specifications',
       config: 'Configurator', gallery: 'Gallery', related: 'Related systems', applications: 'Applications',
@@ -141,7 +141,7 @@
       proj_eyebrow: 'Τα έργα μας', proj_title: 'Εμβληματικά έργα. Διαρκές αποτύπωμα.', proj_body: 'Επιλογή από τις κατασκευές μας σε αλουμίνιο και γυαλί για σπίτια, γραφεία και καταστήματα.', view_projects: 'Όλα τα έργα',
       band_title: 'Ας φτιάξουμε κάτι σπουδαίο μαζί', band_body: 'Ζητήστε δωρεάν συμβουλή και προσφορά σήμερα.', contact_us: 'Επικοινωνία', quick_links: 'Σύνδεσμοι', follow: 'Ακολουθήστε μας', contact_info: 'Στοιχεία επικοινωνίας',
       search_ph: 'Αναζήτηση, π.χ. συρόμενες πόρτες', no_results: 'Δεν βρέθηκαν αποτελέσματα για «{q}».', popular: 'Δημοφιλείς αναζητήσεις', chips: ['Συρόμενα', 'Παράθυρα', 'Πόρτες', 'Πτυσσόμενα', 'Γυαλί'],
-      hero_eyebrow: 'Λύσεις αλουμινίου υψηλής ποιότητας', explore_systems: 'Δείτε τα προϊόντα μας', watch: 'Δείτε το βίντεο',
+      hero_eyebrow: 'Παράθυρα · Πόρτες · Γυαλί', explore_systems: 'Δείτε τα προϊόντα μας', watch: 'Δείτε το βίντεο',
       about_eyebrow: 'Σχετικά με την', survey: 'Κλείστε δωρεάν αυτοψία', systems_eyebrow: 'Συστήματα αλουμινίου', explore: 'Δείτε το σύστημα',
       all_systems: 'Όλα τα συστήματα', system_n: 'Σύστημα {n} / {t}', overview: 'Επισκόπηση', features: 'Χαρακτηριστικά', specs: 'Τεχνικά στοιχεία',
       config: 'Διαμόρφωση', gallery: 'Φωτογραφίες', related: 'Σχετικά συστήματα', applications: 'Εφαρμογές',
@@ -331,6 +331,7 @@
           (s, i) => `<div class="slide${i ? '' : ' on'}" aria-hidden="${i ? 'true' : 'false'}"><img src="${esc(src(s.img))}" alt="" ${i ? 'loading="lazy"' : 'fetchpriority="high"'}>${s.video && !reduce ? `<video src="${esc(src(s.video))}" muted loop playsinline preload="${i ? 'none' : 'auto'}" aria-hidden="true"></video>` : ''}</div>`
         )
         .join('')}</div>
+      <div class="hero-live" aria-hidden="true"><i class="sweep"></i>${[[8, 6, 14, 0], [18, 4, 18, 3], [27, 7, 16, 7], [39, 5, 20, 1.5], [52, 6, 15, 5], [61, 4, 19, 9], [70, 8, 17, 2.5], [78, 5, 21, 6], [86, 6, 15, 4], [94, 4, 18, 8]].map(([x, s, d, dl]) => `<b style="--x:${x}%;--s:${s}px;--d:${d}s;--dl:${dl}s"></b>`).join('')}</div>
       <div class="hero-shade"></div>
       ${badge ? `<span class="seal"><span>${esc(badge)}</span></span>` : ''}
       ${many ? `<button type="button" class="hs-arrow prev" data-slide="-1" aria-label="Previous slide">${icon('back')}</button><button type="button" class="hs-arrow next" data-slide="1" aria-label="Next slide">${icon('arrow')}</button>` : ''}

@@ -28,9 +28,9 @@ export const DEFAULT_SITE = {
   },
   text: {
     tagline: T('Engineering Excellence. Redefining Aluminium.', 'Μηχανική αριστεία. Επαναπροσδιορίζουμε το αλουμίνιο.'),
-    heroTitle: T('Engineering Excellence.', 'Μηχανική αριστεία.'),
-    heroAccent: T('Redefining Aluminium.', 'Επαναπροσδιορίζουμε το αλουμίνιο.'),
-    heroSub: T('Aluminium windows, doors and glass systems for modern architecture, made to measure in Cyprus.', 'Παράθυρα, πόρτες και συστήματα γυαλιού αλουμινίου για σύγχρονη αρχιτεκτονική, κατά παραγγελία στην Κύπρο.'),
+    heroTitle: T('Precision aluminium,', 'Αλουμίνιο ακριβείας,'),
+    heroAccent: T('made to measure.', 'στα μέτρα σας.'),
+    heroSub: T('Windows, doors and glass systems, designed, made and installed in Cyprus.', 'Παράθυρα, πόρτες και συστήματα γυαλιού, με σχεδιασμό, κατασκευή και τοποθέτηση στην Κύπρο.'),
     introTitle: T('Precision in every frame. Care in every detail.', 'Ακρίβεια σε κάθε πλαίσιο. Φροντίδα σε κάθε λεπτομέρεια.'),
     introBody: T(
       'From the first measurement to the final seal, one team designs, fabricates and installs your aluminium windows, doors and glass systems. Everything is made to measure, for homes, offices and commercial spaces across Cyprus.',
