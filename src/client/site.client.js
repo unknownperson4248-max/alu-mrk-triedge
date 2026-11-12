@@ -337,11 +337,9 @@
       ${many ? `<button type="button" class="hs-arrow prev" data-slide="-1" aria-label="Previous slide">${icon('back')}</button><button type="button" class="hs-arrow next" data-slide="1" aria-label="Next slide">${icon('arrow')}</button>` : ''}
       <div class="wrap hero-in">
         ${showText ? `<div class="hero-copy">
-          <p class="eyebrow">${u('hero_eyebrow')}</p>
           <h1>${esc(t(S.text.heroTitle))}<span class="silver">${esc(t(S.text.heroAccent))}</span></h1>
-          ${t(S.text.heroSub) ? `<p class="sub">${esc(t(S.text.heroSub))}</p>` : ''}
-          <div class="hero-cta"><a class="btn btn-accent" href="#systems">${u('explore_systems')}${icon('arrow')}</a>${S.heroVideo ? `<button type="button" class="btn btn-play" data-video><span class="play">${icon('play')}</span>${u('watch')}</button>` : `<a class="btn btn-play" href="#quote"><span class="play">${icon('file')}</span>${u('get_quote')}</a>`}</div>
-        </div>` : ''}
+        </div>
+        <a class="hero-down" href="#systems" aria-label="${u('explore_systems')}">${icon('arrow')}</a>` : ''}
         ${many ? `<div class="hs-count"><b id="hs-n">01</b><span>/ ${pad(sl.length)}</span><i class="hs-bar"><i id="hs-fill"></i></i><span class="hs-mini"><button type="button" data-slide="-1" aria-label="Previous slide">${icon('back')}</button><button type="button" data-slide="1" aria-label="Next slide">${icon('arrow')}</button></span></div>` : ''}
       </div>
     </section>`;
