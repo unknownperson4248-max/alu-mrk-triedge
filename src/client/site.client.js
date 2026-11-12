@@ -72,7 +72,7 @@
       band_title: 'Let’s build something great together', band_body: 'Get a free consultation and quote today.', contact_us: 'Contact us', quick_links: 'Quick links', follow: 'Follow us', contact_info: 'Contact info',
       search_ph: 'Search, e.g. sliding doors', no_results: 'No results for “{q}”.', popular: 'Popular searches', chips: ['Sliding', 'Windows', 'Doors', 'Folding', 'Glass'],
       hero_eyebrow: 'Windows · Doors · Glass', explore_systems: 'Explore our products', watch: 'Watch video',
-      ab_title: 'About us', ab_more: 'More about us', ab_values: 'What we stand for', ab_how: 'How we work', ab_how_sub: 'One team from the first measurement to the final seal.', ab_s1: 'Measure', ab_s1b: 'We visit, survey and measure every opening on site.', ab_s2: 'Design', ab_s2b: 'We choose the right system, glass and finish with you.', ab_s3: 'Fabricate', ab_s3b: 'Your windows and doors are made to measure.', ab_s4: 'Install', ab_s4b: 'Our own team installs and seals everything.', ab_partner: 'Our profiles', ab_partner_b: 'We work with aluminium profile systems supplied by MUSKITA.', ab_partner_l: 'See the profile systems', ab_cta_b: 'Tell us about your project and get a written quotation.', about_eyebrow: 'About', survey: 'Book a free site survey', systems_eyebrow: 'Aluminium systems', explore: 'Explore system',
+      discover: 'Discover more', pg_sys_b: 'Windows, doors, sliding systems, glass and more. Pick a system to see how it works.', pg_prod_h: 'Discover our profile systems', pg_gal_h: 'Projects we have completed', ab_title: 'About us', ab_more: 'More about us', ab_values: 'What we stand for', ab_how: 'How we work', ab_how_sub: 'One team from the first measurement to the final seal.', ab_s1: 'Measure', ab_s1b: 'We visit, survey and measure every opening on site.', ab_s2: 'Design', ab_s2b: 'We choose the right system, glass and finish with you.', ab_s3: 'Fabricate', ab_s3b: 'Your windows and doors are made to measure.', ab_s4: 'Install', ab_s4b: 'Our own team installs and seals everything.', ab_partner: 'Our profiles', ab_partner_b: 'We work with aluminium profile systems supplied by MUSKITA.', ab_partner_l: 'See the profile systems', ab_cta_b: 'Tell us about your project and get a written quotation.', about_eyebrow: 'About', survey: 'Book a free site survey', systems_eyebrow: 'Aluminium systems', explore: 'Explore system',
       all_systems: 'All systems', system_n: 'System {n} / {t}', overview: 'Overview', features: 'Features', specs: 'Specifications',
       config: 'Configurator', gallery: 'Gallery', related: 'Related systems', applications: 'Applications',
       on_request: 'On request', specs_note: 'Values depend on the size and design of each project. Ask us for the technical sheet.',
@@ -142,7 +142,7 @@
       band_title: 'Ας φτιάξουμε κάτι σπουδαίο μαζί', band_body: 'Ζητήστε δωρεάν συμβουλή και προσφορά σήμερα.', contact_us: 'Επικοινωνία', quick_links: 'Σύνδεσμοι', follow: 'Ακολουθήστε μας', contact_info: 'Στοιχεία επικοινωνίας',
       search_ph: 'Αναζήτηση, π.χ. συρόμενες πόρτες', no_results: 'Δεν βρέθηκαν αποτελέσματα για «{q}».', popular: 'Δημοφιλείς αναζητήσεις', chips: ['Συρόμενα', 'Παράθυρα', 'Πόρτες', 'Πτυσσόμενα', 'Γυαλί'],
       hero_eyebrow: 'Παράθυρα · Πόρτες · Γυαλί', explore_systems: 'Δείτε τα προϊόντα μας', watch: 'Δείτε το βίντεο',
-      ab_title: 'Η εταιρεία', ab_more: 'Περισσότερα για εμάς', ab_values: 'Τι πρεσβεύουμε', ab_how: 'Πώς δουλεύουμε', ab_how_sub: 'Μία ομάδα από την πρώτη μέτρηση μέχρι την τελική σφράγιση.', ab_s1: 'Μέτρηση', ab_s1b: 'Επισκεπτόμαστε τον χώρο και μετράμε κάθε άνοιγμα.', ab_s2: 'Σχεδιασμός', ab_s2b: 'Επιλέγουμε μαζί σας σύστημα, γυαλί και φινίρισμα.', ab_s3: 'Κατασκευή', ab_s3b: 'Τα παράθυρα και οι πόρτες σας κατασκευάζονται στα μέτρα σας.', ab_s4: 'Τοποθέτηση', ab_s4b: 'Η δική μας ομάδα τοποθετεί και σφραγίζει τα πάντα.', ab_partner: 'Τα προφίλ μας', ab_partner_b: 'Συνεργαζόμαστε με συστήματα προφίλ αλουμινίου της MUSKITA.', ab_partner_l: 'Δείτε τα συστήματα προφίλ', ab_cta_b: 'Πείτε μας για το έργο σας και λάβετε γραπτή προσφορά.', about_eyebrow: 'Σχετικά με την', survey: 'Κλείστε δωρεάν αυτοψία', systems_eyebrow: 'Συστήματα αλουμινίου', explore: 'Δείτε το σύστημα',
+      discover: 'Δείτε περισσότερα', pg_sys_b: 'Παράθυρα, πόρτες, συρόμενα, γυαλί και άλλα. Διαλέξτε ένα σύστημα για να δείτε πώς λειτουργεί.', pg_prod_h: 'Ανακαλύψτε τα συστήματα προφίλ μας', pg_gal_h: 'Έργα που έχουμε ολοκληρώσει', ab_title: 'Η εταιρεία', ab_more: 'Περισσότερα για εμάς', ab_values: 'Τι πρεσβεύουμε', ab_how: 'Πώς δουλεύουμε', ab_how_sub: 'Μία ομάδα από την πρώτη μέτρηση μέχρι την τελική σφράγιση.', ab_s1: 'Μέτρηση', ab_s1b: 'Επισκεπτόμαστε τον χώρο και μετράμε κάθε άνοιγμα.', ab_s2: 'Σχεδιασμός', ab_s2b: 'Επιλέγουμε μαζί σας σύστημα, γυαλί και φινίρισμα.', ab_s3: 'Κατασκευή', ab_s3b: 'Τα παράθυρα και οι πόρτες σας κατασκευάζονται στα μέτρα σας.', ab_s4: 'Τοποθέτηση', ab_s4b: 'Η δική μας ομάδα τοποθετεί και σφραγίζει τα πάντα.', ab_partner: 'Τα προφίλ μας', ab_partner_b: 'Συνεργαζόμαστε με συστήματα προφίλ αλουμινίου της MUSKITA.', ab_partner_l: 'Δείτε τα συστήματα προφίλ', ab_cta_b: 'Πείτε μας για το έργο σας και λάβετε γραπτή προσφορά.', about_eyebrow: 'Σχετικά με την', survey: 'Κλείστε δωρεάν αυτοψία', systems_eyebrow: 'Συστήματα αλουμινίου', explore: 'Δείτε το σύστημα',
       all_systems: 'Όλα τα συστήματα', system_n: 'Σύστημα {n} / {t}', overview: 'Επισκόπηση', features: 'Χαρακτηριστικά', specs: 'Τεχνικά στοιχεία',
       config: 'Διαμόρφωση', gallery: 'Φωτογραφίες', related: 'Σχετικά συστήματα', applications: 'Εφαρμογές',
       on_request: 'Κατόπιν αιτήματος', specs_note: 'Οι τιμές εξαρτώνται από το μέγεθος και τον σχεδιασμό κάθε έργου. Ζητήστε μας το τεχνικό φυλλάδιο.',
@@ -273,7 +273,7 @@
         <nav class="links" aria-label="Main">
           <a href="#top" class="is-home">${u('home')}</a>
           <button type="button" class="mega-btn" data-p="mega" aria-expanded="false" aria-controls="mega">${u('m_systems')}${icon('chev')}</button>
-          ${prods().length ? `<button type="button" class="mega-btn" data-p="pmega" aria-expanded="false" aria-controls="pmega">${u('products')}${icon('chev')}</button>` : ''}<a href="#projects">${u('m_projects')}</a><a href="#about-us">${u('m_about')}</a><a href="#quote">${u('contact')}</a>
+          ${prods().length ? `<button type="button" class="mega-btn" data-p="pmega" aria-expanded="false" aria-controls="pmega">${u('products')}${icon('chev')}</button>` : ''}<a href="#gallery">${u('m_projects')}</a><a href="#about-us">${u('m_about')}</a><a href="#quote">${u('contact')}</a>
         </nav>
         <button type="button" class="icon-btn srch-btn" aria-expanded="false" aria-controls="srch" aria-label="${u('search')}">${icon('search')}</button>
         ${langSelect()}
@@ -300,7 +300,7 @@
             <div class="acc-panel" id="acc-sys"><ul>${list.map((s, i) => `<li><a href="#${esc(s.slug)}"><small>${pad(i + 1)}</small>${esc(t(s.name))}</a></li>`).join('')}</ul></div></li>
           ${prods().length ? `<li><button type="button" class="acc" aria-expanded="false" aria-controls="acc-prof"><span><i class="mi">${icon('layers')}</i>${u('m_products')}</span>${icon('chev')}</button>
             <div class="acc-panel" id="acc-prof"><ul>${prods().map((x) => `<li><a href="#${esc(x.id)}"><small class="mdl">${esc(x.model)}</small>${esc(t(x.name))}</a></li>`).join('')}<li><a class="acc-all" href="#products">${u('view_all_prof')}${icon('arrow')}</a></li></ul></div></li>` : ''}
-          <li><a href="#projects"><span><i class="mi">${icon('images')}</i>${u('m_projects')}</span>${icon('right')}</a></li>
+          <li><a href="#gallery"><span><i class="mi">${icon('images')}</i>${u('m_projects')}</span>${icon('right')}</a></li>
           <li><a href="#reviews"><span><i class="mi">${icon('star')}</i>${u('reviews')}</span>${icon('right')}</a></li>
           <li><a href="#about-us"><span><i class="mi">${icon('users')}</i>${u('m_about')}</span>${icon('right')}</a></li>
           <li><a href="#quote"><span><i class="mi">${icon('mail')}</i>${u('m_contact')}</span>${icon('right')}</a></li>
@@ -454,7 +454,7 @@
     const stats = (S.stats || []).filter((x) => String(x.value || '').trim());
     const steps = [['ab_s1', 'ab_s1b', 'ruler'], ['ab_s2', 'ab_s2b', 'palette'], ['ab_s3', 'ab_s3b', 'layers'], ['ab_s4', 'ab_s4b', 'check']];
     return `<div class="sp-bar"><div class="wrap">
-        <a class="sp-back" href="#about">${icon('back')}${u('back_home')}</a>
+        <a class="sp-back" href="#tz-about">${icon('back')}${u('back_home')}</a>
         <span class="sp-title">${u('ab_title')}</span>
         <a class="btn btn-accent" href="#quote">${u('quote')}</a>
       </div></div>
@@ -472,6 +472,7 @@
       ${stats.length ? `<section class="ab-stats-w"><div class="wrap"><ul class="about-stats">${stats.map((x) => `<li><b>${esc(x.value)}</b><span>${esc(t(x.label))}</span></li>`).join('')}</ul></div></section>` : ''}
       ${String((S.founder || {}).name || '').trim() ? `<section class="ab-founder"><div class="wrap">${founder()}</div></section>` : ''}
       ${prods().length ? `<section class="ab-partner"><div class="wrap ab-two"><div><p class="eyebrow">${u('ab_partner')}</p><p class="ab-sub">${u('ab_partner_b')}</p></div><a class="link-sm" href="#products">${u('ab_partner_l')}${icon('arrow')}</a></div></section>` : ''}
+      ${engineering()}
       <section class="ab-cta"><img src="${esc(src(S.heroImage || 'img/house-windows.jpg'))}" alt="" loading="lazy"><div class="wrap"><h2>${u('band_title')}</h2><p>${u('ab_cta_b')}</p><div class="ab-cta-b"><a class="btn btn-accent" href="#quote">${u('get_quote')}${icon('arrow')}</a>${waLink() ? `<a class="btn btn-wa" href="${esc(waLink(u('wa_hello', { c: S.company.name })))}" target="_blank" rel="noopener">${waIcon}WhatsApp</a>` : ''}</div></div></section>
       ${footerMini()}`;
   }
@@ -486,6 +487,64 @@
     const m = /^(\d{4})-(\d{2})/.exec(w.date || '');
     return m ? new Date(+m[1], +m[2] - 1, 1).toLocaleDateString(lang === 'el' ? 'el-GR' : 'en-GB', { month: 'short', year: 'numeric' }) : '';
   };
+
+  /* ---------- home: one short block per page, each opens its own page ---------- */
+  function teaser(o) {
+    return `<section class="tz${o.flip ? ' flip' : ''}" id="tz-${o.id}"><div class="wrap tz-in">
+      <a class="tz-media" href="#${o.href}" tabindex="-1" aria-hidden="true"><img src="${esc(src(o.img))}" alt="" loading="lazy"></a>
+      <div class="tz-text">
+        <p class="eyebrow">${esc(o.eyebrow)}</p>
+        <h2>${esc(o.title)}</h2>
+        <p>${esc(o.body)}</p>
+        ${o.extra || ''}
+        <a class="tz-btn" href="#${o.href}"><span>${u('discover')}</span><i>${icon('arrow')}</i></a>
+      </div>
+    </div></section>`;
+  }
+  function teasers() {
+    const out = [], P = prods(), W = works(), list = sys();
+    const stats = (S.stats || []).filter((x) => String(x.value || '').trim()).slice(0, 3);
+    if (list.length) out.push({ id: 'systems', href: 'systems', img: list[0].image, eyebrow: u('systems_eyebrow'), title: u('m_systems'), body: t(S.text.systemsSub) || u('pg_sys_b'),
+      extra: `<ul class="tz-tags">${list.slice(0, 6).map((x) => `<li><a href="#${esc(x.slug)}">${esc(t(x.name))}</a></li>`).join('')}</ul>` });
+    if (P.length) out.push({ id: 'products', href: 'products', img: P[0].image, eyebrow: u('prod_eyebrow'), title: u('products'), body: u('prod_sub'),
+      extra: `<ul class="tz-tags">${P.map((x) => `<li><a href="#${esc(x.id)}">${esc(x.model)}</a></li>`).join('')}</ul>` });
+    out.push({ id: 'about', href: 'about-us', img: S.aboutImage || 'img/alu-profiles.jpg', eyebrow: `${u('about_eyebrow')} ${S.company.name}`, title: u('m_about'), body: t(S.text.introBody) || t(S.text.introTitle),
+      extra: stats.length ? `<ul class="tz-stats">${stats.map((x) => `<li><b data-count="${esc(x.value)}">${esc(x.value)}</b><span>${esc(t(x.label))}</span></li>`).join('')}</ul>` : '' });
+    if (W.length) out.push({ id: 'gallery', href: 'gallery', img: W[0].images[0], eyebrow: u('gal_eyebrow'), title: u('gallery'), body: u('gal_page_sub'),
+      extra: `<div class="tz-thumbs">${W.slice(1, 4).map((w) => `<img src="${esc(src(w.images[0]))}" alt="" loading="lazy">`).join('')}</div>` });
+    return out.map((o, i) => teaser({ ...o, flip: i % 2 === 1 })).join('');
+  }
+
+  /* ---------- page hero shared by the systems, profile systems and gallery pages ---------- */
+  function pgHero(img, eyebrow, h1, h2, body) {
+    return `<section class="pg-hero"><img src="${esc(src(img))}" alt=""><div class="pg-hero-t"><p class="eyebrow">${esc(eyebrow)}</p><h1>${esc(h1)}</h1></div></section>
+      <section class="pg-card-w"><div class="wrap"><div class="pg-card"><h2>${esc(h2)}</h2><p>${esc(body)}</p></div></div></section>`;
+  }
+  function pgBar(back, title) {
+    return `<div class="sp-bar"><div class="wrap">
+        <a class="sp-back" href="#${back}">${icon('back')}${u('back_home')}</a>
+        <span class="sp-title">${esc(title)}</span>
+        <a class="btn btn-accent" href="#quote">${u('quote')}</a>
+      </div></div>`;
+  }
+  function systemsPage() {
+    const list = sys();
+    return `${pgBar('tz-systems', u('m_systems'))}
+      ${pgHero(S.heroImage || list[0].image, u('systems_eyebrow'), u('m_systems'), t(S.text.systemsTitle) || u('m_systems'), t(S.text.systemsSub) || u('pg_sys_b'))}
+      <section class="pg-body"><div class="wrap"><div class="sys-grid rv-kids">${list.map((x, i) => `<a class="card" style="--i:${Math.min(i, 8)}" href="#${esc(x.slug)}"><img src="${esc(src(x.image))}" alt="" loading="lazy"><span class="card-n">${esc(t(x.name))}${icon('arrow')}</span></a>`).join('')}</div></div></section>
+      ${footerMini()}`;
+  }
+  function productsPage() {
+    const L = prods(), used = new Set(L.map((x) => x.cat));
+    const cats = (S.productCats || []).filter((c) => used.has(c.id));
+    return `${pgBar('tz-products', u('products'))}
+      ${pgHero(L[0].image, u('prod_eyebrow'), u('products'), u('pg_prod_h'), u('prod_sub'))}
+      <section class="pg-body"><div class="wrap">
+        ${cats.length > 1 ? `<div class="chips" role="group" aria-label="${u('products')}">${[{ id: 'all', name: u('all_products') }, ...cats.map((c) => ({ id: c.id, name: t(c.name) }))].map((c) => `<button type="button" data-pf="${esc(c.id)}" aria-pressed="${pf === c.id}">${esc(c.name)}</button>`).join('')}</div>` : ''}
+        <div class="prod-grid pg-grid rv-kids" id="prod-grid">${prodCards()}</div>
+      </div></section>
+      ${footerMini()}`;
+  }
   function workCard(w, i) {
     const meta = [catName(w.cat), workDate(w)].filter(Boolean).join(' · ');
     return `<button type="button" class="work" style="--i:${Math.min(i, 8)}" data-work="${esc(w.id)}" aria-label="${esc(t(w.title))}">
@@ -516,12 +575,12 @@
   }
   function galleryPage() {
     return `<div class="sp-bar"><div class="wrap">
-        <a class="sp-back" href="#projects">${icon('back')}${u('back_home')}</a>
+        <a class="sp-back" href="#tz-gallery">${icon('back')}${u('back_home')}</a>
         <span class="sp-title">${u('gallery')}</span>
         <a class="btn btn-accent" href="#quote">${u('quote')}</a>
       </div></div>
-      <section class="gal-head"><div class="wrap"><p class="eyebrow">${u('gallery')}</p><h1>${u('gal_page_title')}</h1><p>${u('gal_page_sub')}</p>${chips('page')}</div></section>
-      <section class="gal-body"><div class="wrap"><div class="work-grid" id="work-page">${workList('page')}</div></div></section>
+      ${pgHero(works()[0].images[0], u('gallery'), u('gal_page_title'), u('pg_gal_h'), u('gal_page_sub'))}
+      <section class="pg-body"><div class="wrap">${chips('page')}<div class="work-grid rv-kids" id="work-page">${workList('page')}</div></div></section>
       ${footerMini()}`;
   }
 
@@ -582,7 +641,7 @@
     return `<section class="reviews" id="reviews"><div class="wrap">
       <div class="rev-head rv"><div><p class="eyebrow">${u('reviews')}</p><h2>${u('rv_h')}</h2>${L.length ? '' : `<p class="rev-sub">${u(googleOn() ? 'rv_empty_g' : 'rev_empty')}</p>`}</div>${L.length ? `<a class="rv-arrow" href="#all-reviews" aria-label="${u('rv_see_all')}">${icon('arrow')}</a>` : ''}</div>
       <div class="rv-top rv${L.length ? '' : ' solo'}">${L.length ? revSummary(L) : ''}${rateBox()}</div>
-      ${L.length ? `<div class="rev-grid rv-kids">${L.slice(0, 3).map(revCard).join('')}</div>${L.length > 3 ? `<a class="btn btn-ghost rv-seeall" href="#all-reviews">${u('rv_see_all')} (${L.length})${icon('arrow')}</a>` : ''}` : ''}
+      ${L.length ? `<a class="btn btn-ghost rv-seeall" href="#all-reviews">${u('rv_see_all')} (${L.length})${icon('arrow')}</a>` : ''}
     </div></section>`;
   }
   let rvSort = 'rel', rvStar = 0;
@@ -1136,7 +1195,7 @@
     const soc = socialLinks('socials');
     return `<footer class="foot"><div class="wrap foot-top${soc ? ' has-soc' : ''}">
       <div class="foot-brand"><img src="/img/logo-light.png" alt="${esc(c.name)}" width="111" height="52"><p>${esc(t(S.text.tagline))}</p></div>
-      <div><h4>${u('quick_links')}</h4><ul><li><a href="#top">${u('home')}</a></li><li><a href="#about-us">${u('about')}</a></li><li><a href="#systems">${u('systems')}</a></li>${prods().length ? `<li><a href="#products">${u('products')}</a></li>` : ''}<li><a href="#projects">${u('gallery')}</a></li><li><a href="#reviews">${u('reviews')}</a></li><li><a href="#quote">${u('contact')}</a></li></ul></div>
+      <div><h4>${u('quick_links')}</h4><ul><li><a href="#top">${u('home')}</a></li><li><a href="#about-us">${u('about')}</a></li><li><a href="#systems">${u('systems')}</a></li>${prods().length ? `<li><a href="#products">${u('products')}</a></li>` : ''}<li><a href="#gallery">${u('gallery')}</a></li><li><a href="#reviews">${u('reviews')}</a></li><li><a href="#quote">${u('contact')}</a></li></ul></div>
       <div><h4>${u('systems')}</h4><ul>${list.slice(0, 6).map((s) => `<li><a href="#${esc(s.slug)}">${esc(t(s.name))}</a></li>`).join('')}</ul></div>
       <div><h4>${u('contact_info')}</h4><ul class="foot-contact">
         ${t(c.address) ? `<li>${icon('pin')}<span>${esc(t(c.address))}</span></li>` : ''}
@@ -1347,7 +1406,7 @@
 
   function render() {
     document.documentElement.lang = lang;
-    $('#app').innerHTML = header() + '<main>' + hero() + cats() + products() + about() + projects() + reviews() + engineering() + band() + quote() + '</main>' + footer();
+    $('#app').innerHTML = header() + '<main>' + hero() + teasers() + reviews() + quote() + '</main>' + footer();
     tstStart();
     hsShow(hsI);
     railArrows();
@@ -1371,7 +1430,7 @@
   if (PREVIEW) document.documentElement.classList.add('pv');
   function reveal(scope, instant) {
     if (!io || !scope) return;
-    $$('.rv, .rv-kids', scope).forEach((el) => { if (instant) el.classList.add('in', 'now'); else io.observe(el); });
+    $$('.rv, .rv-kids, .tz', scope).forEach((el) => { if (instant) el.classList.add('in', 'now'); else io.observe(el); });
   }
   function countUp(scope) {
     $$('[data-count]', scope).forEach((el) => {
@@ -1622,27 +1681,40 @@
   }
 
   // system page routing
+  let pgTok = 0;
+  function mount(html, label, title, instant, after) {
+    const sp = $('#sp'), tok = ++pgTok;
+    const swap = !reduce && !instant && !sp.hidden && sp.classList.contains('open');
+    const put = () => {
+      if (tok !== pgTok) return;
+      sp.innerHTML = html;
+      sp.setAttribute('role', 'dialog');
+      sp.setAttribute('aria-modal', 'true');
+      sp.setAttribute('aria-label', label);
+      sp.scrollTop = 0;
+      sp.classList.remove('swap', 'enter');
+      void sp.offsetWidth;
+      if (!reduce) sp.classList.add('enter');
+      document.title = title;
+      if (after) after(sp);
+    };
+    if (swap) { sp.classList.add('swap'); setTimeout(put, 280); }
+    else {
+      put();
+      sp.hidden = false;
+      if (instant || reduce) sp.classList.add('open');
+      else requestAnimationFrame(() => requestAnimationFrame(() => sp.classList.add('open')));
+    }
+    lock(true, 'sp');
+    sp.setAttribute('tabindex', '-1');
+    setTimeout(() => sp.focus({ preventScroll: true }), 50);
+  }
   function openSystem(slug, instant) {
     const s = bySlug(slug);
     if (!s) return;
-    prodCur = null;
+    prodCur = null; listOpen = '';
     current = s;
-    const sp = $('#sp');
-    sp.innerHTML = systemPage(s);
-    sp.setAttribute('role', 'dialog');
-    sp.setAttribute('aria-modal', 'true');
-    sp.setAttribute('aria-label', t(s.name));
-    sp.hidden = false;
-    sp.scrollTop = 0;
-    if (instant || reduce) sp.classList.add('open');
-    else requestAnimationFrame(() => requestAnimationFrame(() => sp.classList.add('open')));
-    lock(true, 'sp');
-    renderCfg(s);
-    reveal(sp, instant && renders > 1);
-    cfgDemo(s);
-    document.title = `${t(s.name)} · ${S.company.name}`;
-    sp.setAttribute('tabindex', '-1');
-    setTimeout(() => sp.focus({ preventScroll: true }), 50);
+    mount(systemPage(s), t(s.name), `${t(s.name)} · ${S.company.name}`, instant, (sp) => { renderCfg(s); reveal(sp, instant && renders > 1); cfgDemo(s); });
   }
   function closeSystem() {
     const sp = $('#sp');
@@ -1653,24 +1725,12 @@
     document.title = `${S.company.name} · ${t(S.text.tagline)}`;
     setTimeout(() => { if (!layerBusy()) { sp.hidden = true; sp.innerHTML = ''; } }, reduce ? 0 : 720);
   }
-  let galOpen = false, prodCur = null, revOpen = false, abOpen = false;
-  const layerBusy = () => current || galOpen || prodCur || revOpen || abOpen;
+  let galOpen = false, prodCur = null, revOpen = false, abOpen = false, listOpen = '';
+  const layerBusy = () => current || galOpen || prodCur || revOpen || abOpen || listOpen;
   function openAboutPage(instant) {
-    current = null; galOpen = false; prodCur = null; revOpen = false;
+    current = null; galOpen = false; prodCur = null; revOpen = false; listOpen = '';
     abOpen = true;
-    const sp = $('#sp');
-    sp.innerHTML = aboutPage();
-    sp.setAttribute('role', 'dialog');
-    sp.setAttribute('aria-modal', 'true');
-    sp.setAttribute('aria-label', u('ab_title'));
-    sp.hidden = false;
-    sp.scrollTop = 0;
-    if (instant || reduce) sp.classList.add('open');
-    else requestAnimationFrame(() => requestAnimationFrame(() => sp.classList.add('open')));
-    lock(true, 'sp');
-    document.title = `${u('ab_title')} · ${S.company.name}`;
-    sp.setAttribute('tabindex', '-1');
-    setTimeout(() => sp.focus({ preventScroll: true }), 50);
+    mount(aboutPage(), u('ab_title'), `${u('ab_title')} · ${S.company.name}`, instant, (sp) => reveal(sp, instant && renders > 1));
   }
   function closeAboutPage() {
     if (!abOpen) return;
@@ -1682,21 +1742,9 @@
     setTimeout(() => { if (!layerBusy()) { sp.hidden = true; sp.innerHTML = ''; } }, reduce ? 0 : 720);
   }
   function openRevPage(instant) {
-    current = null; galOpen = false; prodCur = null;
+    current = null; galOpen = false; prodCur = null; listOpen = '';
     revOpen = true;
-    const sp = $('#sp');
-    sp.innerHTML = revPage();
-    sp.setAttribute('role', 'dialog');
-    sp.setAttribute('aria-modal', 'true');
-    sp.setAttribute('aria-label', u('rv_h'));
-    sp.hidden = false;
-    sp.scrollTop = 0;
-    if (instant || reduce) sp.classList.add('open');
-    else requestAnimationFrame(() => requestAnimationFrame(() => sp.classList.add('open')));
-    lock(true, 'sp');
-    document.title = `${u('rv_h')} · ${S.company.name}`;
-    sp.setAttribute('tabindex', '-1');
-    setTimeout(() => sp.focus({ preventScroll: true }), 50);
+    mount(revPage(), u('rv_h'), `${u('rv_h')} · ${S.company.name}`, instant);
   }
   function closeRevPage() {
     if (!revOpen) return;
@@ -1711,22 +1759,9 @@
     const x = byProd(id);
     if (!x) return;
     current = null;
-    galOpen = false;
+    galOpen = false; listOpen = '';
     prodCur = x;
-    const sp = $('#sp');
-    sp.innerHTML = productPage(x);
-    sp.setAttribute('role', 'dialog');
-    sp.setAttribute('aria-modal', 'true');
-    sp.setAttribute('aria-label', x.model);
-    sp.hidden = false;
-    sp.scrollTop = 0;
-    if (instant || reduce) sp.classList.add('open');
-    else requestAnimationFrame(() => requestAnimationFrame(() => sp.classList.add('open')));
-    lock(true, 'sp');
-    reveal(sp, instant && renders > 1);
-    document.title = `${x.model} · ${t(x.name)} · ${S.company.name}`;
-    sp.setAttribute('tabindex', '-1');
-    setTimeout(() => sp.focus({ preventScroll: true }), 50);
+    mount(productPage(x), x.model, `${x.model} · ${t(x.name)} · ${S.company.name}`, instant, (sp) => reveal(sp, instant && renders > 1));
   }
   function closeProduct() {
     if (!prodCur) return;
@@ -1738,21 +1773,25 @@
     setTimeout(() => { if (!layerBusy()) { sp.hidden = true; sp.innerHTML = ''; } }, reduce ? 0 : 720);
   }
   function openGallery(instant) {
-    current = null;
+    current = null; listOpen = '';
     galOpen = true;
+    mount(galleryPage(), u('gallery'), `${u('gal_page_title')} · ${S.company.name}`, instant, (sp) => reveal(sp, instant && renders > 1));
+  }
+  // systems list page and profile systems list page
+  function openList(which, instant) {
+    current = null; galOpen = false; prodCur = null; revOpen = false; abOpen = false;
+    listOpen = which;
+    const title = which === 'systems' ? u('m_systems') : u('products');
+    mount(which === 'systems' ? systemsPage() : productsPage(), title, `${title} · ${S.company.name}`, instant, (sp) => reveal(sp, instant && renders > 1));
+  }
+  function closeList() {
+    if (!listOpen) return;
+    listOpen = '';
     const sp = $('#sp');
-    sp.innerHTML = galleryPage();
-    sp.setAttribute('role', 'dialog');
-    sp.setAttribute('aria-modal', 'true');
-    sp.setAttribute('aria-label', u('gallery'));
-    sp.hidden = false;
-    sp.scrollTop = 0;
-    if (instant || reduce) sp.classList.add('open');
-    else requestAnimationFrame(() => requestAnimationFrame(() => sp.classList.add('open')));
-    lock(true, 'sp');
-    document.title = `${u('gal_page_title')} · ${S.company.name}`;
-    sp.setAttribute('tabindex', '-1');
-    setTimeout(() => sp.focus({ preventScroll: true }), 50);
+    sp.classList.remove('open');
+    lock(false, 'sp');
+    document.title = `${S.company.name} · ${t(S.text.tagline)}`;
+    setTimeout(() => { if (!layerBusy()) { sp.hidden = true; sp.innerHTML = ''; } }, reduce ? 0 : 720);
   }
   function closeGallery() {
     if (!galOpen) return;
@@ -1764,10 +1803,13 @@
     setTimeout(() => { if (!layerBusy()) { sp.hidden = true; sp.innerHTML = ''; } }, reduce ? 0 : 720);
   }
   function route(first) {
-    const h = decodeURIComponent(location.hash.slice(1));
+    let h = decodeURIComponent(location.hash.slice(1));
+    h = { projects: 'gallery', about: 'about-us', engineering: 'about-us' }[h] || h;
     if (panel) setPanel(null);
     setHelp(false);
     if (h === 'about-us') { openAboutPage(first); return; }
+    if (h === 'systems' && sys().length) { openList('systems', first); return; }
+    if (h === 'products' && prods().length) { openList('products', first); return; }
     if (h === 'all-reviews' && allRevs().length) { abOpen = false; openRevPage(first); return; }
     if (h === 'gallery' && works().length) { prodCur = null; revOpen = false; abOpen = false; openGallery(first); return; }
     if (h && byProd(h)) { revOpen = false; abOpen = false; openProduct(h, first); return; }
@@ -1777,6 +1819,7 @@
     if (prodCur) closeProduct();
     if (galOpen) closeGallery();
     if (current) closeSystem();
+    closeList();
     if (h && !first) { const el = document.getElementById(h); if (el) setTimeout(() => el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }), 20); }
   }
 
@@ -2006,7 +2049,11 @@
   }
   // admin preview: jump straight to the part of the page being edited
   function previewTo(t) {
-    if (byProd(t) || bySlug(t) || t === 'gallery' || t === 'all-reviews') { if (location.hash === '#' + t) route(true); else location.hash = t; return; }
+    // home sections that moved to their own pages
+    if (/^\.founder/.test(t)) t = 'about-us';
+    else if (/#about$/.test(t)) t = '#tz-about';
+    else t = { '#projects': works().length ? 'gallery' : 'top', '#products': 'products', '#systems': 'systems' }[t] || t;
+    if (byProd(t) || bySlug(t) || ['gallery', 'all-reviews', 'about-us', 'products', 'systems'].includes(t)) { if (location.hash === '#' + t) route(true); else location.hash = t; return; }
     if (layerBusy() || location.hash) { history.replaceState(null, '', location.pathname + location.search); route(true); }
     const go = () => {
       if (t === 'top') { scrollTo(0, 0); return; }
