@@ -1515,9 +1515,9 @@
     lock(panel === 'menu' || (panel === 'search' && mobile()), 'panel');
     onScroll();
   }
-  // scroll cue: appears 2.5s after the hero entrance, hides on scroll, returns only at the very top
+  // scroll cue: comes in about 1s after load, with the hero text, hides on scroll, returns only at the very top
   let cueReady = false;
-  setTimeout(() => { cueReady = true; syncCue(); }, 1600 + 2500);
+  setTimeout(() => { cueReady = true; syncCue(); }, 1000);
   function syncCue() { const c = $('.scroll-cue'); if (c) c.classList.toggle('show', cueReady && scrollY <= 2 && !layerBusy()); }
   function onScroll() {
     syncCue();
