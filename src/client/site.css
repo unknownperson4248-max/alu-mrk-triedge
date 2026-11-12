@@ -312,7 +312,7 @@ html[data-tone=dark] .hdr.solid .brand .logo-d,html[data-tone=dark] .hdr.open-pa
 .about{position:relative;background:var(--navy-deep);color:var(--on-navy);padding-block:clamp(16px,2vw,32px) clamp(56px,7vw,96px)}
 .about-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,4fr) minmax(0,3fr);gap:clamp(28px,3.5vw,56px);align-items:center;max-width:1440px;margin:0 auto;padding-right:max(20px,env(safe-area-inset-right,0px))}
 .about-media{position:relative;margin:0;aspect-ratio:16/11;overflow:hidden;border-radius:0 10px 10px 0;background:var(--navy)}
-.about-media img{width:100%;height:100%;object-fit:cover}
+.about-media img,.about-media video{width:100%;height:100%;object-fit:cover;display:block}
 .about-media::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 60%,color-mix(in srgb,var(--navy-deep) 60%,transparent))}
 .about-play{position:absolute;z-index:1;left:50%;top:50%;width:78px;height:78px;margin:-39px 0 0 -39px;border-radius:50%;border:2px solid #fff;background:rgba(10,11,13,.4);color:#fff;display:grid;place-items:center;cursor:pointer;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);transition:transform .3s}
 .about-play:hover{transform:scale(1.06)}

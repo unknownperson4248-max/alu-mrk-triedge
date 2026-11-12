@@ -180,7 +180,11 @@
         ${pair('founder.role', 'Role, e.g. Founder & Managing Director')}
         ${pair('founder.bio', 'Short bio (2–4 sentences)', true)}
         ${pair('founder.quote', 'Personal message (optional)', true)}</div>
-      <div class="card"><h2>About section image</h2>${imgPick('aboutImage', 'Image next to the About text')}</div>
+      <div class="card"><h2>About section image</h2>${imgPick('aboutImage', 'Image next to the About text (also shown while the video loads)')}
+        <div class="fld"><span class="lbl">Video instead of the image (optional)</span>
+          ${site.aboutVideo ? `<video class="vprev" src="${esc(src(site.aboutVideo))}" muted loop autoplay playsinline></video><div class="pick"><button type="button" class="b b-sm" data-act="upload-video" data-path="aboutVideo">Replace video</button><button type="button" class="b b-sm b-danger" data-act="clear" data-path="aboutVideo">Remove video</button></div>`
+            : `<div><button type="button" class="b b-sm b-pri" data-act="upload-video" data-path="aboutVideo">Upload video</button></div>`}
+          <small class="muted">MP4, up to 24 MB. Best: 6 to 10 seconds, no sound, loops smoothly.</small></div></div>
       <div class="card"><h2>Main text</h2>
         ${pair('text.tagline', 'Tagline (footer and browser title)')}
         ${pair('text.introTitle', 'About: title', true)}
@@ -898,7 +902,7 @@
       case 'upload-video': {
         const files = await chooseFiles('video/mp4,video/webm', false);
         const up = await uploadFiles(files);
-        if (up[0]) { site.heroVideo = up[0]; markDirty(); renderEditor(); }
+        if (up[0]) { site[b.dataset.path === 'aboutVideo' ? 'aboutVideo' : 'heroVideo'] = up[0]; markDirty(); renderEditor(); }
         break;
       }
       case 'upload': { const files = await chooseFiles('image/*', true); if (files.length) { await uploadFiles(files); renderEditor(); } break; }

@@ -435,7 +435,7 @@
     const stats = (S.stats || []).filter((x) => String(x.value || '').trim());
     return `<section class="about" id="about">
       <div class="about-grid">
-        <figure class="about-media rv"><img src="${esc(src(img))}" alt="" loading="lazy">${S.heroVideo ? `<button type="button" class="about-play" data-video aria-label="${u('watch')}">${icon('play')}</button>` : ''}</figure>
+        <figure class="about-media rv">${S.aboutVideo ? `<video src="${esc(src(S.aboutVideo))}" poster="${esc(src(img))}" muted loop autoplay playsinline preload="metadata" aria-hidden="true"></video>` : `<img src="${esc(src(img))}" alt="" loading="lazy">`}${S.heroVideo && !S.aboutVideo ? `<button type="button" class="about-play" data-video aria-label="${u('watch')}">${icon('play')}</button>` : ''}</figure>
         <div class="about-text rv">
           <p class="eyebrow">${u('about_eyebrow')} ${esc(S.company.name)}</p>
           <h2>${esc(t(S.text.introTitle))}</h2>
