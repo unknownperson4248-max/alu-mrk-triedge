@@ -501,18 +501,16 @@
       </div>
     </div></section>`;
   }
-  function teasers() {
+  function teasers(part) {
     const out = [], P = prods(), W = works(), list = sys();
     const stats = (S.stats || []).filter((x) => String(x.value || '').trim()).slice(0, 3);
     if (list.length) out.push({ id: 'systems', href: 'systems', img: list[0].image, eyebrow: u('systems_eyebrow'), title: u('m_systems'), body: t(S.text.systemsSub) || u('pg_sys_b'),
       extra: `<ul class="tz-tags">${list.slice(0, 6).map((x) => `<li><a href="#${esc(x.slug)}">${esc(t(x.name))}</a></li>`).join('')}</ul>` });
-    if (P.length) out.push({ id: 'products', href: 'products', img: P[0].image, eyebrow: u('prod_eyebrow'), title: u('products'), body: u('prod_sub'),
-      extra: `<ul class="tz-tags">${P.map((x) => `<li><a href="#${esc(x.id)}">${esc(x.model)}</a></li>`).join('')}</ul>` });
     out.push({ id: 'about', href: 'about-us', img: S.aboutImage || 'img/alu-profiles.jpg', eyebrow: `${u('about_eyebrow')} ${S.company.name}`, title: u('m_about'), body: t(S.text.introBody) || t(S.text.introTitle),
       extra: stats.length ? `<ul class="tz-stats">${stats.map((x) => `<li><b data-count="${esc(x.value)}">${esc(x.value)}</b><span>${esc(t(x.label))}</span></li>`).join('')}</ul>` : '' });
     if (W.length) out.push({ id: 'gallery', href: 'gallery', img: W[0].images[0], eyebrow: u('gal_eyebrow'), title: u('gallery'), body: u('gal_page_sub'),
       extra: `<div class="tz-thumbs">${W.slice(1, 4).map((w) => `<img src="${esc(src(w.images[0]))}" alt="" loading="lazy">`).join('')}</div>` });
-    return out.map((o, i) => teaser({ ...o, flip: i % 2 === 1 })).join('');
+    return out.map((o, i) => ({ ...o, flip: i % 2 === 1 })).filter((o) => (part === 'top' ? o.id === 'systems' : o.id !== 'systems')).map(teaser).join('');
   }
 
   /* ---------- page hero shared by the systems, profile systems and gallery pages ---------- */
@@ -1406,7 +1404,7 @@
 
   function render() {
     document.documentElement.lang = lang;
-    $('#app').innerHTML = header() + '<main>' + hero() + teasers() + reviews() + quote() + '</main>' + footer();
+    $('#app').innerHTML = header() + '<main>' + hero() + teasers('top') + products() + teasers('rest') + reviews() + quote() + '</main>' + footer();
     tstStart();
     hsShow(hsI);
     railArrows();
@@ -1809,7 +1807,6 @@
     setHelp(false);
     if (h === 'about-us') { openAboutPage(first); return; }
     if (h === 'systems' && sys().length) { openList('systems', first); return; }
-    if (h === 'products' && prods().length) { openList('products', first); return; }
     if (h === 'all-reviews' && allRevs().length) { abOpen = false; openRevPage(first); return; }
     if (h === 'gallery' && works().length) { prodCur = null; revOpen = false; abOpen = false; openGallery(first); return; }
     if (h && byProd(h)) { revOpen = false; abOpen = false; openProduct(h, first); return; }
@@ -2052,8 +2049,8 @@
     // home sections that moved to their own pages
     if (/^\.founder/.test(t)) t = 'about-us';
     else if (/#about$/.test(t)) t = '#tz-about';
-    else t = { '#projects': works().length ? 'gallery' : 'top', '#products': 'products', '#systems': 'systems' }[t] || t;
-    if (byProd(t) || bySlug(t) || ['gallery', 'all-reviews', 'about-us', 'products', 'systems'].includes(t)) { if (location.hash === '#' + t) route(true); else location.hash = t; return; }
+    else t = { '#projects': works().length ? 'gallery' : 'top', '#systems': 'systems' }[t] || t;
+    if (byProd(t) || bySlug(t) || ['gallery', 'all-reviews', 'about-us', 'systems'].includes(t)) { if (location.hash === '#' + t) route(true); else location.hash = t; return; }
     if (layerBusy() || location.hash) { history.replaceState(null, '', location.pathname + location.search); route(true); }
     const go = () => {
       if (t === 'top') { scrollTo(0, 0); return; }
