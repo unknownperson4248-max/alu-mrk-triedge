@@ -214,8 +214,8 @@ async function handleQuote(req, env, url) {
   if (!raw.length) errs.push('items');
   const items = [];
   for (const it of raw) {
-    const w = Math.round(+it.width), h = Math.round(+it.height), q = Math.round(+it.qty);
-    if (!Q_CATS.includes(it.cat) || !(w > 0 && w <= 30000) || !(h > 0 && h <= 30000) || !(q >= 1 && q <= 999)) { errs.push('item'); break; }
+    const measure = !!it.measure, w = measure ? 0 : Math.round(+it.width), h = measure ? 0 : Math.round(+it.height), q = Math.round(+it.qty);
+    if (!Q_CATS.includes(it.cat) || (!measure && (!(w > 0 && w <= 30000) || !(h > 0 && h <= 30000))) || !(q >= 1 && q <= 999)) { errs.push('item'); break; }
     const files = [];
     for (const f of Array.isArray(it.files) ? it.files.slice(0, 3) : []) {
       const id = String(f && f.id || '');
@@ -224,7 +224,7 @@ async function handleQuote(req, env, url) {
       if (meta) files.push({ id, name: meta.name, type: meta.type, size: meta.size });
     }
     items.push({
-      cat: it.cat, catName: clip(it.catName, 60), model: clip(it.model, 80), width: w, height: h, qty: q,
+      cat: it.cat, catName: clip(it.catName, 60), model: clip(it.model, 80), measure, width: w, height: h, qty: q,
       colour: clip(it.colour, 60), glass: clip(it.glass, 60), glassThk: clip(it.glassThk, 40), opening: clip(it.opening, 60),
       specs: clip(it.specs, 500), notes: clip(it.notes, 1000), files,
     });
@@ -237,7 +237,7 @@ async function handleQuote(req, env, url) {
   // remembers the email so a later Google review from it shows "Verified customer"
   await env.KV.put('qe:' + (await sha256hex(customer.email.toLowerCase())), '1', KEEP);
   const site = await getSite(env);
-  const lines = items.map((it, k) => `${k + 1}. ${it.model || it.catName} (${it.catName}) ${it.width} x ${it.height} mm, qty ${it.qty}`
+  const lines = items.map((it, k) => `${k + 1}. ${it.model || it.catName} (${it.catName}) ${it.measure ? 'size: measure on site' : `${it.width} x ${it.height} mm`}, qty ${it.qty}`
     + [it.colour && `colour ${it.colour}`, it.glass && `glass ${it.glass}${it.glassThk ? ' ' + it.glassThk : ''}`, it.opening && `opening ${it.opening}`].filter(Boolean).map((x) => ', ' + x).join('')
     + (it.specs ? `\n   Specs: ${it.specs}` : '') + (it.notes ? `\n   Notes: ${it.notes}` : '') + (it.files.length ? `\n   Attachments: ${it.files.map((f) => f.name).join(', ')}` : '')).join('\n');
   const when = new Date(ts).toLocaleString('en-GB', { timeZone: 'Asia/Nicosia', dateStyle: 'medium', timeStyle: 'short' });
@@ -248,7 +248,7 @@ async function handleQuote(req, env, url) {
      <h3 style="font-size:16px;margin:16px 0 8px">Products (${items.length})</h3>
      ${items.map((it, k) => `<div style="border:1px solid #e3e5e8;border-radius:8px;padding:10px 12px;margin-bottom:8px">
        <div style="font-weight:bold">${k + 1}. ${escMail(it.model || it.catName)}</div>
-       <table role="presentation" cellpadding="0" cellspacing="0" style="font-size:14px">${row('Category', it.catName)}${row('Size', `${it.width} x ${it.height} mm`)}${row('Quantity', String(it.qty))}${row('Colour', it.colour)}${row('Glass', [it.glass, it.glassThk].filter(Boolean).join(', '))}${row('Opening', it.opening)}${row('Specifications', it.specs)}${row('Notes', it.notes)}${row('Attachments', it.files.map((f) => f.name).join(', ') + (it.files.length ? ' (open in the admin panel)' : ''))}</table></div>`).join('')}`, url.origin);
+       <table role="presentation" cellpadding="0" cellspacing="0" style="font-size:14px">${row('Category', it.catName)}${row('Size', it.measure ? 'Not known: measure on site' : `${it.width} x ${it.height} mm`)}${row('Quantity', String(it.qty))}${row('Colour', it.colour)}${row('Glass', [it.glass, it.glassThk].filter(Boolean).join(', '))}${row('Opening', it.opening)}${row('Specifications', it.specs)}${row('Notes', it.notes)}${row('Attachments', it.files.map((f) => f.name).join(', ') + (it.files.length ? ' (open in the admin panel)' : ''))}</table></div>`).join('')}`, url.origin);
   const plain = `Quotation request ${ref}\n${when}\n\nName: ${customer.name}\nEmail: ${customer.email}\nPhone: ${customer.phone}\n${customer.company ? 'Company: ' + customer.company + '\n' : ''}${customer.location ? 'Location: ' + customer.location + '\n' : ''}${customer.type ? 'Project type: ' + customer.type + '\n' : ''}${customer.message ? '\nMessage:\n' + customer.message + '\n' : ''}\nProducts:\n${lines}\n\nAdmin panel: ${url.origin}/admin`;
   rec.email = await sendMail(env, site, { subject: `Quotation request ${ref} · ${customer.name} · ${items.length} item${items.length > 1 ? 's' : ''}`, html, text: plain, replyTo: customer.email });
   const key = `q:${String(9e15 - ts).padStart(16, '0')}:${rid(4)}`;

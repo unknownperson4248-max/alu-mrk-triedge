@@ -37,7 +37,7 @@
       qb_colour: 'Colour / finish', qb_glass: 'Glass type', qb_glass_thk: 'Glass thickness', qb_glass_thk_ph: 'e.g. 4-16-4', qb_opening: 'Opening type', qb_specs: 'Additional specifications', qb_specs_ph: 'Handles, locks, mosquito nets, thresholds…', qb_notes: 'Notes', qb_notes_ph: 'Anything else we should know about this item',
       qb_files: 'Photo or drawing (optional)', qb_files_hint: 'JPG, PNG or PDF, up to 10 MB, max 3 files.', qb_add_file: 'Add file', qb_uploading: 'Uploading…',
       qb_add: 'Add to quotation', qb_save: 'Save changes', qb_cancel: 'Cancel', qb_add_more: 'Add another product', qb_edit: 'Edit', qb_remove: 'Remove', qb_continue: 'Continue', qb_back: 'Back', qb_review: 'Review request', qb_submit: 'Send quotation request',
-      qb_list: 'Your quotation ({n})', qb_empty: 'No products added yet.', qb_need: 'Please enter width, height and quantity.', qb_need_items: 'Add at least one product first.',
+      qb_list: 'Your quotation ({n})', qb_empty: 'No products added yet.', qb_need: 'Please enter width, height and quantity.', qb_measure: 'I don’t know the size or colour', qb_measure_sub: 'No problem. Just add the product and how many you need. We visit, measure and help you choose.', qb_measure_s: 'Size: we measure on site', qb_need_qty: 'Please enter how many you need.', qb_need_items: 'Add at least one product first.',
       qb_fullname: 'Full name', qb_email: 'Email', qb_phone: 'Phone (with country code)', qb_phone_ph: '+357 99 000000', qb_company: 'Company name', qb_location: 'Project location', qb_ptype: 'Project type', qb_msg: 'Additional message', optional: 'optional',
       qb_privacy: 'I agree that {c} uses these details only to answer my quotation request.', qb_privacy_note: 'We use your details only to prepare and send your quotation. We do not share them with anyone else.',
       qb_err_name: 'Please enter your full name.', qb_err_email: 'Please enter a valid email address.', qb_err_phone: 'Please enter your phone number with the country code, e.g. +357.', qb_err_privacy: 'Please accept the privacy notice.',
@@ -107,7 +107,7 @@
       qb_colour: 'Χρώμα / φινίρισμα', qb_glass: 'Τύπος γυαλιού', qb_glass_thk: 'Πάχος γυαλιού', qb_glass_thk_ph: 'π.χ. 4-16-4', qb_opening: 'Τύπος ανοίγματος', qb_specs: 'Επιπλέον προδιαγραφές', qb_specs_ph: 'Χερούλια, κλειδαριές, σήτες, κατωκάσια…', qb_notes: 'Σημειώσεις', qb_notes_ph: 'Οτιδήποτε άλλο πρέπει να γνωρίζουμε για αυτό το προϊόν',
       qb_files: 'Φωτογραφία ή σχέδιο (προαιρετικά)', qb_files_hint: 'JPG, PNG ή PDF, έως 10 MB, έως 3 αρχεία.', qb_add_file: 'Προσθήκη αρχείου', qb_uploading: 'Μεταφόρτωση…',
       qb_add: 'Προσθήκη στην προσφορά', qb_save: 'Αποθήκευση αλλαγών', qb_cancel: 'Ακύρωση', qb_add_more: 'Προσθήκη άλλου προϊόντος', qb_edit: 'Επεξεργασία', qb_remove: 'Αφαίρεση', qb_continue: 'Συνέχεια', qb_back: 'Πίσω', qb_review: 'Έλεγχος αιτήματος', qb_submit: 'Αποστολή αιτήματος προσφοράς',
-      qb_list: 'Η προσφορά σας ({n})', qb_empty: 'Δεν έχετε προσθέσει προϊόντα ακόμη.', qb_need: 'Συμπληρώστε πλάτος, ύψος και ποσότητα.', qb_need_items: 'Προσθέστε πρώτα τουλάχιστον ένα προϊόν.',
+      qb_list: 'Η προσφορά σας ({n})', qb_empty: 'Δεν έχετε προσθέσει προϊόντα ακόμη.', qb_need: 'Συμπληρώστε πλάτος, ύψος και ποσότητα.', qb_measure: 'Δεν ξέρω τις διαστάσεις ή το χρώμα', qb_measure_sub: 'Κανένα πρόβλημα. Προσθέστε το προϊόν και την ποσότητα. Ερχόμαστε, μετράμε και σας βοηθάμε να επιλέξετε.', qb_measure_s: 'Διαστάσεις: μέτρηση επί τόπου', qb_need_qty: 'Παρακαλώ συμπληρώστε την ποσότητα.', qb_need_items: 'Προσθέστε πρώτα τουλάχιστον ένα προϊόν.',
       qb_fullname: 'Ονοματεπώνυμο', qb_email: 'Email', qb_phone: 'Τηλέφωνο (με κωδικό χώρας)', qb_phone_ph: '+357 99 000000', qb_company: 'Εταιρεία', qb_location: 'Τοποθεσία έργου', qb_ptype: 'Είδος έργου', qb_msg: 'Επιπλέον μήνυμα', optional: 'προαιρετικό',
       qb_privacy: 'Συμφωνώ η {c} να χρησιμοποιήσει αυτά τα στοιχεία μόνο για να απαντήσει στο αίτημα προσφοράς μου.', qb_privacy_note: 'Χρησιμοποιούμε τα στοιχεία σας μόνο για να ετοιμάσουμε και να σας στείλουμε την προσφορά. Δεν τα μοιραζόμαστε με κανέναν.',
       qb_err_name: 'Συμπληρώστε το ονοματεπώνυμό σας.', qb_err_email: 'Συμπληρώστε έγκυρη διεύθυνση email.', qb_err_phone: 'Συμπληρώστε τηλέφωνο με κωδικό χώρας, π.χ. +357.', qb_err_privacy: 'Αποδεχτείτε τη σημείωση απορρήτου.',
@@ -976,7 +976,7 @@
   try { const q = JSON.parse(localStorage.getItem(QB_KEY) || 'null'); if (q && Array.isArray(q.items)) QB = { ...QB, ...q, err: '', busy: false }; } catch (e) {}
   if (QB.cust && QB.cust.phone && QB.cust.pnum == null) QB.cust.pnum = QB.cust.phone;
   const qbSave = () => { try { const { err, busy, more, ...keep } = QB; localStorage.setItem(QB_KEY, JSON.stringify(keep)); } catch (e) {} };
-  const blankItem = (o) => ({ grp: '', mp: 0, cat: '', model: '', pid: '', width: '', height: '', qty: 1, colour: '', glass: '', glassThk: '', opening: '', specs: '', notes: '', files: [], ...(o || {}) });
+  const blankItem = (o) => ({ grp: '', mp: 0, cat: '', model: '', pid: '', measure: 0, width: '', height: '', qty: 1, colour: '', glass: '', glassThk: '', opening: '', specs: '', notes: '', files: [], ...(o || {}) });
   const optList = (vals, cur, blank) => (blank ? `<option value="">${esc(blank)}</option>` : '') + vals.map((v) => `<option ${v === cur ? 'selected' : ''}>${esc(v)}</option>`).join('');
 
   const QG = [
@@ -997,7 +997,7 @@
   const itemP = (it) => (it.pid && byProd(it.pid)) || prodByModel(it.model);
   const itemImg = (it) => { const p = itemP(it); return src((p && p.image) || qgImg(grpOf(it.cat) || QG[4])); };
   const itemTitle = (it) => { const p = itemP(it); return it.model ? (p && dupModel(p) ? it.model : `${it.model} – ${p ? t(p.name) : it.catName || ''}`) : it.catName || pcat(it.cat); };
-  const itemMeta = (it) => [`${it.width} × ${it.height} mm`, it.colour, `${u('qb_qty_s')} ${it.qty}`].filter(Boolean).join(' · ');
+  const itemMeta = (it) => [it.measure ? u('qb_measure_s') : `${it.width} × ${it.height} mm`, it.colour, `${u('qb_qty_s')} ${it.qty}`].filter(Boolean).join(' · ');
   const qbSummary = (list) => { const n = list.length, pcs = list.reduce((s, it) => s + (+it.qty || 0), 0); return `${n === 1 ? u('qb_item_1') : u('qb_items_n', { n })} · ${u('qb_pcs', { n: pcs })}`; };
 
   function qbCard(it, k, mode) {
@@ -1030,11 +1030,12 @@
       const more = QB.more || d.specs || d.notes || (d.files || []).length;
       h += `<div class="qb-box" id="qb-spec">
           ${g.id === 'custom' ? `<div class="f"><label for="qi-name">${u('qb_pname')} *</label><input id="qi-name" data-qi="model" maxlength="80" autocomplete="off" placeholder="${esc(u('qb_pname_ph'))}" value="${esc(d.model)}"></div>` : ''}
-          <div class="qb-g3"><div class="f"><label for="qi-w">${u('qb_width_s')} *</label><input id="qi-w" data-qi="width" type="number" inputmode="numeric" min="1" max="30000" step="1" placeholder="mm" value="${esc(d.width)}"></div>
+          <label class="qb-measure${d.measure ? ' on' : ''}"><input type="checkbox" id="qi-ms" data-qb-measure ${d.measure ? 'checked' : ''}><span class="qb-sw" aria-hidden="true"><i></i></span><span><b>${u('qb_measure')}</b><small>${u('qb_measure_sub')}</small></span></label>
+          ${d.measure ? `<div class="qb-g3 qb-qonly"><div class="f"><label for="qi-q">${u('qb_qty_s')} *</label><input id="qi-q" data-qi="qty" type="number" inputmode="numeric" min="1" max="999" step="1" value="${esc(d.qty)}"></div></div>` : `<div class="qb-g3"><div class="f"><label for="qi-w">${u('qb_width_s')} *</label><input id="qi-w" data-qi="width" type="number" inputmode="numeric" min="1" max="30000" step="1" placeholder="mm" value="${esc(d.width)}"></div>
           <div class="f"><label for="qi-h">${u('qb_height_s')} *</label><input id="qi-h" data-qi="height" type="number" inputmode="numeric" min="1" max="30000" step="1" placeholder="mm" value="${esc(d.height)}"></div>
-          <div class="f"><label for="qi-q">${u('qb_qty_s')} *</label><input id="qi-q" data-qi="qty" type="number" inputmode="numeric" min="1" max="999" step="1" value="${esc(d.qty)}"></div></div>
-          <div class="qb-g2">${sel('colour', 'qi-col', 'qb_colour', u('colour_opts'))}${sel('opening', 'qi-open', 'qb_opening', u('opening_opts'))}${sel('glass', 'qi-gl', 'qb_glass', u('glass_opts'))}
-          <div class="f"><label for="qi-glt">${u('qb_glass_thk')}</label><input id="qi-glt" data-qi="glassThk" maxlength="40" placeholder="${esc(u('qb_glass_thk_ph'))}" value="${esc(d.glassThk)}"></div></div>
+          <div class="f"><label for="qi-q">${u('qb_qty_s')} *</label><input id="qi-q" data-qi="qty" type="number" inputmode="numeric" min="1" max="999" step="1" value="${esc(d.qty)}"></div></div>`}
+          ${d.measure ? '' : `<div class="qb-g2">${sel('colour', 'qi-col', 'qb_colour', u('colour_opts'))}${sel('opening', 'qi-open', 'qb_opening', u('opening_opts'))}${sel('glass', 'qi-gl', 'qb_glass', u('glass_opts'))}
+          <div class="f"><label for="qi-glt">${u('qb_glass_thk')}</label><input id="qi-glt" data-qi="glassThk" maxlength="40" placeholder="${esc(u('qb_glass_thk_ph'))}" value="${esc(d.glassThk)}"></div></div>`}
           <details class="qb-more" id="qb-more"${more ? ' open' : ''}><summary>${icon('plus')}<span>${u('qb_more')}</span><small>${u('optional')}</small></summary><div class="qb-more-b">
             <div class="f"><label for="qi-sp">${u('qb_specs')}</label><textarea id="qi-sp" data-qi="specs" maxlength="500" rows="2" placeholder="${esc(u('qb_specs_ph'))}">${esc(d.specs)}</textarea></div>
             <div class="f"><label for="qi-no">${u('qb_notes')}</label><textarea id="qi-no" data-qi="notes" maxlength="1000" rows="2" placeholder="${esc(u('qb_notes_ph'))}">${esc(d.notes)}</textarea></div>
@@ -1166,7 +1167,8 @@
       if (!g) { if (er) er.textContent = u('qb_need_prod'); return; }
       if (grpModels(g).length && !d.mp) { if (er) er.textContent = u('qb_need_model'); return; }
       if (g.id === 'custom') { d.model = String(d.model || '').trim(); if (!d.model) { if (er) er.textContent = u('qb_need_pname'); const f = $('#qi-name'); if (f) f.focus(); return; } }
-      if (!d.cat || !(d.width > 0) || !(d.height > 0) || !(d.qty >= 1)) { if (er) er.textContent = u('qb_need'); const f = !(d.width > 0) ? '#qi-w' : !(d.height > 0) ? '#qi-h' : '#qi-q'; if ($(f)) $(f).focus(); return; }
+      if (d.measure) { d.width = ''; d.height = ''; d.colour = ''; d.opening = ''; d.glass = ''; d.glassThk = ''; if (!d.cat || !(d.qty >= 1)) { if (er) er.textContent = u('qb_need_qty'); const f = $('#qi-q'); if (f) f.focus(); return; } }
+      else if (!d.cat || !(d.width > 0) || !(d.height > 0) || !(d.qty >= 1)) { if (er) er.textContent = u('qb_need'); const f = !(d.width > 0) ? '#qi-w' : !(d.height > 0) ? '#qi-h' : '#qi-q'; if ($(f)) $(f).focus(); return; }
       d.catName = pcat(d.cat);
       if (QB.edit >= 0) QB.items[QB.edit] = d; else QB.items.push(d);
       QB.edit = -1; QB.draft = null;
@@ -2019,6 +2021,7 @@
   });
   document.addEventListener('focusin', (e) => { if (e.target.classList.contains('sq')) runSearch(e.target.closest('[data-search]')); });
   document.addEventListener('change', async (e) => {
+    if (e.target.matches('[data-qb-measure]')) { const d = qbReadItem(); d.measure = e.target.checked ? 1 : 0; qbRender(); const f = $(d.measure ? '#qi-q' : '#qi-w'); if (f) f.focus({ preventScroll: true }); return; }
     if (e.target.dataset && e.target.dataset.qi) { qbReadItem(); qbSave(); return; }
     if (e.target.dataset && e.target.dataset.qc) { qbReadCust(); qbSave(); return; }
     if (e.target.id === 'qb-file' && e.target.files[0]) { const d = qbReadItem(); const f = await qbUpload(e.target.files[0]); if (f) { d.files = [...(d.files || []), f].slice(0, 3); qbRender(); } return; }
