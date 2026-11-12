@@ -266,7 +266,7 @@
       c.phone ? `<a href="${telLink()}">${icon('phone')}${esc(c.phone)}</a>` : '',
       t(c.address) ? `<span>${icon('pin')}${esc(t(c.address).split('\n')[0])}</span>` : '',
     ].join('');
-    return `<header class="hdr" id="hdr">
+    return `<div class="sprog" id="sprog" aria-hidden="true"></div><header class="hdr" id="hdr">
       <div class="topbar"><div class="wrap topbar-in"><div class="tb-l">${tb}</div>${socialLinks('tb-r')}</div></div>
       <div class="wrap nav">
         <a class="brand" href="#top" aria-label="${esc(c.name)}"><img class="logo-l" src="/img/logo-light.png" alt="${esc(c.name)}" width="98" height="46"><img class="logo-d" src="/img/logo-dark.png" alt="" width="98" height="46"></a>
@@ -389,6 +389,16 @@
   const catImg = (id) => { const c = (S.productCats || []).find((x) => x.id === id); return (c && c.image) || CAT_IMG[artKey(id)]; };
   const prodGroups = () => { const L = prods(); return (S.productCats || []).map((c) => ({ id: c.id, name: t(c.name), list: L.filter((x) => x.cat === c.id) })).filter((g) => g.list.length); };
   const nModels = (n) => `${n} ${n === 1 ? u('model1') : u('models')}`;
+  function modelsPage(id) {
+    const g = prodGroups().find((x) => x.id === id);
+    return `${pgBar('products', g.name)}
+      <section class="mc-head"><div class="wrap mc-in">
+        <div class="mc-art">${catArt(id)}</div>
+        <div><p class="eyebrow">${u('prod_eyebrow')} · ${nModels(g.list.length)}</p><h1>${esc(g.name)}</h1><p>${u('choose_model')}</p></div>
+      </div></section>
+      <section class="pg-body"><div class="wrap"><div class="prod-grid pg-grid rv-kids" id="prod-grid">${prodCards(g.list)}</div></div></section>
+      ${footerMini()}`;
+  }
   function prodCards(only) {
     const L = only || prods().filter((x) => pf === 'all' || x.cat === pf);
     return L.map((x, i) => `<article class="prod" style="--i:${i}">
@@ -398,21 +408,21 @@
     </article>`).join('');
   }
   function products() {
-    const L = prods();
-    if (!L.length) return '';
-    const used = new Set(L.map((x) => x.cat));
-    const cats = (S.productCats || []).filter((c) => used.has(c.id));
+    const G = prodGroups();
+    if (!G.length) return '';
     return `<section class="prods" id="products"><div class="wrap">
       <div class="proj-head rv"><div><p class="eyebrow">${u('prod_eyebrow')}</p><h2>${u('prod_title')}</h2><p class="prods-sub">${u('prod_sub')}</p></div></div>
-      ${cats.length > 1 ? `<div class="chips" role="group" aria-label="${u('products')}">${[{ id: 'all', name: u('all_products') }, ...cats.map((c) => ({ id: c.id, name: t(c.name) }))].map((c) => `<button type="button" data-pf="${esc(c.id)}" aria-pressed="${pf === c.id}">${esc(c.name)}</button>`).join('')}</div>` : ''}
-      <div class="prod-rail"><button type="button" class="rail-btn prev" data-prail="-1" aria-label="Previous">${icon('back')}</button><div class="prod-grid rv-kids" id="prod-grid">${prodCards()}</div><button type="button" class="rail-btn next" data-prail="1" aria-label="Next">${icon('arrow')}</button></div>
+      <div class="pcat-grid rv-kids">${G.map((g, k) => `<a class="pcat" style="--i:${k}" href="#models-${esc(g.id)}">
+        <span class="pcat-art">${catArt(g.id)}<span class="pcat-n">${nModels(g.list.length)}</span></span>
+        <span class="pcat-b"><b class="pcat-h">${esc(g.name)}</b><span class="pcat-m">${g.list.map((x) => esc(x.model)).join(' · ')}</span><span class="link-sm">${u('view_models')}${icon('arrow')}</span></span>
+      </a>`).join('')}</div>
     </div></section>`;
   }
   function productPage(x) {
     const specs = (x.specs || []).filter((r) => t(r.label) && String(r.value || '').trim());
     const apps = (x.applications || []).map(t).filter(Boolean);
     return `<div class="sp-bar"><div class="wrap">
-        <a class="sp-back" href="#products">${icon('back')}${u('products')}</a>
+        <a class="sp-back" href="#models-${esc(x.cat)}">${icon('back')}${esc(pcat(x.cat) || u('products'))}</a>
         <span class="sp-title">${esc(x.model)}</span>
         <button type="button" class="btn btn-accent" data-addq="${esc(x.id)}">${u('add_quote')}</button>
       </div></div>
@@ -1624,9 +1634,10 @@
   // scroll cue: comes in about 1s after load, with the hero text, hides on scroll, returns only at the very top
   let cueReady = false;
   setTimeout(() => { cueReady = true; syncCue(); }, 1000);
+  function syncProg() { const b = $('#sprog'); if (b) { const m = document.documentElement.scrollHeight - innerHeight; b.style.transform = `scaleX(${m > 0 ? Math.min(1, scrollY / m) : 0})`; } }
   function syncCue() { const c = $('.scroll-cue'); if (c) c.classList.toggle('show', cueReady && scrollY <= 2 && !layerBusy()); }
   function onScroll() {
-    syncCue();
+    syncCue(); syncProg();
     const h = $('#hdr');
     if (!h) return;
     h.classList.toggle('solid', scrollY > 40 && !panel);
@@ -1795,8 +1806,9 @@
   function openList(which, instant) {
     current = null; galOpen = false; prodCur = null; revOpen = false; abOpen = false;
     listOpen = which;
-    const title = which === 'systems' ? u('m_systems') : u('products');
-    mount(which === 'systems' ? systemsPage() : productsPage(), title, `${title} · ${S.company.name}`, instant, (sp) => reveal(sp, instant && renders > 1));
+    const c = which.startsWith('models-') ? which.slice(7) : '';
+    const title = which === 'systems' ? u('m_systems') : c ? pcat(c) : u('products');
+    mount(which === 'systems' ? systemsPage() : c ? modelsPage(c) : productsPage(), title, `${title} · ${S.company.name}`, instant, (sp) => reveal(sp, instant && renders > 1));
   }
   function closeList() {
     if (!listOpen) return;
@@ -1823,6 +1835,7 @@
     setHelp(false);
     if (h === 'about-us') { openAboutPage(first); return; }
     if (h === 'systems' && sys().length) { openList('systems', first); return; }
+    if (h.startsWith('models-') && prodGroups().some((g) => 'models-' + g.id === h)) { openList(h, first); return; }
     if (h === 'all-reviews' && allRevs().length) { abOpen = false; openRevPage(first); return; }
     if (h === 'gallery' && works().length) { prodCur = null; revOpen = false; abOpen = false; openGallery(first); return; }
     if (h && byProd(h)) { revOpen = false; abOpen = false; openProduct(h, first); return; }
