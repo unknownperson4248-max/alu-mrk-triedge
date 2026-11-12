@@ -1386,3 +1386,12 @@ html.pv .hero-copy>*,html.pv .hs-count{animation:none}
 .qb-measure small{display:block;margin-top:3px;font-size:13px;line-height:1.45;color:var(--on-navy-muted)}
 .qb-qonly{grid-template-columns:minmax(0,140px)}
 .qb-opt{font:inherit;font-size:11px;opacity:.6;text-transform:none;letter-spacing:0;margin-left:4px}
+
+/* quotation: examples sit above the box, the switch is one compact line */
+.qb-ex{display:block;margin:-2px 0 7px;font-size:12.5px;line-height:1.4;color:var(--on-navy-muted)}
+.qb-measure{display:inline-flex;align-items:center;gap:10px;padding:0;margin:2px 0 14px;border:0;background:none}
+.qb-measure.on{background:none}
+.qb-measure .qb-sw{width:36px;height:20px;margin:0}
+.qb-measure .qb-sw i{width:14px;height:14px}
+.qb-measure.on .qb-sw i{transform:translateX(16px)}
+.qb-measure b{font-size:14px;font-weight:500}
