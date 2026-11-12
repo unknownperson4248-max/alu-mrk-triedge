@@ -235,7 +235,7 @@
     return `<div class="crumb"><button type="button" class="b b-sm" data-act="back-work">← All work</button><h2>${esc(w.title?.en || 'New work')}</h2></div>
       <div class="card"><h2>Photos</h2><p class="hint">The first photo is the cover. Tap ★ on another photo to make it the cover.</p>
         <div class="thumbs">${(w.images || []).map((g, k) => `<div class="thumb"><img src="${esc(src(g))}" alt=""><button type="button" class="x" data-act="del" data-path="${p}.images" data-i="${k}" data-now="1" aria-label="Remove">×</button>${k ? `<button type="button" class="first" data-act="work-cover" data-i="${k}" aria-label="Make cover">★</button>` : '<span class="cover">Cover</span>'}</div>`).join('') || '<span class="muted">No photos yet.</span>'}</div>
-        <div class="pick"><button type="button" class="b b-pri" data-act="work-photos">Upload photos</button><button type="button" class="b b-sm" data-act="pick-add" data-path="${p}.images">Choose from library</button></div></div>
+        <div class="pick"><button type="button" class="b b-pri" data-act="work-photos">Upload photos</button></div></div>
       <div class="card"><h2>Details</h2>
         ${pair(`${p}.title`, 'Title, e.g. Sliding doors, villa in Limassol')}
         <div class="row">${sel(`${p}.cat`, 'Category', [['', 'No category'], ...site.galleryCats.map((c) => [c.id, c.name.en || c.name.el || c.id])])}${fld('Month finished', `<input type="month" data-path="${p}.date" value="${esc(w.date || '')}">`)}</div>
@@ -317,7 +317,7 @@
         <div class="acts"><button type="button" class="b b-sm b-icon" data-act="move" data-path="products" data-i="${i}" data-d="-1" ${i === 0 ? 'disabled' : ''} aria-label="Move up">↑</button><button type="button" class="b b-sm b-icon" data-act="move" data-path="products" data-i="${i}" data-d="1" ${i === L.length - 1 ? 'disabled' : ''} aria-label="Move down">↓</button><button type="button" class="b b-sm b-pri" data-act="edit-prod" data-i="${i}">Edit</button></div>
       </div>`).join('')}</div>
       <div><button type="button" class="b b-sm" data-act="add-prod">+ Add product</button></div></div>
-      <div class="card"><h2>Choose product pictures</h2><p class="hint">The four pictures customers tap in the quotation form (“Choose product”). Tap “Change photo” to use your own picture. “Remove” brings the standard picture back. To add a product itself, use “+ Add product” above.</p>
+      <div class="card"><h2>Choose product pictures</h2><p class="hint">The four pictures customers tap in the quotation form (“Choose product”). Tap “Change photo” and pick a picture from your phone’s gallery or files. “Remove” brings the standard picture back. To add a product itself, use “+ Add product” above.</p>
         <div class="tile-pick">${[['doors', 'Doors', 'img/tile-doors.jpg'], ['windows', 'Windows', 'img/tile-windows.jpg'], ['sliding', 'Sliding systems', 'img/sliding-door.jpg'], ['glass', 'Glass', 'img/glass-stairs.jpg']].map(([k, l, d]) => { const v = val(`quoteTiles.${k}`); return fld(l + (v ? '' : ' (standard picture)'), `<div class="pick"><img src="${esc(src(v || d))}" alt=""><button type="button" class="b b-sm" data-act="pick" data-path="quoteTiles.${k}">Change photo</button>${v ? `<button type="button" class="b b-sm b-danger" data-act="clear" data-path="quoteTiles.${k}">Remove</button>` : ''}</div>`); }).join('')}</div></div>
       <div class="card"><h2>Product categories</h2><p class="hint">Used for the product filter and the first question of the quotation form.</p>
         <div class="list">${site.productCats.map((c, i) => `<div class="item">${itemHead('productCats', i, site.productCats.length, c.name?.en || 'Category')}${pair(`productCats.${i}.name`, 'Name')}</div>`).join('')}</div>
@@ -921,8 +921,8 @@
         [a[i], a[j]] = [a[j], a[i]];
         markDirty(); renderEditor(); break;
       }
-      case 'pick': { const v = await picker('Choose image'); if (v) { setP(site, p, v); markDirty(); renderEditor(); } break; }
-      case 'pick-add': { const v = await picker('Add photo to gallery'); if (v) { (getP(site, p) || setP(site, p, []) || getP(site, p)).push(v); markDirty(); renderEditor(); } break; }
+      case 'pick': { const up = await uploadFiles(await chooseFiles('image/*', false)); if (up[0]) { setP(site, p, up[0]); markDirty(); renderEditor(); } break; }
+      case 'pick-add': { const up = await uploadFiles(await chooseFiles('image/*', true)); if (up.length) { (getP(site, p) || setP(site, p, []) || getP(site, p)).push(...up); markDirty(); renderEditor(); } break; }
       case 'clear': setP(site, p, ''); markDirty(); renderEditor(); break;
       case 'edit-sys': editIdx = +b.dataset.i; renderEditor(); pgIn(); scrollTo(0, 0); previewGo(site.systems[editIdx].slug); break;
       case 'back-sys': editIdx = null; renderEditor(); pgIn(); previewGo('#systems'); break;
