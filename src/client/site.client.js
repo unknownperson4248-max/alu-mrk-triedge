@@ -44,7 +44,7 @@
       qb_customer: 'Customer details', qb_done_title: 'Thank you, your request has been sent.', qb_done_body: 'Your reference is {r}. We will review your products and measurements and contact you with a written quotation.', qb_done_wa: 'Also send it on WhatsApp', qb_new: 'Start a new request', qb_wa_msg: 'Hello {c}, I have sent quotation request {r}.',
       qb_sending: 'Sending…', qb_err_send: 'Your request could not be sent. Please try again, or contact us by phone or WhatsApp.', qb_err_file: 'This file could not be uploaded. Use JPG, PNG or PDF up to 10 MB.', qb_items_n: '{n} products', qb_item_1: '1 product',
       qb_eyebrow: 'Get a quote', qb_h: 'Build your quotation', qb_lead: 'Choose your aluminium products, add the sizes and we prepare a written quotation for you.',
-      qg_doors: 'Doors', qg_windows: 'Windows', qg_sliding: 'Sliding systems', qg_glass: 'Glass', qg_custom: 'Custom solution', qb_other_cat: 'Something else? Tell us what you need.',
+      qb_tile_sub: 'Made to measure', qg_doors: 'Doors', qg_windows: 'Windows', qg_sliding: 'Sliding systems', qg_glass: 'Glass', qg_custom: 'Custom solution', qb_other_cat: 'Something else? Tell us what you need.',
       qb_choose_prod: 'Choose product', qb_choose_model: 'Choose model', qb_change: 'Change', qb_not_sure: 'Not sure / other', qb_not_sure_sub: 'We help you choose the right system.',
       qb_sec_size: 'Measurements', qb_sec_finish: 'Colour, glass & opening', qb_sec_extra: 'Extra details', qb_qty_s: 'Qty', qb_pcs: '{n} pcs', qb_added: 'Added', qb_dup: 'Duplicate',
       qb_list_t: 'Your quotation list', qb_cont_details: 'Continue to your details', qb_sec_contact: 'Contact details', qb_sec_project: 'About the project', qb_cc: 'Country code',
@@ -114,7 +114,7 @@
       qb_customer: 'Στοιχεία πελάτη', qb_done_title: 'Ευχαριστούμε, το αίτημά σας στάλθηκε.', qb_done_body: 'Ο αριθμός αναφοράς σας είναι {r}. Θα ελέγξουμε τα προϊόντα και τις διαστάσεις και θα επικοινωνήσουμε μαζί σας με γραπτή προσφορά.', qb_done_wa: 'Στείλτε το και στο WhatsApp', qb_new: 'Νέο αίτημα', qb_wa_msg: 'Γεια σας, έστειλα το αίτημα προσφοράς {r}.',
       qb_sending: 'Αποστολή…', qb_err_send: 'Το αίτημα δεν στάλθηκε. Δοκιμάστε ξανά ή επικοινωνήστε μαζί μας τηλεφωνικά ή στο WhatsApp.', qb_err_file: 'Το αρχείο δεν ανέβηκε. Χρησιμοποιήστε JPG, PNG ή PDF έως 10 MB.', qb_items_n: '{n} προϊόντα', qb_item_1: '1 προϊόν',
       qb_eyebrow: 'Προσφορά', qb_h: 'Δημιουργήστε την προσφορά σας', qb_lead: 'Επιλέξτε τα προϊόντα αλουμινίου, προσθέστε τις διαστάσεις και ετοιμάζουμε γραπτή προσφορά για εσάς.',
-      qg_doors: 'Πόρτες', qg_windows: 'Παράθυρα', qg_sliding: 'Συρόμενα συστήματα', qg_glass: 'Γυαλί', qg_custom: 'Ειδική κατασκευή', qb_other_cat: 'Κάτι άλλο; Πείτε μας τι χρειάζεστε.',
+      qb_tile_sub: 'Στα μέτρα σας', qg_doors: 'Πόρτες', qg_windows: 'Παράθυρα', qg_sliding: 'Συρόμενα συστήματα', qg_glass: 'Γυαλί', qg_custom: 'Ειδική κατασκευή', qb_other_cat: 'Κάτι άλλο; Πείτε μας τι χρειάζεστε.',
       qb_choose_prod: 'Επιλέξτε προϊόν', qb_choose_model: 'Επιλέξτε μοντέλο', qb_change: 'Αλλαγή', qb_not_sure: 'Δεν είμαι σίγουρος / άλλο', qb_not_sure_sub: 'Σας βοηθάμε να επιλέξετε το σωστό σύστημα.',
       qb_sec_size: 'Διαστάσεις', qb_sec_finish: 'Χρώμα, γυαλί & άνοιγμα', qb_sec_extra: 'Επιπλέον στοιχεία', qb_qty_s: 'Ποσ.', qb_pcs: '{n} τεμ.', qb_added: 'Προστέθηκε', qb_dup: 'Αντιγραφή',
       qb_list_t: 'Η λίστα προσφοράς σας', qb_cont_details: 'Συνέχεια στα στοιχεία σας', qb_sec_contact: 'Στοιχεία επικοινωνίας', qb_sec_project: 'Για το έργο', qb_cc: 'Κωδικός χώρας',
@@ -389,16 +389,6 @@
   const catImg = (id) => { const c = (S.productCats || []).find((x) => x.id === id); return (c && c.image) || CAT_IMG[artKey(id)]; };
   const prodGroups = () => { const L = prods(); return (S.productCats || []).map((c) => ({ id: c.id, name: t(c.name), list: L.filter((x) => x.cat === c.id) })).filter((g) => g.list.length); };
   const nModels = (n) => `${n} ${n === 1 ? u('model1') : u('models')}`;
-  function modelsPage(id) {
-    const g = prodGroups().find((x) => x.id === id);
-    return `${pgBar('products', g.name)}
-      <section class="mc-head"><div class="wrap mc-in">
-        <div class="mc-art"><img src="${esc(src(catImg(id)))}" alt=""><span class="pcat-ic">${catArt(id)}</span></div>
-        <div><p class="eyebrow">${u('prod_eyebrow')} · ${nModels(g.list.length)}</p><h1>${esc(g.name)}</h1><p>${u('choose_model')}</p></div>
-      </div></section>
-      <section class="pg-body"><div class="wrap"><div class="prod-grid pg-grid rv-kids" id="prod-grid">${prodCards(g.list)}</div></div></section>
-      ${footerMini()}`;
-  }
   function prodCards(only) {
     const L = only || prods().filter((x) => pf === 'all' || x.cat === pf);
     return L.map((x, i) => `<article class="prod" style="--i:${i}">
@@ -408,21 +398,21 @@
     </article>`).join('');
   }
   function products() {
-    const G = prodGroups();
-    if (!G.length) return '';
+    const L = prods();
+    if (!L.length) return '';
+    const used = new Set(L.map((x) => x.cat));
+    const cats = (S.productCats || []).filter((c) => used.has(c.id));
     return `<section class="prods" id="products"><div class="wrap">
       <div class="proj-head rv"><div><p class="eyebrow">${u('prod_eyebrow')}</p><h2>${u('prod_title')}</h2><p class="prods-sub">${u('prod_sub')}</p></div></div>
-      <div class="pcat-grid rv-kids">${G.map((g, k) => `<a class="pcat" style="--i:${k}" href="#models-${esc(g.id)}">
-        <span class="pcat-art"><img src="${esc(src(catImg(g.id)))}" alt="" loading="lazy"><span class="pcat-n">${nModels(g.list.length)}</span><span class="pcat-ic">${catArt(g.id)}</span></span>
-        <span class="pcat-b"><b class="pcat-h">${esc(g.name)}</b><span class="pcat-m">${g.list.map((x) => esc(x.model)).join(' · ')}</span><span class="link-sm">${u('view_models')}${icon('arrow')}</span></span>
-      </a>`).join('')}</div>
+      ${cats.length > 1 ? `<div class="chips" role="group" aria-label="${u('products')}">${[{ id: 'all', name: u('all_products') }, ...cats.map((c) => ({ id: c.id, name: t(c.name) }))].map((c) => `<button type="button" data-pf="${esc(c.id)}" aria-pressed="${pf === c.id}">${esc(c.name)}</button>`).join('')}</div>` : ''}
+      <div class="prod-rail"><button type="button" class="rail-btn prev" data-prail="-1" aria-label="Previous">${icon('back')}</button><div class="prod-grid rv-kids" id="prod-grid">${prodCards()}</div><button type="button" class="rail-btn next" data-prail="1" aria-label="Next">${icon('arrow')}</button></div>
     </div></section>`;
   }
   function productPage(x) {
     const specs = (x.specs || []).filter((r) => t(r.label) && String(r.value || '').trim());
     const apps = (x.applications || []).map(t).filter(Boolean);
     return `<div class="sp-bar"><div class="wrap">
-        <a class="sp-back" href="#models-${esc(x.cat)}">${icon('back')}${esc(pcat(x.cat) || u('products'))}</a>
+        <a class="sp-back" href="#products">${icon('back')}${u('products')}</a>
         <span class="sp-title">${esc(x.model)}</span>
         <button type="button" class="btn btn-accent" data-addq="${esc(x.id)}">${u('add_quote')}</button>
       </div></div>
@@ -974,12 +964,12 @@
   try { const q = JSON.parse(localStorage.getItem(QB_KEY) || 'null'); if (q && Array.isArray(q.items)) QB = { ...QB, ...q, err: '', busy: false }; } catch (e) {}
   if (QB.cust && QB.cust.phone && QB.cust.pnum == null) QB.cust.pnum = QB.cust.phone;
   const qbSave = () => { try { const { err, busy, more, ...keep } = QB; localStorage.setItem(QB_KEY, JSON.stringify(keep)); } catch (e) {} };
-  const blankItem = (o) => ({ grp: '', mp: 0, cat: '', model: '', width: '', height: '', qty: 1, colour: '', glass: '', glassThk: '', opening: '', specs: '', notes: '', files: [], ...(o || {}) });
+  const blankItem = (o) => ({ grp: '', mp: 0, cat: '', model: '', pid: '', width: '', height: '', qty: 1, colour: '', glass: '', glassThk: '', opening: '', specs: '', notes: '', files: [], ...(o || {}) });
   const optList = (vals, cur, blank) => (blank ? `<option value="">${esc(blank)}</option>` : '') + vals.map((v) => `<option ${v === cur ? 'selected' : ''}>${esc(v)}</option>`).join('');
 
   const QG = [
-    { id: 'doors', cats: ['doors'], img: 'img/commercial-doors.jpg', k: 'qg_doors' },
-    { id: 'windows', cats: ['windows'], img: 'img/house-windows.jpg', k: 'qg_windows' },
+    { id: 'doors', cats: ['doors'], img: 'img/tile-doors.jpg', k: 'qg_doors' },
+    { id: 'windows', cats: ['windows'], img: 'img/tile-windows.jpg', k: 'qg_windows' },
     { id: 'sliding', cats: ['sliding-doors', 'sliding-windows', 'thermal'], img: 'img/sliding-door.jpg', k: 'qg_sliding' },
     { id: 'glass', cats: ['glass'], img: 'img/glass-stairs.jpg', k: 'qg_glass' },
     { id: 'custom', cats: ['custom'], img: 'img/alu-profiles.jpg', k: 'qg_custom' },
@@ -989,8 +979,11 @@
   const grpById = (id) => QG.find((g) => g.id === id) || null;
   const grpModels = (g) => (g ? prods().filter((x) => g.cats.includes(x.cat)) : []);
   const prodByModel = (m) => (m ? prods().find((x) => x.model === m) : null);
-  const itemImg = (it) => { const p = prodByModel(it.model); return src((p && p.image) || (grpOf(it.cat) || QG[4]).img); };
-  const itemTitle = (it) => { const p = prodByModel(it.model); return it.model ? `${it.model} – ${p ? t(p.name) : it.catName || ''}` : it.catName || pcat(it.cat); };
+  const dupModel = (p) => prods().filter((x) => x.model === p.model).length > 1;
+  const modelLabel = (p) => (dupModel(p) ? `${p.model} (${t(p.name)})` : p.model);
+  const itemP = (it) => (it.pid && byProd(it.pid)) || prodByModel(it.model);
+  const itemImg = (it) => { const p = itemP(it); return src((p && p.image) || (grpOf(it.cat) || QG[4]).img); };
+  const itemTitle = (it) => { const p = itemP(it); return it.model ? (p && dupModel(p) ? it.model : `${it.model} – ${p ? t(p.name) : it.catName || ''}`) : it.catName || pcat(it.cat); };
   const itemMeta = (it) => [`${it.width} × ${it.height} mm`, it.colour, `${u('qb_qty_s')} ${it.qty}`].filter(Boolean).join(' · ');
   const qbSummary = (list) => { const n = list.length, pcs = list.reduce((s, it) => s + (+it.qty || 0), 0); return `${n === 1 ? u('qb_item_1') : u('qb_items_n', { n })} · ${u('qb_pcs', { n: pcs })}`; };
 
@@ -998,8 +991,8 @@
     const extra = [it.glass, it.glassThk, it.opening].filter(Boolean).join(' · ');
     const full = mode === 'review';
     return `<article class="qb-item"><img class="qb-item-im" src="${esc(itemImg(it))}" alt="" loading="lazy">
-      <div class="qb-item-b"><div class="qb-item-t"><b>${esc(it.model || it.catName || pcat(it.cat))}</b>${mode === 'list' ? `<span class="qb-badge">${icon('check')}${u('qb_added')}</span>` : `<span class="qb-num">${k + 1}</span>`}</div>
-        ${it.model ? `<span class="qb-item-n">${esc((prodByModel(it.model) && t(prodByModel(it.model).name)) || it.catName || '')}</span>` : ''}<span class="qb-item-m">${esc(itemMeta(it))}</span>${extra ? `<small>${esc(extra)}</small>` : ''}${full && it.specs ? `<small>${esc(it.specs)}</small>` : ''}${full && it.notes ? `<small>${esc(it.notes)}</small>` : ''}${it.files && it.files.length ? `<small>${icon('images')} ${full ? esc(it.files.map((f) => f.name).join(', ')) : it.files.length}</small>` : ''}</div>
+      <div class="qb-item-b"><div class="qb-item-t"><b>${esc((itemP(it) && itemP(it).model) || it.model || it.catName || pcat(it.cat))}</b>${mode === 'list' ? `<span class="qb-badge">${icon('check')}${u('qb_added')}</span>` : `<span class="qb-num">${k + 1}</span>`}</div>
+        ${it.model ? `<span class="qb-item-n">${esc((itemP(it) && t(itemP(it).name)) || it.catName || '')}</span>` : ''}<span class="qb-item-m">${esc(itemMeta(it))}</span>${extra ? `<small>${esc(extra)}</small>` : ''}${full && it.specs ? `<small>${esc(it.specs)}</small>` : ''}${full && it.notes ? `<small>${esc(it.notes)}</small>` : ''}${it.files && it.files.length ? `<small>${icon('images')} ${full ? esc(it.files.map((f) => f.name).join(', ')) : it.files.length}</small>` : ''}</div>
       ${mode === 'list' ? `<div class="qb-item-a"><button type="button" data-qb="edit" data-k="${k}">${icon('pen')}${u('qb_edit')}</button><button type="button" data-qb="dup" data-k="${k}">${icon('copy')}${u('qb_dup')}</button><button type="button" class="del" data-qb="del" data-k="${k}">${icon('trash')}${u('qb_remove')}</button></div>` : ''}
     </article>`;
   }
@@ -1009,12 +1002,12 @@
     const ready = g && (!ms.length || d.mp);
     let h = `<div class="qb-sec" id="qb-edit"><div class="qb-sec-h"><h3>${QB.edit >= 0 ? u('qb_edit_product', { n }) : g ? u('qb_product', { n }) : u('qb_choose_prod')}</h3>${QB.items.length ? `<button type="button" class="qb-link" data-qb="cancel-item">${u('qb_cancel')}</button>` : ''}</div>`;
     if (!g) {
-      h += `<div class="qb-cats">${QG.slice(0, 4).map((x) => `<button type="button" class="qb-cat" data-qb="grp" data-g="${x.id}"><span class="qb-cat-im"><img src="${esc(src(x.img))}" alt="" loading="lazy"></span><b>${u(x.k)}</b></button>`).join('')}</div>
+      h += `<div class="qb-cats">${QG.slice(0, 4).map((x) => `<button type="button" class="qb-cat" style="--i:${QG.indexOf(x)}" data-qb="grp" data-g="${x.id}"><span class="qb-cat-im"><img src="${esc(src(x.img))}" alt="" loading="lazy"><span class="pcat-ic">${catArt(x.id === 'windows' ? 'windows' : x.cats[0])}</span></span><b>${u(x.k)}</b><small>${esc(grpModels(x).length ? [...new Set(grpModels(x).map((m) => m.model))].join(' · ') : u('qb_tile_sub'))}</small></button>`).join('')}</div>
         <button type="button" class="qb-cat-more" data-qb="grp" data-g="custom"><span>${icon('sparkle')}</span><div><b>${u('qg_custom')}</b><small>${u('qb_other_cat')}</small></div>${icon('right')}</button>`;
     } else {
       h += `<div class="qb-picked"><img src="${esc(src(g.img))}" alt=""><div><small>${u('qb_cat')}</small><b>${u(g.k)}</b></div><button type="button" class="qb-link" data-qb="grp" data-g="">${u('qb_change')}</button></div>`;
       if (ms.length) {
-        h += `<div class="qb-sub-h">${u('qb_choose_model')}</div><div class="qb-models">${ms.map((x) => `<button type="button" class="qb-model${d.mp && d.model === x.model ? ' on' : ''}" aria-pressed="${!!(d.mp && d.model === x.model)}" data-qb="model" data-m="${esc(x.model)}"><span class="qb-model-im"><img src="${esc(src(x.image))}" alt="" loading="lazy"></span><span class="qb-model-t"><b>${esc(x.model)}</b><span>${esc(t(x.name))}</span><small>${esc(pcat(x.cat))}</small></span><span class="qb-radio"></span></button>`).join('')}
+        h += `<div class="qb-sub-h">${u('qb_choose_model')}</div><div class="qb-models">${ms.map((x) => `<button type="button" class="qb-model${d.mp && (d.pid ? d.pid === x.id : d.model === x.model) ? ' on' : ''}" aria-pressed="${!!(d.mp && (d.pid ? d.pid === x.id : d.model === x.model))}" data-qb="model" data-m="${esc(x.id)}"><span class="qb-model-im"><img src="${esc(src(x.image))}" alt="" loading="lazy"></span><span class="qb-model-t"><b>${esc(x.model)}</b><span>${esc(t(x.name))}</span><small>${esc(pcat(x.cat))}</small></span><span class="qb-radio"></span></button>`).join('')}
           <button type="button" class="qb-model${d.mp && !d.model ? ' on' : ''}" aria-pressed="${!!(d.mp && !d.model)}" data-qb="model" data-m=""><span class="qb-model-im qb-ns">?</span><span class="qb-model-t"><b>${u('qb_not_sure')}</b><span>${u('qb_not_sure_sub')}</span></span><span class="qb-radio"></span></button></div>`;
         if (g.id === 'sliding' && d.mp && !d.model) h += `<div class="qb-chips qb-stype">${['sliding-doors', 'sliding-windows'].map((c) => `<button type="button" class="qb-chip${d.cat === c ? ' on' : ''}" aria-pressed="${d.cat === c}" data-qb="stype" data-c="${c}">${esc(pcat(c))}</button>`).join('')}</div>`;
       }
@@ -1144,12 +1137,12 @@
   async function qbAction(a, el) {
     if (a === 'grp') {
       const d = qbReadItem(), g = grpById(el.dataset.g);
-      d.grp = g ? g.id : ''; d.model = ''; d.mp = g && !grpModels(g).length ? 1 : 0; d.cat = g ? g.cats[0] : '';
+      d.grp = g ? g.id : ''; d.model = ''; d.pid = ''; d.mp = g && !grpModels(g).length ? 1 : 0; d.cat = g ? g.cats[0] : '';
       qbRender(); qbGo('#qb-edit');
     } else if (a === 'model') {
-      const d = qbReadItem(), g = grpById(d.grp), p = prodByModel(el.dataset.m);
+      const d = qbReadItem(), g = grpById(d.grp), p = byProd(el.dataset.m);
       const first = !d.mp;
-      d.model = p ? p.model : ''; d.mp = 1; d.cat = p ? p.cat : g ? g.cats[0] : 'custom';
+      d.model = p ? modelLabel(p) : ''; d.pid = p ? p.id : ''; d.mp = 1; d.cat = p ? p.cat : g ? g.cats[0] : 'custom';
       qbRender(); if (first) qbGo('#qb-spec');
     } else if (a === 'stype') { const d = qbReadItem(); d.cat = el.dataset.c; qbRender(); }
     else if (a === 'qty-' || a === 'qty+') { const d = qbReadItem(); d.qty = Math.min(999, Math.max(1, (Math.round(+d.qty) || 1) + (a === 'qty+' ? 1 : -1))); const q = $('#qi-q'); if (q) q.value = d.qty; qbSave(); }
@@ -1708,7 +1701,6 @@
   let pgTok = 0;
   function mount(html, label, title, instant, after) {
     const sp = $('#sp'), tok = ++pgTok;
-    const swap = !reduce && !instant && !sp.hidden && sp.classList.contains('open');
     const put = () => {
       if (tok !== pgTok) return;
       sp.innerHTML = html;
@@ -1716,19 +1708,17 @@
       sp.setAttribute('aria-modal', 'true');
       sp.setAttribute('aria-label', label);
       sp.scrollTop = 0;
-      sp.classList.remove('swap', 'enter');
+      sp.classList.remove('enter');
       void sp.offsetWidth;
       if (!reduce) sp.classList.add('enter');
       document.title = title;
       if (after) after(sp);
     };
-    if (swap) { sp.classList.add('swap'); setTimeout(put, 280); }
-    else {
-      put();
-      sp.hidden = false;
-      if (instant || reduce) sp.classList.add('open');
-      else requestAnimationFrame(() => requestAnimationFrame(() => sp.classList.add('open')));
-    }
+    const was = !sp.hidden && sp.classList.contains('open');
+    put();
+    sp.hidden = false;
+    if (was || instant || reduce) sp.classList.add('open');
+    else requestAnimationFrame(() => requestAnimationFrame(() => sp.classList.add('open')));
     lock(true, 'sp');
     sp.setAttribute('tabindex', '-1');
     setTimeout(() => sp.focus({ preventScroll: true }), 50);
@@ -1805,9 +1795,8 @@
   function openList(which, instant) {
     current = null; galOpen = false; prodCur = null; revOpen = false; abOpen = false;
     listOpen = which;
-    const c = which.startsWith('models-') ? which.slice(7) : '';
-    const title = which === 'systems' ? u('m_systems') : c ? pcat(c) : u('products');
-    mount(which === 'systems' ? systemsPage() : c ? modelsPage(c) : productsPage(), title, `${title} · ${S.company.name}`, instant, (sp) => reveal(sp, instant && renders > 1));
+    const title = which === 'systems' ? u('m_systems') : u('products');
+    mount(which === 'systems' ? systemsPage() : productsPage(), title, `${title} · ${S.company.name}`, instant, (sp) => reveal(sp, instant && renders > 1));
   }
   function closeList() {
     if (!listOpen) return;
@@ -1834,7 +1823,6 @@
     setHelp(false);
     if (h === 'about-us') { openAboutPage(first); return; }
     if (h === 'systems' && sys().length) { openList('systems', first); return; }
-    if (h.startsWith('models-') && prodGroups().some((g) => 'models-' + g.id === h)) { openList(h, first); return; }
     if (h === 'all-reviews' && allRevs().length) { abOpen = false; openRevPage(first); return; }
     if (h === 'gallery' && works().length) { prodCur = null; revOpen = false; abOpen = false; openGallery(first); return; }
     if (h && byProd(h)) { revOpen = false; abOpen = false; openProduct(h, first); return; }
@@ -1985,7 +1973,7 @@
     const consult = e.target.closest('[data-consult]');
     if (consult) { const sy = bySlug(consult.dataset.consult); qbStart({ cat: SYS_CAT[consult.dataset.consult] || 'custom', specs: sy ? t(sy.name) : '' }); return; }
     const addq = e.target.closest('[data-addq]');
-    if (addq) { const x = byProd(addq.dataset.addq); if (x) qbStart({ cat: x.cat, model: x.model }); return; }
+    if (addq) { const x = byProd(addq.dataset.addq); if (x) qbStart({ cat: x.cat, model: modelLabel(x), pid: x.id }); return; }
     const qa = e.target.closest('[data-qb]');
     if (qa) { qbAction(qa.dataset.qb, qa); return; }
     const qfd = e.target.closest('[data-qf-del]');

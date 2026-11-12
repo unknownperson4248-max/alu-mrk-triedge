@@ -30,6 +30,10 @@ import i27 from './img/sliding-door.jpg';
 import i28 from './img/sliding-door.webp';
 import i29 from './img/sliding-window.jpg';
 import i30 from './img/sliding-window.webp';
+import i31 from './img/tile-doors.jpg';
+import i32 from './img/tile-doors.webp';
+import i33 from './img/tile-windows.jpg';
+import i34 from './img/tile-windows.webp';
 
 export const IMAGES = {
   'alu-profiles.jpg': [i0, 'image/jpeg'],
@@ -63,4 +67,8 @@ export const IMAGES = {
   'sliding-door.webp': [i28, 'image/webp'],
   'sliding-window.jpg': [i29, 'image/jpeg'],
   'sliding-window.webp': [i30, 'image/webp'],
+  'tile-doors.jpg': [i31, 'image/jpeg'],
+  'tile-doors.webp': [i32, 'image/webp'],
+  'tile-windows.jpg': [i33, 'image/jpeg'],
+  'tile-windows.webp': [i34, 'image/webp'],
 };

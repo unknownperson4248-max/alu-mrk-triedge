@@ -1189,7 +1189,6 @@ html.pv .hero-copy>*,html.pv .hs-count{animation:none}
 @media (prefers-reduced-motion:reduce){.mnav,.mnav.open{transition:none}}
 
 /* ---------- home: short "discover more" blocks; pages: blur in like a dashboard ---------- */
-@keyframes rise{from{opacity:0;transform:translateY(26px);filter:blur(10px)}to{opacity:1;transform:none;filter:none}}
 .tz{padding-block:clamp(56px,8vw,120px) 0;background:var(--bg)}
 .tz:last-of-type{padding-bottom:clamp(56px,8vw,120px)}
 .tz-in{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:clamp(28px,5vw,84px);align-items:center}
@@ -1233,17 +1232,6 @@ html.pv .hero-copy>*,html.pv .hs-count{animation:none}
 @keyframes tz-open{from{opacity:0;clip-path:inset(10% 8% 10% 8% round 6px)}to{opacity:1;clip-path:inset(0 0 0 0 round 6px)}}
 @keyframes tz-zoom{from{transform:scale(1.18)}to{transform:none}}
 .rv-seeall{margin-top:18px}
-
-/* pages: fade in over the site; moving between pages blurs the old one out and the new one in */
-.sp{transform:none;opacity:0;visibility:hidden;transition:opacity .5s var(--ease-out),visibility 0s linear .5s}
-.sp.open{opacity:1;visibility:visible;transition:opacity .5s var(--ease-out),visibility 0s}
-.sp>:not(.sp-bar){transition:opacity .26s ease,filter .26s ease,transform .26s ease}
-.sp.swap>:not(.sp-bar){opacity:0;filter:blur(14px);transform:scale(.985)}
-.sp.enter>:not(.sp-bar){animation:pg-in .85s var(--ease-out) backwards}
-.sp.enter>:nth-child(3){animation-delay:.1s}
-.sp.enter>:nth-child(4){animation-delay:.2s}
-.sp.enter>:nth-child(n+5){animation-delay:.3s}
-@keyframes pg-in{from{opacity:0;filter:blur(16px);transform:translateY(30px)}to{opacity:1;filter:none;transform:none}}
 
 .pg-hero{position:relative;min-height:min(74vh,660px);display:grid;place-items:center;text-align:center;color:#fff;overflow:hidden;background:var(--navy-deep)}
 .pg-hero>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;animation:tz-zoom 2.6s var(--ease-out) backwards}
@@ -1342,3 +1330,25 @@ html.pv .hero-copy>*,html.pv .hs-count{animation:none}
   .pcat-m{font-size:12.5px;line-height:1.4}
   .pcat-b .link-sm{font-size:13px;margin-top:2px}
 }
+
+/* quotation "Choose product": clean product shot with a small icon, name and models under it */
+.qb-cats{gap:16px 12px}
+.qb-cat{overflow:visible;border-radius:0;display:grid;gap:3px;align-content:start}
+.qb-cat::after{display:none}
+.qb-cat-im{position:relative;aspect-ratio:5/4;border-radius:18px;background:#eef1f4;box-shadow:inset 0 0 0 1px var(--qb-ln);margin-bottom:8px;transition:transform .35s var(--ease-out),box-shadow .3s}
+.qb-cat-im img{border-radius:inherit}
+.qb-cat b{position:static;font:600 17px/1.2 var(--display);letter-spacing:-.01em;text-shadow:none;padding-inline:2px}
+.qb-cat small{color:var(--on-navy-muted);font-size:12.5px;line-height:1.35;padding-inline:2px}
+.qb-cat:hover .qb-cat-im{transform:translateY(-3px);box-shadow:0 18px 34px -20px rgba(0,0,0,.7),inset 0 0 0 1px color-mix(in srgb,var(--accent) 60%,transparent)}
+.qb-cat .pcat-ic{right:8px;bottom:8px;width:38px;height:38px;border-radius:11px}
+.qb-cat .pcat-ic .art{width:32px;height:24px}
+.qb-cat{animation:rise .6s var(--ease-out) backwards;animation-delay:calc(var(--i,0) * 70ms)}
+@media (prefers-reduced-motion:reduce){.qb-cat{animation:none}}
+
+/* light animations only (opacity + movement): no blur filters, so phones stay smooth */
+.sp.enter>:not(.sp-bar){animation:rise .7s var(--ease-out) backwards}
+.sp.enter>:nth-child(3){animation-delay:.08s}
+.sp.enter>:nth-child(4){animation-delay:.16s}
+.sp.enter>:nth-child(n+5){animation-delay:.24s}
+.pcat-ic{-webkit-backdrop-filter:none;backdrop-filter:none;background:rgba(12,17,23,.78)}
+@media (prefers-reduced-motion:reduce){.sp.enter>:not(.sp-bar){animation:none}}
