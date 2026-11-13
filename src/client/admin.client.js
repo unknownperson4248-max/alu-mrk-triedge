@@ -9,7 +9,8 @@
 
   let site = null, media = [], builtin = [], presets = {}, defaults = null;
   let pvMode = innerWidth < 700 ? 'mob' : 'desk';
-  let pendRev = null, pendCount = 0, editProd = null, uRev = null;
+  let pendRev = null, pendCount = 0, editProd = null, uRev = null, pcEdit = '';
+  const pcClosed = new Set();
   let dirty = false, tab = 'dash', editIdx = null, editWork = null, quotes = null, quoteCount = 0, previewReady = false;
 
   // sidebar: every part of the website under its own heading
@@ -44,6 +45,9 @@
     plus: '<path d="M12 5v14M5 12h14"/>',
     right: '<path d="M9 6l6 6-6 6"/>',
     trash: '<path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/>',
+    pen: '<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/>',
+    up: '<path d="M6 15l6-6 6 6"/>',
+    down: '<path d="M6 9l6 6 6-6"/>',
   };
   const ni = (n) => `<svg class="ni" viewBox="0 0 24 24" aria-hidden="true">${NI[n] || ''}</svg>`;
   const ICONS = ['motor', 'remote', 'maximize', 'shield', 'thermo', 'droplet', 'lock', 'sun', 'wind', 'layers', 'ruler', 'sparkle', 'building', 'fold', 'arrowsV', 'arrowsH', 'grid', 'window', 'door', 'palette', 'key', 'home', 'check', 'diamond', 'globe', 'users', 'handshake'];
@@ -293,21 +297,41 @@
   /* ---------- aluminium profile systems (models) ---------- */
   function vProducts() {
     if (editProd != null && site.products[editProd]) return vProductEdit(editProd);
-    const L = site.products;
-    const catName = (id) => { const c = site.productCats.find((x) => x.id === id); return c ? c.name.en : id; };
-    return `<div class="card"><h2>Profile Systems</h2><p class="hint">Shown in the Profile Systems section and in the quotation form. Only enter specifications from the profile manufacturer’s (MUSKITA) catalogue. Hidden products (unticked) are not shown.</p>
-      <div class="list">${L.map((x, i) => `<div class="sys-row${x.visible === false ? ' off' : ''}">
-        <input type="checkbox" data-path="products.${i}.visible" ${x.visible !== false ? 'checked' : ''} aria-label="Show on website" style="width:18px;height:18px;accent-color:#0e1b2e">
-        <img src="${esc(src(x.image))}" alt="">
-        <div style="min-width:0"><div class="nm">${esc(x.model)} · ${esc(x.name?.en || '')}</div><div class="sub">${esc(catName(x.cat))} · ${x.visible === false ? 'Hidden' : 'Shown'}${(x.specs || []).filter((r) => r.value).length ? '' : ' · no specs yet'}</div></div>
-        <div class="acts"><button type="button" class="b b-sm b-icon" data-act="move" data-path="products" data-i="${i}" data-d="-1" ${i === 0 ? 'disabled' : ''} aria-label="Move up">↑</button><button type="button" class="b b-sm b-icon" data-act="move" data-path="products" data-i="${i}" data-d="1" ${i === L.length - 1 ? 'disabled' : ''} aria-label="Move down">↓</button><button type="button" class="b b-sm b-pri" data-act="edit-prod" data-i="${i}">Edit</button></div>
-      </div>`).join('')}</div>
-      <div><button type="button" class="b b-sm" data-act="add-prod">+ Add product</button></div></div>
+    const C = site.productCats, L = site.products;
+    const groups = C.map((c, ci) => ({ c, ci, items: L.map((x, i) => ({ x, i })).filter((o) => o.x.cat === c.id) }));
+    const lost = L.map((x, i) => ({ x, i })).filter((o) => !C.some((c) => c.id === o.x.cat));
+    const sw = (path, on, label) => `<label class="sw" title="${label}"><input type="checkbox" data-path="${path}" ${on ? 'checked' : ''} aria-label="${label}"><i></i></label>`;
+    const row = ({ x, i }, k, n) => `<div class="pp${x.visible === false ? ' off' : ''}">
+        <button type="button" class="pp-main" data-act="edit-prod" data-i="${i}"><img src="${esc(src(x.image))}" alt=""><span><b>${esc(x.model || 'New product')}</b><small>${esc(x.name?.en || '')}${x.visible === false ? ' · <em>Hidden</em>' : ''}</small></span></button>
+        <div class="pp-acts">${sw(`products.${i}.visible`, x.visible !== false, 'Show on website')}
+          <button type="button" class="ib" data-act="edit-prod" data-i="${i}" aria-label="Edit">${ni('pen')}</button>
+          <button type="button" class="ib" data-act="pmove" data-i="${i}" data-d="-1" ${k === 0 ? 'disabled' : ''} aria-label="Move up">${ni('up')}</button>
+          <button type="button" class="ib" data-act="pmove" data-i="${i}" data-d="1" ${k === n - 1 ? 'disabled' : ''} aria-label="Move down">${ni('down')}</button>
+          <button type="button" class="ib del" data-act="pdel" data-i="${i}" aria-label="Delete">${ni('trash')}</button></div>
+      </div>`;
+    const group = (g) => {
+      const open = !pcClosed.has(g.c.id), ed = pcEdit === g.c.id;
+      return `<div class="pc${open ? ' open' : ''}">
+        <div class="pc-head">
+          <button type="button" class="pc-tog" data-act="pc-toggle" data-id="${esc(g.c.id)}" aria-expanded="${open}">${ni('right')}<span><b>${esc(g.c.name?.en || 'New category')}</b><small>${g.items.length} product${g.items.length === 1 ? '' : 's'}</small></span></button>
+          <div class="pp-acts">
+            <button type="button" class="ib${ed ? ' on' : ''}" data-act="pc-edit" data-id="${esc(g.c.id)}" aria-label="Rename category">${ni('pen')}</button>
+            <button type="button" class="ib" data-act="move" data-path="productCats" data-i="${g.ci}" data-d="-1" ${g.ci === 0 ? 'disabled' : ''} aria-label="Move up">${ni('up')}</button>
+            <button type="button" class="ib" data-act="move" data-path="productCats" data-i="${g.ci}" data-d="1" ${g.ci === C.length - 1 ? 'disabled' : ''} aria-label="Move down">${ni('down')}</button>
+            <button type="button" class="ib del" data-act="pc-del" data-i="${g.ci}" aria-label="Delete category">${ni('trash')}</button></div>
+        </div>
+        ${ed ? `<div class="pc-name">${pair(`productCats.${g.ci}.name`, 'Category name')}<button type="button" class="b b-sm b-pri" data-act="pc-edit" data-id="${esc(g.c.id)}">Done</button></div>` : ''}
+        ${open ? `<div class="pc-body"><button type="button" class="pc-add" data-act="add-prod" data-cat="${esc(g.c.id)}">${ni('plus')}Add product</button>
+          ${g.items.map((o, k) => row(o, k, g.items.length)).join('') || '<p class="empty">No products in this category yet.</p>'}</div>` : ''}
+      </div>`;
+    };
+    return `<div class="card"><h2>Profile Systems</h2><p class="hint">Tap a category to open it. <b>+ Add product</b> adds a product to that category. ${ni('pen')} edits the name and photos, the switch shows or hides it on the website. Press <b>Save</b> at the top when you are done.</p>
+      <div class="pcs">${groups.map(group).join('')}
+        ${lost.length ? `<div class="pc open"><div class="pc-head"><span class="pc-tog"><span><b>Without a category</b><small>Open a product and choose its category</small></span></span></div><div class="pc-body">${lost.map((o, k) => row(o, k, lost.length)).join('')}</div></div>` : ''}</div>
+      <div><button type="button" class="b b-sm" data-act="pc-add">${ni('plus')}Add category</button></div></div>
       <div class="card"><h2>Choose product pictures</h2><p class="hint">The four pictures customers tap in the quotation form (“Choose product”). Tap “Change photo” and pick a picture from your phone’s gallery or files. “Remove” brings the standard picture back. To add a product itself, use “+ Add product” above.</p>
         <div class="tile-pick">${[['doors', 'Doors', 'img/tile-doors.jpg'], ['windows', 'Windows', 'img/tile-windows.jpg'], ['sliding', 'Sliding systems', 'img/sliding-door.jpg'], ['glass', 'Glass', 'img/glass-stairs.jpg']].map(([k, l, d]) => { const v = val(`quoteTiles.${k}`); return fld(l + (v ? '' : ' (standard picture)'), `<div class="pick"><img src="${esc(src(v || d))}" alt=""><button type="button" class="b b-sm" data-act="pick" data-path="quoteTiles.${k}">Change photo</button>${v ? `<button type="button" class="b b-sm b-danger" data-act="clear" data-path="quoteTiles.${k}">Remove</button>` : ''}</div>`); }).join('')}</div></div>
-      <div class="card"><h2>Product categories</h2><p class="hint">Used for the product filter and the first question of the quotation form.</p>
-        <div class="list">${site.productCats.map((c, i) => `<div class="item">${itemHead('productCats', i, site.productCats.length, c.name?.en || 'Category')}${pair(`productCats.${i}.name`, 'Name')}</div>`).join('')}</div>
-        ${addBtn('productCats', 'cat', 'Add category')}</div>`;
+`;
   }
   function vProductEdit(i) {
     const x = site.products[i], p = `products.${i}`;
@@ -799,10 +823,30 @@
       case 'side-close': setSide(false); break;
       case 'edit-prod': editProd = +b.dataset.i; renderEditor(); pgIn(); scrollTo(0, 0); previewGo(site.products[editProd].id); break;
       case 'back-prod': editProd = null; renderEditor(); pgIn(); previewGo('#products'); break;
+      case 'pc-toggle': { const id = b.dataset.id; if (pcClosed.has(id)) pcClosed.delete(id); else pcClosed.add(id); renderEditor(); break; }
+      case 'pc-edit': { pcEdit = pcEdit === b.dataset.id ? '' : b.dataset.id; renderEditor(); const f = pcEdit && $('.pc-name input'); if (f) f.focus(); break; }
+      case 'pc-add': { const c = TPL.cat(); site.productCats.push(c); pcEdit = c.id; markDirty(); renderEditor(); const f = $('.pc-name input'); if (f) f.focus(); break; }
+      case 'pc-del': {
+        const c = site.productCats[+b.dataset.i]; if (!c) break;
+        if (site.products.some((x) => x.cat === c.id)) { toast('This category still has products. Delete or move them first.', 'err'); break; }
+        if (!b.dataset.armed) { b.dataset.armed = '1'; b.classList.add('armed'); toast('Tap the bin again to delete this category.'); setTimeout(() => { if (b.isConnected) { delete b.dataset.armed; b.classList.remove('armed'); } }, 3000); break; }
+        site.productCats.splice(+b.dataset.i, 1); markDirty(); renderEditor(); break;
+      }
+      case 'pmove': {
+        const i = +b.dataset.i, x = site.products[i]; if (!x) break;
+        const same = site.products.map((y, k) => (y.cat === x.cat ? k : -1)).filter((k) => k >= 0), at = same.indexOf(i), j = same[at + +b.dataset.d];
+        if (j == null) break;
+        [site.products[i], site.products[j]] = [site.products[j], site.products[i]]; markDirty(); renderEditor(); break;
+      }
+      case 'pdel': {
+        const x = site.products[+b.dataset.i]; if (!x) break;
+        if (!b.dataset.armed) { b.dataset.armed = '1'; b.classList.add('armed'); toast(`Tap the bin again to delete ${x.model || 'this product'}.`); setTimeout(() => { if (b.isConnected) { delete b.dataset.armed; b.classList.remove('armed'); } }, 3000); break; }
+        site.products.splice(+b.dataset.i, 1); markDirty(); renderEditor(); toast('Deleted. Press Save to update the website.', 'ok'); break;
+      }
       case 'add-prod': {
         let n = site.products.length + 1, id = 'product-' + n;
         while (site.products.some((x) => x.id === id)) id = 'product-' + ++n;
-        site.products.push({ id, model: '', visible: false, cat: (site.productCats[0] || {}).id || '', image: 'img/house-windows.jpg', name: T(), short: T(), desc: T(), colours: T(), specs: [], applications: [], source: '' });
+        site.products.push({ id, model: '', visible: true, cat: b.dataset.cat || (site.productCats[0] || {}).id || '', image: 'img/house-windows.jpg', name: T(), short: T(), desc: T(), colours: T(), specs: [], applications: [], source: '' });
         editProd = site.products.length - 1; markDirty(); renderEditor(); scrollTo(0, 0); break;
       }
       case 'del-prod': {
