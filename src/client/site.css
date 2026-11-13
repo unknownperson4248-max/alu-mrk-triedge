@@ -1397,8 +1397,8 @@ html.pv .hero-copy>*,html.pv .hs-count{animation:none}
 .qb-measure b{font-size:14px;font-weight:500}
 
 /* ---------- front page: 3D door intro (scroll-driven; --p 0..1 and --side are set by the script) ---------- */
-.intro{--p:0;--side:0;position:relative;height:250vh;background:#06070a;color:#fff}
-.intro-stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;isolation:isolate}
+.intro{--p:0;--side:0;position:relative;height:100vh;height:100svh;min-height:560px;background:#06070a;color:#fff}
+.intro-stage{position:relative;height:100%;overflow:hidden;isolation:isolate}
 .intro-glow{position:absolute;inset:0;z-index:-1;background:
   radial-gradient(60% 50% at 50% 100%,rgba(227,155,58,.16),transparent 70%),
   radial-gradient(40% 40% at 15% 10%,rgba(122,67,18,.22),transparent 70%),
@@ -1410,12 +1410,9 @@ html.pv .hero-copy>*,html.pv .hs-count{animation:none}
 .intro-btn{display:inline-flex;align-items:center;gap:10px;padding:12px 22px;border-radius:999px;background:#fff;color:#0b0d12;font-weight:600;font-size:14px;text-decoration:none;letter-spacing:.02em;transition:transform .25s var(--ease-out),box-shadow .25s}
 .intro-btn .ic{width:16px;height:16px}
 .intro-btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px -12px rgba(227,155,58,.7)}
-.intro-ghost{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:999px;border:1px solid rgba(255,255,255,.35);background:transparent;color:#fff;font:600 14px var(--body);cursor:pointer}
-.intro-ghost .ic{width:16px;height:16px}
-.intro-ghost:hover{border-color:#fff}
 /* stage A: centered brand text (fades and lifts away as the scroll starts) */
-.intro-a{position:absolute;left:50%;top:clamp(110px,17vh,190px);width:min(92vw,980px);display:grid;justify-items:center;text-align:center;
-  transform:translate(-50%,calc(var(--p) * -110px));opacity:clamp(0,calc(1 - var(--p) * 2.6),1)}
+.intro-a{position:absolute;left:50%;top:clamp(100px,15vh,170px);width:min(92vw,980px);display:grid;justify-items:center;text-align:center;
+  transform:translate(-50%,calc(var(--p) * -60px));opacity:clamp(0,calc(1 - var(--p) * 1.8),1)}
 .intro-a h1{font:400 clamp(38px,6vw,92px)/1.02 var(--display);letter-spacing:-.03em;margin:14px 0 0}
 .intro-a h1 span{background:linear-gradient(180deg,#f4f5f7 10%,#9aa3ad 90%);-webkit-background-clip:text;background-clip:text;color:transparent}
 .intro-a .intro-rule{margin:20px auto}
@@ -1431,21 +1428,21 @@ html.pv .hero-copy>*,html.pv .hs-count{animation:none}
 /* side labels follow the small window and door */
 .intro-side{position:absolute;left:0;top:0;font:500 11px/1 var(--mono);letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.7);text-decoration:none;white-space:nowrap;padding:8px 4px;opacity:var(--side)}
 .intro-side:hover{color:var(--accent)}
-/* stage B: the model text comes in on the left */
-.intro-b{position:absolute;left:max(24px,7vw);top:50%;width:min(40vw,520px);transform:translate(calc((1 - var(--p)) * -40px),-50%);opacity:clamp(0,calc((var(--p) - .5) * 3),1);pointer-events:none}
-.intro.b-on .intro-b{pointer-events:auto}
-.intro-b h2{font:400 clamp(48px,6vw,96px)/1 var(--display);letter-spacing:-.035em;margin:10px 0 0}
-.intro-acts{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
 @media (max-width:760px){
-  .intro{height:230vh}
   .intro-a{top:clamp(92px,13vh,130px)}
   .intro-a h1{font-size:clamp(34px,10vw,46px)}
   .intro-sub{font-size:14px}
   .intro-a .intro-rule{margin:14px auto}
   .intro-a .intro-btn{margin-top:16px}
   .intro-side{font-size:9.5px;letter-spacing:.22em}
-  .intro-b{left:20px;right:20px;top:auto;bottom:max(28px,6vh);width:auto;transform:translateY(calc((1 - var(--p)) * 40px))}
-  .intro-b h2{font-size:46px}
-  .intro-acts{margin-top:18px;gap:10px}
 }
 @media (prefers-reduced-motion:reduce){.intro-a>*{transition:none}}
+
+/* scroll cue under the button: two soft gold chevrons dropping in a loop */
+.intro-cue{position:relative;display:block;width:34px;height:34px;margin-top:18px;opacity:.9;transition:opacity .3s}
+.intro-cue i{position:absolute;left:50%;top:4px;width:14px;height:14px;margin-left:-7px;border-right:2px solid var(--accent);border-bottom:2px solid var(--accent);transform:rotate(45deg);opacity:0;animation:intro-cue 1.8s var(--ease-out) infinite;filter:drop-shadow(0 0 6px rgba(227,155,58,.6))}
+.intro-cue i+i{animation-delay:.25s}
+@keyframes intro-cue{0%{opacity:0;transform:translateY(-6px) rotate(45deg)}35%{opacity:1}100%{opacity:0;transform:translateY(12px) rotate(45deg)}}
+.intro.moved .intro-cue{opacity:0;pointer-events:none}
+@media (max-width:760px){.intro-cue{margin-top:12px}}
+@media (prefers-reduced-motion:reduce){.intro-cue i{animation:none;opacity:1}}

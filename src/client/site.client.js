@@ -1460,16 +1460,10 @@
           <span class="intro-rule" aria-hidden="true"></span>
           ${sub ? `<p class="intro-sub">${esc(sub)}</p>` : ''}
           <a class="intro-btn" href="#quote">${u('get_quote')}${icon('arrow')}</a>
+          <a class="intro-cue" href="#tz-systems" aria-label="${u('discover')}"><i></i><i></i></a>
         </div>
         <a class="intro-side l" href="#systems">${u('qg_windows')}</a>
         <a class="intro-side r" href="${d ? '#' + esc(d.id) : '#products'}">${u('qg_doors')}</a>
-        ${d ? `<div class="intro-b">
-          <p class="intro-eb">${esc(pcat(d.cat))}</p>
-          <h2>${esc(d.model)}</h2>
-          <span class="intro-rule" aria-hidden="true"></span>
-          <p class="intro-sub">${esc(t(d.short) || t(d.name))}</p>
-          <div class="intro-acts"><a class="intro-btn" href="#${esc(d.id)}">${u('details')}${icon('arrow')}</a><button type="button" class="intro-ghost" data-addq="${esc(d.id)}">${icon('file')}${u('add_quote')}</button></div>
-        </div>` : ''}
       </div>
     </section>`;
   }
@@ -1576,8 +1570,8 @@
       renderer.setSize(vw, vh, false); cam.aspect = aspect; cam.updateProjectionMatrix();
     }
     function progress() {
-      const r = sec.getBoundingClientRect(), span = sec.offsetHeight - innerHeight;
-      return span > 0 ? Math.min(1, Math.max(0, -r.top / span)) : 0;
+      const r = sec.getBoundingClientRect(), span = Math.max(1, sec.offsetHeight * 0.85);
+      return Math.min(1, Math.max(0, -r.top / span));
     }
     const lA = $('.intro-side.l', sec), lB = $('.intro-side.r', sec), v3 = new THREE.Vector3();
     function label(el, obj, dy) {
@@ -1599,16 +1593,16 @@
       const hk = ez(seg(b, 2.3, 2.9)); door.handle.position.y = lerp(0.9, -0.08, hk); door.handle.visible = hk > 0;
       // ----- from the build pose to stage A, then the scroll to stage B -----
       const settle = io(seg(b, 2.6, BUILD + 0.2));
-      const p = io(Math.min(1, prog / 0.75));
+      const p = prog;
       const idle = reduce ? 0 : Math.sin(tt * 0.6) * 0.05;
       const sA = narrow ? 1.05 : 1.3, hA = 2.2 * sA;
-      const ayA = -VH / 2 - hA / 2 + hA * (narrow ? 0.5 : 0.46);
-      const bx = narrow ? 0 : Math.min(VW * 0.24, 1.6), by = narrow ? VH * 0.17 : 0.02, sB = narrow ? 0.62 : 1.0;
+      const ayA = -VH / 2 - hA / 2 + hA * (narrow ? 0.48 : 0.4);
+      const bx = 0, by = ayA + VH * 0.28, sB = sA * 1.08;
       const buildPose = { x: 0, y: 0, s: narrow ? 0.62 : 0.95, ry: 0.35 * (1 - ez(seg(b, 0, 2.6))) };
       const ax = lerp(buildPose.x, 0, settle), ay = lerp(buildPose.y, ayA, settle), as = lerp(buildPose.s, sA, settle), ary = buildPose.ry;
       door.g.position.set(lerp(ax, bx, p), lerp(ay, by, p), 0);
       door.g.scale.setScalar(lerp(as, sB, p));
-      door.g.rotation.y = lerp(ary, -0.5, p) + idle * (0.4 + p);
+      door.g.rotation.y = lerp(ary, -0.55, p) + idle * (0.4 + p);
       door.g.rotation.x = lerp(0, 0.04, p);
       // side pieces: in from the edges after the build, out again with the scroll
       const side = ez(seg(b, 2.9, BUILD + 0.5)) * (1 - p);
@@ -1619,7 +1613,7 @@
       label(lA, win, narrow ? -0.32 : -0.5); label(lB, mini.g, narrow ? -0.4 : -0.55);
       rim.position.set(door.g.position.x + 1.6, door.g.position.y + 0.6, 1.4);
       sec.style.setProperty('--p', p.toFixed(4));
-      sec.classList.toggle('a-off', p > 0.35); sec.classList.toggle('b-on', p > 0.6);
+      sec.classList.toggle('a-off', p > 0.35); sec.classList.toggle('moved', p > 0.02);
       sec.style.setProperty('--side', side.toFixed(3));
       if (!shown && b > 3.15) { shown = true; sec.classList.add('ready'); }
       renderer.render(scene, cam);
