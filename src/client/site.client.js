@@ -1439,9 +1439,213 @@
   /* ---------- render + behaviour ---------- */
   let current = null, pendingSystem = null, panel = null;
 
+
+  /* ---------- front page: a 3D aluminium door builds itself, then the scroll moves it to the side ----------
+     Stage 0 (on load): the frame profiles fly in and lock, the sash, the panel and the stripes follow, the handle drops in.
+     Stage A (top of the page): brand text in the middle, the door rises from the bottom, a small window left and a small door right.
+     Stage B (scrolled): the door moves right and turns, the model text comes in on the left. Three.js loads from a CDN;
+     without WebGL the classic photo hero is shown instead. */
+  const THREE_URL = 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js';
+  let intro = null;
+  function introHero() {
+    const d = prods().find((x) => x.cat === 'doors') || prods()[0];
+    const sub = t(S.text.heroSub);
+    return `<section class="intro" id="top" aria-label="${esc(S.company.name)}">
+      <div class="intro-stage">
+        <div class="intro-glow" aria-hidden="true"></div>
+        <canvas class="intro-cv" aria-hidden="true"></canvas>
+        <div class="intro-a">
+          <p class="intro-eb">${esc(S.company.name)}</p>
+          <h1>${esc(t(S.text.heroTitle))} <span>${esc(t(S.text.heroAccent))}</span></h1>
+          <span class="intro-rule" aria-hidden="true"></span>
+          ${sub ? `<p class="intro-sub">${esc(sub)}</p>` : ''}
+          <a class="intro-btn" href="#quote">${u('get_quote')}${icon('arrow')}</a>
+        </div>
+        <a class="intro-side l" href="#systems">${u('qg_windows')}</a>
+        <a class="intro-side r" href="${d ? '#' + esc(d.id) : '#products'}">${u('qg_doors')}</a>
+        ${d ? `<div class="intro-b">
+          <p class="intro-eb">${esc(pcat(d.cat))}</p>
+          <h2>${esc(d.model)}</h2>
+          <span class="intro-rule" aria-hidden="true"></span>
+          <p class="intro-sub">${esc(t(d.short) || t(d.name))}</p>
+          <div class="intro-acts"><a class="intro-btn" href="#${esc(d.id)}">${u('details')}${icon('arrow')}</a><button type="button" class="intro-ghost" data-addq="${esc(d.id)}">${icon('file')}${u('add_quote')}</button></div>
+        </div>` : ''}
+      </div>
+    </section>`;
+  }
+  function introStop() { if (intro) { intro.stop(); intro = null; } }
+  async function introStart() {
+    introStop();
+    const sec = $('.intro'), cv = sec && $('.intro-cv', sec);
+    if (!sec || !cv) return;
+    let THREE;
+    try {
+      const probe = document.createElement('canvas');
+      if (!(probe.getContext('webgl2') || probe.getContext('webgl'))) throw new Error('no webgl');
+      THREE = await import(THREE_URL);
+    } catch (e) {
+      // classic photo hero instead
+      sec.outerHTML = hero();
+      hsShow(0);
+      return;
+    }
+    if (!sec.isConnected) return;
+    const renderer = new THREE.WebGLRenderer({ canvas: cv, antialias: true, alpha: true, powerPreference: 'high-performance' });
+    renderer.setPixelRatio(Math.min(devicePixelRatio || 1, innerWidth < 760 ? 1.75 : 1.5));
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.3;
+    const scene = new THREE.Scene();
+    const cam = new THREE.PerspectiveCamera(35, 1, 0.1, 50);
+    cam.position.set(0, 0, 5.2);
+
+    // studio reflections: dark room with soft light strips and one warm card (what the metal reflects)
+    const pm = new THREE.PMREMGenerator(renderer);
+    const env = new THREE.Scene();
+    env.add(new THREE.Mesh(new THREE.BoxGeometry(12, 8, 12), new THREE.MeshBasicMaterial({ color: 0x0b0c0f, side: THREE.BackSide })));
+    const strip = (w, h, x, y, z, ry, c) => { const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ color: c, side: THREE.DoubleSide })); m.position.set(x, y, z); m.rotation.y = ry; env.add(m); };
+    strip(5, 0.5, 0, 3.6, 0, 0, 0xffffff); env.children[env.children.length - 1].rotation.x = Math.PI / 2;
+    strip(0.6, 5, -5.5, 0, 1, Math.PI / 2, 0xe8eef5);
+    strip(0.5, 4, 5.5, 0.5, -1, -Math.PI / 2, 0xf0b25a);
+    strip(4, 1.4, 0, 0, 5.8, Math.PI, 0x9aa4ae);
+    strip(0.35, 6, -3, 0, 5.5, Math.PI, 0xffffff);
+    strip(0.35, 6, 3, 0, 5.5, Math.PI, 0xffffff);
+    scene.environment = pm.fromScene(env, 0.035).texture;
+    scene.add(new THREE.HemisphereLight(0xdfe6ee, 0x1a1208, 0.55));
+    const key = new THREE.DirectionalLight(0xfff1dc, 2.4); key.position.set(-2.5, 3, 4); scene.add(key);
+    const rim = new THREE.PointLight(0xe39b3a, 18, 8, 2); rim.position.set(2.2, 0.6, 1.4); scene.add(rim);
+
+    const M = {
+      frame: new THREE.MeshStandardMaterial({ color: 0x4a4f56, metalness: 0.92, roughness: 0.28, envMapIntensity: 1.6 }),
+      sash: new THREE.MeshStandardMaterial({ color: 0x33373c, metalness: 0.9, roughness: 0.34, envMapIntensity: 1.4 }),
+      panel: new THREE.MeshStandardMaterial({ color: 0x23262a, metalness: 0.6, roughness: 0.5, envMapIntensity: 1.0 }),
+      groove: new THREE.MeshStandardMaterial({ color: 0x07080a, metalness: 0.3, roughness: 0.8 }),
+      steel: new THREE.MeshStandardMaterial({ color: 0xcfd3d8, metalness: 1, roughness: 0.22, envMapIntensity: 1.4 }),
+      glass: new THREE.MeshStandardMaterial({ color: 0xa9c3d6, metalness: 0.2, roughness: 0.04, transparent: true, opacity: 0.42, envMapIntensity: 2.4 }),
+    };
+    const box = (w, h, d, m, x, y, z) => { const o = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), m); o.position.set(x, y, z); return o; };
+    // ring of four profiles; returns the parts so they can fly in one by one
+    const ring = (W, H, tk, dp, m, z) => [
+      box(W, tk, dp, m, 0, H / 2 - tk / 2, z), box(tk, H, dp, m, W / 2 - tk / 2, 0, z),
+      box(W, tk, dp, m, 0, -H / 2 + tk / 2, z), box(tk, H, dp, m, -W / 2 + tk / 2, 0, z),
+    ];
+    function makeDoor() {
+      const g = new THREE.Group(), W = 1.0, H = 2.2;
+      const outer = ring(W, H, 0.075, 0.12, M.frame, 0), inner = ring(W - 0.15, H - 0.15, 0.05, 0.09, M.sash, 0.01);
+      const panel = new THREE.Group();
+      const pw = W - 0.25, ph = H - 0.25;
+      panel.add(box(pw, ph, 0.035, M.panel, 0, 0, 0));
+      for (let k = 1; k < 14; k++) panel.add(box(pw - 0.02, 0.005, 0.004, M.groove, 0, -ph / 2 + (ph / 14) * k, 0.019));
+      const stripes = [];
+      [0.62, 0.37, 0.12, -0.13, -0.38].forEach((fy) => {
+        const sm = new THREE.MeshStandardMaterial({ color: 0xf1ede4, metalness: 0.2, roughness: 0.35, emissive: new THREE.Color(0xe39b3a), emissiveIntensity: 0 });
+        const s = box(pw * 0.86, 0.022, 0.012, sm, -pw * 0.05, fy * ph / 1.55, 0.024); panel.add(s); stripes.push(s);
+      });
+      const handle = new THREE.Group();
+      const bar = new THREE.Mesh(new THREE.CylinderGeometry(0.014, 0.014, 0.82, 20), M.steel); bar.position.set(0, 0, 0.075); handle.add(bar);
+      [-0.33, 0.33].forEach((y) => { const st = new THREE.Mesh(new THREE.CylinderGeometry(0.009, 0.009, 0.06, 12), M.steel); st.rotation.x = Math.PI / 2; st.position.set(0, y, 0.045); handle.add(st); });
+      const lock = new THREE.Mesh(new THREE.CylinderGeometry(0.012, 0.012, 0.02, 16), M.steel); lock.rotation.x = Math.PI / 2; lock.position.set(0, -0.5, 0.03); handle.add(lock);
+      handle.position.set(W / 2 - 0.2, -0.08, 0);
+      [...outer, ...inner].forEach((p) => g.add(p)); g.add(panel); g.add(handle);
+      return { g, outer, inner, panel, stripes, handle };
+    }
+    function makeWindow() {
+      const g = new THREE.Group(), W = 1.5, H = 1.1;
+      ring(W, H, 0.07, 0.11, M.frame, 0).forEach((p) => g.add(p));
+      g.add(box(0.06, H - 0.1, 0.1, M.frame, 0, 0, 0.01));
+      [-1, 1].forEach((s) => { ring(W / 2 - 0.1, H - 0.16, 0.045, 0.07, M.sash, 0.02).forEach((p) => { p.position.x += s * (W / 4 - 0.01); g.add(p); }); g.add(box(W / 2 - 0.18, H - 0.24, 0.01, M.glass, s * (W / 4 - 0.01), 0, 0.02)); });
+      return g;
+    }
+    const door = makeDoor(), win = makeWindow(), mini = makeDoor();
+    scene.add(door.g, win, mini.g);
+    // rest positions of the parts (for the build)
+    const parts = [...door.outer, ...door.inner];
+    parts.forEach((p, k) => { p.userData.home = p.position.clone(); const dir = [[0, 1], [1, 0], [0, -1], [-1, 0]][k % 4]; p.userData.from = new THREE.Vector3(dir[0] * 2.4, dir[1] * 2.4, 0.8); });
+
+    // timeline helpers
+    const ez = (x) => (x <= 0 ? 0 : x >= 1 ? 1 : 1 - Math.pow(2, -10 * x)); // ease out expo
+    const io = (x) => (x <= 0 ? 0 : x >= 1 ? 1 : x < 0.5 ? 16 * x ** 5 : 1 - Math.pow(-2 * x + 2, 5) / 2); // ease in-out quint
+    const seg = (t, a, b) => (t - a) / (b - a);
+    const lerp = (a, b, k) => a + (b - a) * k;
+    const t0 = performance.now(), BUILD = reduce ? 0 : 3.3;
+    let vw = 1, vh = 1, aspect = 1, raf = 0, alive = true, inView = true, prog = 0, shown = false;
+
+    function size() {
+      const r = cv.getBoundingClientRect();
+      vw = Math.max(1, r.width); vh = Math.max(1, r.height); aspect = vw / vh;
+      renderer.setSize(vw, vh, false); cam.aspect = aspect; cam.updateProjectionMatrix();
+    }
+    function progress() {
+      const r = sec.getBoundingClientRect(), span = sec.offsetHeight - innerHeight;
+      return span > 0 ? Math.min(1, Math.max(0, -r.top / span)) : 0;
+    }
+    const lA = $('.intro-side.l', sec), lB = $('.intro-side.r', sec), v3 = new THREE.Vector3();
+    function label(el, obj, dy) {
+      v3.set(obj.position.x, obj.position.y + dy, obj.position.z).project(cam);
+      const w2 = (el.offsetWidth || 60) / 2 + 10, x = Math.min(vw - w2, Math.max(w2, ((v3.x + 1) / 2) * vw));
+      el.style.transform = `translate(${x}px, ${((1 - v3.y) / 2) * vh}px) translate(-50%, -50%)`;
+    }
+    function frame(now) {
+      if (!alive) return;
+      raf = requestAnimationFrame(frame);
+      if (!inView) return;
+      const tt = (now - t0) / 1000, b = reduce ? 10 : tt;
+      // visible size of the stage at z = 0
+      const VH = 2 * Math.tan((cam.fov * Math.PI) / 360) * cam.position.z, VW = VH * aspect, narrow = aspect < 0.9;
+      // ----- build -----
+      parts.forEach((p, k) => { const kk = ez(seg(b, 0.15 + k * 0.12, 0.85 + k * 0.12)); p.position.lerpVectors(p.userData.from, p.userData.home, kk); p.rotation.z = (1 - kk) * (k % 2 ? 0.6 : -0.6); p.visible = kk > 0; });
+      const pk = ez(seg(b, 1.3, 2.0)); door.panel.position.z = lerp(-1.2, 0, pk); door.panel.visible = pk > 0; door.panel.scale.setScalar(lerp(0.9, 1, pk));
+      door.stripes.forEach((s, k) => { const a = seg(b, 1.9 + k * 0.1, 2.3 + k * 0.1); s.material.emissiveIntensity = a <= 0 ? 0 : a < 1 ? 2.2 * Math.sin(Math.PI * a) + 0.25 * a : 0.25; s.scale.x = Math.max(0.001, ez(a * 1.4)); });
+      const hk = ez(seg(b, 2.3, 2.9)); door.handle.position.y = lerp(0.9, -0.08, hk); door.handle.visible = hk > 0;
+      // ----- from the build pose to stage A, then the scroll to stage B -----
+      const settle = io(seg(b, 2.6, BUILD + 0.2));
+      const p = io(Math.min(1, prog / 0.75));
+      const idle = reduce ? 0 : Math.sin(tt * 0.6) * 0.05;
+      const sA = narrow ? 1.05 : 1.3, hA = 2.2 * sA;
+      const ayA = -VH / 2 - hA / 2 + hA * (narrow ? 0.5 : 0.46);
+      const bx = narrow ? 0 : Math.min(VW * 0.24, 1.6), by = narrow ? VH * 0.17 : 0.02, sB = narrow ? 0.62 : 1.0;
+      const buildPose = { x: 0, y: 0, s: narrow ? 0.62 : 0.95, ry: 0.35 * (1 - ez(seg(b, 0, 2.6))) };
+      const ax = lerp(buildPose.x, 0, settle), ay = lerp(buildPose.y, ayA, settle), as = lerp(buildPose.s, sA, settle), ary = buildPose.ry;
+      door.g.position.set(lerp(ax, bx, p), lerp(ay, by, p), 0);
+      door.g.scale.setScalar(lerp(as, sB, p));
+      door.g.rotation.y = lerp(ary, -0.5, p) + idle * (0.4 + p);
+      door.g.rotation.x = lerp(0, 0.04, p);
+      // side pieces: in from the edges after the build, out again with the scroll
+      const side = ez(seg(b, 2.9, BUILD + 0.5)) * (1 - p);
+      const sx = VW / 2 - (narrow ? 0.12 : 0.35);
+      win.position.set(-sx - (1 - side) * 1.2, narrow ? -VH * 0.08 : -0.05, -0.4); win.scale.setScalar(narrow ? 0.32 : 0.48); win.rotation.y = 0.5 + idle; win.visible = side > 0.01;
+      mini.g.position.set(sx + (1 - side) * 1.2, narrow ? -VH * 0.08 : -0.05, -0.4); mini.g.scale.setScalar(narrow ? 0.22 : 0.3); mini.g.rotation.y = -0.5 - idle; mini.g.visible = side > 0.01;
+      mini.stripes.forEach((s) => (s.material.emissiveIntensity = 0.25));
+      label(lA, win, narrow ? -0.32 : -0.5); label(lB, mini.g, narrow ? -0.4 : -0.55);
+      rim.position.set(door.g.position.x + 1.6, door.g.position.y + 0.6, 1.4);
+      sec.style.setProperty('--p', p.toFixed(4));
+      sec.classList.toggle('a-off', p > 0.35); sec.classList.toggle('b-on', p > 0.6);
+      sec.style.setProperty('--side', side.toFixed(3));
+      if (!shown && b > 3.15) { shown = true; sec.classList.add('ready'); }
+      renderer.render(scene, cam);
+    }
+    const onScrollI = () => { prog = progress(); };
+    const onResize = () => { size(); prog = progress(); };
+    const ob = new IntersectionObserver((es) => { inView = es[0].isIntersecting; }, { rootMargin: '80px' });
+    ob.observe(sec);
+    addEventListener('scroll', onScrollI, { passive: true });
+    addEventListener('resize', onResize, { passive: true });
+    size(); prog = progress();
+    sec.classList.add('live');
+    raf = requestAnimationFrame(frame);
+    intro = {
+      stop() {
+        alive = false; cancelAnimationFrame(raf); ob.disconnect();
+        removeEventListener('scroll', onScrollI); removeEventListener('resize', onResize);
+        renderer.dispose(); pm.dispose();
+      },
+    };
+  }
+
   function render() {
     document.documentElement.lang = lang;
-    $('#app').innerHTML = header() + '<main>' + hero() + teasers('top') + products() + teasers('rest') + reviews() + quote() + '</main>' + footer();
+    introStop();
+    $('#app').innerHTML = header() + '<main>' + (S.heroMode === 'photo' ? hero() : introHero()) + teasers('top') + products() + teasers('rest') + reviews() + quote() + '</main>' + footer();
     tstStart();
     hsShow(hsI);
     railArrows();
@@ -1449,6 +1653,7 @@
     fitNav();
     syncPanels();
     reveal($('#app'), renders++ > 0);
+    if ($('.intro')) introStart();
   }
 
   // scroll reveal + count-up. Content is visible unless the script turns the effect on.
