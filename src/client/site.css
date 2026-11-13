@@ -1446,3 +1446,4 @@ html.pv .hero-copy>*,html.pv .hs-count{animation:none}
 .intro.moved .intro-cue{opacity:0;pointer-events:none}
 @media (max-width:760px){.intro-cue{margin-top:12px}}
 @media (prefers-reduced-motion:reduce){.intro-cue i{animation:none;opacity:1}}
+.intro:not(.ready) .intro-cue{opacity:0}
