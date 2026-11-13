@@ -72,7 +72,7 @@
       band_title: 'Let’s build something great together', band_body: 'Get a free consultation and quote today.', contact_us: 'Contact us', quick_links: 'Quick links', follow: 'Follow us', contact_info: 'Contact info',
       search_ph: 'Search, e.g. sliding doors', no_results: 'No results for “{q}”.', popular: 'Popular searches', chips: ['Sliding', 'Windows', 'Doors', 'Folding', 'Glass'],
       hero_eyebrow: 'Windows · Doors · Glass', explore_systems: 'Explore our products', watch: 'Watch video',
-      discover: 'Discover more', model1: 'model', models: 'models', view_models: 'View models', choose_model: 'Choose a model to see its details or add it to your quotation.', pg_sys_b: 'Windows, doors, sliding systems, glass and more. Pick a system to see how it works.', pg_prod_h: 'Discover our profile systems', pg_gal_h: 'Projects we have completed', ab_title: 'About us', ab_more: 'More about us', ab_values: 'What we stand for', ab_how: 'How we work', ab_how_sub: 'One team from the first measurement to the final seal.', ab_s1: 'Measure', ab_s1b: 'We visit, survey and measure every opening on site.', ab_s2: 'Design', ab_s2b: 'We choose the right system, glass and finish with you.', ab_s3: 'Fabricate', ab_s3b: 'Your windows and doors are made to measure.', ab_s4: 'Install', ab_s4b: 'Our own team installs and seals everything.', ab_partner: 'Our profiles', ab_partner_b: 'We work with aluminium profile systems supplied by MUSKITA.', ab_partner_l: 'See the profile systems', ab_cta_b: 'Tell us about your project and get a written quotation.', about_eyebrow: 'About', survey: 'Book a free site survey', systems_eyebrow: 'Aluminium systems', explore: 'Explore system',
+      discover: 'Discover more', privacy_l: 'Privacy notice', privacy_upd: 'Last updated', privacy_read: 'Read our privacy notice', model1: 'model', models: 'models', view_models: 'View models', choose_model: 'Choose a model to see its details or add it to your quotation.', pg_sys_b: 'Windows, doors, sliding systems, glass and more. Pick a system to see how it works.', pg_prod_h: 'Discover our profile systems', pg_gal_h: 'Projects we have completed', ab_title: 'About us', ab_more: 'More about us', ab_values: 'What we stand for', ab_how: 'How we work', ab_how_sub: 'One team from the first measurement to the final seal.', ab_s1: 'Measure', ab_s1b: 'We visit, survey and measure every opening on site.', ab_s2: 'Design', ab_s2b: 'We choose the right system, glass and finish with you.', ab_s3: 'Fabricate', ab_s3b: 'Your windows and doors are made to measure.', ab_s4: 'Install', ab_s4b: 'Our own team installs and seals everything.', ab_partner: 'Our profiles', ab_partner_b: 'We work with aluminium profile systems supplied by MUSKITA.', ab_partner_l: 'See the profile systems', ab_cta_b: 'Tell us about your project and get a written quotation.', about_eyebrow: 'About', survey: 'Book a free site survey', systems_eyebrow: 'Aluminium systems', explore: 'Explore system',
       all_systems: 'All systems', system_n: 'System {n} / {t}', overview: 'Overview', features: 'Features', specs: 'Specifications',
       config: 'Configurator', gallery: 'Gallery', related: 'Related systems', applications: 'Applications',
       on_request: 'On request', specs_note: 'Values depend on the size and design of each project. Ask us for the technical sheet.',
@@ -142,7 +142,7 @@
       band_title: 'Ας φτιάξουμε κάτι σπουδαίο μαζί', band_body: 'Ζητήστε δωρεάν συμβουλή και προσφορά σήμερα.', contact_us: 'Επικοινωνία', quick_links: 'Σύνδεσμοι', follow: 'Ακολουθήστε μας', contact_info: 'Στοιχεία επικοινωνίας',
       search_ph: 'Αναζήτηση, π.χ. συρόμενες πόρτες', no_results: 'Δεν βρέθηκαν αποτελέσματα για «{q}».', popular: 'Δημοφιλείς αναζητήσεις', chips: ['Συρόμενα', 'Παράθυρα', 'Πόρτες', 'Πτυσσόμενα', 'Γυαλί'],
       hero_eyebrow: 'Παράθυρα · Πόρτες · Γυαλί', explore_systems: 'Δείτε τα προϊόντα μας', watch: 'Δείτε το βίντεο',
-      discover: 'Δείτε περισσότερα', model1: 'μοντέλο', models: 'μοντέλα', view_models: 'Δείτε τα μοντέλα', choose_model: 'Επιλέξτε μοντέλο για να δείτε λεπτομέρειες ή να το προσθέσετε στην προσφορά σας.', pg_sys_b: 'Παράθυρα, πόρτες, συρόμενα, γυαλί και άλλα. Διαλέξτε ένα σύστημα για να δείτε πώς λειτουργεί.', pg_prod_h: 'Ανακαλύψτε τα συστήματα προφίλ μας', pg_gal_h: 'Έργα που έχουμε ολοκληρώσει', ab_title: 'Η εταιρεία', ab_more: 'Περισσότερα για εμάς', ab_values: 'Τι πρεσβεύουμε', ab_how: 'Πώς δουλεύουμε', ab_how_sub: 'Μία ομάδα από την πρώτη μέτρηση μέχρι την τελική σφράγιση.', ab_s1: 'Μέτρηση', ab_s1b: 'Επισκεπτόμαστε τον χώρο και μετράμε κάθε άνοιγμα.', ab_s2: 'Σχεδιασμός', ab_s2b: 'Επιλέγουμε μαζί σας σύστημα, γυαλί και φινίρισμα.', ab_s3: 'Κατασκευή', ab_s3b: 'Τα παράθυρα και οι πόρτες σας κατασκευάζονται στα μέτρα σας.', ab_s4: 'Τοποθέτηση', ab_s4b: 'Η δική μας ομάδα τοποθετεί και σφραγίζει τα πάντα.', ab_partner: 'Τα προφίλ μας', ab_partner_b: 'Συνεργαζόμαστε με συστήματα προφίλ αλουμινίου της MUSKITA.', ab_partner_l: 'Δείτε τα συστήματα προφίλ', ab_cta_b: 'Πείτε μας για το έργο σας και λάβετε γραπτή προσφορά.', about_eyebrow: 'Σχετικά με την', survey: 'Κλείστε δωρεάν αυτοψία', systems_eyebrow: 'Συστήματα αλουμινίου', explore: 'Δείτε το σύστημα',
+      discover: 'Δείτε περισσότερα', privacy_l: 'Πολιτική απορρήτου', privacy_upd: 'Τελευταία ενημέρωση', privacy_read: 'Διαβάστε την πολιτική απορρήτου', model1: 'μοντέλο', models: 'μοντέλα', view_models: 'Δείτε τα μοντέλα', choose_model: 'Επιλέξτε μοντέλο για να δείτε λεπτομέρειες ή να το προσθέσετε στην προσφορά σας.', pg_sys_b: 'Παράθυρα, πόρτες, συρόμενα, γυαλί και άλλα. Διαλέξτε ένα σύστημα για να δείτε πώς λειτουργεί.', pg_prod_h: 'Ανακαλύψτε τα συστήματα προφίλ μας', pg_gal_h: 'Έργα που έχουμε ολοκληρώσει', ab_title: 'Η εταιρεία', ab_more: 'Περισσότερα για εμάς', ab_values: 'Τι πρεσβεύουμε', ab_how: 'Πώς δουλεύουμε', ab_how_sub: 'Μία ομάδα από την πρώτη μέτρηση μέχρι την τελική σφράγιση.', ab_s1: 'Μέτρηση', ab_s1b: 'Επισκεπτόμαστε τον χώρο και μετράμε κάθε άνοιγμα.', ab_s2: 'Σχεδιασμός', ab_s2b: 'Επιλέγουμε μαζί σας σύστημα, γυαλί και φινίρισμα.', ab_s3: 'Κατασκευή', ab_s3b: 'Τα παράθυρα και οι πόρτες σας κατασκευάζονται στα μέτρα σας.', ab_s4: 'Τοποθέτηση', ab_s4b: 'Η δική μας ομάδα τοποθετεί και σφραγίζει τα πάντα.', ab_partner: 'Τα προφίλ μας', ab_partner_b: 'Συνεργαζόμαστε με συστήματα προφίλ αλουμινίου της MUSKITA.', ab_partner_l: 'Δείτε τα συστήματα προφίλ', ab_cta_b: 'Πείτε μας για το έργο σας και λάβετε γραπτή προσφορά.', about_eyebrow: 'Σχετικά με την', survey: 'Κλείστε δωρεάν αυτοψία', systems_eyebrow: 'Συστήματα αλουμινίου', explore: 'Δείτε το σύστημα',
       all_systems: 'Όλα τα συστήματα', system_n: 'Σύστημα {n} / {t}', overview: 'Επισκόπηση', features: 'Χαρακτηριστικά', specs: 'Τεχνικά στοιχεία',
       config: 'Διαμόρφωση', gallery: 'Φωτογραφίες', related: 'Σχετικά συστήματα', applications: 'Εφαρμογές',
       on_request: 'Κατόπιν αιτήματος', specs_note: 'Οι τιμές εξαρτώνται από το μέγεθος και τον σχεδιασμό κάθε έργου. Ζητήστε μας το τεχνικό φυλλάδιο.',
@@ -1069,7 +1069,7 @@
           <div class="qb-g2"><div class="f"><label for="qc-pnum">${u('qb_phone')} *</label><div class="qb-phone"><select id="qc-cc" data-qc="cc" aria-label="${esc(u('qb_cc'))}">${CC.map(([v, n]) => `<option value="${v}" ${v === cc ? 'selected' : ''}>${v} ${n}</option>`).join('')}</select><input id="qc-pnum" data-qc="pnum" type="tel" inputmode="tel" autocomplete="tel" maxlength="30" placeholder="99 000000" value="${esc(c.pnum || '')}"></div></div>
           ${fld('location', 'qb_location', 'text', 'address-level2', 0)}</div>
         </div>
-        <label class="qb-check"><input type="checkbox" id="qc-privacy" data-qc="privacy" ${c.privacy ? 'checked' : ''}><span>${esc(u('qb_privacy', { c: S.company.name }))}<small>${u('qb_privacy_note')}</small></span></label>
+        <label class="qb-check"><input type="checkbox" id="qc-privacy" data-qc="privacy" ${c.privacy ? 'checked' : ''}><span>${esc(u('qb_privacy', { c: S.company.name }))}<small>${u('qb_privacy_note')} <a href="#privacy" target="_blank">${u('privacy_read')}</a></small></span></label>
         <p class="q-status err" id="qb-cerr" role="alert"></p>
         <div class="qb-nav"><button type="button" class="btn btn-ghost" data-qb="to-items">${icon('back')}${u('qb_back')}</button><button type="button" class="btn btn-accent" data-qb="to-review">${u('qb_review')}${icon('arrow')}</button></div>`;
     }
@@ -1239,7 +1239,7 @@
         ${t(c.hours) ? `<li>${icon('clock')}<span>${esc(t(c.hours))}</span></li>` : ''}
       </ul></div>
       ${soc ? `<div><h4>${u('follow')}</h4>${soc}</div>` : ''}
-    </div><div class="wrap foot-bottom"><span>© ${new Date().getFullYear()} ${esc(c.name)}. ${u('rights')}</span><span>${esc(t(S.text.tagline))}</span></div></footer>
+    </div><div class="wrap foot-bottom"><span>© ${new Date().getFullYear()} ${esc(c.name)}. ${u('rights')}</span><a href="#privacy">${u('privacy_l')}</a></div></footer>
     ${helpButton()}`;
   }
 
@@ -1318,7 +1318,7 @@
         <div class="btns"><button type="button" class="btn btn-accent" data-consult="${esc(s.slug)}">${u('consult')}</button>${S.company.phone ? `<a class="btn btn-ghost" href="${telLink()}">${icon('phone')}${esc(S.company.phone)}</a>` : ''}</div></div></section>
       ${footerMini()}`;
   }
-  const footerMini = () => `<div class="foot"><div class="wrap foot-bottom"><span>© ${new Date().getFullYear()} ${esc(S.company.name)}</span><span>${esc(t(S.text.tagline))}</span></div></div>`;
+  const footerMini = () => `<div class="foot"><div class="wrap foot-bottom"><span>© ${new Date().getFullYear()} ${esc(S.company.name)}</span><a href="#privacy">${u('privacy_l')}</a></div></div>`;
 
   /* ---------- configurator ---------- */
   const CFG = {};
@@ -1445,7 +1445,7 @@
      Stage A (top of the page): brand text in the middle, the door rises from the bottom, a small window left and a small door right.
      Stage B (scrolled): the door moves right and turns, the model text comes in on the left. Three.js loads from a CDN;
      without WebGL the classic photo hero is shown instead. */
-  const THREE_URL = 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js';
+  const THREE_URL = '/vendor/three-0.170.0.js'; // served by this site (MIT), no third-party CDN
   let intro = null;
   function introHero() {
     const d = prods().find((x) => x.cat === 'doors') || prods()[0];
@@ -1466,6 +1466,21 @@
         <a class="intro-side r" href="${d ? '#' + esc(d.id) : '#products'}">${u('qg_doors')}</a>
       </div>
     </section>`;
+  }
+  function privacyPage() {
+    const P = (globalThis.PRIVACY || {})[lang] || (globalThis.PRIVACY || {}).en;
+    if (!P) return '';
+    const c = S.company, addr = t(c.address);
+    const fill = (s) => esc(s).replace(/\{c\}/g, esc(c.name)).replace(/\{e\}/g, `<a href="mailto:${esc(c.email)}">${esc(c.email)}</a>`).replace(/\{p\}/g, esc(c.phone || '')).replace(/\{a\}/g, addr ? ' ' + esc(addr.replace(/\n/g, ', ')) + '.' : '').replace(/www\.dataprotection\.gov\.cy/g, '<a href="https://www.dataprotection.gov.cy" target="_blank" rel="noopener">www.dataprotection.gov.cy</a>');
+    const para = (list) => { let h = '', ul = []; const flush = () => { if (ul.length) { h += `<ul>${ul.join('')}</ul>`; ul = []; } }; list.forEach((x) => { if (x.startsWith('- ')) ul.push(`<li>${fill(x.slice(2))}</li>`); else { flush(); h += `<p>${fill(x)}</p>`; } }); flush(); return h; };
+    const d = new Date(globalThis.PRIVACY.updated + 'T12:00:00').toLocaleDateString(lang === 'el' ? 'el-GR' : 'en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+    return `${pgBar('top', P.title)}
+      <article class="legal"><div class="wrap legal-in">
+        <p class="eyebrow">${esc(c.name)}</p><h1>${esc(P.title)}</h1><p class="legal-upd">${u('privacy_upd')}: ${esc(d)}</p>
+        <p class="legal-intro">${fill(P.intro)}</p>
+        ${P.sections.map(([h, list]) => `<section><h2>${esc(h)}</h2>${para(list)}</section>`).join('')}
+      </div></article>
+      ${footerMini()}`;
   }
   function introStop() { if (intro) { intro.stop(); intro = null; } }
   async function introStart() {
@@ -2014,8 +2029,8 @@
     current = null; galOpen = false; prodCur = null; revOpen = false; abOpen = false;
     listOpen = which;
     const c = which.startsWith('models-') ? which.slice(7) : '';
-    const title = which === 'systems' ? u('m_systems') : c ? pcat(c) : u('products');
-    mount(which === 'systems' ? systemsPage() : c ? modelsPage(c) : productsPage(), title, `${title} · ${S.company.name}`, instant, (sp) => reveal(sp, instant && renders > 1));
+    const title = which === 'privacy' ? u('privacy_l') : which === 'systems' ? u('m_systems') : c ? pcat(c) : u('products');
+    mount(which === 'privacy' ? privacyPage() : which === 'systems' ? systemsPage() : c ? modelsPage(c) : productsPage(), title, `${title} · ${S.company.name}`, instant, (sp) => reveal(sp, instant && renders > 1));
   }
   function closeList() {
     if (!listOpen) return;
@@ -2042,6 +2057,7 @@
     setHelp(false);
     if (h === 'about-us') { openAboutPage(first); return; }
     if (h === 'systems' && sys().length) { openList('systems', first); return; }
+    if (h === 'privacy') { openList('privacy', first); return; }
     if (h.startsWith('models-') && prodGroups().some((g) => 'models-' + g.id === h)) { openList(h, first); return; }
     if (h === 'all-reviews' && allRevs().length) { abOpen = false; openRevPage(first); return; }
     if (h === 'gallery' && works().length) { prodCur = null; revOpen = false; abOpen = false; openGallery(first); return; }

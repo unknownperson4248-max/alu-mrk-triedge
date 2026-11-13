@@ -1,12 +1,21 @@
 import INDEX_HTML from './client/index.html';
 import SITE_CSS from './client/site.css';
-import SITE_JS from './client/site.client.js';
+import SITE_JS_MAIN from './client/site.client.js';
+import PRIVACY_JS from './client/privacy.client.js';
+const SITE_JS = PRIVACY_JS + '\n' + SITE_JS_MAIN;
 import ADMIN_HTML from './client/admin.html';
 import ADMIN_CSS from './client/admin.css';
 import ADMIN_JS from './client/admin.client.js';
 import { IMAGES } from './images.js';
+import THREE_JS from './vendor/three.client.js';
+import F_sora_latin from './fonts/sora-latin.bin';
+import F_inter_latin from './fonts/inter-latin.bin';
+import F_inter_greek from './fonts/inter-greek.bin';
+import F_jetbrains_mono_latin from './fonts/jetbrains-mono-latin.bin';
+import F_jetbrains_mono_greek from './fonts/jetbrains-mono-greek.bin';
 import { DEFAULT_SITE, PRESETS } from './data.js';
 
+const FONTS = {'sora-latin': F_sora_latin, 'inter-latin': F_inter_latin, 'inter-greek': F_inter_greek, 'jetbrains-mono-latin': F_jetbrains_mono_latin, 'jetbrains-mono-greek': F_jetbrains_mono_greek};
 const enc = new TextEncoder();
 const PBKDF2_ITER = 10000;
 const SESSION_DAYS = 7;
@@ -787,6 +796,8 @@ export default {
       }
       if (path === '/site.css') return text(SITE_CSS, 'text/css; charset=utf-8', 'public, max-age=31536000, immutable');
       if (path === '/site.js') return text(SITE_JS, 'text/javascript; charset=utf-8', 'public, max-age=31536000, immutable');
+      if (path === '/vendor/three-0.170.0.js') return text(THREE_JS, 'text/javascript; charset=utf-8', 'public, max-age=31536000, immutable');
+      { const fm = /^\/fonts\/([a-z-]+)\.woff2$/.exec(path); if (fm && FONTS[fm[1]]) return text(FONTS[fm[1]], 'font/woff2', 'public, max-age=31536000, immutable', 200, { 'access-control-allow-origin': '*' }); }
 
       if (path === '/admin' || path === '/admin/') {
         return text(ADMIN_HTML.replace(/\{\{V\}\}/g, VERSION), 'text/html; charset=utf-8', 'no-store', 200, { 'x-frame-options': 'DENY', 'x-robots-tag': 'noindex' });

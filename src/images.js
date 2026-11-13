@@ -13,27 +13,25 @@ import i10 from './img/glass-room.jpg';
 import i11 from './img/glass-room.webp';
 import i12 from './img/glass-stairs.jpg';
 import i13 from './img/glass-stairs.webp';
-import i14 from './img/hero-house.jpg';
-import i15 from './img/hero-house.webp';
-import i16 from './img/house-windows.jpg';
-import i17 from './img/house-windows.webp';
-import i18 from './img/icon-dark.png';
-import i19 from './img/lift-slide.jpg';
-import i20 from './img/lift-slide.webp';
-import i21 from './img/logo-dark.png';
-import i22 from './img/logo-light.png';
-import i23 from './img/office-partition.jpg';
-import i24 from './img/office-partition.webp';
-import i25 from './img/partition-door.jpg';
-import i26 from './img/partition-door.webp';
-import i27 from './img/sliding-door.jpg';
-import i28 from './img/sliding-door.webp';
-import i29 from './img/sliding-window.jpg';
-import i30 from './img/sliding-window.webp';
-import i31 from './img/tile-doors.jpg';
-import i32 from './img/tile-doors.webp';
-import i33 from './img/tile-windows.jpg';
-import i34 from './img/tile-windows.webp';
+import i14 from './img/house-windows.jpg';
+import i15 from './img/house-windows.webp';
+import i16 from './img/icon-dark.png';
+import i17 from './img/lift-slide.jpg';
+import i18 from './img/lift-slide.webp';
+import i19 from './img/logo-dark.png';
+import i20 from './img/logo-light.png';
+import i21 from './img/office-partition.jpg';
+import i22 from './img/office-partition.webp';
+import i23 from './img/partition-door.jpg';
+import i24 from './img/partition-door.webp';
+import i25 from './img/sliding-door.jpg';
+import i26 from './img/sliding-door.webp';
+import i27 from './img/sliding-window.jpg';
+import i28 from './img/sliding-window.webp';
+import i29 from './img/tile-doors.jpg';
+import i30 from './img/tile-doors.webp';
+import i31 from './img/tile-windows.jpg';
+import i32 from './img/tile-windows.webp';
 
 export const IMAGES = {
   'alu-profiles.jpg': [i0, 'image/jpeg'],
@@ -50,25 +48,23 @@ export const IMAGES = {
   'glass-room.webp': [i11, 'image/webp'],
   'glass-stairs.jpg': [i12, 'image/jpeg'],
   'glass-stairs.webp': [i13, 'image/webp'],
-  'hero-house.jpg': [i14, 'image/jpeg'],
-  'hero-house.webp': [i15, 'image/webp'],
-  'house-windows.jpg': [i16, 'image/jpeg'],
-  'house-windows.webp': [i17, 'image/webp'],
-  'icon-dark.png': [i18, 'image/png'],
-  'lift-slide.jpg': [i19, 'image/jpeg'],
-  'lift-slide.webp': [i20, 'image/webp'],
-  'logo-dark.png': [i21, 'image/png'],
-  'logo-light.png': [i22, 'image/png'],
-  'office-partition.jpg': [i23, 'image/jpeg'],
-  'office-partition.webp': [i24, 'image/webp'],
-  'partition-door.jpg': [i25, 'image/jpeg'],
-  'partition-door.webp': [i26, 'image/webp'],
-  'sliding-door.jpg': [i27, 'image/jpeg'],
-  'sliding-door.webp': [i28, 'image/webp'],
-  'sliding-window.jpg': [i29, 'image/jpeg'],
-  'sliding-window.webp': [i30, 'image/webp'],
-  'tile-doors.jpg': [i31, 'image/jpeg'],
-  'tile-doors.webp': [i32, 'image/webp'],
-  'tile-windows.jpg': [i33, 'image/jpeg'],
-  'tile-windows.webp': [i34, 'image/webp'],
+  'house-windows.jpg': [i14, 'image/jpeg'],
+  'house-windows.webp': [i15, 'image/webp'],
+  'icon-dark.png': [i16, 'image/png'],
+  'lift-slide.jpg': [i17, 'image/jpeg'],
+  'lift-slide.webp': [i18, 'image/webp'],
+  'logo-dark.png': [i19, 'image/png'],
+  'logo-light.png': [i20, 'image/png'],
+  'office-partition.jpg': [i21, 'image/jpeg'],
+  'office-partition.webp': [i22, 'image/webp'],
+  'partition-door.jpg': [i23, 'image/jpeg'],
+  'partition-door.webp': [i24, 'image/webp'],
+  'sliding-door.jpg': [i25, 'image/jpeg'],
+  'sliding-door.webp': [i26, 'image/webp'],
+  'sliding-window.jpg': [i27, 'image/jpeg'],
+  'sliding-window.webp': [i28, 'image/webp'],
+  'tile-doors.jpg': [i29, 'image/jpeg'],
+  'tile-doors.webp': [i30, 'image/webp'],
+  'tile-windows.jpg': [i31, 'image/jpeg'],
+  'tile-windows.webp': [i32, 'image/webp'],
 };
