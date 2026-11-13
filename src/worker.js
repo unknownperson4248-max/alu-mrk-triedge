@@ -68,6 +68,7 @@ function themeCss(theme) {
 }
 
 function tone(theme) {
+  if (!theme || theme.skin !== 'dark') return 'light';
   const hex = HEX.test((theme && theme.bg) || '') ? theme.bg : '#ffffff';
   const [r, g, b] = [1, 3, 5].map((k) => parseInt(hex.slice(k, k + 2), 16) / 255);
   return 0.2126 * r + 0.7152 * g + 0.0722 * b < 0.45 ? 'dark' : 'light';
@@ -100,6 +101,7 @@ function renderIndex(site, url) {
     '{{DATA}}': data,
     '{{V}}': VERSION,
     '{{TONE}}': tone(site.theme),
+    '{{SKIN}}': site.theme && site.theme.skin === 'dark' ? '' : 'skin-glass',
     '{{NAVY}}': HEX.test(site.theme.navy || '') ? site.theme.navy : '#0e1b2e',
   };
   return INDEX_HTML.replace(/\{\{[A-Z_]+\}\}/g, (m) => (m in map ? map[m] : m));

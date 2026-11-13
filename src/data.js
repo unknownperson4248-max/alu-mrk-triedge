@@ -16,7 +16,7 @@ export const PRESETS = {
 
 export const DEFAULT_SITE = {
   version: 1,
-  theme: { ...PRESETS['black-silver-gold'] },
+  theme: { ...PRESETS['black-silver-gold'], skin: 'glass' },
   company: {
     name: 'Alu MRK TriEdge Ltd',
     phone: '+357 99 078280',

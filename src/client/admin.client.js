@@ -166,7 +166,9 @@
   /* ---------- tabs ---------- */
   function vDesign() {
     const th = site.theme;
-    return `<div class="card"><h2>Website colours</h2><p class="hint">Changes show in the preview at once. Press Save to put them on the live website.</p>
+    return `<div class="card"><h2>Website style</h2><p class="hint">Light glass: bright background with white glass cards. Dark: the earlier black look, coloured with the colours below.</p>
+        <div class="row">${sel('theme.skin', 'Style', [['glass', 'Light glass'], ['dark', 'Dark']])}</div></div>
+      <div class="card"><h2>Website colours</h2><p class="hint">Changes show in the preview at once. Press Save to put them on the live website. With Light glass only the accent colour is used.</p>
       <div class="presets">${Object.entries(presets).map(([k, p]) => `<button type="button" class="preset" data-act="preset" data-k="${k}"><i>${['navy', 'accent', 'surface'].map((c) => `<b style="background:${p[c]}"></b>`).join('')}</i>${esc(PRESET_NAMES[k] || k)}</button>`).join('')}</div>
       <div class="colors">${COLORS.map(([k, l]) => `<div class="color"><small>${esc(l)}</small><div class="sw"><input type="color" data-path="theme.${k}" value="${esc(th[k])}" aria-label="${esc(l)}"><input type="text" data-path="theme.${k}" data-color value="${esc(th[k])}" maxlength="7" aria-label="${esc(l)} hex"></div></div>`).join('')}</div>
       <div><button type="button" class="b b-sm" data-act="reset-theme">Reset to default colours</button></div></div>`;
@@ -300,7 +302,7 @@
     const C = site.productCats, L = site.products;
     const groups = C.map((c, ci) => ({ c, ci, items: L.map((x, i) => ({ x, i })).filter((o) => o.x.cat === c.id) }));
     const lost = L.map((x, i) => ({ x, i })).filter((o) => !C.some((c) => c.id === o.x.cat));
-    const sw = (path, on, label) => `<label class="sw" title="${label}"><input type="checkbox" data-path="${path}" ${on ? 'checked' : ''} aria-label="${label}"><i></i></label>`;
+    const sw = (path, on, label) => `<label class="tgl" title="${label}"><input type="checkbox" data-path="${path}" ${on ? 'checked' : ''} aria-label="${label}"><i></i></label>`;
     const row = ({ x, i }, k, n) => `<div class="pp${x.visible === false ? ' off' : ''}">
         <button type="button" class="pp-main" data-act="edit-prod" data-i="${i}"><img src="${esc(src(x.image))}" alt=""><span><b>${esc(x.model || 'New product')}</b><small>${esc(x.name?.en || '')}${x.visible === false ? ' · <em>Hidden</em>' : ''}</small></span></button>
         <div class="pp-acts">${sw(`products.${i}.visible`, x.visible !== false, 'Show on website')}

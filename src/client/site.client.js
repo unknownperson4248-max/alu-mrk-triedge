@@ -2281,7 +2281,9 @@
     $('#theme').textContent = `:root{${css}}`;
     const hex = /^#[0-9a-f]{6}$/i.test(th.bg || '') ? th.bg : '#ffffff';
     const [r, g, b] = [1, 3, 5].map((k) => parseInt(hex.slice(k, k + 2), 16) / 255);
-    document.documentElement.dataset.tone = 0.2126 * r + 0.7152 * g + 0.0722 * b < 0.45 ? 'dark' : 'light';
+    const glass = th.skin !== 'dark';
+    document.documentElement.classList.toggle('skin-glass', glass);
+    document.documentElement.dataset.tone = glass ? 'light' : 0.2126 * r + 0.7152 * g + 0.0722 * b < 0.45 ? 'dark' : 'light';
   }
   // admin preview: jump straight to the part of the page being edited
   function previewTo(t) {

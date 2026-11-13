@@ -1447,3 +1447,93 @@ html.pv .hero-copy>*,html.pv .hs-count{animation:none}
 @media (max-width:760px){.intro-cue{margin-top:12px}}
 @media (prefers-reduced-motion:reduce){.intro-cue i{animation:none;opacity:1}}
 .intro:not(.ready) .intro-cue{opacity:0}
+
+/* =====================================================================
+   Light glass style (html.skin-glass): bright mint/peach backdrop, white glass cards, cards lift on hover.
+   Only colours, surfaces and shadows change here; layout stays the same.
+   ===================================================================== */
+html.skin-glass{--bg:#eef2f1;--surface:#ffffff;--ink:#1b2126;--muted:#5d666d;--line:rgba(27,33,38,.1);--navy:#1f2529;--navy-deep:#171b1e;
+  --on-navy:#1b2126;--on-navy-muted:#5d666d;--silver:#7a838a;
+  --glass:linear-gradient(180deg,rgba(255,255,255,.95),rgba(255,255,255,.76));--glass-b:rgba(255,255,255,.95);
+  --glass-sh:0 1px 0 rgba(255,255,255,.9) inset,0 24px 46px -28px rgba(24,48,40,.34),0 2px 6px -2px rgba(24,48,40,.08);
+  --mint:#6fae99;--peach:#efb28e;color-scheme:light}
+html.skin-glass body{background:radial-gradient(1100px 760px at 6% -6%,#dcefe7 0%,transparent 60%),radial-gradient(900px 700px at 104% 18%,#f8e8dc 0%,transparent 58%),radial-gradient(900px 900px at 50% 120%,#e3ece9 0%,transparent 60%),var(--bg);background-attachment:fixed;color:var(--ink)}
+html.skin-glass .eyebrow{color:var(--muted)}
+/* header: dark logo and text on the light page */
+html.skin-glass .hdr{color:var(--ink)}
+html.skin-glass .hdr .brand .logo-l{display:none}
+html.skin-glass .hdr .brand .logo-d{display:block}
+html.skin-glass .hdr.solid,html.skin-glass .hdr.open-panel{background:rgba(246,249,248,.9);box-shadow:0 1px 0 var(--line),0 10px 30px -24px rgba(24,48,40,.4)}
+html.skin-glass .topbar{color:var(--muted);border-color:var(--line)}
+html.skin-glass .nav-cta{border-color:rgba(27,33,38,.25)}
+html.skin-glass .burger b{background:var(--ink)}
+html.skin-glass .mega,html.skin-glass .srch{background:rgba(250,252,251,.98);color:var(--ink)}
+html.skin-glass .lsel-menu{background:#fff;box-shadow:var(--glass-sh)}
+html.skin-glass .mnav{background:#f4f7f6}
+/* glass cards */
+html.skin-glass :is(.rev,.rvc,.rv-sum,.rv-rate,.prod,.pcat,.ab-card,.qb-shell,.sp-band>.wrap,.band-cta,.feat,.hi){background:var(--glass);border:1px solid var(--glass-b);box-shadow:var(--glass-sh);color:var(--ink);border-radius:22px}
+html.skin-glass :is(.prod,.pcat,.rvc,.rev,.ab-card,.work,.card,.tz-media){transition:transform .35s var(--ease-out),box-shadow .35s}
+html.skin-glass :is(.prod,.pcat,.rvc,.rev,.ab-card,.work,.card):hover{transform:translateY(-5px);box-shadow:0 1px 0 rgba(255,255,255,.9) inset,0 34px 56px -30px rgba(24,48,40,.42)}
+html.skin-glass :is(.tz-media,.work,.card,.ab-img,.sp-hero-img,.about-media){border-radius:22px;box-shadow:var(--glass-sh)}
+/* sections that were dark become part of the bright page */
+html.skin-glass :is(.prods,.reviews,.quote,.tz,.projects,.about,.band,.gal-head,.gal-body,.sp-sec,.sp-hero,.mc-head,.pg-body){background:transparent;color:var(--ink);border-color:transparent}
+html.skin-glass .prods::before{opacity:.5;background:linear-gradient(rgba(27,33,38,.05) 1px,transparent 1px) 0 0/100% 56px,linear-gradient(90deg,rgba(27,33,38,.05) 1px,transparent 1px) 0 0/56px 100%}
+html.skin-glass :is(.prods,.reviews,.quote) .eyebrow,html.skin-glass .prods-sub,html.skin-glass .rev-sub{color:var(--muted)}
+html.skin-glass .sp{background:radial-gradient(1000px 700px at 0% 0%,#dcefe7,transparent 60%),radial-gradient(900px 700px at 100% 30%,#f8e8dc,transparent 60%),var(--bg)}
+html.skin-glass .sp-bar{background:rgba(246,249,248,.92)}
+/* profile system category cards: light drawing board */
+html.skin-glass .pcat{overflow:hidden}
+html.skin-glass .pcat-art,html.skin-glass .mc-art{background:radial-gradient(120% 90% at 70% 15%,rgba(239,178,142,.28),transparent 60%),repeating-linear-gradient(90deg,rgba(27,33,38,.05) 0 1px,transparent 1px 34px),linear-gradient(160deg,#fbfcfb,#e8eeec)}
+html.skin-glass .art .s{stroke:#2a3137}
+html.skin-glass .art .f{stroke:rgba(27,33,38,.22)}
+html.skin-glass .art .fill{fill:rgba(111,174,153,.14)}
+html.skin-glass .pcat-n{background:rgba(255,255,255,.9);color:var(--ink);border-color:rgba(27,33,38,.1)}
+html.skin-glass .pcat-ic{background:rgba(255,255,255,.92);border-color:rgba(27,33,38,.1)}
+html.skin-glass .pcat-ic .art .s{stroke:#2a3137}
+html.skin-glass .pcat-m{color:var(--muted)}
+/* product cards */
+html.skin-glass .prod-img{background:#e9eeec}
+html.skin-glass .prod-b p{color:var(--muted)}
+/* reviews */
+html.skin-glass :is(.rv-big b,.rv-rate-h,.rvc,.rev){color:var(--ink)}
+html.skin-glass :is(.rv-big span,.rv-rate-s,.rv-bars li){color:var(--muted)}
+html.skin-glass .rv-bars i{background:rgba(27,33,38,.08)}
+html.skin-glass .rv-arrow{background:rgba(27,33,38,.06);color:var(--ink)}
+/* quotation builder: white glass panel, light inputs */
+html.skin-glass .qb-shell{--qb-card:#ffffff;--qb-in:rgba(27,33,38,.035);--qb-ln:rgba(27,33,38,.1)}
+html.skin-glass .qb-shell :is(h2,h3,b,.qb-cat-more,.qb-measure b,.qb-check,.qb-item-n,.qb-files .qb-file){color:var(--ink)}
+html.skin-glass .qb-shell :is(small,.qb-item-m,.qb-measure small,.qb-ex,.qb-hint,.qb-sub-h,label){color:var(--muted)}
+html.skin-glass .qb-shell .f :is(input,select,textarea){background:#fff;color:var(--ink);border-color:rgba(27,33,38,.14)}
+html.skin-glass .qb-shell .f :is(input,textarea)::placeholder{color:#9aa2a8}
+html.skin-glass .qb-item{background:#fff}
+html.skin-glass .qb-sw{background:rgba(27,33,38,.15)}
+html.skin-glass .qb-cat small{color:var(--muted)}
+html.skin-glass .qb-steps li:not(.on) :is(span,button){background:rgba(27,33,38,.05);color:var(--muted)}
+html.skin-glass .quote .q-side,html.skin-glass .quote .q-intro{color:var(--ink)}
+/* footer */
+html.skin-glass .foot{background:rgba(255,255,255,.55);color:var(--muted);border-top:1px solid rgba(255,255,255,.9);box-shadow:0 -20px 40px -34px rgba(24,48,40,.3)}
+html.skin-glass .foot h4,html.skin-glass .foot a:hover{color:var(--ink)}
+html.skin-glass .foot-brand img{filter:invert(1) brightness(.25)}
+/* front page 3D intro on the bright page */
+html.skin-glass .intro{background:transparent;color:var(--ink)}
+html.skin-glass .intro-glow{background:radial-gradient(60% 55% at 50% 105%,rgba(239,178,142,.45),transparent 70%),radial-gradient(45% 45% at 10% 8%,rgba(111,174,153,.28),transparent 70%),radial-gradient(40% 40% at 92% 30%,rgba(239,178,142,.25),transparent 70%)}
+html.skin-glass .intro-eb,html.skin-glass .intro-side{color:var(--muted)}
+html.skin-glass .intro-a h1 span{background:linear-gradient(180deg,#59636b 10%,#9aa3aa 90%);-webkit-background-clip:text;background-clip:text}
+html.skin-glass .intro-sub{color:var(--muted)}
+html.skin-glass .intro-btn{background:var(--ink);color:#fff;box-shadow:0 14px 30px -16px rgba(27,33,38,.6)}
+html.skin-glass .intro-cue i{filter:none}
+html.skin-glass .tz-text>p:not(.eyebrow){color:var(--muted)}
+html.skin-glass .tz-text h2{background:linear-gradient(180deg,var(--ink) 30%,#59636b);-webkit-background-clip:text;background-clip:text;color:transparent}
+html.skin-glass .tz-btn{border-color:rgba(27,33,38,.25);color:var(--ink)}
+html.skin-glass .sprog{background:linear-gradient(90deg,var(--mint),var(--accent))}
+/* glass: About page sections and the contact column next to the quotation */
+html.skin-glass :is(.ab-intro,.ab-values,.ab-how,.ab-stats-w,.ab-founder,.ab-partner){background:transparent;color:var(--ink)}
+html.skin-glass :is(.ab-intro p,.ab-sub,.ab-card p,.ab-steps p){color:var(--muted)}
+html.skin-glass .ab-n{border-color:rgba(27,33,38,.18)}
+html.skin-glass .about-stats li{border-color:var(--line)}
+html.skin-glass .about-stats span{color:var(--muted)}
+html.skin-glass .qb-contact,html.skin-glass .qb-contact h2,html.skin-glass .qb-contact h3{color:var(--ink)}
+html.skin-glass :is(.q-line small,.qb-contact .eyebrow){color:var(--muted)}
+html.skin-glass .q-line{border-color:var(--line)}
+html.skin-glass :is(.qb-brand,.qb-lead){color:var(--muted)}
+html.skin-glass .eng{background:transparent}
