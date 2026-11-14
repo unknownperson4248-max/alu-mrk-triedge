@@ -1954,7 +1954,8 @@
     else requestAnimationFrame(() => requestAnimationFrame(() => sp.classList.add('open')));
     lock(true, 'sp');
     sp.setAttribute('tabindex', '-1');
-    setTimeout(() => sp.focus({ preventScroll: true }), 50);
+    // not inside the admin preview: there the page re-renders on every key press and would pull focus away from the admin's text field
+    if (!PREVIEW) setTimeout(() => sp.focus({ preventScroll: true }), 50);
   }
   function openSystem(slug, instant) {
     const s = bySlug(slug);
