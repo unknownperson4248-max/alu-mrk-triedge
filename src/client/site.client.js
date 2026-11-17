@@ -299,7 +299,7 @@
           <li><button type="button" class="acc" aria-expanded="false" aria-controls="acc-sys"><span><i class="mi">${icon('grid')}</i>${u('m_systems')}</span>${icon('chev')}</button>
             <div class="acc-panel" id="acc-sys"><ul>${list.map((s, i) => `<li><a href="#${esc(s.slug)}"><small>${pad(i + 1)}</small>${esc(t(s.name))}</a></li>`).join('')}</ul></div></li>
           ${prods().length ? `<li><button type="button" class="acc" aria-expanded="false" aria-controls="acc-prof"><span><i class="mi">${icon('layers')}</i>${u('m_products')}</span>${icon('chev')}</button>
-            <div class="acc-panel" id="acc-prof"><ul>${prods().map((x) => `<li><a href="#${esc(x.id)}"><small class="mdl">${esc(x.model)}</small>${esc(t(x.name))}</a></li>`).join('')}<li><a class="acc-all" href="#products">${u('view_all_prof')}${icon('arrow')}</a></li></ul></div></li>` : ''}
+            <div class="acc-panel" id="acc-prof"><ul>${prods().map((x) => `<li><a href="#${esc(x.id)}">${esc(x.model)}</a></li>`).join('')}<li><a class="acc-all" href="#products">${u('view_all_prof')}${icon('arrow')}</a></li></ul></div></li>` : ''}
           <li><a href="#gallery"><span><i class="mi">${icon('images')}</i>${u('m_projects')}</span>${icon('right')}</a></li>
           <li><a href="#reviews"><span><i class="mi">${icon('star')}</i>${u('reviews')}</span>${icon('right')}</a></li>
           <li><a href="#about-us"><span><i class="mi">${icon('users')}</i>${u('m_about')}</span>${icon('right')}</a></li>
@@ -1831,7 +1831,7 @@
   function render() {
     document.documentElement.lang = lang;
     introStop();
-    $('#app').innerHTML = header() + '<main>' + hero() + quickFind() + teasers('top') + products() + teasers('rest') + reviews() + quote() + '</main>' + footer();
+    $('#app').innerHTML = header() + '<main>' + (S.heroMode === 'photo' ? hero() : introHero()) + quickFind() + teasers('top') + products() + teasers('rest') + reviews() + quote() + '</main>' + footer();
     tstStart();
     hsShow(hsI);
     railArrows();

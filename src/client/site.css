@@ -1817,3 +1817,12 @@ html.skin-glass .mx-chips button[aria-pressed="true"]{background:var(--ink);colo
   @keyframes fadeLate{0%,38%{opacity:0;transform:translateX(-10px)}100%{opacity:1;transform:none}}
 }
 @media (max-width:1180px){html.skin-glass .mnav,html .mnav{background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,.05) 40%,rgba(255,255,255,.1)),rgba(38,42,48,.62)}html.skin-glass .mnav .mnav-main .acc-panel a{color:rgba(255,255,255,.82)}}
+
+/* ---- phones: no blur and no endless decorative motion (they made the site feel slow) ---- */
+@media (max-width:1180px){
+  *,*::before,*::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+  html .mnav,html.skin-glass .mnav{-webkit-backdrop-filter:blur(12px)!important;backdrop-filter:blur(12px)!important;background:linear-gradient(180deg,rgba(255,255,255,.14),rgba(255,255,255,.04) 40%,rgba(255,255,255,.08)),rgba(34,38,44,.86)}
+  .slide img,.slide:only-child.on img,.ab-hero img{animation:none!important}
+  .help-btn::before,.help-btn::after,.help-ic.a .ic,.hero-cta .btn-accent::after,.d-water,.d-break{animation:none!important}
+  .mnav-main .acc-panel a{padding-block:9px}
+}
