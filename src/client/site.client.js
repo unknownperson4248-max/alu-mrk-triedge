@@ -30,7 +30,7 @@
       call: 'Call', leadership: 'Leadership',
       ask_price: 'Ask the price', ask_wa_msg: 'Hello {c}, I would like the price for this:', wa_note: 'Opens WhatsApp with the message ready. You only need to press send.',
       products: 'Profile Systems', m_products: 'Profile Systems', prod_eyebrow: 'Profile Systems', view_all_prof: 'View all profile systems', prod_title: 'Our profile models', prod_sub: 'We fabricate and install these aluminium profile systems to measure. Profiles are supplied by MUSKITA.', prod_maker: 'Profile manufacturer: MUSKITA',
-      details: 'Details', add_quote: 'Add to quotation', added_quote: 'Added to your quotation', tech_data: 'Technical data', tech_source: 'Source: MUSKITA product information. Values vary by version and configuration; we confirm the exact figures for your project.', tech_on_request: 'Technical details on request.', colours: 'Colours & finishes', all_products: 'All models',
+      details: 'Details', m_alsys: 'MUSKITA Systems', al_h1: 'Aluminium Systems', alsys_eyebrow: 'MUSKITA systems we fabricate & install', alsys_sub: 'Ten families of MUSKITA aluminium systems, from minimal sliding glass walls to fences and pergolas. Choose a system to see its models and technical data.', alsys_all: 'All MUSKITA systems', al_products: 'models', al_product1: 'model', al_versions: 'Versions', al_order: 'Values in order:', al_more: 'More in this system', al_ask: 'Ask about this system', al_tag: 'Aluminium system', add_quote: 'Add to quotation', added_quote: 'Added to your quotation', tech_data: 'Technical data', tech_source: 'Source: MUSKITA product information. Values vary by version and configuration; we confirm the exact figures for your project.', tech_on_request: 'Technical details on request.', colours: 'Colours & finishes', all_products: 'All models',
       qb_title: 'Request a quotation', qb_sub: 'Add every door, window or system you need. We review the measurements and send you a written quotation.',
       qb_step1: 'Products', qb_step2: 'Details', qb_step3: 'Review', qb_product: 'Product {n}', qb_edit_product: 'Edit product {n}',
       qb_cat: 'Product category', qb_model: 'Model', qb_model_other: 'Other / not sure', qb_choose: 'Choose…', qb_width: 'Width (mm)', qb_height: 'Height (mm)', qb_qty: 'Quantity',
@@ -100,7 +100,7 @@
       call: 'Κλήση', leadership: 'Διοίκηση',
       ask_price: 'Ρωτήστε τιμή', ask_wa_msg: 'Γεια σας, θα ήθελα την τιμή για αυτό:', wa_note: 'Ανοίγει το WhatsApp με έτοιμο μήνυμα. Πατήστε μόνο αποστολή.',
       products: 'Συστήματα προφίλ', m_products: 'Συστήματα προφίλ', prod_eyebrow: 'Συστήματα προφίλ', view_all_prof: 'Όλα τα συστήματα προφίλ', prod_title: 'Τα μοντέλα προφίλ μας', prod_sub: 'Κατασκευάζουμε και τοποθετούμε αυτά τα συστήματα προφίλ αλουμινίου στα μέτρα σας. Τα προφίλ προμηθεύει η MUSKITA.', prod_maker: 'Κατασκευαστής προφίλ: MUSKITA',
-      details: 'Λεπτομέρειες', add_quote: 'Προσθήκη στην προσφορά', added_quote: 'Προστέθηκε στην προσφορά σας', tech_data: 'Τεχνικά στοιχεία', tech_source: 'Πηγή: στοιχεία προϊόντος MUSKITA. Οι τιμές διαφέρουν ανά έκδοση και διαμόρφωση· επιβεβαιώνουμε τα ακριβή στοιχεία για το έργο σας.', tech_on_request: 'Τεχνικά στοιχεία κατόπιν αιτήματος.', colours: 'Χρώματα & φινιρίσματα', all_products: 'Όλα τα μοντέλα',
+      details: 'Λεπτομέρειες', m_alsys: 'Συστήματα MUSKITA', al_h1: 'Συστήματα αλουμινίου', alsys_eyebrow: 'Συστήματα MUSKITA που κατασκευάζουμε & τοποθετούμε', alsys_sub: 'Δέκα οικογένειες συστημάτων αλουμινίου MUSKITA, από minimal συρόμενα υαλοστάσια έως περιφράξεις και πέργκολες. Επιλέξτε σύστημα για να δείτε τα μοντέλα και τα τεχνικά στοιχεία.', alsys_all: 'Όλα τα συστήματα MUSKITA', al_products: 'μοντέλα', al_product1: 'μοντέλο', al_versions: 'Εκδόσεις', al_order: 'Τιμές με τη σειρά:', al_more: 'Περισσότερα σε αυτό το σύστημα', al_ask: 'Ρωτήστε για αυτό το σύστημα', al_tag: 'Σύστημα αλουμινίου', add_quote: 'Προσθήκη στην προσφορά', added_quote: 'Προστέθηκε στην προσφορά σας', tech_data: 'Τεχνικά στοιχεία', tech_source: 'Πηγή: στοιχεία προϊόντος MUSKITA. Οι τιμές διαφέρουν ανά έκδοση και διαμόρφωση· επιβεβαιώνουμε τα ακριβή στοιχεία για το έργο σας.', tech_on_request: 'Τεχνικά στοιχεία κατόπιν αιτήματος.', colours: 'Χρώματα & φινιρίσματα', all_products: 'Όλα τα μοντέλα',
       qb_title: 'Ζητήστε προσφορά', qb_sub: 'Προσθέστε κάθε πόρτα, παράθυρο ή σύστημα που χρειάζεστε. Ελέγχουμε τις διαστάσεις και σας στέλνουμε γραπτή προσφορά.',
       qb_step1: 'Προϊόντα', qb_step2: 'Στοιχεία', qb_step3: 'Έλεγχος', qb_product: 'Προϊόν {n}', qb_edit_product: 'Επεξεργασία προϊόντος {n}',
       qb_cat: 'Κατηγορία προϊόντος', qb_model: 'Μοντέλο', qb_model_other: 'Άλλο / δεν είμαι σίγουρος', qb_choose: 'Επιλέξτε…', qb_width: 'Πλάτος (mm)', qb_height: 'Ύψος (mm)', qb_qty: 'Ποσότητα',
@@ -273,6 +273,7 @@
         <nav class="links" aria-label="Main">
           <a href="#top" class="is-home">${u('home')}</a>
           <button type="button" class="mega-btn" data-p="mega" aria-expanded="false" aria-controls="mega">${u('m_systems')}${icon('chev')}</button>
+          ${ALS().length ? `<button type="button" class="mega-btn" data-p="amega" aria-expanded="false" aria-controls="amega">${u('m_alsys')}${icon('chev')}</button>` : ''}
           ${prods().length ? `<button type="button" class="mega-btn" data-p="pmega" aria-expanded="false" aria-controls="pmega">${u('products')}${icon('chev')}</button>` : ''}<a href="#gallery">${u('m_projects')}</a><a href="#about-us">${u('m_about')}</a><a href="#quote">${u('contact')}</a>
         </nav>
         <button type="button" class="icon-btn srch-btn" aria-expanded="false" aria-controls="srch" aria-label="${u('search')}">${icon('search')}</button>
@@ -284,6 +285,10 @@
         <div class="mega-intro"><p class="eyebrow">${u('systems_eyebrow')}</p><h3>${esc(t(S.text.systemsTitle))}</h3><p>${esc(t(S.text.systemsSub))}</p><a class="arrow-link" href="#systems">${u('view_all')}${icon('arrow')}</a></div>
         <ul class="mega-grid">${list.map((s, i) => `<li><a href="#${esc(s.slug)}"><img src="${esc(src(s.image))}" alt="" loading="lazy"><span><small>${pad(i + 1)}</small>${esc(t(s.name))}</span></a></li>`).join('')}</ul>
       </div></div>
+      ${ALS().length ? `<div class="mega" id="amega" hidden><div class="wrap mega-in">
+        <div class="mega-intro"><p class="eyebrow">${u('alsys_eyebrow')}</p><h3>${u('m_alsys')}</h3><p>${u('alsys_sub')}</p><a class="arrow-link" href="#aluminium-systems">${u('alsys_all')}${icon('arrow')}</a></div>
+        <ul class="mega-grid al-mega">${ALS().map((s, i) => `<li><a href="#al-${esc(s.id)}"><span class="al-mi">${alArt(s.art)}</span><span><small>${pad(i + 1)}</small>${esc(t(s.name))}</span></a></li>`).join('')}</ul>
+      </div></div>` : ''}
       ${prods().length ? `<div class="mega" id="pmega" hidden><div class="wrap mega-in">
         <div class="mega-intro"><p class="eyebrow">${u('prod_eyebrow')}</p><h3>${u('prod_title')}</h3><p>${u('prod_sub')}</p><a class="arrow-link" href="#products">${u('view_all_prof')}${icon('arrow')}</a></div>
         <ul class="mega-grid">${prods().map((x) => `<li><a href="#${esc(x.id)}"><img src="${esc(src(x.image))}" alt="" loading="lazy"><span><small>${esc(x.model)}</small>${esc(t(x.name))}</span></a></li>`).join('')}</ul>
@@ -298,6 +303,8 @@
           <li><a href="#top"><span><i class="mi">${icon('home')}</i>${u('home')}</span>${icon('right')}</a></li>
           <li><button type="button" class="acc" aria-expanded="false" aria-controls="acc-sys"><span><i class="mi">${icon('grid')}</i>${u('m_systems')}</span>${icon('chev')}</button>
             <div class="acc-panel" id="acc-sys"><ul>${list.map((s, i) => `<li><a href="#${esc(s.slug)}"><small>${pad(i + 1)}</small>${esc(t(s.name))}</a></li>`).join('')}</ul></div></li>
+          ${ALS().length ? `<li><button type="button" class="acc" aria-expanded="false" aria-controls="acc-al"><span><i class="mi">${icon('layers')}</i>${u('m_alsys')}</span>${icon('chev')}</button>
+            <div class="acc-panel" id="acc-al"><ul>${ALS().map((s, i) => `<li><a href="#al-${esc(s.id)}"><small>${pad(i + 1)}</small>${esc(t(s.name))}</a></li>`).join('')}<li><a class="acc-all" href="#aluminium-systems">${u('alsys_all')}${icon('arrow')}</a></li></ul></div></li>` : ''}
           ${prods().length ? `<li><button type="button" class="acc" aria-expanded="false" aria-controls="acc-prof"><span><i class="mi">${icon('layers')}</i>${u('m_products')}</span>${icon('chev')}</button>
             <div class="acc-panel" id="acc-prof"><ul>${prods().map((x) => `<li><a href="#${esc(x.id)}"><small class="mdl">${esc(x.model)}</small>${esc(t(x.name))}</a></li>`).join('')}<li><a class="acc-all" href="#products">${u('view_all_prof')}${icon('arrow')}</a></li></ul></div></li>` : ''}
           <li><a href="#gallery"><span><i class="mi">${icon('images')}</i>${u('m_projects')}</span>${icon('right')}</a></li>
@@ -406,6 +413,113 @@
       <div class="prod-b"><p class="prod-m">${esc(x.model)}</p><h3><a href="#${esc(x.id)}">${esc(t(x.name))}</a></h3><p>${esc(t(x.short))}</p>
       <div class="prod-acts"><a class="link-sm" href="#${esc(x.id)}">${u('details')}${icon('arrow')}</a><button type="button" class="btn btn-sm btn-accent" data-addq="${esc(x.id)}">${icon('file')}${u('add_quote')}</button></div></div>
     </article>`).join('');
+  }
+
+  /* ---------- Aluminium Systems: MUSKITA catalogue (10 systems, their models, technical data) ---------- */
+  const ALS = () => S.aluSystems || [];
+  const alSys = (id) => ALS().find((x) => x.id === id);
+  const alProd = (id) => { for (const s of ALS()) { const p = s.products.find((x) => x.id === id); if (p) return { s, p }; } return null; };
+  const AL_ART = {
+    thea: [['s', 'M50 60H350V250H50Z'], ['fill', 'M56 66H200V244H56Z'], ['s', 'M200 62V248'], ['f', 'M86 222L150 98'], ['f', 'M228 222L292 98'], ['g', 'M160 270H240M228 262L240 270L228 278']],
+    curtain: [['s', 'M80 30H320V270H80Z'], ['fill', 'M80 30H320V270H80Z'], ['s', 'M160 30V270'], ['s', 'M240 30V270'], ['g', 'M80 110H320'], ['g', 'M80 190H320'], ['f', 'M100 170L140 130'], ['f', 'M260 250L300 210'], ['s', 'M60 282H340']],
+    fence: [['s', 'M70 80V262'], ['s', 'M200 80V262'], ['s', 'M330 80V262'], ['fill', 'M70 100H330V122H70Z'], ['s', 'M70 100H330V122H70Z'], ['s', 'M70 140H330V162H70Z'], ['s', 'M70 180H330V202H70Z'], ['s', 'M70 220H330V242H70Z'], ['g', 'M40 264H360']],
+    shading: [['s', 'M90 60H300V256H90Z'], ['g', 'M100 92L290 76'], ['g', 'M100 124L290 108'], ['g', 'M100 156L290 140'], ['g', 'M100 188L290 172'], ['g', 'M100 220L290 204'], ['fill', 'M300 60H318V256H300Z'], ['s', 'M342 52A20 20 0 1 0 342.1 52'], ['f', 'M314 84L280 104']],
+    pergola: [['s', 'M80 112V262'], ['s', 'M320 112V262'], ['fill', 'M60 96H340V112H60Z'], ['s', 'M60 96H340V112H60Z'], ['g', 'M84 88L100 70'], ['g', 'M124 88L140 70'], ['g', 'M164 88L180 70'], ['g', 'M204 88L220 70'], ['g', 'M244 88L260 70'], ['g', 'M284 88L300 70'], ['s', 'M40 264H360']],
+    balustrade: [['s', 'M40 250H360'], ['fill', 'M70 122H190V246H70Z'], ['s', 'M70 122H190V246H70Z'], ['fill', 'M210 122H330V246H210Z'], ['s', 'M210 122H330V246H210Z'], ['s', 'M60 110H340'], ['f', 'M92 222L132 152'], ['f', 'M232 222L272 152']],
+    partition: [['s', 'M40 40H360V262H40Z'], ['s', 'M140 40V262'], ['s', 'M250 40V262'], ['fill', 'M258 56H352V262H258Z'], ['g', 'M40 150H140'], ['g', 'M140 150H250'], ['s', 'M334 146V178'], ['f', 'M60 126L112 70'], ['f', 'M162 126L214 70']],
+    insect: [['s', 'M100 50H300V250H100Z'], ['g', 'M100 90H300'], ['g', 'M100 130H300'], ['g', 'M100 170H300'], ['g', 'M100 210H300'], ['g', 'M140 50V250'], ['g', 'M180 50V250'], ['g', 'M220 50V250'], ['g', 'M260 50V250'], ['fill', 'M300 50H316V250H300Z']],
+    hinged: null, sliding: null,
+  };
+  const alArt = (key) => `<svg class="art" viewBox="0 0 400 300" aria-hidden="true">${(AL_ART[key] || ART[key === 'hinged' ? 'windows' : key] || ART.windows).map(([c, d]) => `<path class="${c}" d="${d}"${c === 'fill' ? '' : ' pathLength="1"'}/>`).join('')}</svg>`;
+  const AL_VAL_EL = [[/Up to/g, 'Έως'], [/\bClass\b/g, 'Κλάση'], [/customised sizes also available/gi, 'διατίθενται και ειδικές διαστάσεις'], [/service load/g, 'φορτίο λειτουργίας'], [/safety load/g, 'φορτίο ασφαλείας'], [/^Pass$/, 'Επιτυχής'], [/^Double$/, 'Διπλή'], [/Variable/g, 'Μεταβλητή'], [/Minimum/g, 'ελάχιστο'], [/Multiple options/g, 'Πολλές επιλογές'], [/Depending on louvre/g, 'Ανάλογα με την περσίδα'], [/for black out/g, 'για συσκότιση'], [/for shading/g, 'για σκίαση'], [/degrees/g, 'μοίρες'], [/Tested as per/g, 'Δοκιμή κατά'], [/results contingent on glass type and thickness/g, 'τα αποτελέσματα εξαρτώνται από τον τύπο και το πάχος του γυαλιού'], [/\bfrom\b/gi, 'από'], [/\band\b/g, 'και'], [/\bor\b/g, 'ή'], [/\bto\b/g, 'έως']];
+  const alVal = (v) => t({ en: v, el: AL_VAL_EL.reduce((a, [r, x]) => a.replace(r, x), String(v)) });
+  const alLabel = (k) => { const L = (S.aluSpecLabels || {})[k]; return L ? (lang === 'el' ? L[1] : L[0]) : k; };
+  const AL_KEYS = ['uw', 'sound', 'msw', 'mdw', 'glass', 'water', 'bw', 'plank', 'section', 'pwmax', 'thick', 'maxPane', 'profw'];
+  const alKeySpecs = (p) => AL_KEYS.map((k) => (p.specs || []).find((r) => r[0] === k)).filter(Boolean).slice(0, 3);
+  const AL_SHORT = { uw: ['Uw (W/m²K)', 'Uw (W/m²K)'], sound: ['Sound reduction', 'Ηχομείωση'], msw: ['Max sash weight', 'Μέγ. βάρος φύλλου'], mdw: ['Max door weight', 'Μέγ. βάρος πόρτας'], glass: ['Glass', 'Γυαλί'], pwmax: ['Max width', 'Μέγ. πλάτος'], bw: ['Blade width', 'Πλάτος περσίδας'], maxPane: ['Glass pane', 'Υαλοπίνακας'] };
+  const alShort = (k) => (AL_SHORT[k] ? AL_SHORT[k][lang === 'el' ? 1 : 0] : alLabel(k));
+  // card summary: one figure per spec; when versions differ, the best one (lowest Uw, highest dB / kg / mm)
+  const alChip = (k, v) => {
+    if (!String(v).includes(' / ')) return alVal(v);
+    const nums = (String(v).match(/\d+(?:\.\d+)?/g) || []).map(Number);
+    if (!nums.length) return alVal(v);
+    const unit = (String(v).match(/(dB|kg|mm)\s*$/) || [])[1] || '';
+    return k === 'uw' ? '≥ ' + Math.min(...nums) : `${lang === 'el' ? 'Έως' : 'Up to'} ${Math.max(...nums)}${unit ? ' ' + unit : ''}`;
+  };
+  const nAl = (n) => `${n} ${n === 1 ? u('al_product1') : u('al_products')}`;
+  function alSystemsPage() {
+    return `${pgBar('top', u('m_alsys'))}
+      <section class="al-hero"><div class="wrap al-hero-in">
+        <div><p class="eyebrow">${u('alsys_eyebrow')}</p><h1>${u('al_h1')}</h1><p class="al-lead">${u('alsys_sub')}</p><p class="sp-maker">${u('prod_maker')}</p></div>
+        <div class="al-hero-art">${alArt('thea')}</div>
+      </div></section>
+      <section class="pg-body"><div class="wrap"><div class="al-grid rv-kids">${ALS().map((s, i) => `<a class="al-card" style="--i:${Math.min(i, 9)}" href="#al-${esc(s.id)}">
+        <span class="al-no">${pad(i + 1)}</span>
+        <span class="al-art">${alArt(s.art)}</span>
+        <span class="al-b"><b>${esc(t(s.name))}</b><small>${esc(t(s.intro))}</small>
+          <span class="al-models">${s.products.slice(0, 4).map((p) => `<i>${esc(p.model)}</i>`).join('')}${s.products.length > 4 ? `<i>+${s.products.length - 4}</i>` : ''}</span></span>
+        <span class="al-foot"><span>${nAl(s.products.length)}</span>${icon('arrow')}</span>
+      </a>`).join('')}</div></div></section>
+      ${footerMini()}`;
+  }
+  function alSwitch(cur) {
+    return `<nav class="al-switch" aria-label="${u('m_alsys')}">${ALS().map((s, i) => `<a href="#al-${esc(s.id)}"${s.id === cur ? ' aria-current="page"' : ''}><small>${pad(i + 1)}</small>${esc(t(s.name))}</a>`).join('')}</nav>`;
+  }
+  function alSysPage(s) {
+    const i = ALS().indexOf(s);
+    return `<div class="sp-bar"><div class="wrap">
+        <a class="sp-back" href="#aluminium-systems">${icon('back')}${u('m_alsys')}</a>
+        <span class="sp-title">${esc(t(s.name))}</span>
+        <a class="btn btn-accent" href="#quote">${u('quote')}</a>
+      </div></div>
+      <section class="mc-head al-head"><div class="wrap mc-in">
+        <div class="mc-art">${alArt(s.art)}</div>
+        <div><p class="eyebrow">${pad(i + 1)} · ${u('al_tag')} · ${nAl(s.products.length)}</p><h1>${esc(t(s.name))}</h1><p>${esc(t(s.intro))}</p></div>
+      </div></section>
+      <div class="wrap">${alSwitch(s.id)}</div>
+      <section class="pg-body"><div class="wrap"><div class="alp-list rv-kids">${s.products.map((p, k) => `<a class="alp-card" style="--i:${Math.min(k, 9)}" href="#alp-${esc(p.id)}">
+        <span class="alp-top"><span class="alp-model">${esc(p.model)}</span><span class="alp-n">${pad(k + 1)}</span></span>
+        <b>${esc(t(p.name))}</b>
+        <p>${esc(t(p.desc))}</p>
+        ${alKeySpecs(p).length ? `<span class="alp-keys">${alKeySpecs(p).map(([k2, v]) => `<span><small>${esc(alShort(k2))}</small>${esc(alChip(k2, v))}</span>`).join('')}</span>` : ''}
+        <span class="link-sm">${u('details')}${icon('arrow')}</span>
+      </a>`).join('')}</div></div></section>
+      ${footerMini()}`;
+  }
+  function alProdPage(p, s) {
+    const specs = p.specs || [];
+    const sib = s.products.filter((x) => x.id !== p.id);
+    const wa = waLink() ? waLink(`${u('ask_wa_msg', { c: S.company.name })}\n${p.model} · ${t(p.name)}\n${location.origin}/#alp-${p.id}`) : '';
+    return `<div class="sp-bar"><div class="wrap">
+        <a class="sp-back" href="#al-${esc(s.id)}">${icon('back')}${esc(t(s.name))}</a>
+        <span class="sp-title">${esc(p.model)}</span>
+        <button type="button" class="btn btn-accent" data-alq="${esc(p.id)}">${u('add_quote')}</button>
+      </div></div>
+      <section class="sp-hero al-p"><div class="wrap sp-hero-grid">
+        <div>
+          <p class="eyebrow">${esc(t(s.name))}</p>
+          <h1>${esc(p.model)}</h1>
+          <p class="lead">${esc(t(p.name))}</p>
+          <p class="sp-maker">${u('prod_maker')}</p>
+          <p class="prod-desc">${esc(t(p.desc))}</p>
+          ${(p.versions || []).length ? `<p class="al-vh">${u('al_versions')}</p><ul class="sp-apps">${p.versions.map((v) => `<li>${esc(v)}</li>`).join('')}</ul>` : ''}
+          <div class="sp-cta">
+            <button type="button" class="btn btn-navy" data-alq="${esc(p.id)}">${icon('file')}${u('add_quote')}</button>
+            ${wa ? `<a class="btn btn-wa" href="${esc(wa)}" target="_blank" rel="noopener">${waIcon}${u('ask_price')}</a>` : ''}
+          </div>
+        </div>
+        <div class="sp-hero-media">${p.image ? `<figure class="sp-hero-img"><img src="${esc(src(p.image))}" alt="${esc(p.model)}"></figure>` : `<div class="al-p-art"><span class="al-p-model">${esc(p.model)}</span>${alArt(s.art)}</div>`}</div>
+      </div></section>
+      <section class="sp-sec"><div class="wrap sp-two">
+        <div><p class="eyebrow">${u('tech_data')}</p><h2>${u('specs')}</h2></div>
+        <div>${specs.length ? `${p.order ? `<p class="al-order">${u('al_order')} <b>${esc(p.order)}</b></p>` : ''}<table class="spec-table"><tbody>${specs.map(([k, v]) => `<tr><th scope="row">${esc(alLabel(k))}</th><td>${esc(alVal(v))}</td></tr>`).join('')}</tbody></table>` : `<p class="prod-desc">${u('tech_on_request')}</p>`}
+          <p class="spec-note">${icon('info')}<span>${u('tech_source')} <a href="${esc(p.source)}" target="_blank" rel="noopener">MUSKITA</a></span></p>
+        </div>
+      </div></section>
+      ${sib.length ? `<section class="sp-sec"><div class="wrap"><p class="eyebrow">${u('al_more')}</p><div class="al-sib">${sib.map((x) => `<a href="#alp-${esc(x.id)}"><b>${esc(x.model)}</b><small>${esc(t(x.name))}</small>${icon('arrow')}</a>`).join('')}</div></div></section>` : ''}
+      <section class="sp-band"><div class="wrap"><div><h2>${u('cta_title')}</h2><p>${u('cta_body')}</p></div>
+        <div class="btns"><button type="button" class="btn btn-accent" data-alq="${esc(p.id)}">${u('add_quote')}</button>${S.company.phone ? `<a class="btn btn-ghost" href="${telLink()}">${icon('phone')}${esc(S.company.phone)}</a>` : ''}</div></div></section>
+      ${footerMini()}`;
   }
   function products() {
     const G = prodGroups();
@@ -532,6 +646,8 @@
     const stats = (S.stats || []).filter((x) => String(x.value || '').trim()).slice(0, 3);
     if (list.length) out.push({ id: 'systems', href: 'systems', img: list[0].image, eyebrow: u('systems_eyebrow'), title: u('m_systems'), body: t(S.text.systemsSub) || u('pg_sys_b'),
       extra: `<ul class="tz-tags">${list.slice(0, 6).map((x) => `<li><a href="#${esc(x.slug)}">${esc(t(x.name))}</a></li>`).join('')}</ul>` });
+    if (ALS().length) out.push({ id: 'alsys', href: 'aluminium-systems', img: 'img/glass-room.jpg', eyebrow: u('alsys_eyebrow'), title: u('m_alsys'), body: u('alsys_sub'),
+      extra: `<ul class="tz-tags">${ALS().map((x) => `<li><a href="#al-${esc(x.id)}">${esc(t(x.name))}</a></li>`).join('')}</ul>` });
     out.push({ id: 'about', href: 'about-us', img: S.aboutImage || 'img/alu-profiles.jpg', eyebrow: `${u('about_eyebrow')} ${S.company.name}`, title: u('m_about'), body: t(S.text.introBody) || t(S.text.introTitle),
       extra: stats.length ? `<ul class="tz-stats">${stats.map((x) => `<li><b data-count="${esc(x.value)}">${esc(x.value)}</b><span>${esc(t(x.label))}</span></li>`).join('')}</ul>` : '' });
     if (W.length) out.push({ id: 'gallery', href: 'gallery', img: W[0].images[0], eyebrow: u('gal_eyebrow'), title: u('gallery'), body: u('gal_page_sub'),
@@ -1847,6 +1963,8 @@
     if (g) g.hidden = panel !== 'mega';
     const pg = $('#pmega');
     if (pg) pg.hidden = panel !== 'pmega';
+    const ag = $('#amega');
+    if (ag) ag.hidden = panel !== 'amega';
     $$('.mega-btn').forEach((b) => b.setAttribute('aria-expanded', String(panel === b.dataset.p)));
     s.hidden = panel !== 'search';
     $('.srch-btn').setAttribute('aria-expanded', String(panel === 'search'));
@@ -1897,6 +2015,8 @@
       page('#engineering', 'layers', UI[lang].m_engineering, u('eng_title'), 'engineering quality thermal break profile glazing seals drainage insulation τεχνολογια ποιοτητα θερμοδιακοπη μονωση'),
       page('#about', 'home', UI[lang].m_about, t(S.text.introTitle), 'about company team founder owner εταιρεια ομαδα ιδρυτης'),
       ...prods().map((x) => ({ href: '#' + x.id, img: x.image, ic: 'layers', title: x.model + ' · ' + t(x.name), sub: t(x.short), title_n: norm(x.model + ' ' + x.model.replace(/\s/g, '') + ' ' + [x.name.en, x.name.el].join(' ')), hay: norm([x.model, x.model.replace(/\s/g, ''), 'muskita', pcat(x.cat), x.name.en, x.name.el, x.short.en, x.short.el, x.desc.en, x.desc.el].join(' ')) })),
+      ...ALS().map((s2) => ({ href: '#al-' + s2.id, ic: 'layers', title: t(s2.name), sub: t(s2.intro), title_n: norm(both(s2.name).join(' ')), hay: norm([...both(s2.name), ...both(s2.intro), 'aluminium systems συστηματα αλουμινιου muskita'].join(' ')) })),
+      ...ALS().flatMap((s2) => s2.products.map((x) => ({ href: '#alp-' + x.id, ic: 'layers', title: x.model + ' · ' + t(x.name), sub: t(s2.name), title_n: norm(x.model + ' ' + x.model.replace(/\s/g, '') + ' ' + both(x.name).join(' ')), hay: norm([x.model, x.model.replace(/\s/g, ''), 'muskita', ...both(s2.name), ...both(x.name), ...both(x.desc), ...(x.versions || [])].join(' ')) }))),
       page('#reviews', 'star', u('reviews'), u('rev_title'), 'reviews review rating testimonials clients κριτικες αξιολογησεις πελατες'),
       page('#gallery', 'images', u('gal_page_title'), u('gal_page_sub'), 'gallery projects photos work latest portfolio εργα φωτογραφιες γκαλερι'),
       page('#quote', 'file', u('quote'), u('quote_body'), 'contact quote price cost phone whatsapp email survey measure επικοινωνια προσφορα τιμη τηλεφωνο αυτοψια')
@@ -2030,8 +2150,15 @@
     current = null; galOpen = false; prodCur = null; revOpen = false; abOpen = false;
     listOpen = which;
     const c = which.startsWith('models-') ? which.slice(7) : '';
-    const title = which === 'privacy' ? u('privacy_l') : which === 'systems' ? u('m_systems') : c ? pcat(c) : u('products');
-    mount(which === 'privacy' ? privacyPage() : which === 'systems' ? systemsPage() : c ? modelsPage(c) : productsPage(), title, `${title} · ${S.company.name}`, instant, (sp) => reveal(sp, instant && renders > 1));
+    let title, page;
+    if (which === 'aluminium-systems') { title = u('m_alsys'); page = alSystemsPage(); }
+    else if (which.startsWith('alp-')) { const r = alProd(which.slice(4)); title = `${r.p.model} · ${t(r.p.name)}`; page = alProdPage(r.p, r.s); }
+    else if (which.startsWith('al-')) { const s2 = alSys(which.slice(3)); title = t(s2.name); page = alSysPage(s2); }
+    else {
+      title = which === 'privacy' ? u('privacy_l') : which === 'systems' ? u('m_systems') : c ? pcat(c) : u('products');
+      page = which === 'privacy' ? privacyPage() : which === 'systems' ? systemsPage() : c ? modelsPage(c) : productsPage();
+    }
+    mount(page, title, `${title} · ${S.company.name}`, instant, (sp) => reveal(sp, instant && renders > 1));
   }
   function closeList() {
     if (!listOpen) return;
@@ -2059,6 +2186,7 @@
     if (h === 'about-us') { openAboutPage(first); return; }
     if (h === 'systems' && sys().length) { openList('systems', first); return; }
     if (h === 'privacy') { openList('privacy', first); return; }
+    if ((h === 'aluminium-systems' && ALS().length) || (h.startsWith('alp-') && alProd(h.slice(4))) || (h.startsWith('al-') && alSys(h.slice(3)))) { openList(h, first); return; }
     if (h.startsWith('models-') && prodGroups().some((g) => 'models-' + g.id === h)) { openList(h, first); return; }
     if (h === 'all-reviews' && allRevs().length) { abOpen = false; openRevPage(first); return; }
     if (h === 'gallery' && works().length) { prodCur = null; revOpen = false; abOpen = false; openGallery(first); return; }
@@ -2209,6 +2337,8 @@
 
     const consult = e.target.closest('[data-consult]');
     if (consult) { const sy = bySlug(consult.dataset.consult); qbStart({ cat: SYS_CAT[consult.dataset.consult] || 'custom', specs: sy ? t(sy.name) : '' }); return; }
+    const alq = e.target.closest('[data-alq]');
+    if (alq) { const r = alProd(alq.dataset.alq); if (r) qbStart({ cat: 'custom', specs: `${r.p.model} · ${t(r.p.name)} (${t(r.s.name)})` }); return; }
     const addq = e.target.closest('[data-addq]');
     if (addq) { const x = byProd(addq.dataset.addq); if (x) qbStart({ cat: x.cat, model: modelLabel(x), pid: x.id }); return; }
     const qa = e.target.closest('[data-qb]');

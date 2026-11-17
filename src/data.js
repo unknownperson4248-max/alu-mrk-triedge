@@ -1,5 +1,7 @@
 // Default website content. The admin panel saves a full copy of this object to KV;
 // these values are only used until the first save (and to fill any missing fields).
+import { ALU_SYSTEMS, SPEC_LABELS } from './alu-systems.js';
+
 const T = (en, el) => ({ en, el });
 const F = (icon, en, el) => ({ icon, title: T(en, el) });
 const SP = (en, el) => ({ label: T(en, el), value: '' });
@@ -15,6 +17,8 @@ export const PRESETS = {
 };
 
 export const DEFAULT_SITE = {
+  aluSystems: ALU_SYSTEMS,
+  aluSpecLabels: SPEC_LABELS,
   version: 1,
   theme: { ...PRESETS['black-silver-gold'], skin: 'glass' },
   company: {

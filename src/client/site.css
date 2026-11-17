@@ -1559,3 +1559,81 @@ html.skin-glass .eng{background:transparent}
 .foot-bottom a{color:inherit}
 .foot-bottom a:hover{color:var(--ink)}
 .qb-check small a{color:var(--accent);white-space:nowrap}
+
+/* ---------- Aluminium Systems catalogue: blueprint panels, numbered systems, spec-sheet cards ---------- */
+.al-hero{padding-block:clamp(32px,5vw,72px) clamp(6px,2vw,20px)}
+.al-hero-in{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:clamp(24px,4vw,64px);align-items:center}
+.al-hero h1{font:500 clamp(44px,6vw,84px)/.98 var(--display);letter-spacing:-.035em;margin:12px 0 16px}
+.al-lead{color:var(--muted);font-size:18px;line-height:1.55;max-width:52ch;margin:0}
+.al-hero-art,.al-art,.al-p-art,.al-mi{display:grid;place-items:center;position:relative;overflow:hidden;background:radial-gradient(120% 90% at 70% 15%,color-mix(in srgb,var(--accent) 24%,transparent),transparent 60%),repeating-linear-gradient(90deg,rgba(255,255,255,.035) 0 1px,transparent 1px 34px),repeating-linear-gradient(0deg,rgba(255,255,255,.025) 0 1px,transparent 1px 34px),linear-gradient(160deg,#1c2531,#0c1117)}
+.al-hero-art{aspect-ratio:4/3;border-radius:18px}
+.al-hero-art .art{width:84%;height:auto}
+.al-hero-art .art [pathLength],.al-p-art .art [pathLength]{animation:draw 2s var(--ease-out) .3s backwards}
+.al-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.al-card{position:relative;display:grid;grid-template-columns:150px minmax(0,1fr);grid-template-rows:1fr auto;gap:0 18px;padding:14px;border:1px solid var(--line);border-radius:18px;text-decoration:none;color:inherit;background:color-mix(in srgb,var(--ink) 3%,var(--bg));transition:transform .35s var(--ease-out),border-color .3s,box-shadow .3s}
+.al-card:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--accent) 60%,transparent);box-shadow:0 24px 50px -30px rgba(0,0,0,.6)}
+.al-no{position:absolute;right:16px;top:14px;font:500 12px/1 var(--mono);letter-spacing:.14em;color:var(--muted)}
+.al-art{grid-row:1/3;align-self:start;aspect-ratio:1;border-radius:12px}
+.al-art .art .s,.al-mi .art .s{stroke-width:6}
+.al-art .art .g,.al-mi .art .g{stroke-width:6.5}
+.al-art .art .f{stroke-width:3.5}
+.al-art .art{width:92%;height:auto;transition:transform .6s var(--ease-out)}
+.al-card:hover .al-art .art{transform:scale(1.06)}
+.al-b{display:grid;gap:6px;align-content:start;padding:6px 30px 0 0}
+.al-b b{font:500 21px/1.15 var(--display);letter-spacing:-.01em}
+.al-b small{color:var(--muted);font-size:14px;line-height:1.45}
+.al-models{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.al-models i{font:normal 500 11px/1 var(--mono);letter-spacing:.05em;padding:5px 8px;border:1px solid var(--line);border-radius:999px;color:var(--muted)}
+.al-foot{display:flex;justify-content:space-between;align-items:center;font:500 11.5px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);padding-top:12px}
+.al-foot svg{width:18px;height:18px;transition:transform .3s var(--ease-out)}
+.al-card:hover .al-foot svg{transform:translateX(5px)}
+.rv-on .al-grid.in .art [pathLength]{animation:draw 1.6s var(--ease-out) backwards;animation-delay:calc(.3s + var(--i,0) * 110ms)}
+.rv-on .al-grid.now .art [pathLength]{animation:none}
+.al-switch{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:28px 0 0;padding-bottom:2px;overscroll-behavior-x:contain}
+.al-switch::-webkit-scrollbar{display:none}
+.al-switch a{flex:none;display:flex;gap:8px;align-items:center;padding:9px 14px;border:1px solid var(--line);border-radius:999px;font-size:13px;text-decoration:none;color:var(--muted);white-space:nowrap;transition:color .2s,border-color .2s,background .2s}
+.al-switch a:hover{color:var(--ink);border-color:var(--ink)}
+.al-switch small{font:500 11px var(--mono);color:var(--accent)}
+.al-switch a[aria-current]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.alp-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.alp-card{position:relative;overflow:hidden;display:flex;flex-direction:column;gap:10px;padding:22px 20px 18px;border:1px solid var(--line);border-radius:18px;text-decoration:none;color:inherit;background:color-mix(in srgb,var(--ink) 3%,var(--bg));transition:transform .35s var(--ease-out),border-color .3s,box-shadow .3s}
+.alp-card::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,var(--accent),transparent);transform:scaleX(.2);transform-origin:left;transition:transform .55s var(--ease-out)}
+.alp-card:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--accent) 55%,transparent);box-shadow:0 24px 50px -30px rgba(0,0,0,.6)}
+.alp-card:hover::before{transform:scaleX(1)}
+.alp-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.alp-model{font:600 22px/1.1 var(--display);letter-spacing:-.015em}
+.alp-n{font:500 11px var(--mono);color:var(--muted);letter-spacing:.14em}
+.alp-card>b{font-weight:500;color:var(--accent);font-size:14.5px;line-height:1.35}
+.alp-card>p{color:var(--muted);font-size:14px;line-height:1.55;margin:0;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.alp-keys{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:auto;padding-top:8px}
+.alp-keys span{display:grid;gap:4px;align-content:start;padding:9px 8px;border-radius:10px;background:color-mix(in srgb,var(--ink) 6%,transparent);font:500 12.5px/1.25 var(--mono);overflow-wrap:anywhere}
+.alp-keys small{font:400 10.5px/1.25 var(--body);color:var(--muted)}
+.alp-card .link-sm{margin-top:4px}
+.al-p-art{aspect-ratio:4/3;border-radius:18px}
+.al-p-art .art{width:80%;height:auto}
+.al-p-model{position:absolute;left:18px;bottom:12px;font:600 clamp(26px,4vw,46px)/1 var(--display);color:rgba(255,255,255,.13);letter-spacing:-.02em;pointer-events:none}
+.al-vh{font:500 12px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:24px 0 0}
+.al-p .sp-apps{margin-top:10px}
+.al-order{font-size:13px;color:var(--muted);margin:0 0 6px}
+.al-order b{font:500 13px var(--mono);color:var(--ink)}
+.al-sib{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;margin-top:14px}
+.al-sib a{display:grid;grid-template-columns:1fr auto;gap:3px 10px;align-items:center;padding:14px 16px;border:1px solid var(--line);border-radius:12px;text-decoration:none;color:inherit;transition:border-color .2s}
+.al-sib a:hover{border-color:var(--accent)}
+.al-sib b{font:500 15px var(--display)}
+.al-sib small{grid-column:1;color:var(--muted);font-size:13px}
+.al-sib svg{grid-row:1/3;grid-column:2;width:18px;height:18px;color:var(--accent)}
+.al-mega .al-mi{width:76px;height:56px;flex:none;border-radius:8px}
+.al-mega .al-mi .art{width:92%;height:auto}
+@media (max-width:1100px){.alp-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:900px){.al-grid{grid-template-columns:1fr}.al-hero-in{grid-template-columns:1fr}.al-hero-art{max-width:560px}}
+@media (max-width:640px){.alp-list{grid-template-columns:1fr}}
+@media (max-width:520px){
+  .al-card{grid-template-columns:104px minmax(0,1fr);gap:0 14px;padding:12px}
+  .al-b{padding-right:24px}
+  .al-b b{font-size:18px}
+  .al-b small{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .al-models i:nth-child(n+4){display:none}
+}
+html.skin-glass .al-hero-art,html.skin-glass .al-art,html.skin-glass .al-p-art,html.skin-glass .al-mi{background:radial-gradient(120% 90% at 70% 15%,rgba(239,178,142,.28),transparent 60%),repeating-linear-gradient(90deg,rgba(27,33,38,.05) 0 1px,transparent 1px 34px),repeating-linear-gradient(0deg,rgba(27,33,38,.035) 0 1px,transparent 1px 34px),linear-gradient(160deg,#fbfcfb,#e8eeec)}
+html.skin-glass .al-p-model{color:rgba(27,33,38,.1)}
+.al-art::after,.al-hero-art::after,.al-p-art::after{content:"";position:absolute;inset:8px;pointer-events:none;border-radius:6px;background:linear-gradient(var(--accent),var(--accent)) 0 0/12px 1.5px no-repeat,linear-gradient(var(--accent),var(--accent)) 0 0/1.5px 12px no-repeat,linear-gradient(var(--accent),var(--accent)) 100% 100%/12px 1.5px no-repeat,linear-gradient(var(--accent),var(--accent)) 100% 100%/1.5px 12px no-repeat;opacity:.7}

@@ -61,6 +61,9 @@ function mergeSite(stored) {
     founder: { ...d.founder, ...(stored.founder || {}) },
     quoteSettings: { ...d.quoteSettings, ...(stored.quoteSettings || {}) },
     reviewSettings: { ...d.reviewSettings, ...(stored.reviewSettings || {}) },
+    // the Aluminium Systems catalogue is managed in code (src/alu-systems.js), never from a saved copy
+    aluSystems: structuredClone(d.aluSystems),
+    aluSpecLabels: structuredClone(d.aluSpecLabels),
   };
 }
 
@@ -635,6 +638,8 @@ async function handleAdminApi(req, env, url, path) {
     const err = validSite(s);
     if (err) return json({ ok: false, error: err }, 400);
     s.updatedAt = Date.now();
+    delete s.aluSystems; // code-managed catalogue: not stored
+    delete s.aluSpecLabels;
     await env.KV.put('site', JSON.stringify(s));
     return json({ ok: true, updatedAt: s.updatedAt });
   }
