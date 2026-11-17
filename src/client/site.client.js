@@ -273,7 +273,6 @@
         <nav class="links" aria-label="Main">
           <a href="#top" class="is-home">${u('home')}</a>
           <button type="button" class="mega-btn" data-p="mega" aria-expanded="false" aria-controls="mega">${u('m_systems')}${icon('chev')}</button>
-          ${ALS().length ? `<button type="button" class="mega-btn" data-p="amega" aria-expanded="false" aria-controls="amega">${u('m_alsys')}${icon('chev')}</button>` : ''}
           ${prods().length ? `<button type="button" class="mega-btn" data-p="pmega" aria-expanded="false" aria-controls="pmega">${u('products')}${icon('chev')}</button>` : ''}<a href="#gallery">${u('m_projects')}</a><a href="#about-us">${u('m_about')}</a><a href="#quote">${u('contact')}</a>
         </nav>
         <button type="button" class="icon-btn srch-btn" aria-expanded="false" aria-controls="srch" aria-label="${u('search')}">${icon('search')}</button>
@@ -285,10 +284,6 @@
         <div class="mega-intro"><p class="eyebrow">${u('systems_eyebrow')}</p><h3>${esc(t(S.text.systemsTitle))}</h3><p>${esc(t(S.text.systemsSub))}</p><a class="arrow-link" href="#systems">${u('view_all')}${icon('arrow')}</a></div>
         <ul class="mega-grid">${list.map((s, i) => `<li><a href="#${esc(s.slug)}"><img src="${esc(src(s.image))}" alt="" loading="lazy"><span><small>${pad(i + 1)}</small>${esc(t(s.name))}</span></a></li>`).join('')}</ul>
       </div></div>
-      ${ALS().length ? `<div class="mega" id="amega" hidden><div class="wrap mega-in">
-        <div class="mega-intro"><p class="eyebrow">${u('alsys_eyebrow')}</p><h3>${u('m_alsys')}</h3><p>${u('alsys_sub')}</p><a class="arrow-link" href="#aluminium-systems">${u('alsys_all')}${icon('arrow')}</a></div>
-        <ul class="mega-grid al-mega">${ALS().map((s, i) => `<li><a href="#al-${esc(s.id)}"><span class="al-mi">${alArt(s.art)}</span><span><small>${pad(i + 1)}</small>${esc(t(s.name))}</span></a></li>`).join('')}</ul>
-      </div></div>` : ''}
       ${prods().length ? `<div class="mega" id="pmega" hidden><div class="wrap mega-in">
         <div class="mega-intro"><p class="eyebrow">${u('prod_eyebrow')}</p><h3>${u('prod_title')}</h3><p>${u('prod_sub')}</p><a class="arrow-link" href="#products">${u('view_all_prof')}${icon('arrow')}</a></div>
         <ul class="mega-grid">${prods().map((x) => `<li><a href="#${esc(x.id)}"><img src="${esc(src(x.image))}" alt="" loading="lazy"><span><small>${esc(x.model)}</small>${esc(t(x.name))}</span></a></li>`).join('')}</ul>
@@ -303,8 +298,6 @@
           <li><a href="#top"><span><i class="mi">${icon('home')}</i>${u('home')}</span>${icon('right')}</a></li>
           <li><button type="button" class="acc" aria-expanded="false" aria-controls="acc-sys"><span><i class="mi">${icon('grid')}</i>${u('m_systems')}</span>${icon('chev')}</button>
             <div class="acc-panel" id="acc-sys"><ul>${list.map((s, i) => `<li><a href="#${esc(s.slug)}"><small>${pad(i + 1)}</small>${esc(t(s.name))}</a></li>`).join('')}</ul></div></li>
-          ${ALS().length ? `<li><button type="button" class="acc" aria-expanded="false" aria-controls="acc-al"><span><i class="mi">${icon('layers')}</i>${u('m_alsys')}</span>${icon('chev')}</button>
-            <div class="acc-panel" id="acc-al"><ul>${ALS().map((s, i) => `<li><a href="#al-${esc(s.id)}"><small>${pad(i + 1)}</small>${esc(t(s.name))}</a></li>`).join('')}<li><a class="acc-all" href="#aluminium-systems">${u('alsys_all')}${icon('arrow')}</a></li></ul></div></li>` : ''}
           ${prods().length ? `<li><button type="button" class="acc" aria-expanded="false" aria-controls="acc-prof"><span><i class="mi">${icon('layers')}</i>${u('m_products')}</span>${icon('chev')}</button>
             <div class="acc-panel" id="acc-prof"><ul>${prods().map((x) => `<li><a href="#${esc(x.id)}"><small class="mdl">${esc(x.model)}</small>${esc(t(x.name))}</a></li>`).join('')}<li><a class="acc-all" href="#products">${u('view_all_prof')}${icon('arrow')}</a></li></ul></div></li>` : ''}
           <li><a href="#gallery"><span><i class="mi">${icon('images')}</i>${u('m_projects')}</span>${icon('right')}</a></li>
@@ -491,7 +484,7 @@
     const sib = s.products.filter((x) => x.id !== p.id);
     const wa = waLink() ? waLink(`${u('ask_wa_msg', { c: S.company.name })}\n${p.model} · ${t(p.name)}\n${location.origin}/#alp-${p.id}`) : '';
     return `<div class="sp-bar"><div class="wrap">
-        <a class="sp-back" href="#al-${esc(s.id)}">${icon('back')}${esc(t(s.name))}</a>
+        <a class="sp-back" href="#${esc(homeSys(p.id) || 'top')}">${icon('back')}${esc(homeSys(p.id) ? t(bySlug(homeSys(p.id)).name) : u('back_home'))}</a>
         <span class="sp-title">${esc(p.model)}</span>
         <button type="button" class="btn btn-accent" data-alq="${esc(p.id)}">${u('add_quote')}</button>
       </div></div>
@@ -508,7 +501,7 @@
             ${wa ? `<a class="btn btn-wa" href="${esc(wa)}" target="_blank" rel="noopener">${waIcon}${u('ask_price')}</a>` : ''}
           </div>
         </div>
-        <div class="sp-hero-media">${p.image ? `<figure class="sp-hero-img"><img src="${esc(src(p.image))}" alt="${esc(p.model)}"></figure>` : `<div class="al-p-art"><span class="al-p-model">${esc(p.model)}</span>${alArt(s.art)}</div>`}</div>
+        <div class="sp-hero-media">${alImg(p, s) ? `<figure class="sp-hero-img"><img src="${esc(src(alImg(p, s)))}" alt="${esc(p.model)}"></figure>` : `<div class="al-p-art"><span class="al-p-model">${esc(p.model)}</span>${alArt(s.art)}</div>`}</div>
       </div></section>
       <section class="sp-sec"><div class="wrap sp-two">
         <div><p class="eyebrow">${u('tech_data')}</p><h2>${u('specs')}</h2></div>
@@ -516,10 +509,35 @@
           <p class="spec-note">${icon('info')}<span>${u('tech_source')} <a href="${esc(p.source)}" target="_blank" rel="noopener">MUSKITA</a></span></p>
         </div>
       </div></section>
-      ${sib.length ? `<section class="sp-sec"><div class="wrap"><p class="eyebrow">${u('al_more')}</p><div class="al-sib">${sib.map((x) => `<a href="#alp-${esc(x.id)}"><b>${esc(x.model)}</b><small>${esc(t(x.name))}</small>${icon('arrow')}</a>`).join('')}</div></div></section>` : ''}
+      ${sib.length ? `<section class="sp-sec"><div class="wrap"><p class="eyebrow">${u('al_more')}</p><div class="al-sib">${sib.filter((x) => homeSys(x.id)).map((x) => `<a href="#alp-${esc(x.id)}"><b>${esc(x.model)}</b><small>${esc(t(x.name))}</small>${icon('arrow')}</a>`).join('')}</div></div></section>` : ''}
       <section class="sp-band"><div class="wrap"><div><h2>${u('cta_title')}</h2><p>${u('cta_body')}</p></div>
         <div class="btns"><button type="button" class="btn btn-accent" data-alq="${esc(p.id)}">${u('add_quote')}</button>${S.company.phone ? `<a class="btn btn-ghost" href="${telLink()}">${icon('phone')}${esc(S.company.phone)}</a>` : ''}</div></div></section>
       ${footerMini()}`;
+  }
+
+  // MUSKITA products shown inside each of our main systems (photos: our own project images that match the type)
+  const SYS_PRODS = {
+    'motorized-sliding': ['mu144', 'mu114', 'thea-minimal'],
+    'aluminium-windows': ['mu2075', 'mu2020', 'mu2000', 'mu2500', 'mu6100', 'mu605'],
+    'aluminium-doors': ['mu2075-pivot', 'mu2700', 'mu2600-slim', 'structural-doors', 'mu2000'],
+    'folding-systems': ['mu2600', 'mu2600-hd', 'mu900-bifold'],
+    'sliding-glass': ['thea-minimal', 'mu144', 'mu114', 'mu27', 'mu3000', 'mu100', 'mu3200'],
+    'curtain-wall': ['mu800', 'mu800-sg', 'mu4200-semi', 'mu4200-struct'],
+    'glass-facade': ['mu800-sg', 'mu4200-struct', 'mu500', 'horizon', 'mu3900'],
+    'custom-solutions': ['mu9000-oasis', 'mu9000-zen', 'mu950-sunsmart', 'mu950', 'mu900', 'mu900-eclipse', 'mu35', 'mu435', 'mu450', 'alufence', 'mu1080', 'mu1100', 'mu936', 'mu941', 'fence-louvre', 'fence-perforated', 'mu500', 'horizon', 'mu3900'],
+  };
+  const AL_IMG = { sliding: 'img/sliding-door.jpg', thea: 'img/glass-room.jpg', hinged: 'img/house-windows.jpg', curtain: 'img/glass-room.jpg', balustrade: 'img/glass-stairs.jpg', partition: 'img/office-partition.jpg' };
+  const AL_IMG_P = { mu144: 'img/lift-slide.jpg', mu3200: 'img/sliding-window.jpg', mu100: 'img/sliding-window.jpg', mu2600: 'img/folding-product.jpg', 'mu2600-hd': 'img/folding-interior.jpg', 'mu2075-pivot': 'img/commercial-doors.jpg', mu2700: 'img/door-window.jpg', 'mu2600-slim': 'img/partition-door.jpg', 'structural-doors': 'img/partition-door.jpg', mu2000: 'img/door-window.jpg' };
+  const alImg = (p, s) => p.image || AL_IMG_P[p.id] || AL_IMG[s.art] || '';
+  const homeSys = (pid) => Object.keys(SYS_PRODS).find((k) => SYS_PRODS[k].includes(pid) && bySlug(k));
+  function sysProducts(slug) {
+    const L = (SYS_PRODS[slug] || []).map(alProd).filter(Boolean);
+    if (!L.length) return '';
+    return `<section class="sp-sec" id="sp-products"><div class="wrap"><p class="eyebrow">MUSKITA</p><h2>${lang === 'el' ? 'Προϊόντα του συστήματος' : 'Products in this system'}</h2>
+      <div class="msk rv-kids">${L.map(({ p, s }, k) => `<a class="msk-card" style="--i:${Math.min(k, 8)}" href="#alp-${esc(p.id)}">
+        <span class="msk-img">${alImg(p, s) ? `<img src="${esc(src(alImg(p, s)))}" alt="${esc(p.model)}" loading="lazy">` : alArt(s.art)}</span>
+        <span class="msk-b"><b>${esc(p.model)}</b><span>${esc(t(p.name))}</span><small>${u('details')}${icon('arrow')}</small></span>
+      </a>`).join('')}</div></div></section>`;
   }
   function products() {
     const G = prodGroups();
@@ -646,8 +664,6 @@
     const stats = (S.stats || []).filter((x) => String(x.value || '').trim()).slice(0, 3);
     if (list.length) out.push({ id: 'systems', href: 'systems', img: list[0].image, eyebrow: u('systems_eyebrow'), title: u('m_systems'), body: t(S.text.systemsSub) || u('pg_sys_b'),
       extra: `<ul class="tz-tags">${list.slice(0, 6).map((x) => `<li><a href="#${esc(x.slug)}">${esc(t(x.name))}</a></li>`).join('')}</ul>` });
-    if (ALS().length) out.push({ id: 'alsys', href: 'aluminium-systems', img: 'img/glass-room.jpg', eyebrow: u('alsys_eyebrow'), title: u('m_alsys'), body: u('alsys_sub'),
-      extra: `<ul class="tz-tags">${ALS().map((x) => `<li><a href="#al-${esc(x.id)}">${esc(t(x.name))}</a></li>`).join('')}</ul>` });
     out.push({ id: 'about', href: 'about-us', img: S.aboutImage || 'img/alu-profiles.jpg', eyebrow: `${u('about_eyebrow')} ${S.company.name}`, title: u('m_about'), body: t(S.text.introBody) || t(S.text.introTitle),
       extra: stats.length ? `<ul class="tz-stats">${stats.map((x) => `<li><b data-count="${esc(x.value)}">${esc(x.value)}</b><span>${esc(t(x.label))}</span></li>`).join('')}</ul>` : '' });
     if (W.length) out.push({ id: 'gallery', href: 'gallery', img: W[0].images[0], eyebrow: u('gal_eyebrow'), title: u('gallery'), body: u('gal_page_sub'),
@@ -1428,6 +1444,7 @@
       ${hasCfg ? `<section class="sp-sec" id="sp-config"><div class="wrap"><p class="eyebrow">${u('config')}</p><h2>${u('config')}</h2><div class="cfg rv" id="cfg"></div></div></section>` : ''}
       ${imgs.length > 1 ? `<section class="sp-sec" id="sp-gallery"><div class="wrap"><p class="eyebrow">${u('gallery')}</p><h2>${u('gallery')}</h2>
         <div class="gal rv-kids n${Math.min(imgs.length, 4)}">${imgs.map((im, k) => `<button type="button" style="--i:${k}" data-zoom="${k}" aria-label="${u('zoom')}"><img src="${esc(src(im))}" alt="${esc(t(s.name))}" loading="lazy"></button>`).join('')}</div></div></section>` : ''}
+      ${sysProducts(s.slug)}
       ${related.length ? `<section class="sp-sec" id="sp-related"><div class="wrap"><p class="eyebrow">${u('related')}</p><h2>${u('related')}</h2>
         <div class="rel rv-kids">${related.map((r, k) => `<a style="--i:${k}" href="#${esc(r.slug)}"><figure><img src="${esc(src(r.image))}" alt="" loading="lazy"></figure><small>${pad(list.indexOf(r) + 1)}</small><h3>${esc(t(r.name))}</h3></a>`).join('')}</div></div></section>` : ''}
       <section class="sp-band"><div class="wrap"><div><h2>${u('cta_title')}</h2><p>${u('cta_body')}</p></div>
