@@ -518,27 +518,45 @@
   // MUSKITA products shown inside each of our main systems (photos: our own project images that match the type)
   const SYS_PRODS = {
     'motorized-sliding': ['mu144', 'mu114', 'thea-minimal'],
-    'aluminium-windows': ['mu2075', 'mu2020', 'mu2000', 'mu2500', 'mu6100', 'mu605'],
-    'aluminium-doors': ['mu2075-pivot', 'mu2700', 'mu2600-slim', 'structural-doors', 'mu2000'],
+    'aluminium-windows': ['mu2075', 'mu2020', 'mu2000', 'mu2500', 'mu6100', 'mu605', 'anodize', 'powder', 'wood'],
+    'aluminium-doors': ['mu2075-pivot', 'mu2700', 'mu2600-slim', 'structural-doors', 'mu2000', 'anodize', 'powder', 'wood'],
     'folding-systems': ['mu2600', 'mu2600-hd', 'mu900-bifold'],
     'sliding-glass': ['thea-minimal', 'mu144', 'mu114', 'mu27', 'mu3000', 'mu100', 'mu3200'],
     'curtain-wall': ['mu800', 'mu800-sg', 'mu4200-semi', 'mu4200-struct'],
-    'glass-facade': ['mu800-sg', 'mu4200-struct', 'mu500', 'horizon', 'mu3900'],
-    'custom-solutions': ['mu9000-oasis', 'mu9000-zen', 'mu950-sunsmart', 'mu950', 'mu900', 'mu900-eclipse', 'mu35', 'mu435', 'mu450', 'alufence', 'mu1080', 'mu1100', 'mu936', 'mu941', 'fence-louvre', 'fence-perforated', 'mu500', 'horizon', 'mu3900'],
+    'glass-facade': ['mu800-sg', 'mu4200-struct', 'mu4100', 'mu3880', 'mu673', 'acoustic', 'mu500', 'horizon', 'mu3900'],
+    'custom-solutions': ['mu9000-oasis', 'mu9000-zen', 'mu950-sunsmart', 'mu950', 'mu900', 'mu900-eclipse', 'mu35', 'mu435', 'mu450', 'alufence', 'mu1080', 'mu1100', 'mu936', 'mu941', 'fence-louvre', 'fence-perforated', 'mu500', 'horizon', 'mu3900',
+      'mu3880', 'mu4100', 'mu673', 'slotdrain', 'mu7300', 'mu7320', 'mu7330', 'mp102', 'mp109', 'mp222', 'mp224', 'mp503', 'mp601', 'ladder-double', 'ladder-single', 'ladder-tripod',
+      'anodize', 'powder', 'wood', 'custom-profiles', 'gp-profiles', 'std-profiles', 'acoustic', 'signs'],
   };
   const AL_IMG = { sliding: 'img/sliding-door.jpg', thea: 'img/glass-room.jpg', hinged: 'img/house-windows.jpg', curtain: 'img/glass-room.jpg', balustrade: 'img/glass-stairs.jpg', partition: 'img/office-partition.jpg' };
   const AL_IMG_P = { mu144: 'img/lift-slide.jpg', mu3200: 'img/sliding-window.jpg', mu100: 'img/sliding-window.jpg', mu2600: 'img/folding-product.jpg', 'mu2600-hd': 'img/folding-interior.jpg', 'mu2075-pivot': 'img/commercial-doors.jpg', mu2700: 'img/door-window.jpg', 'mu2600-slim': 'img/partition-door.jpg', 'structural-doors': 'img/partition-door.jpg', mu2000: 'img/door-window.jpg' };
   const alImg = (p, s) => p.image || AL_IMG_P[p.id] || AL_IMG[s.art] || '';
   const homeSys = (pid) => Object.keys(SYS_PRODS).find((k) => SYS_PRODS[k].includes(pid) && bySlug(k));
+  // products inside a system: simple tap-to-open list, filter by family when there are several
   function sysProducts(slug) {
     const L = (SYS_PRODS[slug] || []).map(alProd).filter(Boolean);
     if (!L.length) return '';
-    return `<section class="sp-sec" id="sp-products"><div class="wrap"><p class="eyebrow">MUSKITA</p><h2>${lang === 'el' ? 'Προϊόντα του συστήματος' : 'Products in this system'}</h2>
-      <div class="msk rv-kids">${L.map(({ p, s }, k) => `<a class="msk-card" style="--i:${Math.min(k, 8)}" href="#alp-${esc(p.id)}">
-        <span class="msk-img">${alImg(p, s) ? `<img src="${esc(src(alImg(p, s)))}" alt="${esc(p.model)}" loading="lazy">` : alArt(s.art)}</span>
-        <span class="msk-b"><b>${esc(p.model)}</b><span>${esc(t(p.name))}</span><small>${u('details')}${icon('arrow')}</small></span>
-      </a>`).join('')}</div></div></section>`;
+    const fams = [...new Map(L.map(({ s }) => [s.id, s])).values()];
+    const el = lang === 'el';
+    return `<section class="sp-sec" id="sp-products"><div class="wrap">
+      <p class="eyebrow">MUSKITA · ${L.length} ${u('al_products')}</p><h2>${el ? 'Προϊόντα του συστήματος' : 'Products in this system'}</h2>
+      <p class="mx-sub">${el ? 'Πατήστε ένα μοντέλο για τα βασικά του.' : 'Tap a model to see the essentials.'}</p>
+      ${fams.length > 1 ? `<div class="chips mx-chips">${[{ id: 'all', name: { en: 'All', el: 'Όλα' } }, ...fams].map((f) => `<button type="button" data-mxf="${esc(f.id)}" aria-pressed="${f.id === 'all'}">${esc(t(f.name))}</button>`).join('')}</div>` : ''}
+      <ul class="mx">${L.map(({ p, s: f }, k) => `<li class="mx-i" data-fam="${esc(f.id)}" style="--i:${Math.min(k, 12)}">
+        <button type="button" class="mx-h" aria-expanded="false" data-mx>
+          <span class="mx-th">${alImg(p, f) ? `<img src="${esc(src(alImg(p, f)))}" alt="" loading="lazy">` : alArt(f.art)}</span>
+          <span class="mx-t"><b>${esc(p.model)}</b><small>${esc(t(p.name))}</small></span>
+          <i class="mx-pl" aria-hidden="true"></i>
+        </button>
+        <div class="mx-body"><div class="mx-in">
+          <p>${esc(t(p.desc))}</p>
+          ${alKeySpecs(p).length ? `<span class="alp-keys">${alKeySpecs(p).map(([k2, v]) => `<span><small>${esc(alShort(k2))}</small>${esc(alChip(k2, v))}</span>`).join('')}</span>` : ''}
+          <div class="mx-acts"><a class="btn btn-sm btn-ghost" href="#alp-${esc(p.id)}">${el ? 'Όλα τα στοιχεία' : 'Full details'}</a><button type="button" class="btn btn-sm btn-accent" data-alq="${esc(p.id)}">${icon('file')}${u('add_quote')}</button></div>
+        </div></div>
+      </li>`).join('')}</ul>
+    </div></section>`;
   }
+
   function products() {
     const G = prodGroups();
     if (!G.length) return '';
@@ -2354,6 +2372,10 @@
 
     const consult = e.target.closest('[data-consult]');
     if (consult) { const sy = bySlug(consult.dataset.consult); qbStart({ cat: SYS_CAT[consult.dataset.consult] || 'custom', specs: sy ? t(sy.name) : '' }); return; }
+    const mx = e.target.closest('[data-mx]');
+    if (mx) { const li = mx.closest('.mx-i'), open = !li.classList.contains('open'); li.classList.toggle('open', open); mx.setAttribute('aria-expanded', String(open)); return; }
+    const mxf = e.target.closest('[data-mxf]');
+    if (mxf) { const f = mxf.dataset.mxf, sec = mxf.closest('#sp-products'); $$('[data-mxf]', sec).forEach((b) => b.setAttribute('aria-pressed', String(b === mxf))); $$('.mx-i', sec).filter((li) => f === 'all' || li.dataset.fam === f).forEach((li, n) => { li.style.setProperty('--i', String(Math.min(n, 12))); li.classList.remove('mx-go'); void li.offsetWidth; li.classList.add('mx-go'); }); $$('.mx-i', sec).forEach((li) => { li.hidden = f !== 'all' && li.dataset.fam !== f; }); return; }
     const alq = e.target.closest('[data-alq]');
     if (alq) { const r = alProd(alq.dataset.alq); if (r) qbStart({ cat: 'custom', specs: `${r.p.model} · ${t(r.p.name)} (${t(r.s.name)})` }); return; }
     const addq = e.target.closest('[data-addq]');

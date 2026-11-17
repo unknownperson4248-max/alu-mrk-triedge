@@ -347,6 +347,79 @@ export const ALU_SYSTEMS = [
       },
     ],
   },
+{
+    id: 'cladding', art: 'fence',
+    name: T('Cladding', 'Επενδύσεις'),
+    intro: T('Aluminium cladding for walls, ceilings and façades.', 'Επενδύσεις αλουμινίου για τοίχους, οροφές και προσόψεις.'),
+    products: [
+      { id: 'mu3880', model: 'MU3880 Stripe Cladding', source: M + 'mu3880-stripe-cladding', name: T('Linear stripe cladding', 'Γραμμική επένδυση'), desc: T('Overlapping profiles that cover plaster, concrete, brick or insulation with clean straight lines, inside or outside. Decorative and protects against damp and wear.', 'Αλληλοκαλυπτόμενα προφίλ που καλύπτουν σοβά, μπετόν, τούβλο ή μόνωση με καθαρές ευθείες γραμμές, μέσα ή έξω. Διακοσμητική και προστατεύει από υγρασία και φθορά.'), specs: [] },
+      { id: 'mu4100', model: 'MU4100 Rainscreen R4 Cladding', source: M + 'mu4100-rainscreen-r4-cladding', name: T('Ventilated rainscreen substructure', 'Υποδομή αεριζόμενης πρόσοψης'), desc: T('An aluminium substructure for a ventilated double-skin façade: an air gap behind the panels keeps the building drier and better insulated.', 'Υποδομή αλουμινίου για αεριζόμενη πρόσοψη διπλού κελύφους: το διάκενο αέρα πίσω από τα πάνελ κρατά το κτίριο πιο στεγνό και καλύτερα μονωμένο.'), specs: [] },
+      { id: 'mu673', model: 'MU673 Cladding', source: M + 'mu673-cladding', name: T('Flexible wall & ceiling cladding', 'Ευέλικτη επένδυση τοίχου & οροφής'), desc: T('Quick-fit overlapping profiles for walls, entrance doors or bathroom ceilings, painted or anodised in any colour, with no maintenance.', 'Αλληλοκαλυπτόμενα προφίλ γρήγορης τοποθέτησης για τοίχους, εξώπορτες ή οροφές μπάνιου, βαμμένα ή ανοδιωμένα σε οποιοδήποτε χρώμα, χωρίς συντήρηση.'), specs: [] },
+    ],
+  },
+  {
+    id: 'drainage', art: 'insect',
+    name: T('Drainage', 'Αποχέτευση ομβρίων'),
+    intro: T('Slot drains for patios, pools, parks and pavements.', 'Γραμμικά κανάλια για αυλές, πισίνες, πάρκα και πεζοδρόμια.'),
+    products: [
+      { id: 'slotdrain', model: 'SlotDrain', source: M + 'mu-drainage-solutions', name: T('Discreet aluminium slot drain', 'Διακριτικό κανάλι απορροής'), desc: T('An extruded aluminium channel with a thin linear slot that carries away surface water fast, from home terraces to public spaces.', 'Κανάλι από αλουμίνιο με λεπτή γραμμική σχισμή που απομακρύνει γρήγορα τα νερά, από βεράντες σπιτιών μέχρι δημόσιους χώρους.'), specs: [['height', '95 & 110 mm'], ['access', '200 mm']] },
+    ],
+  },
+  {
+    id: 'solar', art: 'shading',
+    name: T('Solar Panel Mounting', 'Βάσεις φωτοβολταϊκών'),
+    intro: T('Aluminium frames for solar panels on flat, tiled and metal roofs.', 'Αλουμινένιες βάσεις για φωτοβολταϊκά σε ταράτσες, κεραμοσκεπές και μεταλλικές στέγες.'),
+    products: [
+      { id: 'mu7300', model: 'MU7300-1 & MU7300-2', source: M + 'mu7300-1-mu7300-2', name: T('Flat-roof frames, single or double', 'Βάσεις ταράτσας, μονές ή διπλές'), desc: T('Frames for flat concrete roofs that hold panels portrait or landscape at the angle you need.', 'Βάσεις για τσιμεντένιες ταράτσες που κρατούν τα πάνελ κάθετα ή οριζόντια στη γωνία που θέλετε.'), versions: ['MU7300-1', 'MU7300-2'], specs: [['app', 'Roofs'], ['orient', 'Portrait and Landscape'], ['weight', '15 kg'], ['angle2', '15 - 30°'], ['found', 'On concrete'], ['gap', '10 - 15 cm']] },
+      { id: 'mu7320', model: 'MU7320', source: M + 'mu7320', name: T('Mounting for tiled roofs', 'Βάσεις για κεραμοσκεπές'), desc: T('Rails fixed to the existing roof frame, without harming the roof insulation. Suits every type of roof tile.', 'Ράγες στερεωμένες στον υπάρχοντα σκελετό, χωρίς να πειράζεται η μόνωση. Για κάθε τύπο κεραμιδιού.'), specs: [['app', 'Roof tiles'], ['orient', 'Portrait and Landscape'], ['angle2', 'Adjusted as per roof'], ['found', 'Wood or Metal']] },
+      { id: 'mu7330', model: 'MU7330', source: M + 'mu7330', name: T('Mounting for metal roofs', 'Βάσεις για μεταλλικές στέγες'), desc: T('The same rail system for zinc and industrial roofs, fixed with stainless steel brackets.', 'Το ίδιο σύστημα ραγών για τσίγκινες και βιομηχανικές στέγες, με ανοξείδωτα στηρίγματα.'), specs: [['app', 'Zinc roofs'], ['orient', 'Portrait and Landscape'], ['angle2', 'Adjusted as per roof'], ['found', 'Zinc']] },
+    ],
+  },
+  {
+    id: 'pallets', art: 'fence',
+    name: T('Aluminium Pallets', 'Παλέτες αλουμινίου'),
+    intro: T('Welded aluminium pallets that never rot or rust, TÜV certified.', 'Συγκολλημένες παλέτες αλουμινίου που δεν σαπίζουν ούτε σκουριάζουν, με πιστοποίηση TÜV.'),
+    products: [
+      { id: 'mp102', model: 'MP102', source: M + 'mp102', name: T('1200 x 800 mm, 1000 kg', '1200 x 800 mm, 1000 kg'), desc: T('Robot-welded alloy 6005 pallet, watertight with rounded edges, for storage and hygienic warehouses.', 'Παλέτα από κράμα 6005 με ρομποτική συγκόλληση, στεγανή με στρογγυλεμένες άκρες, για αποθήκευση και καθαρούς χώρους.'), specs: [['dims', '1200x800x150 mm'], ['loadb', '1000 kg'], ['weight', '13 kg'], ['plank', '80 mm']] },
+      { id: 'mp109', model: 'MP109', source: M + 'mp109', name: T('1200 x 800 mm, 1500 kg', '1200 x 800 mm, 1500 kg'), desc: T('A stronger 1200 x 800 pallet with wider planks.', 'Ανθεκτικότερη παλέτα 1200 x 800 με φαρδύτερες σανίδες.'), specs: [['dims', '1200x800x150 mm'], ['loadb', '1500 kg'], ['weight', '15 kg'], ['plank', '120 mm']] },
+      { id: 'mp222', model: 'MP222', source: M + 'mp222', name: T('1200 x 800 mm, 1000 kg', '1200 x 800 mm, 1000 kg'), desc: T('A 1200 x 800 pallet with 120 mm planks.', 'Παλέτα 1200 x 800 με σανίδες 120 mm.'), specs: [['dims', '1200x800x150 mm'], ['loadb', '1000 kg'], ['weight', '15 kg'], ['plank', '120 mm']] },
+      { id: 'mp224', model: 'MP224', source: M + 'mp224', name: T('1200 x 800 mm, 1500 kg', '1200 x 800 mm, 1500 kg'), desc: T('A heavy-load 1200 x 800 pallet.', 'Παλέτα 1200 x 800 για βαριά φορτία.'), specs: [['dims', '1200x800x150 mm'], ['loadb', '1500 kg'], ['weight', '15 kg'], ['plank', '120 mm']] },
+      { id: 'mp503', model: 'MP503', source: M + 'mp503', name: T('1200 x 1000 mm, 1500 kg', '1200 x 1000 mm, 1500 kg'), desc: T('A larger 1200 x 1000 pallet for heavy loads.', 'Μεγαλύτερη παλέτα 1200 x 1000 για βαριά φορτία.'), specs: [['dims', '1200 x 1000 x 150 mm'], ['loadb', '1500 kg'], ['weight', '15 kg'], ['plank', '120 mm']] },
+      { id: 'mp601', model: 'MP601', source: M + 'mp601', name: T('1200 x 1000 mm, 1200 kg', '1200 x 1000 mm, 1200 kg'), desc: T('A 1200 x 1000 pallet for medium loads.', 'Παλέτα 1200 x 1000 για μεσαία φορτία.'), specs: [['dims', '1200 x 1000 x 150 mm'], ['loadb', '1200 kg'], ['weight', '15 kg'], ['plank', '120 mm']] },
+    ],
+  },
+  {
+    id: 'ladders', art: 'partition',
+    name: T('Ladders', 'Σκάλες'),
+    intro: T('Light aluminium ladders: single, extending and A-frame.', 'Ελαφριές σκάλες αλουμινίου: μονές, επεκτεινόμενες και τρίποδες.'),
+    products: [
+      { id: 'ladder-double', model: 'Double Extending Ladders (900)', source: M + 'double-extending-ladders', name: T('Extending ladders, 2 to 5 m+', 'Επεκτεινόμενες σκάλες, 2 έως 5 m+'), desc: T('Two-section ladders that slide out to reach higher, in many heights.', 'Σκάλες δύο τμημάτων που ανοίγουν για να φτάσετε ψηλότερα, σε πολλά ύψη.'), specs: [['range', 'Type 900: 2.00 m (8+8 steps) … Type 906: 5.00 m (20+20 steps)']] },
+      { id: 'ladder-single', model: 'Single Ladders (700)', source: M + 'single-ladders', name: T('Single ladders, 2 to 5 m+', 'Μονές σκάλες, 2 έως 5 m+'), desc: T('Simple one-piece aluminium ladders in many lengths.', 'Απλές μονοκόμματες σκάλες αλουμινίου σε πολλά μήκη.'), specs: [['range', 'Type 701: 2.00 m (8 steps) … Type 707: 5.00 m (20 steps)']] },
+      { id: 'ladder-tripod', model: 'Tripod Ladders (500)', source: M + 'tripod-ladders', name: T('A-frame step ladders', 'Τρίποδες σκάλες'), desc: T('Free-standing A-frame ladders for home and work.', 'Αυτοστήρικτες τρίποδες σκάλες για σπίτι και δουλειά.'), specs: [['range', 'Type 501: 0.75 m (3 steps) … Type 508: 2.50 m']] },
+    ],
+  },
+  {
+    id: 'finishes', art: 'shading',
+    name: T('Colours & Finishes', 'Χρώματα & φινιρίσματα'),
+    intro: T('The colour and surface of your aluminium: anodised, powder coated or wood effect.', 'Το χρώμα και η επιφάνεια του αλουμινίου σας: ανοδίωση, ηλεκτροστατική βαφή ή απομίμηση ξύλου.'),
+    products: [
+      { id: 'anodize', model: 'Anodize', source: M + 'anodize', name: T('Anodised metallic finishes', 'Ανοδιωμένα μεταλλικά φινιρίσματα'), desc: T('Refined metallic and tinted tones that last for decades. MUSKITA has anodised aluminium since 1965.', 'Εκλεπτυσμένοι μεταλλικοί και χρωματιστοί τόνοι που κρατούν δεκαετίες. Η MUSKITA ανοδιώνει αλουμίνιο από το 1965.'), specs: [] },
+      { id: 'powder', model: 'Powder Coating', source: M + 'powder-coating', name: T('Powder-coated colours', 'Χρώματα ηλεκτροστατικής βαφής'), desc: T('Superdurable powder coatings: special MU colours plus standard RAL, in smooth or sanded matt textures.', 'Ανθεκτικές ηλεκτροστατικές βαφές: ειδικά χρώματα MU και τυπικά RAL, σε λεία ή αμμώδη ματ υφή.'), specs: [] },
+      { id: 'wood', model: 'Sublimation & Wood Finishes', source: M + 'sublimation-wood-finishes', name: T('Wood-effect finishes', 'Φινιρίσματα απομίμησης ξύλου'), desc: T('The warm look of wood on aluminium, made with the Decoral sublimation process.', 'Η ζεστή όψη του ξύλου σε αλουμίνιο, με τη μέθοδο εξάχνωσης Decoral.'), specs: [] },
+    ],
+  },
+  {
+    id: 'profiles', art: 'curtain',
+    name: T('Profiles & More', 'Προφίλ & άλλα'),
+    intro: T('Standard and custom aluminium profiles, acoustic louvres and sign profiles.', 'Τυποποιημένα και ειδικά προφίλ αλουμινίου, ακουστικές περσίδες και προφίλ πινακίδων.'),
+    products: [
+      { id: 'custom-profiles', model: 'Customized Profiles', source: M + 'customized-profiles', name: T('Profiles made to your design', 'Προφίλ στο δικό σας σχέδιο'), desc: T('Aluminium profiles extruded to your own specification or die, for special projects.', 'Προφίλ αλουμινίου στις δικές σας προδιαγραφές ή μήτρα, για ειδικά έργα.'), specs: [] },
+      { id: 'gp-profiles', model: 'General Purpose Profiles', source: M + 'general-purpose-profiles', name: T('Profiles for everyday uses', 'Προφίλ για καθημερινές χρήσεις'), desc: T('Hundreds of profiles for shading, panels, shutters, flooring edges, frames, false ceilings, grilles, handles and decoration.', 'Εκατοντάδες προφίλ για σκίαση, πάνελ, παντζούρια, δάπεδα, πλαίσια, ψευδοροφές, κάγκελα, χερούλια και διακόσμηση.'), specs: [] },
+      { id: 'std-profiles', model: 'Standard Profiles', source: M + 'standard-profiles', name: T('Tubes, angles and bars', 'Σωλήνες, γωνίες και λάμες'), desc: T('Standard sections in many sizes: square and rectangular, tubes, 90° angles, flat bars, U and T bars.', 'Τυποποιημένες διατομές σε πολλά μεγέθη: τετράγωνες και ορθογώνιες, σωλήνες, γωνίες 90°, λάμες, U και T.'), specs: [] },
+      { id: 'acoustic', model: 'MUSKITA Acoustic Louvres', source: M + 'muskita-acoustic-louvres', name: T('Noise-reducing ventilation louvres', 'Ηχοαπορροφητικές περσίδες αερισμού'), desc: T('Louvres that let air through but cut noise from air conditioners, generators and cooling units, while blending into the façade.', 'Περσίδες που αφήνουν τον αέρα να περνά αλλά μειώνουν τον θόρυβο από κλιματιστικά, γεννήτριες και ψυκτικά, δένοντας με την πρόσοψη.'), specs: [['mwid', '2.00 m'], ['mhei', '3.00 m'], ['cw', '160, 250, 320 & 500 mm'], ['sound', 'Up to 43.6 dB']] },
+      { id: 'signs', model: 'Road Signs', source: M + 'road-signs', name: T('Interlocking sign profiles', 'Αλληλοσυνδεόμενα προφίλ πινακίδων'), desc: T('A light, maintenance-free interlocking profile system for signs of any size.', 'Ελαφρύ σύστημα αλληλοσυνδεόμενων προφίλ χωρίς συντήρηση, για πινακίδες κάθε μεγέθους.'), specs: [] },
+    ],
+  },
 ];
 
 // Spec labels (English, Greek).
@@ -372,6 +445,8 @@ export const SPEC_LABELS = {
   louvre: ['Louvre dimensions', 'Διαστάσεις περσίδας'], angle: ['Louvre angle range', 'Εύρος γωνίας περσίδας'],
   load: ['Load testing', 'Δοκιμή φορτίου'], thick: ['Structure thickness', 'Πάχος κατασκευής'], glazing: ['Glazing', 'Υάλωση'],
   maxPane: ['Glass pane weight', 'Βάρος υαλοπίνακα'],
+  height: ['Height', 'Ύψος'], access: ['Access panel length', 'Μήκος καπακιού επίσκεψης'], app: ['Application', 'Εφαρμογή'], orient: ['Orientation', 'Προσανατολισμός'], weight: ['Weight (±5%)', 'Βάρος (±5%)'], angle2: ['Angle', 'Γωνία'], found: ['Foundation', 'Βάση στήριξης'], gap: ['Lowest distance from ground', 'Ελάχιστη απόσταση από το έδαφος'],
+  dims: ['Dimensions', 'Διαστάσεις'], loadb: ['Load bearing', 'Φορτίο'], range: ['Sizes', 'Μεγέθη'], mwid: ['Maximum width', 'Μέγιστο πλάτος'], mhei: ['Maximum height', 'Μέγιστο ύψος'], cw: ['Construction widths', 'Πλάτη κατασκευής'],
   trw: ['Top rail width', 'Πλάτος άνω οδηγού'], trh: ['Top rail height', 'Ύψος άνω οδηγού'], srw: ['Side rail width', 'Πλάτος πλαϊνού οδηγού'],
   srh: ['Side rail height', 'Ύψος πλαϊνού οδηγού'], tvs: ['Top visible section', 'Ορατό άνω τμήμα'], svs: ['Side visible section', 'Ορατό πλαϊνό τμήμα'],
 };
