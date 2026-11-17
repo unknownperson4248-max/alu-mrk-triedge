@@ -306,7 +306,8 @@ async function handleQuote(req, env, url) {
   if (!(await bump(env, 'quote', 200))) return json({ ok: false, error: 'busy' }, 429);
 
   const ts = Date.now(), ref = quoteRef();
-  const rec = { ref, ts, lang: clip(b.lang, 4), customer, items };
+  const kind = b.kind === 'order' ? 'order' : 'info';
+  const rec = { ref, ts, kind, lang: clip(b.lang, 4), customer, items };
   try {
     const acct = await acctFromReq(req, env);
     if (acct) { const k = 'cq:' + (await sha256hex(acct.email)); const L = (await env.KV.get(k, 'json')) || []; L.unshift({ ref, ts, n: items.length, items: items.slice(0, 10).map((it) => it.model || it.catName) }); await env.KV.put(k, JSON.stringify(L.slice(0, 50))); }
@@ -318,8 +319,8 @@ async function handleQuote(req, env, url) {
     + [it.colour && `colour ${it.colour}`, it.glass && `glass ${it.glass}${it.glassThk ? ' ' + it.glassThk : ''}`, it.opening && `opening ${it.opening}`].filter(Boolean).map((x) => ', ' + x).join('')
     + (it.specs ? `\n   Specs: ${it.specs}` : '') + (it.notes ? `\n   Notes: ${it.notes}` : '') + (it.files.length ? `\n   Attachments: ${it.files.map((f) => f.name).join(', ')}` : '')).join('\n');
   const when = new Date(ts).toLocaleString('en-GB', { timeZone: 'Asia/Nicosia', dateStyle: 'medium', timeStyle: 'short' });
-  const html = mailShell(`Quotation request ${ref}`,
-    `<p style="margin:0 0 12px">New quotation request from the website, ${escMail(when)} (Cyprus time).</p>
+  const html = mailShell(`${kind === 'order' ? 'ORDER' : 'Enquiry'} ${ref}`,
+    `<p style="margin:0 0 12px"><b>${kind === 'order' ? 'The customer wants to ORDER.' : 'The customer wants information / a price.'}</b> New request from the website, ${escMail(when)} (Cyprus time).</p>
      <table role="presentation" cellpadding="0" cellspacing="0" style="font-size:15px;margin-bottom:14px">${row('Reference', ref)}${row('Name', customer.name)}${row('Email', customer.email)}${row('Phone', customer.phone)}${row('Company', customer.company)}${row('Location', customer.location)}${row('Project type', customer.type)}</table>
      ${customer.message ? `<p style="margin:0 0 14px;padding:10px;background:#f7f7f8;border-radius:6px;white-space:pre-line">${escMail(customer.message)}</p>` : ''}
      <h3 style="font-size:16px;margin:16px 0 8px">Products (${items.length})</h3>

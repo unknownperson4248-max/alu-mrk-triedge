@@ -37,7 +37,7 @@
       qb_colour: 'Colour / finish', qb_glass: 'Glass type', qb_glass_thk: 'Glass thickness', qb_glass_thk_ph: 'e.g. 4-16-4', qb_opening: 'Opening type', qb_specs: 'Additional specifications', qb_specs_ph: 'Handles, locks, mosquito nets, thresholds…', qb_notes: 'Notes', qb_notes_ph: 'Anything else we should know about this item',
       qb_files: 'Photo or drawing (optional)', qb_files_hint: 'JPG, PNG or PDF, up to 10 MB, max 3 files.', qb_add_file: 'Add file', qb_uploading: 'Uploading…',
       qb_add: 'Add to quotation', qb_save: 'Save changes', qb_cancel: 'Cancel', qb_add_more: 'Add another product', qb_edit: 'Edit', qb_remove: 'Remove', qb_continue: 'Continue', qb_back: 'Back', qb_review: 'Review request', qb_submit: 'Send quotation request',
-      qb_list: 'Your quotation ({n})', qb_empty: 'No products added yet.', qb_need: 'Please enter width, height and quantity.', qb_measure: 'I don’t know the size or colour', qb_measure_sub: 'No problem. Just add the product and how many you need. We visit, measure and help you choose.', qb_measure_s: 'Size: we measure on site', qb_need_qty: 'Please enter how many you need.', qb_need_items: 'Add at least one product first.',
+      qb_list: 'Your quotation ({n})', qb_empty: 'No products added yet.', qb_need: 'Please enter width, height and quantity.', qb_measure: 'I don’t know the size or colour', qb_measure_sub: 'Size is optional. We visit, measure and help you choose. Know the exact size? Switch this off and add it.', qb_measure_s: 'Size: we measure on site', qb_need_qty: 'Please enter how many you need.', qb_need_items: 'Add at least one product first.',
       qb_fullname: 'Full name', qb_email: 'Email', qb_phone: 'Phone (with country code)', qb_phone_ph: '+357 99 000000', qb_company: 'Company name', qb_location: 'Project location', qb_ptype: 'Project type', qb_msg: 'Additional message', optional: 'optional',
       qb_privacy: 'I agree that {c} uses these details only to answer my quotation request.', qb_privacy_note: 'We use your details only to prepare and send your quotation. We do not share them with anyone else.',
       qb_err_name: 'Please enter your full name.', qb_err_email: 'Please enter a valid email address.', qb_err_phone: 'Please enter your phone number with the country code, e.g. +357.', qb_err_privacy: 'Please accept the privacy notice.',
@@ -107,7 +107,7 @@
       qb_colour: 'Χρώμα / φινίρισμα', qb_glass: 'Τύπος γυαλιού', qb_glass_thk: 'Πάχος γυαλιού', qb_glass_thk_ph: 'π.χ. 4-16-4', qb_opening: 'Τύπος ανοίγματος', qb_specs: 'Επιπλέον προδιαγραφές', qb_specs_ph: 'Χερούλια, κλειδαριές, σήτες, κατωκάσια…', qb_notes: 'Σημειώσεις', qb_notes_ph: 'Οτιδήποτε άλλο πρέπει να γνωρίζουμε για αυτό το προϊόν',
       qb_files: 'Φωτογραφία ή σχέδιο (προαιρετικά)', qb_files_hint: 'JPG, PNG ή PDF, έως 10 MB, έως 3 αρχεία.', qb_add_file: 'Προσθήκη αρχείου', qb_uploading: 'Μεταφόρτωση…',
       qb_add: 'Προσθήκη στην προσφορά', qb_save: 'Αποθήκευση αλλαγών', qb_cancel: 'Ακύρωση', qb_add_more: 'Προσθήκη άλλου προϊόντος', qb_edit: 'Επεξεργασία', qb_remove: 'Αφαίρεση', qb_continue: 'Συνέχεια', qb_back: 'Πίσω', qb_review: 'Έλεγχος αιτήματος', qb_submit: 'Αποστολή αιτήματος προσφοράς',
-      qb_list: 'Η προσφορά σας ({n})', qb_empty: 'Δεν έχετε προσθέσει προϊόντα ακόμη.', qb_need: 'Συμπληρώστε πλάτος, ύψος και ποσότητα.', qb_measure: 'Δεν ξέρω τις διαστάσεις ή το χρώμα', qb_measure_sub: 'Κανένα πρόβλημα. Προσθέστε το προϊόν και την ποσότητα. Ερχόμαστε, μετράμε και σας βοηθάμε να επιλέξετε.', qb_measure_s: 'Διαστάσεις: μέτρηση επί τόπου', qb_need_qty: 'Παρακαλώ συμπληρώστε την ποσότητα.', qb_need_items: 'Προσθέστε πρώτα τουλάχιστον ένα προϊόν.',
+      qb_list: 'Η προσφορά σας ({n})', qb_empty: 'Δεν έχετε προσθέσει προϊόντα ακόμη.', qb_need: 'Συμπληρώστε πλάτος, ύψος και ποσότητα.', qb_measure: 'Δεν ξέρω τις διαστάσεις ή το χρώμα', qb_measure_sub: 'Οι διαστάσεις είναι προαιρετικές. Ερχόμαστε, μετράμε και σας βοηθάμε να επιλέξετε. Ξέρετε τις ακριβείς διαστάσεις; Απενεργοποιήστε αυτό και προσθέστε τες.', qb_measure_s: 'Διαστάσεις: μέτρηση επί τόπου', qb_need_qty: 'Παρακαλώ συμπληρώστε την ποσότητα.', qb_need_items: 'Προσθέστε πρώτα τουλάχιστον ένα προϊόν.',
       qb_fullname: 'Ονοματεπώνυμο', qb_email: 'Email', qb_phone: 'Τηλέφωνο (με κωδικό χώρας)', qb_phone_ph: '+357 99 000000', qb_company: 'Εταιρεία', qb_location: 'Τοποθεσία έργου', qb_ptype: 'Είδος έργου', qb_msg: 'Επιπλέον μήνυμα', optional: 'προαιρετικό',
       qb_privacy: 'Συμφωνώ η {c} να χρησιμοποιήσει αυτά τα στοιχεία μόνο για να απαντήσει στο αίτημα προσφοράς μου.', qb_privacy_note: 'Χρησιμοποιούμε τα στοιχεία σας μόνο για να ετοιμάσουμε και να σας στείλουμε την προσφορά. Δεν τα μοιραζόμαστε με κανέναν.',
       qb_err_name: 'Συμπληρώστε το ονοματεπώνυμό σας.', qb_err_email: 'Συμπληρώστε έγκυρη διεύθυνση email.', qb_err_phone: 'Συμπληρώστε τηλέφωνο με κωδικό χώρας, π.χ. +357.', qb_err_privacy: 'Αποδεχτείτε τη σημείωση απορρήτου.',
@@ -1218,11 +1218,12 @@
     if (have) have.qty = Math.min(999, (+have.qty || 1) + 1);
     else QB.items.push(blankItem({ grp: 'custom', cat: 'custom', catName: t(r.s.name), model: label, measure: 1, qty: 1 }));
     if (QB.step === 'done') QB.step = 'items';
+    QB.draft = null; QB.edit = -1;
     qbSave(); qbRender(); cartBadge(true);
     toast(u('cart_added', { m: r.p.model }));
   }
   const qbSave = () => { try { const { err, busy, more, ...keep } = QB; localStorage.setItem(QB_KEY, JSON.stringify(keep)); } catch (e) {} cartBadge(); };
-  const blankItem = (o) => ({ grp: '', mp: 0, cat: '', model: '', pid: '', measure: 0, width: '', height: '', qty: 1, colour: '', glass: '', glassThk: '', opening: '', specs: '', notes: '', files: [], ...(o || {}) });
+  const blankItem = (o) => ({ grp: '', mp: 0, cat: '', model: '', pid: '', measure: 1, width: '', height: '', qty: 1, colour: '', glass: '', glassThk: '', opening: '', specs: '', notes: '', files: [], ...(o || {}) });
   const optList = (vals, cur, blank) => (blank ? `<option value="">${esc(blank)}</option>` : '') + vals.map((v) => `<option ${v === cur ? 'selected' : ''}>${esc(v)}</option>`).join('');
 
   const QG = [
@@ -1310,7 +1311,10 @@
     if (QB.step === 'details') {
       const fld = (k, lbl, type, ac, req, extra) => `<div class="f"><label for="qc-${k}">${u(lbl)}${req ? ' *' : ''}</label><input id="qc-${k}" data-qc="${k}" type="${type}" autocomplete="${ac}" maxlength="120" value="${esc(c[k] || '')}" ${extra || ''}></div>`;
       const cc = c.cc || '+357';
-      return `${qbSteps()}<div class="qb-sec"><div class="qb-sec-h"><h3>${u('qb_sec_contact')}</h3></div>
+      const kd = QB.kind || 'info', elx = lang === 'el';
+      return `${qbSteps()}<div class="qb-sec qb-kind-w"><div class="qb-sec-h"><h3>${elx ? 'Τι θέλετε;' : 'What would you like?'}</h3></div>
+          <div class="qb-kind">${[['info', elx ? 'Θέλω να μάθω' : 'I want to know', elx ? 'Τιμή, πληροφορίες, συμβουλή. Χωρίς δέσμευση.' : 'Price, information, advice. No commitment.', 'info'], ['order', elx ? 'Θέλω να παραγγείλω' : 'I want to order', elx ? 'Είμαι έτοιμος. Ελάτε να μετρήσετε και να ξεκινήσουμε.' : 'I am ready. Come and measure, and let\'s start.', 'check']].map(([k, h, sub, ic]) => `<button type="button" class="qb-kd${kd === k ? ' on' : ''}" aria-pressed="${kd === k}" data-qb="kind" data-k="${k}"><i>${icon(ic)}</i><b>${h}</b><small>${sub}</small></button>`).join('')}</div></div>
+          <div class="qb-sec"><div class="qb-sec-h"><h3>${u('qb_sec_contact')}</h3></div>
           <div class="qb-g2">${fld('name', 'qb_fullname', 'text', 'name', 1)}${fld('email', 'qb_email', 'email', 'email', 1, 'inputmode="email"')}</div>
           <div class="qb-g2"><div class="f"><label for="qc-pnum">${u('qb_phone')} *</label><div class="qb-phone"><select id="qc-cc" data-qc="cc" aria-label="${esc(u('qb_cc'))}">${CC.map(([v, n]) => `<option value="${v}" ${v === cc ? 'selected' : ''}>${v} ${n}</option>`).join('')}</select><input id="qc-pnum" data-qc="pnum" type="tel" inputmode="tel" autocomplete="tel" maxlength="30" placeholder="99 000000" value="${esc(c.pnum || '')}"></div></div>
           ${fld('location', 'qb_location', 'text', 'address-level2', 0)}</div>
@@ -1427,6 +1431,7 @@
     else if (a === 'edit') { QB.edit = +el.dataset.k; const d = JSON.parse(JSON.stringify(QB.items[QB.edit])); const g = grpOf(d.cat); QB.draft = { ...d, grp: d.grp || (g ? g.id : 'custom'), mp: 1 }; qbRender(); qbGo('#qb-edit'); }
     else if (a === 'dup') { const k = +el.dataset.k; QB.items.splice(k + 1, 0, JSON.parse(JSON.stringify(QB.items[k]))); qbRender(); }
     else if (a === 'del') { QB.items.splice(+el.dataset.k, 1); if (!QB.items.length) { QB.draft = blankItem(); QB.edit = -1; } qbRender(); }
+    else if (a === 'kind') { qbReadCust(); QB.kind = el.dataset.k; qbSave(); qbRender(); }
     else if (a === 'to-items') { if (QB.step === 'details') qbReadCust(); QB.step = 'items'; qbRender(); qbScrollTop(); }
     else if (a === 'to-details') {
       if (QB.step === 'items' && !QB.items.length) { const er = $('#qb-lerr'); if (er) er.textContent = u('qb_need_items'); return; }
@@ -1443,7 +1448,7 @@
       try {
         let ref = 'AMT-PREVIEW';
         if (!PREVIEW) {
-          const body = { sid: QB.sid, lang, website: ($('#qb-web') || {}).value || '', customer: { name: QB.cust.name, email: QB.cust.email, phone: QB.cust.phone, location: QB.cust.location, privacy: QB.cust.privacy }, items: QB.items.map((it) => ({ ...it, files: (it.files || []).map((f) => ({ id: f.id })) })) };
+          const body = { kind: QB.kind || 'info', sid: QB.sid, lang, website: ($('#qb-web') || {}).value || '', customer: { name: QB.cust.name, email: QB.cust.email, phone: QB.cust.phone, location: QB.cust.location, privacy: QB.cust.privacy }, items: QB.items.map((it) => ({ ...it, files: (it.files || []).map((f) => ({ id: f.id })) })) };
           const r = await fetch('/api/quote', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) });
           const j = await r.json().catch(() => ({}));
           if (!r.ok || !j.ok) throw new Error(j.error || 'send');
@@ -1531,15 +1536,16 @@
       <div class="wrap sx-pick"><label class="sx-sel"><span class="sx-sel-k">${el ? 'Αλλαγή συστήματος' : 'Choose a system'}</span>
         <select data-sysgo aria-label="${el ? 'Αλλαγή συστήματος' : 'Choose a system'}">${list.map((x) => `<option value="${esc(x.slug)}" ${x === s ? 'selected' : ''}>${esc(t(x.name))}</option>`).join('')}</select>${icon('chev')}</label></div>
       <section class="sx-list"><div class="wrap">
-        ${L.length ? L.map(({ p, s: f }, k) => { const im = pic(p, f); return `<article class="sx-p rv" style="--i:${k % 2}">
-          <a class="sx-img" href="#alp-${esc(p.id)}" tabindex="-1">${im ? `<img src="${esc(src(im))}" alt="${esc(p.model)}" loading="lazy" decoding="async">` : alArt(f.art)}<span class="sx-no">${pad(k + 1)}</span></a>
-          <div class="sx-card">
-            <p class="sx-fam">${esc(t(f.name))}</p>
-            <h2><a href="#alp-${esc(p.id)}">${esc(p.model)}</a></h2>
-            <p class="sx-tag">${esc(t(p.name))}</p>
-            <div class="sx-act"><a class="sx-more" href="#alp-${esc(p.id)}">${u('details')}${icon('arrow')}</a><button type="button" class="sx-cart" data-cart="${esc(p.id)}" aria-label="${u('cart_add')}">${icon('cart')}<span>${u('cart_add')}</span></button></div>
+        ${L.length ? `<div class="px-grid">${L.map(({ p, s: f }, k) => { const im = pic(p, f); return `<article class="px rv" style="--i:${k % 2}">
+          <a class="px-img" href="#alp-${esc(p.id)}" aria-label="${esc(p.model)}">${im ? `<img src="${esc(src(im))}" alt="" loading="lazy" decoding="async">` : alArt(f.art)}</a>
+          <span class="px-no" aria-hidden="true">${pad(k + 1)}<i></i></span>
+          <h2 class="px-m" style="--fs:${Math.max(18, Math.min(46, Math.floor(700 / Math.max(1, p.model.length))))}px"><a href="#alp-${esc(p.id)}">${esc(p.model)}</a></h2>
+          <div class="px-b">
+            <p class="px-f">${esc(t(f.name))}</p>
+            <p class="px-t">${esc(t(p.name))}</p>
+            <div class="px-act"><a class="px-go" href="#alp-${esc(p.id)}">${u('details')}${icon('arrow')}</a><button type="button" class="px-cart" data-cart="${esc(p.id)}" aria-label="${u('cart_add')}">${icon('cart')}</button></div>
           </div>
-        </article>`; }).join('') : `<div class="sx-empty"><p>${el ? 'Για αυτό το σύστημα ζητήστε μας προσφορά.' : 'Ask us about this system and we will advise you.'}</p><a class="btn btn-accent" href="#quote">${u('quote')}</a></div>`}
+        </article>`; }).join('')}</div>` : `<div class="sx-empty"><p>${el ? 'Για αυτό το σύστημα ζητήστε μας προσφορά.' : 'Ask us about this system and we will advise you.'}</p><a class="btn btn-accent" href="#quote">${u('quote')}</a></div>`}
       </div></section>
       ${footerMini()}`;
   }
