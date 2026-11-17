@@ -1536,14 +1536,12 @@
       <div class="wrap sx-pick"><label class="sx-sel"><span class="sx-sel-k">${el ? 'Αλλαγή συστήματος' : 'Choose a system'}</span>
         <select data-sysgo aria-label="${el ? 'Αλλαγή συστήματος' : 'Choose a system'}">${list.map((x) => `<option value="${esc(x.slug)}" ${x === s ? 'selected' : ''}>${esc(t(x.name))}</option>`).join('')}</select>${icon('chev')}</label></div>
       <section class="sx-list"><div class="wrap">
-        ${L.length ? `<div class="px-grid">${L.map(({ p, s: f }, k) => { const im = pic(p, f); return `<article class="px rv" style="--i:${k % 2}">
-          <a class="px-img" href="#alp-${esc(p.id)}" aria-label="${esc(p.model)}">${im ? `<img src="${esc(src(im))}" alt="" loading="lazy" decoding="async">` : alArt(f.art)}</a>
-          <span class="px-no" aria-hidden="true">${pad(k + 1)}<i></i></span>
-          <h2 class="px-m" style="--fs:${Math.max(18, Math.min(46, Math.floor(700 / Math.max(1, p.model.length))))}px"><a href="#alp-${esc(p.id)}">${esc(p.model)}</a></h2>
-          <div class="px-b">
-            <p class="px-f">${esc(t(f.name))}</p>
-            <p class="px-t">${esc(t(p.name))}</p>
-            <div class="px-act"><a class="px-go" href="#alp-${esc(p.id)}">${u('details')}${icon('arrow')}</a><button type="button" class="px-cart" data-cart="${esc(p.id)}" aria-label="${u('cart_add')}">${icon('cart')}</button></div>
+        ${L.length ? `<div class="bx-grid">${L.map(({ p, s: f }, k) => { const im = pic(p, f); return `<article class="bx rv${k === 0 ? ' bx-wide' : ''}" style="--i:${k % 3}">
+          <a class="bx-img" href="#alp-${esc(p.id)}" aria-label="${esc(p.model)}">${im ? `<img src="${esc(src(im))}" alt="" loading="lazy" decoding="async">` : alArt(f.art)}<span class="bx-chip">${esc(t(f.name))}</span></a>
+          <div class="bx-b">
+            <div class="bx-h"><h2><a href="#alp-${esc(p.id)}">${esc(p.model)}</a></h2><span class="bx-no">${pad(k + 1)}</span></div>
+            <p class="bx-t">${esc(t(p.name))}</p>
+            <div class="bx-act"><a class="bx-go" href="#alp-${esc(p.id)}">${u('details')}${icon('arrow')}</a><button type="button" class="bx-cart" data-cart="${esc(p.id)}">${icon('cart')}<span>${u('cart_add')}</span></button></div>
           </div>
         </article>`; }).join('')}</div>` : `<div class="sx-empty"><p>${el ? 'Για αυτό το σύστημα ζητήστε μας προσφορά.' : 'Ask us about this system and we will advise you.'}</p><a class="btn btn-accent" href="#quote">${u('quote')}</a></div>`}
       </div></section>
