@@ -1217,6 +1217,8 @@
   const newSid = () => (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(16).slice(2));
   let QB = { step: 'items', items: [], edit: -1, draft: null, cust: {}, sid: newSid(), ref: '', err: '' };
   try { const q = JSON.parse(localStorage.getItem(QB_KEY) || 'null'); if (q && Array.isArray(q.items)) QB = { ...QB, ...q, err: '', busy: false }; } catch (e) {}
+  // a sent request shows its thank-you once; next time the form starts fresh (contact details are kept)
+  if (QB.step === 'done') QB = { step: 'items', items: [], edit: -1, draft: null, cust: QB.cust || {}, sid: newSid(), ref: '', err: '' };
   if (QB.cust && QB.cust.phone && QB.cust.pnum == null) QB.cust.pnum = QB.cust.phone;
   const cartCount = () => QB.items.length;
   function cartBadge(bump) {
@@ -1234,7 +1236,7 @@
     qbSave(); qbRender(); cartBadge(true);
     toast(u('cart_added', { m: r.p.model }));
   }
-  const qbSave = () => { try { const { err, busy, more, ...keep } = QB; localStorage.setItem(QB_KEY, JSON.stringify(keep)); } catch (e) {} cartBadge(); };
+  const qbSave = () => { try { const { err, busy, more, ...keep } = QB; if (keep.step === 'done') { keep.step = 'items'; keep.items = []; keep.draft = null; keep.ref = ''; } localStorage.setItem(QB_KEY, JSON.stringify(keep)); } catch (e) {} cartBadge(); };
   const blankItem = (o) => ({ grp: '', mp: 0, cat: '', model: '', pid: '', measure: 1, width: '', height: '', qty: 1, colour: '', glass: '', glassThk: '', opening: '', specs: '', notes: '', files: [], ...(o || {}) });
   const optList = (vals, cur, blank) => (blank ? `<option value="">${esc(blank)}</option>` : '') + vals.map((v) => `<option ${v === cur ? 'selected' : ''}>${esc(v)}</option>`).join('');
 
