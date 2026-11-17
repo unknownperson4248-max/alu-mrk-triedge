@@ -591,6 +591,7 @@
     if (a === 'mode') { ACCT.mode = el.dataset.m; ACCT.err = ''; $('#acct').innerHTML = acctSheet(); return; }
     if (a === 'logout') { try { await fetch('/api/acct/logout', { method: 'POST' }); } catch (e) {} ACCT.user = null; ACCT.reqs = []; $$('.hb-acct').forEach((b) => b.classList.remove('in')); $('#acct').innerHTML = acctSheet(); }
   }
+  document.addEventListener('change', (e) => { const g = e.target.closest('[data-sysgo]'); if (g && g.value) location.hash = g.value; });
   document.addEventListener('submit', async (e) => {
     const f = e.target.closest('[data-acform]');
     if (!f) return;
@@ -1513,56 +1514,33 @@
   }
 
   /* ---------- system detail page ---------- */
+  // system page: full photo with the name, a system picker, then the products. Nothing else.
   function systemPage(s) {
-    const list = sys();
-    const i = list.indexOf(s);
-    const imgs = [s.image, ...(s.gallery || [])].filter(Boolean);
-    const specs = (s.specs || []).filter((r) => t(r.label) && String(r.value || '').trim());
-    const hasCfg = s.kind && s.kind !== 'none';
-    const related = [1, 2, 3].map((k) => list[(i + k) % list.length]).filter((x, j, a) => x && x !== s && a.indexOf(x) === j);
-    const tabs = [['sp-overview', u('overview')], specs.length ? ['sp-specs', u('specs')] : null, hasCfg ? ['sp-config', u('config')] : null, imgs.length > 1 ? ['sp-gallery', u('gallery')] : null, related.length ? ['sp-related', u('related')] : null].filter(Boolean);
-    const msg = u('wa_system', { c: S.company.name, s: t(s.name) });
-    return `<div class="sp-bar"><div class="wrap">
+    const list = sys(), i = list.indexOf(s), L = sysList(s.slug), el = lang === 'el';
+    const used = new Set();
+    const pic = (p, f) => { const im = alImg(p, f); if (!im || (used.has(im) && !p.image)) return ''; used.add(im); return im; };
+    return `<div class="sp-bar sx-bar"><div class="wrap">
         <a class="sp-back" href="#systems">${icon('back')}${u('all_systems')}</a>
-        <span class="sp-title">${esc(t(s.name))}</span>
-        <button type="button" class="btn btn-accent" data-consult="${esc(s.slug)}">${u('quote')}</button>
+        <a class="icon-btn hb-cart" href="#quote" aria-label="${u('cart')}">${icon('cart')}<b class="cart-n" data-cartn ${QB.items.length ? '' : 'hidden'}>${QB.items.length}</b></a>
       </div></div>
-      <section class="sx-head"><div class="wrap"><h1>${esc(t(s.name))}</h1></div></section>
-      ${sysProducts(s.slug)}
-      <section class="sp-hero"><div class="wrap sp-hero-grid">
-        <div>
-          <p class="eyebrow">${u('system_n', { n: pad(i + 1), t: pad(list.length) })}</p>
-          <h1>${esc(t(s.name))}</h1>
-          <p class="lead">${esc(t(s.short))}</p>
-          <div class="sp-cta">
-            <button type="button" class="btn btn-navy" data-consult="${esc(s.slug)}">${u('consult')}${icon('arrow')}</button>
-            ${waLink() ? `<a class="btn btn-ghost" href="${esc(askWa('s', s.slug, t(s.name)))}" target="_blank" rel="noopener">${waIcon}${u('ask_price')}</a>` : ''}
-            ${s.brochure ? `<a class="btn btn-ghost" href="${esc(src(s.brochure))}" target="_blank" rel="noopener">${icon('download')}${u('brochure')}</a>` : ''}
-            ${waLink() ? `<a class="btn btn-wa" href="${esc(waLink(msg))}" target="_blank" rel="noopener">${WA_SVG.replace('<svg', '<svg class="ic"')}WhatsApp</a>` : ''}
+      <section class="sx-hero">
+        ${s.image ? `<img src="${esc(src(s.image))}" alt="" fetchpriority="high">` : ''}
+        <span class="sx-grid" aria-hidden="true"></span>
+        <div class="wrap sx-ht"><p class="sx-k"><i></i>${el ? 'Σύστημα' : 'System'} ${pad(i + 1)} / ${pad(list.length)}</p><h1>${esc(t(s.name))}</h1>${t(s.short) ? `<p class="sx-lead">${esc(t(s.short))}</p>` : ''}</div>
+      </section>
+      <div class="wrap sx-pick"><label class="sx-sel"><span class="sx-sel-k">${el ? 'Αλλαγή συστήματος' : 'Choose a system'}</span>
+        <select data-sysgo aria-label="${el ? 'Αλλαγή συστήματος' : 'Choose a system'}">${list.map((x) => `<option value="${esc(x.slug)}" ${x === s ? 'selected' : ''}>${esc(t(x.name))}</option>`).join('')}</select>${icon('chev')}</label></div>
+      <section class="sx-list"><div class="wrap">
+        ${L.length ? L.map(({ p, s: f }, k) => { const im = pic(p, f); return `<article class="sx-p rv" style="--i:${k % 2}">
+          <a class="sx-img" href="#alp-${esc(p.id)}" tabindex="-1">${im ? `<img src="${esc(src(im))}" alt="${esc(p.model)}" loading="lazy" decoding="async">` : alArt(f.art)}<span class="sx-no">${pad(k + 1)}</span></a>
+          <div class="sx-card">
+            <p class="sx-fam">${esc(t(f.name))}</p>
+            <h2><a href="#alp-${esc(p.id)}">${esc(p.model)}</a></h2>
+            <p class="sx-tag">${esc(t(p.name))}</p>
+            <div class="sx-act"><a class="sx-more" href="#alp-${esc(p.id)}">${u('details')}${icon('arrow')}</a><button type="button" class="sx-cart" data-cart="${esc(p.id)}" aria-label="${u('cart_add')}">${icon('cart')}<span>${u('cart_add')}</span></button></div>
           </div>
-          ${(s.applications || []).length ? `<ul class="sp-apps" aria-label="${u('applications')}">${s.applications.map((a) => `<li>${esc(t(a))}</li>`).join('')}</ul>` : ''}
-        </div>
-        ${imgs[0] ? `<figure class="sp-hero-img" data-zoom="0" tabindex="0" role="button" aria-label="${u('zoom')}"><img src="${esc(src(imgs[0]))}" alt="${esc(t(s.name))}"><span class="zoom-hint">${icon('zoom')}${u('zoom')}</span></figure>` : ''}
+        </article>`; }).join('') : `<div class="sx-empty"><p>${el ? 'Για αυτό το σύστημα ζητήστε μας προσφορά.' : 'Ask us about this system and we will advise you.'}</p><a class="btn btn-accent" href="#quote">${u('quote')}</a></div>`}
       </div></section>
-
-      <section class="sp-sec" id="sp-overview"><div class="wrap sp-two">
-        <div><p class="eyebrow">${u('overview')}</p><h2>${esc(t(s.name))}</h2></div>
-        <div><p class="sp-overview">${esc(t(s.overview))}</p>
-          ${(s.features || []).length ? `<div class="feat-grid rv-kids">${s.features.map((f, k) => `<div class="feat" style="--i:${k}"><span class="tile">${icon(f.icon)}</span><span>${esc(t(f.title))}</span></div>`).join('')}</div>` : ''}
-        </div>
-      </div></section>
-      ${specs.length ? `<section class="sp-sec" id="sp-specs"><div class="wrap sp-two">
-        <div><p class="eyebrow">${u('specs')}</p><h2>${u('specs')}</h2></div>
-        <div><table class="spec-table"><tbody>${specs.map((r) => (String(r.value || '').trim() ? `<tr><th scope="row">${esc(t(r.label))}</th><td>${esc(r.value)}</td></tr>` : `<tr><th scope="row">${esc(t(r.label))}</th><td class="req">${u('on_request')}</td></tr>`)).join('')}</tbody></table>
-          <p class="spec-note">${icon('info')}<span>${u('specs_note')}</span></p></div>
-      </div></section>` : ''}
-      ${hasCfg ? `<section class="sp-sec" id="sp-config"><div class="wrap"><p class="eyebrow">${u('config')}</p><h2>${u('config')}</h2><div class="cfg rv" id="cfg"></div></div></section>` : ''}
-      ${imgs.length > 1 ? `<section class="sp-sec" id="sp-gallery"><div class="wrap"><p class="eyebrow">${u('gallery')}</p><h2>${u('gallery')}</h2>
-        <div class="gal rv-kids n${Math.min(imgs.length, 4)}">${imgs.map((im, k) => `<button type="button" style="--i:${k}" data-zoom="${k}" aria-label="${u('zoom')}"><img src="${esc(src(im))}" alt="${esc(t(s.name))}" loading="lazy"></button>`).join('')}</div></div></section>` : ''}
-      ${related.length ? `<section class="sp-sec" id="sp-related"><div class="wrap"><p class="eyebrow">${u('related')}</p><h2>${u('related')}</h2>
-        <div class="rel rv-kids">${related.map((r, k) => `<a style="--i:${k}" href="#${esc(r.slug)}"><figure><img src="${esc(src(r.image))}" alt="" loading="lazy"></figure><small>${pad(list.indexOf(r) + 1)}</small><h3>${esc(t(r.name))}</h3></a>`).join('')}</div></div></section>` : ''}
-      <section class="sp-band"><div class="wrap"><div><h2>${u('cta_title')}</h2><p>${u('cta_body')}</p></div>
-        <div class="btns"><button type="button" class="btn btn-accent" data-consult="${esc(s.slug)}">${u('consult')}</button>${S.company.phone ? `<a class="btn btn-ghost" href="${telLink()}">${icon('phone')}${esc(S.company.phone)}</a>` : ''}</div></div></section>
       ${footerMini()}`;
   }
   const footerMini = () => `<div class="foot"><div class="wrap foot-bottom"><span>© ${new Date().getFullYear()} ${esc(S.company.name)}</span><a href="#privacy">${u('privacy_l')}</a></div></div>`;
