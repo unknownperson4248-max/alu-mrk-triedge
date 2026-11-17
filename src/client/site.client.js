@@ -1823,11 +1823,19 @@
       const w2 = (el.offsetWidth || 60) / 2 + 10, x = Math.min(vw - w2, Math.max(w2, ((v3.x + 1) / 2) * vw));
       el.style.transform = `translate(${x}px, ${((1 - v3.y) / 2) * vh}px) translate(-50%, -50%)`;
     }
+    let lastF = 0, drawnProg = -1;
+    const slowDev = innerWidth < 760;
     function frame(now) {
       if (!alive) return;
       raf = requestAnimationFrame(frame);
-      if (!inView) return;
+      // draw only when the intro can actually be seen; 30 fps on phones
+      if (!inView || document.hidden || layerBusy() || panel === 'menu') return;
+      if (slowDev && now - lastF < 32) return;
+      lastF = now;
       const tt = (now - t0) / 1000, b = reduce ? 10 : tt;
+      // phones: once the door has built itself, draw only while the page is scrolled (idle sway is skipped)
+      if (slowDev && tt > 7 && prog === drawnProg) return;
+      drawnProg = prog;
       // visible size of the stage at z = 0
       const VH = 2 * Math.tan((cam.fov * Math.PI) / 360) * cam.position.z, VW = VH * aspect, narrow = aspect < 0.9;
       // ----- build -----
@@ -1891,7 +1899,8 @@
     fitNav();
     syncPanels();
     reveal($('#app'), renders++ > 0);
-    if ($('.intro')) introStart();
+    // start the 3D intro once the page has painted and the phone is free, so the first screen shows at once
+    if ($('.intro')) { const go = () => { if (!$('.intro')) return; if (layerBusy()) { setTimeout(go, 800); return; } introStart(); }; if ('requestIdleCallback' in window) requestIdleCallback(go, { timeout: 1500 }); else setTimeout(go, 400); }
     cartBadge();
     if (!ACCT.loaded) { ACCT.loaded = true; acctLoad(); }
   }
