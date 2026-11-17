@@ -159,6 +159,65 @@ async function pbkdf2(password, salt, iter) {
   return b64u(await crypto.subtle.deriveBits({ name: 'PBKDF2', hash: 'SHA-256', salt: enc.encode(salt), iterations: iter }, key, 256));
 }
 
+
+/* ---------- customer accounts (login, my requests) ---------- */
+const ACCT_ITER = 100000;
+const acctKey = async (email) => 'cu:' + (await sha256hex(String(email).trim().toLowerCase()));
+const randTok = () => b64u(crypto.getRandomValues(new Uint8Array(32)));
+async function acctCookie(env, email, secure) {
+  const tok = randTok();
+  await env.KV.put('cs:' + (await sha256hex(tok)), String(email).toLowerCase(), { expirationTtl: 60 * 60 * 24 * 30 });
+  return `ctok=${tok}; Path=/; HttpOnly; ${secure ? 'Secure; ' : ''}SameSite=Lax; Max-Age=${60 * 60 * 24 * 30}`;
+}
+async function acctFromReq(req, env) {
+  const m = (req.headers.get('cookie') || '').match(/(?:^|;\s*)ctok=([^;]+)/);
+  if (!m) return null;
+  const email = await env.KV.get('cs:' + (await sha256hex(m[1])));
+  if (!email) return null;
+  const u = await env.KV.get(await acctKey(email), 'json');
+  return u ? { ...u, tok: m[1] } : null;
+}
+const acctPublic = (u) => ({ name: u.name, email: u.email, phone: u.phone || '' });
+async function handleAccount(req, env, url, path) {
+  const secure = url.protocol === 'https:';
+  const ip = req.headers.get('cf-connecting-ip') || '';
+  let b = {};
+  if (req.method === 'POST') { try { b = await req.json(); } catch {} }
+  if (path === '/api/acct/me' && req.method === 'GET') {
+    const u = await acctFromReq(req, env);
+    if (!u) return json({ ok: true, user: null });
+    const refs = (await env.KV.get('cq:' + (await sha256hex(u.email)), 'json')) || [];
+    return json({ ok: true, user: acctPublic(u), requests: refs.slice(0, 30) });
+  }
+  if (path === '/api/acct/logout' && req.method === 'POST') {
+    const m = (req.headers.get('cookie') || '').match(/(?:^|;\s*)ctok=([^;]+)/);
+    if (m) await env.KV.delete('cs:' + (await sha256hex(m[1])));
+    return json({ ok: true }, 200, { 'set-cookie': `ctok=; Path=/; HttpOnly; ${secure ? 'Secure; ' : ''}SameSite=Lax; Max-Age=0` });
+  }
+  const email = String(b.email || '').trim().toLowerCase(), pw = String(b.password || '');
+  // at most 10 tries per hour from one address, and per email
+  const lim = async (k) => { const key = 'al:' + (await sha256hex(k)); const n = +((await env.KV.get(key)) || 0); if (n >= 10) return false; await env.KV.put(key, String(n + 1), { expirationTtl: 3600 }); return true; };
+  if (!(await lim('ip:' + ip)) || (email && !(await lim('em:' + email)))) return json({ ok: false, error: 'too_many' }, 429);
+  if (path === '/api/acct/register' && req.method === 'POST') {
+    const name = clip(String(b.name || '').trim(), 80), phone = clip(String(b.phone || '').trim(), 30);
+    if (!name || !EMAIL_RE.test(email) || pw.length < 8 || pw.length > 200) return json({ ok: false, error: 'invalid' }, 400);
+    const k = await acctKey(email);
+    if (await env.KV.get(k)) return json({ ok: false, error: 'exists' }, 409);
+    if (!(await bump(env, 'acct', 300))) return json({ ok: false, error: 'busy' }, 429);
+    const salt = randTok();
+    const u = { name, email, phone, salt, iter: ACCT_ITER, hash: await pbkdf2(pw, salt, ACCT_ITER), ts: Date.now() };
+    await env.KV.put(k, JSON.stringify(u));
+    return json({ ok: true, user: acctPublic(u) }, 200, { 'set-cookie': await acctCookie(env, email, secure) });
+  }
+  if (path === '/api/acct/login' && req.method === 'POST') {
+    const u = EMAIL_RE.test(email) ? await env.KV.get(await acctKey(email), 'json') : null;
+    const ok = u && (await pbkdf2(pw, u.salt, u.iter || ACCT_ITER)) === u.hash;
+    if (!ok) return json({ ok: false, error: 'wrong' }, 401);
+    return json({ ok: true, user: acctPublic(u) }, 200, { 'set-cookie': await acctCookie(env, email, secure) });
+  }
+  return json({ ok: false, error: 'Not found' }, 404);
+}
+
 async function authRecord(env) {
   return env.KV.get('auth', 'json');
 }
@@ -248,6 +307,10 @@ async function handleQuote(req, env, url) {
 
   const ts = Date.now(), ref = quoteRef();
   const rec = { ref, ts, lang: clip(b.lang, 4), customer, items };
+  try {
+    const acct = await acctFromReq(req, env);
+    if (acct) { const k = 'cq:' + (await sha256hex(acct.email)); const L = (await env.KV.get(k, 'json')) || []; L.unshift({ ref, ts, n: items.length, items: items.slice(0, 10).map((it) => it.model || it.catName) }); await env.KV.put(k, JSON.stringify(L.slice(0, 50))); }
+  } catch {}
   // remembers the email so a later Google review from it shows "Verified customer"
   await env.KV.put('qe:' + (await sha256hex(customer.email.toLowerCase())), '1', KEEP);
   const site = await getSite(env);
@@ -786,6 +849,7 @@ export default {
     try {
       if (path.startsWith('/api/admin/')) return await handleAdminApi(req, env, url, path);
       if (path === '/api/quote' && req.method === 'POST') return await handleQuote(req, env, url);
+      if (path.startsWith('/api/acct/')) return await handleAccount(req, env, url, path);
       if (path === '/api/upload' && req.method === 'POST') return await handleUpload(req, env, url);
       if (path === '/api/review' && req.method === 'POST') return await handleReviewPost(req, env, url);
       if (path.startsWith('/api/review/')) return await handleUserReviews(req, env, url, path);

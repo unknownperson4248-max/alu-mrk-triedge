@@ -1826,3 +1826,57 @@ html.skin-glass .mx-chips button[aria-pressed="true"]{background:var(--ink);colo
   .help-btn::before,.help-btn::after,.help-ic.a .ic,.hero-cta .btn-accent::after,.d-water,.d-break{animation:none!important}
   .mnav-main .acc-panel a{padding-block:9px}
 }
+
+/* product grid inside a system */
+.pg-sec{padding-top:clamp(14px,2.5vw,26px)!important}
+.pg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:16px}
+.pg-c{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--bg)}
+.pg-c[hidden]{display:none}
+.pg-img{display:grid;place-items:center;aspect-ratio:1;overflow:hidden;background:linear-gradient(160deg,#fbfcfb,#e8eeec)}
+.pg-img img{width:100%;height:100%;object-fit:cover}
+.pg-img .art{width:78%;height:auto}
+.pg-b{display:grid;gap:3px;padding:12px 12px 8px;text-decoration:none;color:inherit;flex:1}
+.pg-b b{font:500 16px/1.2 var(--display)}
+.pg-b span{font-size:13px;line-height:1.35;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pg-add{all:unset;box-sizing:border-box;display:flex;align-items:center;justify-content:center;gap:6px;margin:0 10px 10px;padding:9px 10px;border-radius:10px;background:var(--ink);color:var(--bg);font-size:13px;font-weight:600;cursor:pointer}
+.pg-add .ic{width:16px;height:16px}
+.pg-add:active{transform:scale(.97)}
+.rv-on .pg.in .pg-c{animation:pfRise .45s var(--ease-out) backwards;animation-delay:calc(var(--i,0) * 40ms)}
+.rv-on .pg.now .pg-c{animation:none}
+@media (max-width:1000px){.pg{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:640px){.pg{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.pg-b b{font-size:15px}}
+/* header cart + account */
+.hb-cart,.hb-acct{position:relative;display:inline-grid;place-items:center;width:40px;height:40px;color:inherit}
+.hb-cart .ic,.hb-acct .ic{width:22px;height:22px}
+.hb-acct.in::after{content:"";position:absolute;right:7px;top:7px;width:8px;height:8px;border-radius:50%;background:#2fbf71;border:2px solid var(--bg)}
+.cart-n{position:absolute;right:1px;top:1px;min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--accent);color:#14171a;font:700 11px/18px var(--body);text-align:center}
+.cart-n.bump{animation:cartBump .5s var(--ease-out)}
+@keyframes cartBump{40%{transform:scale(1.45)}}
+/* account sheet */
+.acct{position:fixed;inset:0;z-index:96;display:grid;place-items:end center;background:rgba(6,8,11,.5);opacity:0;transition:opacity .2s}
+.acct.open{opacity:1}
+.ac-card{position:relative;width:min(460px,100%);max-height:88vh;overflow:auto;background:var(--bg);color:var(--ink);border-radius:24px 24px 0 0;padding:26px 22px calc(22px + env(safe-area-inset-bottom,0px));transform:translateY(30px);transition:transform .25s var(--ease-out)}
+.acct.open .ac-card{transform:none}
+@media (min-width:760px){.acct{place-items:center}.ac-card{border-radius:24px}}
+.ac-x{all:unset;position:absolute;right:14px;top:14px;width:36px;height:36px;display:grid;place-items:center;border-radius:50%;cursor:pointer}
+.ac-x .ic{width:20px;height:20px}
+.ac-tabs{display:flex;gap:6px;margin:12px 0 8px}
+.ac-tabs button{all:unset;flex:1;text-align:center;padding:10px;border-radius:12px;border:1px solid var(--line);cursor:pointer;font-weight:600;font-size:14px}
+.ac-tabs button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.ac-sub{color:var(--muted);font-size:14px;margin:6px 0 12px}
+.ac-hi{font:500 24px/1.2 var(--display);margin:10px 0 0}
+.ac-f{display:grid;gap:10px}
+.ac-f label{display:grid;gap:5px;font-size:13px;color:var(--muted)}
+.ac-f input{font:400 16px var(--body);padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.ac-err{color:#d4483b;font-size:14px;margin:0}
+.ac-req{list-style:none;margin:8px 0 14px;padding:0;display:grid;gap:8px}
+.ac-req li{display:grid;gap:2px;padding:10px 12px;border:1px solid var(--line);border-radius:12px}
+.ac-req small{color:var(--muted)}.ac-req span{font-size:13px}
+.ac-acts{display:flex;flex-wrap:wrap;gap:8px}
+/* menu opens fast (no width animation) */
+@media (max-width:1180px){
+  .mnav.open{animation:none;transform:none}
+  .mnav{transform:translateX(-14px);transition:opacity .18s,visibility .18s,transform .22s var(--ease-out)}
+  .mnav.open .mnav-search,.mnav.open .mnav-nav{animation:none}
+  .mnav.open .mnav-search,.mnav.open .mnav-label,.mnav.open .mnav-main>li,.mnav.open .mnav-short{animation-duration:.28s}
+}

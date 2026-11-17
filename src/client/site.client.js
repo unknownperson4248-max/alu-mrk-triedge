@@ -30,7 +30,7 @@
       call: 'Call', leadership: 'Leadership',
       ask_price: 'Ask the price', ask_wa_msg: 'Hello {c}, I would like the price for this:', wa_note: 'Opens WhatsApp with the message ready. You only need to press send.',
       products: 'Profile Systems', m_products: 'Profile Systems', prod_eyebrow: 'Profile Systems', view_all_prof: 'View all profile systems', prod_title: 'Our profile models', prod_sub: 'We fabricate and install these aluminium profile systems to measure. Profiles are supplied by MUSKITA.', prod_maker: 'Profile manufacturer: MUSKITA',
-      details: 'Details', m_alsys: 'MUSKITA Systems', al_h1: 'Aluminium Systems', alsys_eyebrow: 'MUSKITA systems we fabricate & install', alsys_sub: 'Ten families of MUSKITA aluminium systems, from minimal sliding glass walls to fences and pergolas. Choose a system to see its models and technical data.', alsys_all: 'All MUSKITA systems', al_products: 'models', al_product1: 'model', al_versions: 'Versions', al_order: 'Values in order:', al_more: 'More in this system', al_ask: 'Ask about this system', al_tag: 'Aluminium system', add_quote: 'Add to quotation', added_quote: 'Added to your quotation', tech_data: 'Technical data', tech_source: 'Source: MUSKITA product information. Values vary by version and configuration; we confirm the exact figures for your project.', tech_on_request: 'Technical details on request.', colours: 'Colours & finishes', all_products: 'All models',
+      details: 'Details', cart: 'Cart', cart_add: 'Add to cart', cart_added: '{m} added to your cart', acct: 'My account', acct_login: 'Log in', acct_reg: 'Create account', acct_out: 'Log out', acct_name: 'Full name', acct_email: 'Email', acct_phone: 'Phone (with country code)', acct_pw: 'Password (8+ characters)', acct_hi: 'Hello, {n}', acct_reqs: 'My requests', acct_none: 'No requests yet. Add products to your cart and send a request.', acct_err: 'Wrong email or password.', acct_exists: 'This email already has an account. Log in instead.', acct_inv: 'Please fill in your name, a valid email and a password of 8+ characters.', acct_many: 'Too many tries. Please wait an hour.', acct_why: 'Log in to keep your details filled in and see your requests.', m_alsys: 'MUSKITA Systems', al_h1: 'Aluminium Systems', alsys_eyebrow: 'MUSKITA systems we fabricate & install', alsys_sub: 'Ten families of MUSKITA aluminium systems, from minimal sliding glass walls to fences and pergolas. Choose a system to see its models and technical data.', alsys_all: 'All MUSKITA systems', al_products: 'models', al_product1: 'model', al_versions: 'Versions', al_order: 'Values in order:', al_more: 'More in this system', al_ask: 'Ask about this system', al_tag: 'Aluminium system', add_quote: 'Add to quotation', added_quote: 'Added to your quotation', tech_data: 'Technical data', tech_source: 'Source: MUSKITA product information. Values vary by version and configuration; we confirm the exact figures for your project.', tech_on_request: 'Technical details on request.', colours: 'Colours & finishes', all_products: 'All models',
       qb_title: 'Request a quotation', qb_sub: 'Add every door, window or system you need. We review the measurements and send you a written quotation.',
       qb_step1: 'Products', qb_step2: 'Details', qb_step3: 'Review', qb_product: 'Product {n}', qb_edit_product: 'Edit product {n}',
       qb_cat: 'Product category', qb_model: 'Model', qb_model_other: 'Other / not sure', qb_choose: 'Choose…', qb_width: 'Width (mm)', qb_height: 'Height (mm)', qb_qty: 'Quantity',
@@ -100,7 +100,7 @@
       call: 'Κλήση', leadership: 'Διοίκηση',
       ask_price: 'Ρωτήστε τιμή', ask_wa_msg: 'Γεια σας, θα ήθελα την τιμή για αυτό:', wa_note: 'Ανοίγει το WhatsApp με έτοιμο μήνυμα. Πατήστε μόνο αποστολή.',
       products: 'Συστήματα προφίλ', m_products: 'Συστήματα προφίλ', prod_eyebrow: 'Συστήματα προφίλ', view_all_prof: 'Όλα τα συστήματα προφίλ', prod_title: 'Τα μοντέλα προφίλ μας', prod_sub: 'Κατασκευάζουμε και τοποθετούμε αυτά τα συστήματα προφίλ αλουμινίου στα μέτρα σας. Τα προφίλ προμηθεύει η MUSKITA.', prod_maker: 'Κατασκευαστής προφίλ: MUSKITA',
-      details: 'Λεπτομέρειες', m_alsys: 'Συστήματα MUSKITA', al_h1: 'Συστήματα αλουμινίου', alsys_eyebrow: 'Συστήματα MUSKITA που κατασκευάζουμε & τοποθετούμε', alsys_sub: 'Δέκα οικογένειες συστημάτων αλουμινίου MUSKITA, από minimal συρόμενα υαλοστάσια έως περιφράξεις και πέργκολες. Επιλέξτε σύστημα για να δείτε τα μοντέλα και τα τεχνικά στοιχεία.', alsys_all: 'Όλα τα συστήματα MUSKITA', al_products: 'μοντέλα', al_product1: 'μοντέλο', al_versions: 'Εκδόσεις', al_order: 'Τιμές με τη σειρά:', al_more: 'Περισσότερα σε αυτό το σύστημα', al_ask: 'Ρωτήστε για αυτό το σύστημα', al_tag: 'Σύστημα αλουμινίου', add_quote: 'Προσθήκη στην προσφορά', added_quote: 'Προστέθηκε στην προσφορά σας', tech_data: 'Τεχνικά στοιχεία', tech_source: 'Πηγή: στοιχεία προϊόντος MUSKITA. Οι τιμές διαφέρουν ανά έκδοση και διαμόρφωση· επιβεβαιώνουμε τα ακριβή στοιχεία για το έργο σας.', tech_on_request: 'Τεχνικά στοιχεία κατόπιν αιτήματος.', colours: 'Χρώματα & φινιρίσματα', all_products: 'Όλα τα μοντέλα',
+      details: 'Λεπτομέρειες', cart: 'Καλάθι', cart_add: 'Στο καλάθι', cart_added: 'Το {m} μπήκε στο καλάθι σας', acct: 'Ο λογαριασμός μου', acct_login: 'Σύνδεση', acct_reg: 'Νέος λογαριασμός', acct_out: 'Αποσύνδεση', acct_name: 'Ονοματεπώνυμο', acct_email: 'Email', acct_phone: 'Τηλέφωνο (με κωδικό χώρας)', acct_pw: 'Κωδικός (8+ χαρακτήρες)', acct_hi: 'Γεια σας, {n}', acct_reqs: 'Τα αιτήματά μου', acct_none: 'Δεν υπάρχουν αιτήματα ακόμη. Βάλτε προϊόντα στο καλάθι και στείλτε αίτημα.', acct_err: 'Λάθος email ή κωδικός.', acct_exists: 'Υπάρχει ήδη λογαριασμός με αυτό το email. Συνδεθείτε.', acct_inv: 'Συμπληρώστε όνομα, σωστό email και κωδικό 8+ χαρακτήρων.', acct_many: 'Πολλές προσπάθειες. Δοκιμάστε σε μία ώρα.', acct_why: 'Συνδεθείτε για να μένουν συμπληρωμένα τα στοιχεία σας και να βλέπετε τα αιτήματά σας.', m_alsys: 'Συστήματα MUSKITA', al_h1: 'Συστήματα αλουμινίου', alsys_eyebrow: 'Συστήματα MUSKITA που κατασκευάζουμε & τοποθετούμε', alsys_sub: 'Δέκα οικογένειες συστημάτων αλουμινίου MUSKITA, από minimal συρόμενα υαλοστάσια έως περιφράξεις και πέργκολες. Επιλέξτε σύστημα για να δείτε τα μοντέλα και τα τεχνικά στοιχεία.', alsys_all: 'Όλα τα συστήματα MUSKITA', al_products: 'μοντέλα', al_product1: 'μοντέλο', al_versions: 'Εκδόσεις', al_order: 'Τιμές με τη σειρά:', al_more: 'Περισσότερα σε αυτό το σύστημα', al_ask: 'Ρωτήστε για αυτό το σύστημα', al_tag: 'Σύστημα αλουμινίου', add_quote: 'Προσθήκη στην προσφορά', added_quote: 'Προστέθηκε στην προσφορά σας', tech_data: 'Τεχνικά στοιχεία', tech_source: 'Πηγή: στοιχεία προϊόντος MUSKITA. Οι τιμές διαφέρουν ανά έκδοση και διαμόρφωση· επιβεβαιώνουμε τα ακριβή στοιχεία για το έργο σας.', tech_on_request: 'Τεχνικά στοιχεία κατόπιν αιτήματος.', colours: 'Χρώματα & φινιρίσματα', all_products: 'Όλα τα μοντέλα',
       qb_title: 'Ζητήστε προσφορά', qb_sub: 'Προσθέστε κάθε πόρτα, παράθυρο ή σύστημα που χρειάζεστε. Ελέγχουμε τις διαστάσεις και σας στέλνουμε γραπτή προσφορά.',
       qb_step1: 'Προϊόντα', qb_step2: 'Στοιχεία', qb_step3: 'Έλεγχος', qb_product: 'Προϊόν {n}', qb_edit_product: 'Επεξεργασία προϊόντος {n}',
       qb_cat: 'Κατηγορία προϊόντος', qb_model: 'Μοντέλο', qb_model_other: 'Άλλο / δεν είμαι σίγουρος', qb_choose: 'Επιλέξτε…', qb_width: 'Πλάτος (mm)', qb_height: 'Ύψος (mm)', qb_qty: 'Ποσότητα',
@@ -173,6 +173,8 @@
   };
 
   const ICONS = {
+    cart: '<path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.5L21 8H6.2"/><circle cx="10" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/>',
+    user: '<circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/>',
     motor: '<circle cx="12" cy="12" r="9"/><path d="M13 6l-4 7h4l-2 5"/>',
     remote: '<rect x="7" y="2" width="10" height="20" rx="3"/><circle cx="12" cy="8" r="2"/><path d="M10 14h4M10 17h4"/>',
     maximize: '<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>',
@@ -276,6 +278,8 @@
           ${prods().length ? `<button type="button" class="mega-btn" data-p="pmega" aria-expanded="false" aria-controls="pmega">${u('products')}${icon('chev')}</button>` : ''}<a href="#gallery">${u('m_projects')}</a><a href="#about-us">${u('m_about')}</a><a href="#quote">${u('contact')}</a>
         </nav>
         <button type="button" class="icon-btn srch-btn" aria-expanded="false" aria-controls="srch" aria-label="${u('search')}">${icon('search')}</button>
+        <button type="button" class="icon-btn hb-acct" data-acct="open" aria-label="${u('acct')}">${icon('user')}</button>
+        <a class="icon-btn hb-cart" href="#quote" aria-label="${u('cart')}">${icon('cart')}<b class="cart-n" data-cartn hidden>0</b></a>
         ${langSelect()}
         <a class="btn btn-ghost nav-cta" href="#quote">${u('get_quote')}${icon('arrow')}</a>
         <button type="button" class="burger" id="burger" aria-expanded="false" aria-controls="mnav" aria-label="${u('menu')}"><i><b></b><b></b><b></b></i></button>
@@ -486,7 +490,7 @@
     return `<div class="sp-bar"><div class="wrap">
         <a class="sp-back" href="#${esc(homeSys(p.id) || 'top')}">${icon('back')}${esc(homeSys(p.id) ? t(bySlug(homeSys(p.id)).name) : u('back_home'))}</a>
         <span class="sp-title">${esc(p.model)}</span>
-        <button type="button" class="btn btn-accent" data-alq="${esc(p.id)}">${u('add_quote')}</button>
+        <button type="button" class="btn btn-accent" data-cart="${esc(p.id)}">${u('cart_add')}</button>
       </div></div>
       <section class="sp-hero al-p"><div class="wrap sp-hero-grid">
         <div>
@@ -497,7 +501,7 @@
           <p class="prod-desc">${esc(t(p.desc))}</p>
           ${(p.versions || []).length ? `<p class="al-vh">${u('al_versions')}</p><ul class="sp-apps">${p.versions.map((v) => `<li>${esc(v)}</li>`).join('')}</ul>` : ''}
           <div class="sp-cta">
-            <button type="button" class="btn btn-navy" data-alq="${esc(p.id)}">${icon('file')}${u('add_quote')}</button>
+            <button type="button" class="btn btn-navy" data-cart="${esc(p.id)}">${icon('cart')}${u('cart_add')}</button>
             ${wa ? `<a class="btn btn-wa" href="${esc(wa)}" target="_blank" rel="noopener">${waIcon}${u('ask_price')}</a>` : ''}
           </div>
         </div>
@@ -511,7 +515,7 @@
       </div></section>
       ${sib.length ? `<section class="sp-sec"><div class="wrap"><p class="eyebrow">${u('al_more')}</p><div class="al-sib">${sib.filter((x) => homeSys(x.id)).map((x) => `<a href="#alp-${esc(x.id)}"><b>${esc(x.model)}</b><small>${esc(t(x.name))}</small>${icon('arrow')}</a>`).join('')}</div></div></section>` : ''}
       <section class="sp-band"><div class="wrap"><div><h2>${u('cta_title')}</h2><p>${u('cta_body')}</p></div>
-        <div class="btns"><button type="button" class="btn btn-accent" data-alq="${esc(p.id)}">${u('add_quote')}</button>${S.company.phone ? `<a class="btn btn-ghost" href="${telLink()}">${icon('phone')}${esc(S.company.phone)}</a>` : ''}</div></div></section>
+        <div class="btns"><button type="button" class="btn btn-accent" data-cart="${esc(p.id)}">${u('cart_add')}</button>${S.company.phone ? `<a class="btn btn-ghost" href="${telLink()}">${icon('phone')}${esc(S.company.phone)}</a>` : ''}</div></div></section>
       ${footerMini()}`;
   }
 
@@ -521,23 +525,23 @@
   const AL_IMG_P = { mu144: 'img/lift-slide.jpg', mu3200: 'img/sliding-window.jpg', mu100: 'img/sliding-window.jpg', mu2600: 'img/folding-product.jpg', 'mu2600-hd': 'img/folding-interior.jpg', 'mu2075-pivot': 'img/commercial-doors.jpg', mu2700: 'img/door-window.jpg', 'mu2600-slim': 'img/partition-door.jpg', 'structural-doors': 'img/partition-door.jpg', mu2000: 'img/door-window.jpg' };
   const alImg = (p, s) => p.image || AL_IMG_P[p.id] || AL_IMG[s.art] || '';
   const homeSys = (pid) => { const r = alProd(pid); return r ? (r.p.sys || []).find((k) => bySlug(k)) : undefined; };
-  // products inside a system: picture cards; picture, model, name and text animate in; chips filter by family
+  // products inside a system: a simple grid; picture, name and one line; add to cart on each
   function sysProducts(slug) {
     const L = sysList(slug);
     if (!L.length) return '';
     const fams = [...new Map(L.map(({ s: f }) => [f.id, f])).values()];
-    const el = lang === 'el';
     const used = new Set();
     const pic = (p, f) => { const im = alImg(p, f); if (!im || (used.has(im) && !p.image)) return ''; used.add(im); return im; };
-    return `<section class="sp-sec" id="sp-products"><div class="wrap">
-      <p class="eyebrow">MUSKITA · ${L.length} ${u('al_products')}</p><h2>${el ? 'Προϊόντα του συστήματος' : 'Products in this system'}</h2>
+    return `<section class="sp-sec pg-sec" id="sp-products"><div class="wrap">
       ${fams.length > 1 ? `<div class="chips mx-chips">${[{ id: 'all', name: { en: 'All', el: 'Όλα' } }, ...fams].map((f) => `<button type="button" data-mxf="${esc(f.id)}" aria-pressed="${f.id === 'all'}">${esc(t(f.name))}</button>`).join('')}</div>` : ''}
-      <div class="pf rv-kids">${L.map(({ p, s: f }, k) => `<a class="pf-c" data-fam="${esc(f.id)}" style="--i:${Math.min(k, 8)}" href="#alp-${esc(p.id)}">
-        <span class="pf-img">${(() => { const im = pic(p, f); return im ? `<img src="${esc(src(im))}" alt="${esc(p.model)}" loading="lazy">` : alArt(f.art); })()}<span class="pf-wm" aria-hidden="true">${esc(p.model)}</span></span>
-        <span class="pf-b"><small class="pf-f">${esc(t(f.name))}</small><b class="pf-m">${esc(p.model)}</b><span class="pf-n">${esc(t(p.name))}</span><span class="pf-d">${esc(t(p.desc))}</span><span class="pf-go">${u('details')}${icon('arrow')}</span></span>
-      </a>`).join('')}</div>
+      <div class="pg rv-kids">${L.map(({ p, s: f }, k) => `<div class="pg-c" data-fam="${esc(f.id)}" style="--i:${Math.min(k, 8)}">
+        <a class="pg-img" href="#alp-${esc(p.id)}">${(() => { const im = pic(p, f); return im ? `<img src="${esc(src(im))}" alt="${esc(p.model)}" loading="lazy" decoding="async">` : alArt(f.art); })()}</a>
+        <a class="pg-b" href="#alp-${esc(p.id)}"><b>${esc(p.model)}</b><span>${esc(t(p.name))}</span></a>
+        <button type="button" class="pg-add" data-cart="${esc(p.id)}">${icon('cart')}<span>${u('cart_add')}</span></button>
+      </div>`).join('')}</div>
     </div></section>`;
   }
+
 
 
   function quickFind() {
@@ -551,6 +555,57 @@
         <a class="qf-t qf-q" style="--i:${Math.min(list.length + 1, 9)}" href="#quote"><i>${icon('file')}</i><b>${u('get_quote')}</b><small>${el ? 'Δωρεάν, χωρίς δέσμευση' : 'Free, no obligation'}</small></a>
       </div></div></section>`;
   }
+  /* ---------- customer account ---------- */
+  let ACCT = { user: null, reqs: [], mode: 'login', err: '', busy: false };
+  async function acctLoad() {
+    try { const r = await fetch('/api/acct/me', { credentials: 'same-origin' }); const j = await r.json(); ACCT.user = j.user || null; ACCT.reqs = j.requests || []; } catch (e) {}
+    if (ACCT.user) { QB.cust = { ...QB.cust, name: QB.cust.name || ACCT.user.name, email: QB.cust.email || ACCT.user.email, phone: QB.cust.phone || ACCT.user.phone, pnum: QB.cust.pnum || ACCT.user.phone }; qbSave(); }
+    $$('.hb-acct').forEach((b) => b.classList.toggle('in', !!ACCT.user));
+  }
+  function acctSheet() {
+    const U = ACCT.user, el = lang === 'el';
+    const body = U
+      ? `<p class="ac-hi">${esc(u('acct_hi', { n: U.name }))}</p><p class="ac-sub">${esc(U.email)}${U.phone ? ' · ' + esc(U.phone) : ''}</p>
+         <h3>${u('acct_reqs')}</h3>${ACCT.reqs.length ? `<ul class="ac-req">${ACCT.reqs.map((r) => `<li><b>${esc(r.ref)}</b><small>${esc(new Date(r.ts).toLocaleDateString(el ? 'el-GR' : 'en-GB'))} · ${r.n}</small><span>${esc((r.items || []).join(', '))}</span></li>`).join('')}</ul>` : `<p class="ac-sub">${u('acct_none')}</p>`}
+         <div class="ac-acts"><a class="btn btn-accent" href="#quote" data-acct="close">${icon('cart')}${u('cart')} (${cartCount()})</a><button type="button" class="btn btn-ghost" data-acct="logout">${u('acct_out')}</button></div>`
+      : `<div class="ac-tabs"><button type="button" data-acct="mode" data-m="login" aria-pressed="${ACCT.mode === 'login'}">${u('acct_login')}</button><button type="button" data-acct="mode" data-m="reg" aria-pressed="${ACCT.mode === 'reg'}">${u('acct_reg')}</button></div>
+         <p class="ac-sub">${u('acct_why')}</p>
+         <form class="ac-f" data-acform>
+           ${ACCT.mode === 'reg' ? `<label>${u('acct_name')}<input name="name" autocomplete="name" required></label><label>${u('acct_phone')}<input name="phone" type="tel" autocomplete="tel" placeholder="+357"></label>` : ''}
+           <label>${u('acct_email')}<input name="email" type="email" autocomplete="email" required></label>
+           <label>${u('acct_pw')}<input name="password" type="password" autocomplete="${ACCT.mode === 'reg' ? 'new-password' : 'current-password'}" minlength="8" required></label>
+           ${ACCT.err ? `<p class="ac-err">${esc(ACCT.err)}</p>` : ''}
+           <button type="submit" class="btn btn-accent"${ACCT.busy ? ' disabled' : ''}>${ACCT.mode === 'reg' ? u('acct_reg') : u('acct_login')}</button>
+         </form>`;
+    return `<div class="ac-card" role="dialog" aria-modal="true" aria-label="${u('acct')}"><button type="button" class="ac-x" data-acct="close" aria-label="${u('close')}">${icon('close')}</button><p class="eyebrow">${u('acct')}</p>${body}</div>`;
+  }
+  function acctOpen() {
+    let m = $('#acct');
+    if (!m) { m = document.createElement('div'); m.id = 'acct'; m.className = 'acct'; document.body.appendChild(m); }
+    m.innerHTML = acctSheet(); m.hidden = false; requestAnimationFrame(() => m.classList.add('open'));
+  }
+  function acctClose() { const m = $('#acct'); if (m) { m.classList.remove('open'); setTimeout(() => { m.hidden = true; }, 250); } }
+  async function acctAction(a, el) {
+    if (a === 'open') { acctOpen(); acctLoad().then(() => { if ($('#acct') && !$('#acct').hidden) $('#acct').innerHTML = acctSheet(); }); return; }
+    if (a === 'close') { acctClose(); return; }
+    if (a === 'mode') { ACCT.mode = el.dataset.m; ACCT.err = ''; $('#acct').innerHTML = acctSheet(); return; }
+    if (a === 'logout') { try { await fetch('/api/acct/logout', { method: 'POST' }); } catch (e) {} ACCT.user = null; ACCT.reqs = []; $$('.hb-acct').forEach((b) => b.classList.remove('in')); $('#acct').innerHTML = acctSheet(); }
+  }
+  document.addEventListener('submit', async (e) => {
+    const f = e.target.closest('[data-acform]');
+    if (!f) return;
+    e.preventDefault();
+    const d = Object.fromEntries(new FormData(f).entries());
+    ACCT.busy = true; ACCT.err = '';
+    try {
+      const r = await fetch(ACCT.mode === 'reg' ? '/api/acct/register' : '/api/acct/login', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(d) });
+      const j = await r.json().catch(() => ({}));
+      if (!j.ok) ACCT.err = u({ wrong: 'acct_err', exists: 'acct_exists', invalid: 'acct_inv', too_many: 'acct_many' }[j.error] || 'acct_err');
+      else { ACCT.user = j.user; await acctLoad(); }
+    } catch (e2) { ACCT.err = u('acct_err'); }
+    ACCT.busy = false;
+    $('#acct').innerHTML = acctSheet();
+  });
   function products() {
     const G = prodGroups();
     if (!G.length) return '';
@@ -1150,7 +1205,22 @@
   let QB = { step: 'items', items: [], edit: -1, draft: null, cust: {}, sid: newSid(), ref: '', err: '' };
   try { const q = JSON.parse(localStorage.getItem(QB_KEY) || 'null'); if (q && Array.isArray(q.items)) QB = { ...QB, ...q, err: '', busy: false }; } catch (e) {}
   if (QB.cust && QB.cust.phone && QB.cust.pnum == null) QB.cust.pnum = QB.cust.phone;
-  const qbSave = () => { try { const { err, busy, more, ...keep } = QB; localStorage.setItem(QB_KEY, JSON.stringify(keep)); } catch (e) {} };
+  const cartCount = () => QB.items.length;
+  function cartBadge(bump) {
+    $$('[data-cartn]').forEach((b) => { const n = cartCount(); b.textContent = n; b.hidden = !n; if (bump) { b.classList.remove('bump'); void b.offsetWidth; b.classList.add('bump'); } });
+  }
+  function cartAdd(pid) {
+    const r = alProd(pid);
+    if (!r) return;
+    const label = `${r.p.model} – ${t(r.p.name)}`;
+    const have = QB.items.find((it) => it.model === label);
+    if (have) have.qty = Math.min(999, (+have.qty || 1) + 1);
+    else QB.items.push(blankItem({ grp: 'custom', cat: 'custom', catName: t(r.s.name), model: label, measure: 1, qty: 1 }));
+    if (QB.step === 'done') QB.step = 'items';
+    qbSave(); qbRender(); cartBadge(true);
+    toast(u('cart_added', { m: r.p.model }));
+  }
+  const qbSave = () => { try { const { err, busy, more, ...keep } = QB; localStorage.setItem(QB_KEY, JSON.stringify(keep)); } catch (e) {} cartBadge(); };
   const blankItem = (o) => ({ grp: '', mp: 0, cat: '', model: '', pid: '', measure: 0, width: '', height: '', qty: 1, colour: '', glass: '', glassThk: '', opening: '', specs: '', notes: '', files: [], ...(o || {}) });
   const optList = (vals, cur, blank) => (blank ? `<option value="">${esc(blank)}</option>` : '') + vals.map((v) => `<option ${v === cur ? 'selected' : ''}>${esc(v)}</option>`).join('');
 
@@ -1676,8 +1746,8 @@
       return;
     }
     if (!sec.isConnected) return;
-    const renderer = new THREE.WebGLRenderer({ canvas: cv, antialias: true, alpha: true, powerPreference: 'high-performance' });
-    renderer.setPixelRatio(Math.min(devicePixelRatio || 1, innerWidth < 760 ? 1.75 : 1.5));
+    const renderer = new THREE.WebGLRenderer({ canvas: cv, antialias: innerWidth >= 760, alpha: true, powerPreference: 'high-performance' });
+    renderer.setPixelRatio(Math.min(devicePixelRatio || 1, innerWidth < 760 ? 1.15 : 1.5));
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.3;
@@ -1840,6 +1910,8 @@
     syncPanels();
     reveal($('#app'), renders++ > 0);
     if ($('.intro')) introStart();
+    cartBadge();
+    if (!ACCT.loaded) { ACCT.loaded = true; acctLoad(); }
   }
 
   // scroll reveal + count-up. Content is visible unless the script turns the effect on.
@@ -2370,7 +2442,7 @@
     if (mb) { setPanel(panel === mb.dataset.p && !canHover() ? null : mb.dataset.p); return; }
     if (e.target.closest('.srch-btn')) { setPanel(panel === 'search' ? null : 'search'); if (panel === 'search') { const i = $('#sq-top'); i.focus(); runSearch(i.closest('[data-search]')); } return; }
     const acc = e.target.closest('.acc');
-    if (acc) { const open = acc.getAttribute('aria-expanded') !== 'true'; acc.setAttribute('aria-expanded', String(open)); $('#' + acc.getAttribute('aria-controls')).classList.toggle('open', open); return; }
+    if (acc) { const open = acc.getAttribute('aria-expanded') !== 'true'; if (open) $$('.acc[aria-expanded="true"]').forEach((o) => { if (o !== acc) { o.setAttribute('aria-expanded', 'false'); const pnl = $('#' + o.getAttribute('aria-controls')); if (pnl) pnl.classList.remove('open'); } }); acc.setAttribute('aria-expanded', String(open)); $('#' + acc.getAttribute('aria-controls')).classList.toggle('open', open); return; }
     const chip = e.target.closest('[data-chip]');
     if (chip) { const box = chip.closest('[data-search]'), i = box.querySelector('.sq'); i.value = chip.dataset.chip; runSearch(box); i.focus(); return; }
     if (panel && e.target.closest('#mnav a, #mega a, #pmega a, #srch a')) { setPanel(null); return; }
@@ -2408,6 +2480,10 @@
     if (mx) { const li = mx.closest('.mx-i'), open = !li.classList.contains('open'); li.classList.toggle('open', open); mx.setAttribute('aria-expanded', String(open)); return; }
     const mxf = e.target.closest('[data-mxf]');
     if (mxf) { const f = mxf.dataset.mxf, sec = mxf.closest('#sp-products'); $$('[data-mxf]', sec).forEach((b) => b.setAttribute('aria-pressed', String(b === mxf))); $$('[data-fam]', sec).filter((li) => f === 'all' || li.dataset.fam === f).forEach((li, n) => { li.style.setProperty('--i', String(Math.min(n, 12))); li.classList.remove('mx-go'); void li.offsetWidth; li.classList.add('mx-go'); }); $$('[data-fam]', sec).forEach((li) => { li.hidden = f !== 'all' && li.dataset.fam !== f; }); return; }
+    const ca = e.target.closest('[data-cart]');
+    if (ca) { cartAdd(ca.dataset.cart); return; }
+    const acb = e.target.closest('[data-acct]');
+    if (acb) { acctAction(acb.dataset.acct, acb); return; }
     const alq = e.target.closest('[data-alq]');
     if (alq) { const r = alProd(alq.dataset.alq); if (r) qbStart({ cat: 'custom', specs: `${r.p.model} · ${t(r.p.name)} (${t(r.s.name)})` }); return; }
     const addq = e.target.closest('[data-addq]');
