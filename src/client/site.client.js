@@ -527,11 +527,13 @@
     if (!L.length) return '';
     const fams = [...new Map(L.map(({ s: f }) => [f.id, f])).values()];
     const el = lang === 'el';
+    const used = new Set();
+    const pic = (p, f) => { const im = alImg(p, f); if (!im || (used.has(im) && !p.image)) return ''; used.add(im); return im; };
     return `<section class="sp-sec" id="sp-products"><div class="wrap">
       <p class="eyebrow">MUSKITA · ${L.length} ${u('al_products')}</p><h2>${el ? 'Προϊόντα του συστήματος' : 'Products in this system'}</h2>
       ${fams.length > 1 ? `<div class="chips mx-chips">${[{ id: 'all', name: { en: 'All', el: 'Όλα' } }, ...fams].map((f) => `<button type="button" data-mxf="${esc(f.id)}" aria-pressed="${f.id === 'all'}">${esc(t(f.name))}</button>`).join('')}</div>` : ''}
       <div class="pf rv-kids">${L.map(({ p, s: f }, k) => `<a class="pf-c" data-fam="${esc(f.id)}" style="--i:${Math.min(k, 8)}" href="#alp-${esc(p.id)}">
-        <span class="pf-img">${alImg(p, f) ? `<img src="${esc(src(alImg(p, f)))}" alt="${esc(p.model)}" loading="lazy">` : alArt(f.art)}<span class="pf-wm" aria-hidden="true">${esc(p.model)}</span></span>
+        <span class="pf-img">${(() => { const im = pic(p, f); return im ? `<img src="${esc(src(im))}" alt="${esc(p.model)}" loading="lazy">` : alArt(f.art); })()}<span class="pf-wm" aria-hidden="true">${esc(p.model)}</span></span>
         <span class="pf-b"><small class="pf-f">${esc(t(f.name))}</small><b class="pf-m">${esc(p.model)}</b><span class="pf-n">${esc(t(p.name))}</span><span class="pf-d">${esc(t(p.desc))}</span><span class="pf-go">${u('details')}${icon('arrow')}</span></span>
       </a>`).join('')}</div>
     </div></section>`;
@@ -1455,6 +1457,8 @@
         <span class="sp-title">${esc(t(s.name))}</span>
         <button type="button" class="btn btn-accent" data-consult="${esc(s.slug)}">${u('quote')}</button>
       </div></div>
+      <section class="sx-head"><div class="wrap"><h1>${esc(t(s.name))}</h1></div></section>
+      ${sysProducts(s.slug)}
       <section class="sp-hero"><div class="wrap sp-hero-grid">
         <div>
           <p class="eyebrow">${u('system_n', { n: pad(i + 1), t: pad(list.length) })}</p>
@@ -1470,7 +1474,7 @@
         </div>
         ${imgs[0] ? `<figure class="sp-hero-img" data-zoom="0" tabindex="0" role="button" aria-label="${u('zoom')}"><img src="${esc(src(imgs[0]))}" alt="${esc(t(s.name))}"><span class="zoom-hint">${icon('zoom')}${u('zoom')}</span></figure>` : ''}
       </div></section>
-      <nav class="sp-tabs" aria-label="${esc(t(s.name))}"><div class="wrap">${tabs.map(([id, l], k) => `<button type="button" data-go="${id}" class="${k === 0 ? 'on' : ''}">${l}</button>`).join('')}</div></nav>
+
       <section class="sp-sec" id="sp-overview"><div class="wrap sp-two">
         <div><p class="eyebrow">${u('overview')}</p><h2>${esc(t(s.name))}</h2></div>
         <div><p class="sp-overview">${esc(t(s.overview))}</p>
@@ -1485,7 +1489,6 @@
       ${hasCfg ? `<section class="sp-sec" id="sp-config"><div class="wrap"><p class="eyebrow">${u('config')}</p><h2>${u('config')}</h2><div class="cfg rv" id="cfg"></div></div></section>` : ''}
       ${imgs.length > 1 ? `<section class="sp-sec" id="sp-gallery"><div class="wrap"><p class="eyebrow">${u('gallery')}</p><h2>${u('gallery')}</h2>
         <div class="gal rv-kids n${Math.min(imgs.length, 4)}">${imgs.map((im, k) => `<button type="button" style="--i:${k}" data-zoom="${k}" aria-label="${u('zoom')}"><img src="${esc(src(im))}" alt="${esc(t(s.name))}" loading="lazy"></button>`).join('')}</div></div></section>` : ''}
-      ${sysProducts(s.slug)}
       ${related.length ? `<section class="sp-sec" id="sp-related"><div class="wrap"><p class="eyebrow">${u('related')}</p><h2>${u('related')}</h2>
         <div class="rel rv-kids">${related.map((r, k) => `<a style="--i:${k}" href="#${esc(r.slug)}"><figure><img src="${esc(src(r.image))}" alt="" loading="lazy"></figure><small>${pad(list.indexOf(r) + 1)}</small><h3>${esc(t(r.name))}</h3></a>`).join('')}</div></div></section>` : ''}
       <section class="sp-band"><div class="wrap"><div><h2>${u('cta_title')}</h2><p>${u('cta_body')}</p></div>
@@ -1828,7 +1831,7 @@
   function render() {
     document.documentElement.lang = lang;
     introStop();
-    $('#app').innerHTML = header() + '<main>' + (S.heroMode === 'photo' ? hero() : introHero()) + quickFind() + teasers('top') + products() + teasers('rest') + reviews() + quote() + '</main>' + footer();
+    $('#app').innerHTML = header() + '<main>' + hero() + quickFind() + teasers('top') + products() + teasers('rest') + reviews() + quote() + '</main>' + footer();
     tstStart();
     hsShow(hsI);
     railArrows();
