@@ -18,7 +18,7 @@
     ['Overview', [['dash', 'Dashboard', 'dash']]],
     ['Customers', [['inbox', 'Quote requests', 'inbox'], ['reviews', 'Reviews', 'star']]],
     ['Your work', [['works', 'Latest work', 'images'], ['cats', 'Gallery categories', 'tag']]],
-    ['Website', [['hero', 'Hero', 'home'], ['company', 'Company & About', 'building'], ['products', 'Profile Systems', 'layers'], ['systems', 'Aluminium Systems', 'grid'], ['content', 'Key points & numbers', 'chart']]],
+    ['Website', [['hero', 'Hero', 'home'], ['company', 'Company & About', 'building'], ['alu', 'Products', 'grid'], ['products', 'Profile Systems', 'layers'], ['systems', 'Aluminium Systems', 'grid'], ['content', 'Key points & numbers', 'chart']]],
     ['Design & files', [['design', 'Colours', 'palette'], ['media', 'Images & files', 'folder']]],
     ['Account', [['account', 'Password', 'key']]],
   ];
@@ -244,6 +244,7 @@
         <div class="pick"><button type="button" class="b b-pri" data-act="work-photos">Upload photos</button></div></div>
       <div class="card"><h2>Details</h2>
         ${pair(`${p}.title`, 'Title, e.g. Sliding doors, villa in Limassol')}
+        ${pair(`${p}.project`, 'Project (optional), e.g. Villa in Limassol. Jobs with the same project name show together as one project')}
         <div class="row">${sel(`${p}.cat`, 'Category', [['', 'No category'], ...site.galleryCats.map((c) => [c.id, c.name.en || c.name.el || c.id])])}${fld('Month finished', `<input type="month" data-path="${p}.date" value="${esc(w.date || '')}">`)}</div>
         ${pair(`${p}.place`, 'Place (optional), e.g. Limassol')}
         <label class="check"><input type="checkbox" data-act="toggle-new" ${isNew(w) ? 'checked' : ''}>Show the NEW label (${NEW_DAYS} days from today)</label></div>
@@ -334,6 +335,56 @@
       <div class="card"><h2>Choose product pictures</h2><p class="hint">The four pictures customers tap in the quotation form (“Choose product”). Tap “Change photo” and pick a picture from your phone’s gallery or files. “Remove” brings the standard picture back. To add a product itself, use “+ Add product” above.</p>
         <div class="tile-pick">${[['doors', 'Doors', 'img/tile-doors.jpg'], ['windows', 'Windows', 'img/tile-windows.jpg'], ['sliding', 'Sliding systems', 'img/sliding-door.jpg'], ['glass', 'Glass', 'img/glass-stairs.jpg']].map(([k, l, d]) => { const v = val(`quoteTiles.${k}`); return fld(l + (v ? '' : ' (standard picture)'), `<div class="pick"><img src="${esc(src(v || d))}" alt=""><button type="button" class="b b-sm" data-act="pick" data-path="quoteTiles.${k}">Change photo</button>${v ? `<button type="button" class="b b-sm b-danger" data-act="clear" data-path="quoteTiles.${k}">Remove</button>` : ''}</div>`); }).join('')}</div></div>
 `;
+  }
+  /* ---------- Products: the catalogue shown inside the Aluminium Systems pages ---------- */
+  let editAlu = null, aluName = null;
+  const aluOpen = new Set();
+  function vAlu() {
+    if (editAlu && site.aluSystems?.[editAlu[0]]?.products?.[editAlu[1]]) return vAluEdit(editAlu[0], editAlu[1]);
+    editAlu = null;
+    const C = site.aluSystems || (site.aluSystems = []);
+    const sw = (path, on, label) => `<label class="tgl" title="${label}"><input type="checkbox" data-path="${path}" ${on ? 'checked' : ''} aria-label="${label}"><i></i></label>`;
+    const row = (x, ci, pi, n) => `<div class="pp${x.visible === false ? ' off' : ''}">
+        <button type="button" class="ib del" data-act="alu-pdel" data-c="${ci}" data-i="${pi}" aria-label="Delete ${esc(x.model)}">${ni('trash')}</button>
+        <button type="button" class="pp-main" data-act="alu-edit" data-c="${ci}" data-i="${pi}">${x.image ? `<img src="${esc(src(x.image))}" alt="">` : '<span class="noimg" style="width:52px;height:40px">No photo</span>'}<span><b>${esc(x.model || 'New product')}</b><small>${esc(x.name?.en || '')}${x.visible === false ? ' · <em>Hidden</em>' : ''}</small></span></button>
+        <div class="pp-acts">${sw(`aluSystems.${ci}.products.${pi}.visible`, x.visible !== false, 'Show on website')}
+          <button type="button" class="ib" data-act="alu-edit" data-c="${ci}" data-i="${pi}" aria-label="Edit">${ni('pen')}</button>
+          <button type="button" class="ib" data-act="move" data-path="aluSystems.${ci}.products" data-i="${pi}" data-d="-1" ${pi === 0 ? 'disabled' : ''} aria-label="Move up">${ni('up')}</button>
+          <button type="button" class="ib" data-act="move" data-path="aluSystems.${ci}.products" data-i="${pi}" data-d="1" ${pi === n - 1 ? 'disabled' : ''} aria-label="Move down">${ni('down')}</button></div>
+      </div>`;
+    return `<div class="card"><h2>Products</h2><p class="hint">These products show inside your <b>Aluminium Systems</b> pages. Tap a category to open it. ${ni('trash')} deletes a product, ${ni('pen')} edits it (name, text, photo, where it shows), the switch hides or shows it. Press <b>Save</b> at the top when you are done.</p>
+      <div class="pcs">${C.map((c, ci) => { const open = aluOpen.has(c.id), ed = aluName === c.id; return `<div class="pc${open ? ' open' : ''}">
+        <div class="pc-head">
+          <button type="button" class="ib del" data-act="alu-cdel" data-i="${ci}" aria-label="Delete category">${ni('trash')}</button>
+          <button type="button" class="pc-tog" data-act="alu-tog" data-id="${esc(c.id)}" aria-expanded="${open}">${ni('right')}<span><b>${esc(c.name?.en || 'New category')}</b><small>${c.products.length} product${c.products.length === 1 ? '' : 's'}</small></span></button>
+          <div class="pp-acts">
+            <button type="button" class="ib${ed ? ' on' : ''}" data-act="alu-cname" data-id="${esc(c.id)}" aria-label="Rename category">${ni('pen')}</button>
+            <button type="button" class="ib" data-act="move" data-path="aluSystems" data-i="${ci}" data-d="-1" ${ci === 0 ? 'disabled' : ''} aria-label="Move up">${ni('up')}</button>
+            <button type="button" class="ib" data-act="move" data-path="aluSystems" data-i="${ci}" data-d="1" ${ci === C.length - 1 ? 'disabled' : ''} aria-label="Move down">${ni('down')}</button></div>
+        </div>
+        ${ed ? `<div class="pc-name">${pair(`aluSystems.${ci}.name`, 'Category name')}${pair(`aluSystems.${ci}.intro`, 'Short text', true)}<button type="button" class="b b-sm b-pri" data-act="alu-cname" data-id="${esc(c.id)}">Done</button></div>` : ''}
+        ${open ? `<div class="pc-body"><button type="button" class="pc-add" data-act="alu-add" data-c="${ci}">${ni('plus')}Add product</button>
+          ${c.products.map((x, pi) => row(x, ci, pi, c.products.length)).join('') || '<p class="empty">No products in this category yet.</p>'}</div>` : ''}
+      </div>`; }).join('')}</div>
+      <div><button type="button" class="b b-sm" data-act="alu-cadd">${ni('plus')}Add category</button></div></div>`;
+  }
+  function vAluEdit(ci, pi) {
+    const x = site.aluSystems[ci].products[pi], p = `aluSystems.${ci}.products.${pi}`;
+    const labels = site.aluSpecLabels || {};
+    const lab = Object.entries(labels).map(([k, v]) => [k, v[0]]).sort((a2, b2) => a2[1].localeCompare(b2[1]));
+    return `<div class="crumb"><button type="button" class="b b-sm" data-act="alu-back">← All products</button><h2>${esc(x.model || 'New product')}</h2></div>
+      <div class="card"><h2>Basics</h2>${check(`${p}.visible`, 'Show on website')}
+        ${txt(`${p}.model`, 'Model, e.g. MU2075')}
+        ${pair(`${p}.name`, 'Name (one line)')}
+        ${pair(`${p}.desc`, 'Description', true)}
+        ${imgPick(`${p}.image`, 'Photo (if empty, a matching photo or drawing is used)', true)}</div>
+      <div class="card"><h2>Show in these Aluminium Systems</h2><p class="hint">Tick every system page this product should appear in.</p>
+        ${(site.systems || []).map((sy) => `<label class="check"><input type="checkbox" data-act="alu-sys" data-slug="${esc(sy.slug)}" ${(x.sys || []).includes(sy.slug) ? 'checked' : ''}>${esc(sy.name?.en || sy.slug)}</label>`).join('')}</div>
+      <div class="card"><h2>Technical data</h2><p class="hint">Copy only from the manufacturer (MUSKITA). Delete a row with ${ni('trash')}.</p>
+        <div class="list">${(x.specs || []).map((r, k) => `<div class="item"><div class="row">${fld('Label', `<select data-path="${p}.specs.${k}.0">${lab.map(([v, l]) => `<option value="${esc(v)}" ${r[0] === v ? 'selected' : ''}>${esc(l)}</option>`).join('')}</select>`)}${txt(`${p}.specs.${k}.1`, 'Value', 'text', 'e.g. 200 kg')}</div><div><button type="button" class="b b-sm b-danger" data-act="del" data-path="${p}.specs" data-i="${k}" data-now="1">${ni('trash')} Delete row</button></div></div>`).join('')}</div>
+        <div><button type="button" class="b b-sm" data-act="alu-spec-add">+ Add row</button></div>
+        ${txt(`${p}.source`, 'Source link (manufacturer page)', 'url', 'https://')}</div>
+      <div class="card"><h2>Delete</h2><div><button type="button" class="b b-danger" data-act="alu-pdel" data-c="${ci}" data-i="${pi}">Delete ${esc(x.model || 'product')}</button></div></div>`;
   }
   function vProductEdit(i) {
     const x = site.products[i], p = `products.${i}`;
@@ -589,6 +640,7 @@
     });
   }
   function goTab(k) {
+    editAlu = null;
     const ed = $('#editor'), tok = ++tabTok, anim = !!ed && !calm() && k !== tab;
     tab = k;
     editIdx = null;
@@ -619,7 +671,7 @@
     document.title = (quoteCount ? '(' + quoteCount + ') ' : '') + 'Admin · Alu MRK TriEdge';
   }
   function renderEditor() {
-    const views = { cats: vCats, dash: vDash, design: vDesign, company: vCompany, hero: vHero, systems: vSystems, works: vWorks, products: vProducts, reviews: vReviews, content: vContent, inbox: vInbox, media: vMedia, account: vAccount };
+    const views = { alu: vAlu, cats: vCats, dash: vDash, design: vDesign, company: vCompany, hero: vHero, systems: vSystems, works: vWorks, products: vProducts, reviews: vReviews, content: vContent, inbox: vInbox, media: vMedia, account: vAccount };
     const y = scrollY;
     $('#editor').innerHTML = views[tab]();
     $('#main').classList.toggle('no-prev', tab === 'dash' || tab === 'inbox' || tab === 'media' || tab === 'account');
@@ -904,6 +956,37 @@
         toast(b.dataset.cat ? 'Photos added to this category. Add a title, then press Save.' : 'Photos added. Add a title and category, then press Save.', 'ok');
         break;
       }
+      case 'alu-tog': { const id = b.dataset.id; if (aluOpen.has(id)) aluOpen.delete(id); else aluOpen.add(id); renderEditor(); break; }
+      case 'alu-cname': aluName = aluName === b.dataset.id ? null : b.dataset.id; renderEditor(); break;
+      case 'alu-edit': editAlu = [+b.dataset.c, +b.dataset.i]; renderEditor(); pgIn(); scrollTo(0, 0); break;
+      case 'alu-back': editAlu = null; renderEditor(); pgIn(); break;
+      case 'alu-add': {
+        const c = site.aluSystems[+b.dataset.c];
+        c.products.unshift({ id: 'p' + Date.now().toString(36), model: 'New product', name: T(), desc: T(), specs: [], sys: [], visible: true, source: '' });
+        aluOpen.add(c.id); editAlu = [+b.dataset.c, 0]; markDirty(); renderEditor(); scrollTo(0, 0); break;
+      }
+      case 'alu-cadd': {
+        const id = 'c' + Date.now().toString(36);
+        site.aluSystems.push({ id, art: 'sliding', name: { en: 'New category', el: '' }, intro: T(), products: [] });
+        aluOpen.add(id); aluName = id; markDirty(); renderEditor(); break;
+      }
+      case 'alu-pdel': {
+        if (!b.dataset.armed) { b.dataset.armed = '1'; b.classList.add('armed'); b.title = 'Tap again to delete'; toast('Tap the delete button again to delete this product.'); setTimeout(() => { if (b.isConnected) { delete b.dataset.armed; b.classList.remove('armed'); } }, 3000); break; }
+        site.aluSystems[+b.dataset.c].products.splice(+b.dataset.i, 1); editAlu = null; markDirty(); renderEditor(); toast('Product deleted. Press Save to apply.'); break;
+      }
+      case 'alu-cdel': {
+        const c = site.aluSystems[+b.dataset.i];
+        if (!b.dataset.armed) { b.dataset.armed = '1'; b.classList.add('armed'); toast(`Tap again to delete “${c.name?.en || 'category'}” and its ${c.products.length} products.`); setTimeout(() => { if (b.isConnected) { delete b.dataset.armed; b.classList.remove('armed'); } }, 3000); break; }
+        site.aluSystems.splice(+b.dataset.i, 1); markDirty(); renderEditor(); toast('Category deleted. Press Save to apply.'); break;
+      }
+      case 'alu-sys': {
+        const x = editAlu && site.aluSystems[editAlu[0]].products[editAlu[1]];
+        if (!x) break;
+        x.sys = (x.sys || []).filter((k) => k !== b.dataset.slug);
+        if (b.checked) x.sys.push(b.dataset.slug);
+        markDirty(); break;
+      }
+      case 'alu-spec-add': { const x = editAlu && site.aluSystems[editAlu[0]].products[editAlu[1]]; if (x) { (x.specs || (x.specs = [])).push(['glass', '']); markDirty(); renderEditor(); } break; }
       case 'edit-work': editWork = +b.dataset.i; renderEditor(); pgIn(); scrollTo(0, 0); break;
       case 'back-work': editWork = null; renderEditor(); pgIn(); break;
       case 'work-photos': {

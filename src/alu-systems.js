@@ -450,3 +450,18 @@ export const SPEC_LABELS = {
   trw: ['Top rail width', 'Πλάτος άνω οδηγού'], trh: ['Top rail height', 'Ύψος άνω οδηγού'], srw: ['Side rail width', 'Πλάτος πλαϊνού οδηγού'],
   srh: ['Side rail height', 'Ύψος πλαϊνού οδηγού'], tvs: ['Top visible section', 'Ορατό άνω τμήμα'], svs: ['Side visible section', 'Ορατό πλαϊνό τμήμα'],
 };
+
+// Where each product appears: the main Aluminium Systems pages (by slug). Stored on each product as `sys`.
+export const SYS_PLACE = {
+  'motorized-sliding': ['mu144', 'mu114', 'thea-minimal'],
+  'aluminium-windows': ['mu2075', 'mu2020', 'mu2000', 'mu2500', 'mu6100', 'mu605', 'anodize', 'powder', 'wood'],
+  'aluminium-doors': ['mu2075-pivot', 'mu2700', 'mu2600-slim', 'structural-doors', 'mu2000', 'anodize', 'powder', 'wood'],
+  'folding-systems': ['mu2600', 'mu2600-hd', 'mu900-bifold'],
+  'sliding-glass': ['thea-minimal', 'mu144', 'mu114', 'mu27', 'mu3000', 'mu100', 'mu3200'],
+  'curtain-wall': ['mu800', 'mu800-sg', 'mu4200-semi', 'mu4200-struct'],
+  'glass-facade': ['mu800-sg', 'mu4200-struct', 'mu4100', 'mu3880', 'mu673', 'acoustic', 'mu500', 'horizon', 'mu3900'],
+  'custom-solutions': ['mu9000-oasis', 'mu9000-zen', 'mu950-sunsmart', 'mu950', 'mu900', 'mu900-eclipse', 'mu35', 'mu435', 'mu450', 'alufence', 'mu1080', 'mu1100', 'mu936', 'mu941', 'fence-louvre', 'fence-perforated', 'mu500', 'horizon', 'mu3900',
+    'mu3880', 'mu4100', 'mu673', 'slotdrain', 'mu7300', 'mu7320', 'mu7330', 'mp102', 'mp109', 'mp222', 'mp224', 'mp503', 'mp601', 'ladder-double', 'ladder-single', 'ladder-tripod',
+    'anodize', 'powder', 'wood', 'custom-profiles', 'gp-profiles', 'std-profiles', 'acoustic', 'signs'],
+};
+for (const s of ALU_SYSTEMS) for (const p of s.products) { p.sys = Object.keys(SYS_PLACE).filter((k) => SYS_PLACE[k].includes(p.id)); p.visible = true; }
