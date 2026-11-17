@@ -1319,7 +1319,7 @@
           <div class="qb-g2"><div class="f"><label for="qc-pnum">${u('qb_phone')} *</label><div class="qb-phone"><select id="qc-cc" data-qc="cc" aria-label="${esc(u('qb_cc'))}">${CC.map(([v, n]) => `<option value="${v}" ${v === cc ? 'selected' : ''}>${v} ${n}</option>`).join('')}</select><input id="qc-pnum" data-qc="pnum" type="tel" inputmode="tel" autocomplete="tel" maxlength="30" placeholder="99 000000" value="${esc(c.pnum || '')}"></div></div>
           ${fld('location', 'qb_location', 'text', 'address-level2', 0)}</div>
         </div>
-        <label class="qb-check"><input type="checkbox" id="qc-privacy" data-qc="privacy" ${c.privacy ? 'checked' : ''}><span>${esc(u('qb_privacy', { c: S.company.name }))}<small>${u('qb_privacy_note')} <a href="#privacy" target="_blank">${u('privacy_read')}</a></small></span></label>
+        <p class="qb-pnote">${u('qb_privacy_note')} <a href="#privacy">${lang === 'el' ? 'Πολιτική απορρήτου' : 'Privacy notice'}</a></p>
         <p class="q-status err" id="qb-cerr" role="alert"></p>
         <div class="qb-nav"><button type="button" class="btn btn-ghost" data-qb="to-items">${icon('back')}${u('qb_back')}</button><button type="button" class="btn btn-accent" data-qb="to-review">${u('qb_review')}${icon('arrow')}</button></div>`;
     }
@@ -1439,7 +1439,7 @@
       QB.step = 'details'; qbRender('#qc-name'); qbScrollTop();
     } else if (a === 'to-review') {
       const c = qbReadCust(), er = $('#qb-cerr');
-      const bad = !c.name ? ['qb_err_name', '#qc-name'] : !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(c.email || '') ? ['qb_err_email', '#qc-email'] : !/^\s*(\+|00)/.test(c.phone || '') || (c.phone || '').replace(/\D/g, '').length < 8 ? ['qb_err_phone', '#qc-pnum'] : !c.privacy ? ['qb_err_privacy', '#qc-privacy'] : null;
+      const bad = !c.name ? ['qb_err_name', '#qc-name'] : !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(c.email || '') ? ['qb_err_email', '#qc-email'] : !/^\s*(\+|00)/.test(c.phone || '') || (c.phone || '').replace(/\D/g, '').length < 8 ? ['qb_err_phone', '#qc-pnum'] : null;
       if (bad) { er.textContent = u(bad[0]); $(bad[1]).focus(); return; }
       QB.step = 'review'; QB.err = ''; qbRender(); qbScrollTop();
     } else if (a === 'submit') {
@@ -1448,7 +1448,7 @@
       try {
         let ref = 'AMT-PREVIEW';
         if (!PREVIEW) {
-          const body = { kind: QB.kind || 'info', sid: QB.sid, lang, website: ($('#qb-web') || {}).value || '', customer: { name: QB.cust.name, email: QB.cust.email, phone: QB.cust.phone, location: QB.cust.location, privacy: QB.cust.privacy }, items: QB.items.map((it) => ({ ...it, files: (it.files || []).map((f) => ({ id: f.id })) })) };
+          const body = { kind: QB.kind || 'info', sid: QB.sid, lang, website: ($('#qb-web') || {}).value || '', customer: { name: QB.cust.name, email: QB.cust.email, phone: QB.cust.phone, location: QB.cust.location, privacy: true }, items: QB.items.map((it) => ({ ...it, files: (it.files || []).map((f) => ({ id: f.id })) })) };
           const r = await fetch('/api/quote', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) });
           const j = await r.json().catch(() => ({}));
           if (!r.ok || !j.ok) throw new Error(j.error || 'send');

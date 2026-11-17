@@ -345,20 +345,20 @@
     const C = site.aluSystems || (site.aluSystems = []);
     const sw = (path, on, label) => `<label class="tgl" title="${label}"><input type="checkbox" data-path="${path}" ${on ? 'checked' : ''} aria-label="${label}"><i></i></label>`;
     const row = (x, ci, pi, n) => `<div class="pp${x.visible === false ? ' off' : ''}">
-        <button type="button" class="ib del" data-act="alu-pdel" data-c="${ci}" data-i="${pi}" aria-label="Delete ${esc(x.model)}">${ni('trash')}</button>
         <button type="button" class="pp-main" data-act="alu-edit" data-c="${ci}" data-i="${pi}">${x.image ? `<img src="${esc(src(x.image))}" alt="">` : '<span class="noimg" style="width:52px;height:40px">No photo</span>'}<span><b>${esc(x.model || 'New product')}</b><small>${esc(x.name?.en || '')}${x.visible === false ? ' · <em>Hidden</em>' : ''}</small></span></button>
         <div class="pp-acts">${sw(`aluSystems.${ci}.products.${pi}.visible`, x.visible !== false, 'Show on website')}
           <button type="button" class="ib" data-act="alu-edit" data-c="${ci}" data-i="${pi}" aria-label="Edit">${ni('pen')}</button>
+          <button type="button" class="ib del" data-act="alu-pdel" data-c="${ci}" data-i="${pi}" aria-label="Delete ${esc(x.model)}">${ni('trash')}</button>
           <button type="button" class="ib" data-act="move" data-path="aluSystems.${ci}.products" data-i="${pi}" data-d="-1" ${pi === 0 ? 'disabled' : ''} aria-label="Move up">${ni('up')}</button>
           <button type="button" class="ib" data-act="move" data-path="aluSystems.${ci}.products" data-i="${pi}" data-d="1" ${pi === n - 1 ? 'disabled' : ''} aria-label="Move down">${ni('down')}</button></div>
       </div>`;
     return `<div class="card"><h2>Products</h2><p class="hint">These products show inside your <b>Aluminium Systems</b> pages. Tap a category to open it. ${ni('trash')} deletes a product, ${ni('pen')} edits it (name, text, photo, where it shows), the switch hides or shows it. Press <b>Save</b> at the top when you are done.</p>
       <div class="pcs">${C.map((c, ci) => { const open = aluOpen.has(c.id), ed = aluName === c.id; return `<div class="pc${open ? ' open' : ''}">
         <div class="pc-head">
-          <button type="button" class="ib del" data-act="alu-cdel" data-i="${ci}" aria-label="Delete category">${ni('trash')}</button>
           <button type="button" class="pc-tog" data-act="alu-tog" data-id="${esc(c.id)}" aria-expanded="${open}">${ni('right')}<span><b>${esc(c.name?.en || 'New category')}</b><small>${c.products.length} product${c.products.length === 1 ? '' : 's'}</small></span></button>
           <div class="pp-acts">
             <button type="button" class="ib${ed ? ' on' : ''}" data-act="alu-cname" data-id="${esc(c.id)}" aria-label="Rename category">${ni('pen')}</button>
+            <button type="button" class="ib del" data-act="alu-cdel" data-i="${ci}" aria-label="Delete category">${ni('trash')}</button>
             <button type="button" class="ib" data-act="move" data-path="aluSystems" data-i="${ci}" data-d="-1" ${ci === 0 ? 'disabled' : ''} aria-label="Move up">${ni('up')}</button>
             <button type="button" class="ib" data-act="move" data-path="aluSystems" data-i="${ci}" data-d="1" ${ci === C.length - 1 ? 'disabled' : ''} aria-label="Move down">${ni('down')}</button></div>
         </div>
@@ -489,7 +489,7 @@
         <div class="qd-to"><small>Prepared for</small><b>${esc(c.name)}</b>${c.company ? `<span>${esc(c.company)}</span>` : ''}${c.location ? `<span>${esc(c.location)}</span>` : ''}<span>${esc(c.phone || '')}${c.email ? ' · ' + esc(c.email) : ''}</span></div>
         <div class="qd-tabw"><table class="qd-tab"><thead><tr><th>#</th><th>Description</th><th class="num">Size (mm)</th><th class="num">Qty</th><th class="num">Unit price (${esc(cur)})</th><th class="num">Total (${esc(cur)})</th></tr></thead><tbody id="qd-rows">${rows}</tbody></table></div>
         <div class="qd-sum"><div><span>Subtotal</span><b id="qd-sub">–</b></div><div><span>VAT <input id="qd-vat" type="number" min="0" step="0.1" value="${esc(vat == null ? '' : vat)}" placeholder="–">%</span><b id="qd-vatv">–</b></div><div class="qd-total"><span>Total (${esc(cur)})</span><b id="qd-tot">–</b></div></div>
-        <section class="qd-terms">${[['payment', 'Payment terms', payment], ['delivery', 'Delivery / installation', delivery], ['terms', 'Terms and conditions', terms]].map(([k, h, v]) => `<div><h3>${h}</h3><div class="qd-ed" contenteditable="true" data-term="${k}">${esc(v || '')}</div></div>`).join('')}</section>
+        <section class="qd-terms">${[['payment', 'Payment terms', payment], ['delivery', 'Delivery / installation', delivery], ['terms', 'Terms and conditions', terms]].map(([k, h, v]) => `<div><h3>${h}</h3><div class="qd-ed" contenteditable="true" data-term="${k}" data-ph="Tap to write (optional). Left empty, it is not printed.">${esc(v || '')}</div></div>`).join('')}</section>
         <footer class="qd-foot"><div><small>For ${esc(co.name)}</small><div class="qd-sign" contenteditable="true">${esc(sign || '')}</div></div><span>${esc([co.name, co.phone, co.email].filter(Boolean).join(' · '))}</span></footer>
       </article>`;
   }
@@ -1101,7 +1101,12 @@
         if (tab === 'inbox') renderEditor();
         break;
       }
-      case 'qd-print': if (qdIsDirty) await qdSave(b.dataset.key, true); window.print(); break;
+      case 'qd-print': {
+        // boxes with only spaces or line breaks count as empty, so they are left out of the PDF
+        $$('#qdoc .qd-ed').forEach((d) => { if (!d.textContent.trim()) d.innerHTML = ''; });
+        if (qdIsDirty) await qdSave(b.dataset.key, true);
+        window.print(); break;
+      }
       case 'qd-row': {
         const tb = $('#qd-rows'), n = tb.children.length + 1;
         qdDirty(true);

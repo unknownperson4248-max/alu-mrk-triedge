@@ -451,3 +451,6 @@ body::before{content:'';position:fixed;inset:0;z-index:-1;background:
 .tgl input:checked+i::after{transform:translateX(20px)}
 .tgl input:focus-visible+i{outline:2px solid var(--acc);outline-offset:2px}
 @media (min-width:700px){.pp{grid-template-columns:minmax(0,1fr) auto;align-items:center}.pp .pp-acts{border-top:0;padding-top:0}}
+
+.qd-terms .qd-ed{min-height:2.4em;padding:8px 10px;border:1px dashed #cfd4da;border-radius:8px;background:#fafbfc}
+@media print{.qd-terms .qd-ed{border:0;padding:0;background:none;min-height:0}.qd-sum>div:has(#qd-vat:placeholder-shown){display:none}}
