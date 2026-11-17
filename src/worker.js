@@ -409,7 +409,13 @@ async function handleReviewPost(req, env, url) {
     return json({ ok: false, error: 'bad_request' }, 400);
   }
   if (b && b.website) return json({ ok: true });
-  const r = { id: rid(6), name: clip(b.name, 60), place: clip(b.place, 60), title: clip(b.title, 100), project: clip(b.project, 100), rating: Math.round(+b.rating), text: clip(b.text, 1200), lang: clip(b.lang, 4), ts: Date.now(), photos: [] };
+  // reviews come from customer accounts: the name is the account's, and customers who sent a request are marked verified
+  const acct = await acctFromReq(req, env);
+  if (!acct) return json({ ok: false, error: 'login' }, 401);
+  const eh = await sha256hex(acct.email);
+  const sent = ((await env.KV.get('cq:' + eh, 'json')) || []).length > 0 || !!(await env.KV.get('qe:' + eh));
+  b.name = acct.name;
+  const r = { id: rid(6), acct: eh.slice(0, 32), verified: sent, name: clip(b.name, 60), place: clip(b.place, 60), title: clip(b.title, 100), project: clip(b.project, 100), rating: Math.round(+b.rating), text: clip(b.text, 1200), lang: clip(b.lang, 4), ts: Date.now(), photos: [] };
   if (!r.name || r.text.length < 10 || !(r.rating >= 1 && r.rating <= 5)) return json({ ok: false, error: 'required' }, 400);
   for (const id of Array.isArray(b.photos) ? b.photos.slice(0, 3) : []) {
     if (!FILE_ID.test(String(id))) continue;
@@ -419,6 +425,7 @@ async function handleReviewPost(req, env, url) {
   if (!(await bump(env, 'review', 60))) return json({ ok: false, error: 'busy' }, 429);
   const list = (await env.KV.get('rev-pending', 'json')) || [];
   if (list.length >= 200) return json({ ok: false, error: 'busy' }, 429);
+  if (list.filter((x) => x.acct === r.acct).length >= 2) return json({ ok: false, error: 'busy' }, 429);
   list.unshift(r);
   await env.KV.put('rev-pending', JSON.stringify(list));
   const site = await getSite(env);
@@ -797,7 +804,7 @@ async function handleAdminApi(req, env, url, path) {
       await env.KV.put('media:' + mid, value, { metadata: { type: metadata.type, name: 'review-' + (metadata.name || mid), size: value.byteLength, ts: Date.now() } });
       photos.push('media/' + mid);
     }
-    return json({ ok: true, review: { id: r.id, name: r.name, place: r.place || '', title: r.title || '', project: r.project || '', rating: r.rating, text: r.text, ts: r.ts, photos } });
+    return json({ ok: true, review: { id: r.id, name: r.name, place: r.place || '', title: r.title || '', project: r.project || '', rating: r.rating, text: r.text, ts: r.ts, photos, verified: !!r.verified } });
   }
   if (path === '/api/admin/translate' && method === 'POST') {
     if (!env.AI) return json({ ok: false, error: 'Translation is not available' }, 503);

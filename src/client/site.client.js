@@ -602,7 +602,7 @@
       const r = await fetch(ACCT.mode === 'reg' ? '/api/acct/register' : '/api/acct/login', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(d) });
       const j = await r.json().catch(() => ({}));
       if (!j.ok) ACCT.err = u({ wrong: 'acct_err', exists: 'acct_exists', invalid: 'acct_inv', too_many: 'acct_many' }[j.error] || 'acct_err');
-      else { ACCT.user = j.user; await acctLoad(); }
+      else { ACCT.user = j.user; await acctLoad(); if (ACCT.after) { const f = ACCT.after; ACCT.after = null; ACCT.busy = false; acctClose(); f(); return; } }
     } catch (e2) { ACCT.err = u('acct_err'); }
     ACCT.busy = false;
     $('#acct').innerHTML = acctSheet();
@@ -1038,12 +1038,24 @@
     setTimeout(() => { const t = $('#rv-text'); if (t) t.focus({ preventScroll: true }); }, 50);
   }
   function openReviewLegacy(preset) {
-    const m = rvModal();
+    const m = rvModal(), el = lang === 'el';
+    if (!ACCT.user) {
+      m.innerHTML = `<div class="rvm-card rv-gate">
+        <button type="button" class="rvm-x" data-rv-close aria-label="${u('close')}">&times;</button>
+        <span class="rv-gate-ic">${icon('user')}</span>
+        <h3>${el ? 'Συνδεθείτε για να γράψετε κριτική' : 'Log in to write a review'}</h3>
+        <p>${el ? 'Οι κριτικές γράφονται από λογαριασμούς πελατών, ώστε να είναι αληθινές. Η δημιουργία λογαριασμού παίρνει ένα λεπτό.' : 'Reviews come from customer accounts, so every review is real. Creating an account takes a minute.'}</p>
+        <div class="rv-gate-b"><button type="button" class="btn btn-accent" data-rvgate="login">${u('acct_login')}</button><button type="button" class="btn btn-ghost" data-rvgate="reg">${u('acct_reg')}</button></div>
+      </div>`;
+      m.dataset.rating = String(preset || 0);
+      return;
+    }
     m.innerHTML = `<form class="rvm-card" id="rv-form" novalidate>
       <button type="button" class="rvm-x" data-rv-close aria-label="${u('close')}">&times;</button>
       <h3>${u('rev_form_title')}</h3>
       <div class="f"><span class="lbl">${u('rev_rating')}</span>${starPick(preset)}</div>
-      <div class="q-row"><div class="f"><label for="rv-name">${u('name')} *</label><input id="rv-name" autocomplete="name" maxlength="60" required></div><div class="f"><label for="rv-place">${u('rev_place')}</label><input id="rv-place" maxlength="60"></div></div>
+      <p class="rv-as">${icon('user')}<span>${el ? 'Γράφετε ως' : 'Posting as'} <b>${esc(ACCT.user.name)}</b></span>${ACCT.reqs.length ? `<small class="rv-ver">${icon('check')}${u('rv_verified')}</small>` : ''}</p>
+      <div class="q-row"><div class="f"><label for="rv-place">${u('rev_place')}</label><input id="rv-place" maxlength="60"></div></div>
       <div class="f"><label for="rv-title">${u('rev_title_f')}</label><input id="rv-title" maxlength="100"></div>
       <div class="f"><label for="rv-text">${u('rev_text')} *</label><textarea id="rv-text" maxlength="1200" required></textarea></div>
       <div class="f"><label for="rv-project">${u('rev_project')}</label><input id="rv-project" maxlength="100"></div>
@@ -1054,7 +1066,7 @@
     </form>`;
     m.dataset.rating = String(preset || 0);
     rvPhotos = [];
-    setTimeout(() => $('#rv-name') && $('#rv-name').focus({ preventScroll: true }), 50);
+    setTimeout(() => $('#rv-text') && $('#rv-text').focus({ preventScroll: true }), 50);
   }
   let rvPhotos = [];
   function rvDraw() { const b = $('#rv-files'); if (b) b.innerHTML = rvPhotos.map((f, k) => `<span class="qb-file">${f.path ? `<img class="qb-file-im" src="${esc(src(f.path))}" alt="">` : icon('images')}<b>${esc(f.name)}</b><button type="button" data-rvf-del="${k}" aria-label="${u('qb_remove')}">&times;</button></span>`).join(''); }
@@ -1102,7 +1114,7 @@
   }
   async function submitLegacy() {
     const m = $('#rvm'), st = $('#rv-status'), btn = $('#rv-send');
-    const d = { rating: +m.dataset.rating, name: $('#rv-name').value.trim(), place: $('#rv-place').value.trim(), title: $('#rv-title').value.trim(), project: $('#rv-project').value.trim(), text: $('#rv-text').value.trim(), photos: rvPhotos.map((f) => f.id), website: $('#rv-web').value, lang };
+    const d = { rating: +m.dataset.rating, name: ACCT.user ? ACCT.user.name : '', place: $('#rv-place').value.trim(), title: $('#rv-title').value.trim(), project: $('#rv-project').value.trim(), text: $('#rv-text').value.trim(), photos: rvPhotos.map((f) => f.id), website: $('#rv-web').value, lang };
     st.className = 'q-status';
     if (!d.rating || !d.name || d.text.length < 10) { st.textContent = u('rev_need'); st.classList.add('err'); return; }
     btn.disabled = true;
@@ -2471,6 +2483,8 @@
     if (mx) { const li = mx.closest('.mx-i'), open = !li.classList.contains('open'); li.classList.toggle('open', open); mx.setAttribute('aria-expanded', String(open)); return; }
     const mxf = e.target.closest('[data-mxf]');
     if (mxf) { const f = mxf.dataset.mxf, sec = mxf.closest('#sp-products'); $$('[data-mxf]', sec).forEach((b) => b.setAttribute('aria-pressed', String(b === mxf))); $$('[data-fam]', sec).filter((li) => f === 'all' || li.dataset.fam === f).forEach((li, n) => { li.style.setProperty('--i', String(Math.min(n, 12))); li.classList.remove('mx-go'); void li.offsetWidth; li.classList.add('mx-go'); }); $$('[data-fam]', sec).forEach((li) => { li.hidden = f !== 'all' && li.dataset.fam !== f; }); return; }
+    const rg = e.target.closest('[data-rvgate]');
+    if (rg) { const pr = +(($('#rvm') || {}).dataset || {}).rating || 0; ACCT.mode = rg.dataset.rvgate; ACCT.err = ''; ACCT.after = () => openReviewLegacy(pr); acctOpen(); return; }
     const ca = e.target.closest('[data-cart]');
     if (ca) { cartAdd(ca.dataset.cart); return; }
     const acb = e.target.closest('[data-acct]');
