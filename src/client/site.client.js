@@ -505,7 +505,7 @@
             ${wa ? `<a class="btn btn-wa" href="${esc(wa)}" target="_blank" rel="noopener">${waIcon}${u('ask_price')}</a>` : ''}
           </div>
         </div>
-        <div class="sp-hero-media">${alImg(p, s) ? `<figure class="sp-hero-img"><img src="${esc(src(alImg(p, s)))}" alt="${esc(p.model)}"></figure>` : `<div class="al-p-art"><span class="al-p-model">${esc(p.model)}</span>${alArt(s.art)}</div>`}</div>
+        <div class="sp-hero-media">${alImg(p, s) ? `<figure class="sp-hero-img"><img src="${esc(src(alImg(p, s)))}" alt="${esc(p.model)}"></figure>` : `<div class="al-p-art">${alArt(s.art)}</div>`}</div>
       </div></section>
       <section class="sp-sec"><div class="wrap sp-two">
         <div><p class="eyebrow">${u('tech_data')}</p><h2>${u('specs')}</h2></div>
@@ -521,9 +521,8 @@
 
   // MUSKITA products shown inside each of our main systems (photos: our own project images that match the type)
   const sysList = (slug) => ALS().flatMap((f) => f.products.filter((p) => p.visible !== false && (p.sys || []).includes(slug)).map((p) => ({ p, s: f })));
-  const AL_IMG = { sliding: 'img/sliding-door.jpg', thea: 'img/glass-room.jpg', hinged: 'img/house-windows.jpg', curtain: 'img/glass-room.jpg', balustrade: 'img/glass-stairs.jpg', partition: 'img/office-partition.jpg' };
-  const AL_IMG_P = { mu144: 'img/lift-slide.jpg', mu3200: 'img/sliding-window.jpg', mu100: 'img/sliding-window.jpg', mu2600: 'img/folding-product.jpg', 'mu2600-hd': 'img/folding-interior.jpg', 'mu2075-pivot': 'img/commercial-doors.jpg', mu2700: 'img/door-window.jpg', 'mu2600-slim': 'img/partition-door.jpg', 'structural-doors': 'img/partition-door.jpg', mu2000: 'img/door-window.jpg' };
-  const alImg = (p, s) => p.image || AL_IMG_P[p.id] || AL_IMG[s.art] || '';
+  // each product shows only its own photo; no borrowed family photos, so no photo appears twice
+  const alImg = (p) => p.image || '';
   const homeSys = (pid) => { const r = alProd(pid); return r ? (r.p.sys || []).find((k) => bySlug(k)) : undefined; };
   // products inside a system: a simple grid; picture, name and one line; add to cart on each
   function sysProducts(slug) {

@@ -34,6 +34,8 @@ const VERSION = (() => {
 const BASE_HEADERS = {
   'x-content-type-options': 'nosniff',
   'referrer-policy': 'strict-origin-when-cross-origin',
+  'strict-transport-security': 'max-age=31536000; includeSubDomains',
+  'permissions-policy': 'camera=(), microphone=(), geolocation=(), payment=()',
 };
 
 const json = (data, status = 200, headers = {}) =>
@@ -674,8 +676,13 @@ async function handleAdminApi(req, env, url, path) {
     try {
       b = await req.json();
     } catch {}
+    // at most 8 wrong passwords per 15 minutes from one address
+    const lk = 'adl:' + (await sha256hex(req.headers.get('cf-connecting-ip') || 'x'));
+    const fails = +((await env.KV.get(lk)) || 0);
+    if (fails >= 8) return json({ ok: false, error: 'Too many tries. Wait 15 minutes.' }, 429);
     const rec = await checkPassword(env, b.password);
     if (!rec) {
+      await env.KV.put(lk, String(fails + 1), { expirationTtl: 900 });
       await new Promise((r) => setTimeout(r, 800));
       return json({ ok: false, error: 'Wrong password' }, 401);
     }
