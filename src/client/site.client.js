@@ -1218,6 +1218,8 @@
   try { const q = JSON.parse(localStorage.getItem(QB_KEY) || 'null'); if (q && Array.isArray(q.items)) QB = { ...QB, ...q, err: '', busy: false }; } catch (e) {}
   // a sent request shows its thank-you once; next time the form starts fresh (contact details are kept)
   if (QB.step === 'done') QB = { step: 'items', items: [], edit: -1, draft: null, cust: QB.cust || {}, sid: newSid(), ref: '', err: '' };
+  // opening the page never comes back to a half-picked product: it starts at "Choose product" (cart items stay)
+  QB.draft = null; QB.edit = -1; QB.more = false; if (QB.step !== 'items' && !QB.items.length) QB.step = 'items';
   if (QB.cust && QB.cust.phone && QB.cust.pnum == null) QB.cust.pnum = QB.cust.phone;
   const cartCount = () => QB.items.length;
   function cartBadge(bump) {
