@@ -505,7 +505,7 @@
             ${wa ? `<a class="btn btn-wa" href="${esc(wa)}" target="_blank" rel="noopener">${waIcon}${u('ask_price')}</a>` : ''}
           </div>
         </div>
-        <div class="sp-hero-media">${alImg(p, s) ? `<figure class="sp-hero-img"><img src="${esc(src(alImg(p, s)))}" alt="${esc(p.model)}"></figure>` : `<div class="al-p-art">${alArt(s.art)}</div>`}</div>
+        <div class="sp-hero-media">${alImg(p, s) ? `<figure class="sp-hero-img"><img src="${esc(src(alImg(p, s)))}" alt="${esc(p.model)}">${p.credit && p.credit.t ? `<figcaption class="sp-cr">${p.credit.u && /^https:\/\//.test(p.credit.u) ? `<a href="${esc(p.credit.u)}" target="_blank" rel="noopener nofollow">${esc(p.credit.t)}</a>` : esc(p.credit.t)}</figcaption>` : ''}</figure>` : `<div class="al-p-art">${alArt(s.art)}</div>`}</div>
       </div></section>
       <section class="sp-sec"><div class="wrap sp-two">
         <div><p class="eyebrow">${u('tech_data')}</p><h2>${u('specs')}</h2></div>

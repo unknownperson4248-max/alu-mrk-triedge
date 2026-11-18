@@ -2016,3 +2016,4 @@ html.skin-glass .mx-chips button[aria-pressed="true"]{background:var(--ink);colo
 .rv-as{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:4px 0 14px;padding:10px 12px;border-radius:12px;background:var(--surface);font-size:14px}
 .rv-as .ic{width:18px;height:18px;color:var(--accent)}
 .acct{z-index:120}
+.sp-hero-img{position:relative}.sp-cr{position:absolute;right:8px;bottom:8px;max-width:calc(100% - 16px);padding:3px 8px;border-radius:6px;background:rgba(0,0,0,.55);font-size:10.5px;line-height:1.3;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.sp-cr a{color:#fff;text-decoration:none}
