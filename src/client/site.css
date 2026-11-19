@@ -2073,9 +2073,9 @@ html.skin-glass .mx-chips button[aria-pressed="true"]{background:var(--ink);colo
 .ch-x:focus-visible,.ch-go:focus-visible,.ch-chip:focus-visible,.ch-send-q:focus-visible,.ch-p:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .ch-fine{margin:0;padding:2px 14px 10px;background:var(--bg);font-size:11px;color:var(--muted);text-align:center}
 @media (max-width:640px){
-  .chat{right:0;left:0;bottom:0;top:0;width:auto;height:100dvh;border-radius:0;border:0;padding-bottom:env(safe-area-inset-bottom,0px);background:var(--bg)}
-  .ch-h{padding-top:calc(14px + env(safe-area-inset-top,0px))}
-  html.ch-lock,html.ch-lock body{overflow:hidden}
-  html.ch-lock .help{display:none}
+  .chat{right:calc(12px + env(safe-area-inset-right,0px));left:auto;bottom:calc(84px + env(safe-area-inset-bottom,0px));width:min(360px,calc(100vw - 24px));height:min(520px,calc(100dvh - 150px));border-radius:22px}
+  .ch-h{padding:12px 10px 12px 14px}
+  .ch-log{padding:12px 10px}
+  .ch-m{max-width:92%}
 }
 @media (prefers-reduced-motion:reduce){.chat,.chat.open{transition:none}.ch-typing i{animation:none}}

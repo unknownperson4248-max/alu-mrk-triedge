@@ -1605,7 +1605,6 @@
     CH.open = open;
     const d = $('#chat');
     d.classList.toggle('open', open);
-    document.documentElement.classList.toggle('ch-lock', open && matchMedia('(max-width:640px)').matches);
     const hb = $('.help-btn');
     if (hb) { hb.setAttribute('aria-expanded', String(open)); $('#help').classList.toggle('open', open); }
     if (open) { chRender(); setTimeout(() => $('.ch-in', d).focus({ preventScroll: true }), 60); }
@@ -2537,7 +2536,6 @@
     if (chs) { chAsk(chs.dataset.chs); return; }
     const chq = e.target.closest('[data-chq]');
     if (chq) { chSendQuery(+chq.dataset.chq); return; }
-    if (e.target.closest('.ch-p, .ch-q a') && matchMedia('(max-width:640px)').matches) chatOpen(false);
     if (!e.target.closest('.rvc-menu')) $$('.rvc-pop:not([hidden])').forEach((p) => { p.hidden = true; });
     const rate = e.target.closest('[data-rate]');
     if (rate) { openReview(+rate.dataset.rate); return; }
