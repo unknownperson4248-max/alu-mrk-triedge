@@ -1593,7 +1593,8 @@
     d.innerHTML = `<div class="ch-h"><span class="ch-av">${icon('chat')}</span><div><b>${chT('TriEdge AI', 'TriEdge AI')}</b><small>${chT('AI · answers from our product information', 'AI · απαντά από τα στοιχεία των προϊόντων μας')}</small></div><button type="button" class="ch-x" data-chx aria-label="${chT('Close chat', 'Κλείσιμο')}">${icon('close')}</button></div>
       <div class="ch-log" aria-live="polite"></div>
       <form class="ch-f" novalidate><textarea class="ch-in" rows="1" maxlength="800" placeholder="${chT('Type your question…', 'Γράψτε την ερώτησή σας…')}" aria-label="${chT('Message', 'Μήνυμα')}"></textarea><button type="submit" class="ch-go" aria-label="${chT('Send', 'Αποστολή')}">${icon('send')}</button></form>
-      <p class="ch-fine">${chT('AI can make mistakes; our team confirms every detail in the written quotation.', 'Η AI μπορεί να κάνει λάθη· η ομάδα μας επιβεβαιώνει κάθε λεπτομέρεια στη γραπτή προσφορά.')}</p>`;
+      <p class="ch-fine">${chT('AI can make mistakes; our team confirms every detail in the written quotation.', 'Η AI μπορεί να κάνει λάθη· η ομάδα μας επιβεβαιώνει κάθε λεπτομέρεια στη γραπτή προσφορά.')}</p>
+      ${(() => { const c = S.company || {}, wa = waLink(u('wa_hello', { c: c.name })); return wa || c.email ? `<div class="ch-sup"><span>${chT('Contact & support', 'Επικοινωνία & υποστήριξη')}</span>${wa ? `<a class="ch-wa" href="${esc(wa)}" target="_blank" rel="noopener">${waIcon}<b>WhatsApp</b></a>` : ''}${c.email ? `<a class="ch-ml" href="mailto:${esc(c.email)}">${icon('mail')}<b>Gmail</b></a>` : ''}</div>` : ''; })()}`;
     document.body.appendChild(d);
     const f = $('.ch-f', d), inp = $('.ch-in', d);
     f.addEventListener('submit', (e) => { e.preventDefault(); chAsk(inp.value); });
