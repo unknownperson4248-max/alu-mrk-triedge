@@ -1578,10 +1578,10 @@
     return [c.phone && `${chT('Phone', 'Τηλέφωνο')}: ${c.phone}`, c.whatsapp && `WhatsApp: +${String(c.whatsapp).replace(/\D/g, '')}`, c.email && `Email: ${c.email}`].filter(Boolean).join('\n');
   }
   // three quick boxes: they show when the chat opens and under a greeting
-  const chBoxes = () => `<div class="ch-boxes">
-      <a class="ch-box" href="#systems">${icon('grid')}<b>${chT('Products', 'Προϊόντα')}</b></a>
-      <a class="ch-box" href="#gallery">${icon('images')}<b>${chT('Gallery', 'Έργα')}</b></a>
-      <button type="button" class="ch-box" data-chcontact>${icon('phone')}<b>${chT('Contact', 'Επικοινωνία')}</b></button>
+  const chBoxes = () => `<div class="ch-chips">
+      <a class="ch-chip" href="#systems">${chT('Products', 'Προϊόντα')}</a>
+      <a class="ch-chip" href="#gallery">${chT('Gallery', 'Έργα')}</a>
+      <button type="button" class="ch-chip" data-chcontact>${chT('Contact', 'Επικοινωνία')}</button>
     </div>`;
   function chRender() {
     const box = $('#chat');

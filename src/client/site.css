@@ -2121,3 +2121,5 @@ html.ch-open .help-t{display:none}
 .ch-box:hover{border-color:var(--accent)}
 .ch-box:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .ch-m:has(.ch-boxes){max-width:100%;width:100%}
+.ch-chip{color:var(--ink);text-decoration:none}
+.ch-m:has(.ch-chips){max-width:100%}
