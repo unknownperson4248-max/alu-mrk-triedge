@@ -1512,7 +1512,7 @@
   // floating "Need help?" button: opens a small menu with quote, WhatsApp, email and call
   function helpButton() {
     const c = S.company;
-    const items = [
+    const items = chatOn() ? [] : [
       `<a class="help-item" href="#quote"><span>${u('help_quote')}</span><i class="hi hi-quote">${icon('file')}</i></a>`,
       waLink() ? `<a class="help-item" href="${esc(waLink(u('wa_hello', { c: c.name })))}" target="_blank" rel="noopener"><span>WhatsApp</span><i class="hi wa">${waIcon}</i></a>` : '',
       c.email ? `<a class="help-item" href="mailto:${esc(c.email)}"><span>${u('help_email')}</span><i class="hi hi-mail">${icon('mail')}</i></a>` : '',
@@ -1525,12 +1525,130 @@
   }
   function setHelp(open) {
     const h = $('#help');
-    if (!h) return;
+    if (!h || CH.open) return;
     h.classList.toggle('open', open);
     h.classList.remove('say');
     h.querySelector('.help-btn').setAttribute('aria-expanded', String(open));
     h.querySelector('.help-btn').setAttribute('aria-label', open ? u('close_help') : u('help'));
     $$('.help-item', h).forEach((a) => a.setAttribute('tabindex', open ? '0' : '-1'));
+  }
+
+  /* ---------- AI chat assistant ----------
+     The conversation stays in this browser tab only (sessionStorage); the website saves only a quotation request the customer sends. */
+  const CH_KEY = 'alu-chat';
+  const CH = { open: false, busy: false, msgs: [] };
+  try { const m = JSON.parse(sessionStorage.getItem(CH_KEY) || '[]'); if (Array.isArray(m)) CH.msgs = m.slice(-30); } catch (e) {}
+  const chatOn = () => !(S.company && S.company.chatOff);
+  const chSave = () => { try { sessionStorage.setItem(CH_KEY, JSON.stringify(CH.msgs.slice(-30))); } catch (e) {} };
+  const chT = (en, el) => (lang === 'el' ? el : en);
+  const chText = (s) => esc(s).replace(/\n/g, '<br>');
+  const chPhoneOk = (p) => String(p || '').replace(/\D/g, '').length >= 8 && /^\s*(\+|00)/.test(p || '');
+  const chEmailOk = (e) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e || '');
+  function chMissing(q) {
+    const m = [];
+    if (!q.name) m.push(chT('name', 'όνομα'));
+    if (!chEmailOk(q.email)) m.push(chT('email', 'email'));
+    if (!chPhoneOk(q.phone)) m.push(chT('phone with country code (+357…)', 'τηλέφωνο με κωδικό χώρας (+357…)'));
+    return m;
+  }
+  function chQueryCard(q, k, msg) {
+    const miss = chMissing(q);
+    const rows = q.items.map((it) => `<li><b>${esc(it.model)}</b><span>${it.measure ? chT('Size: measure on site', 'Διαστάσεις: μέτρηση στο χώρο') : `${it.width} × ${it.height} mm`} · ${chT('Qty', 'Ποσ.')} ${it.qty}</span>${it.notes ? `<small>${esc(it.notes)}</small>` : ''}</li>`).join('');
+    const who = [q.name, q.email, q.phone, q.location].filter(Boolean).map(esc).join(' · ');
+    return `<div class="ch-q">
+      <div class="ch-q-h">${icon('file')}<b>${q.kind === 'order' ? chT('Order request', 'Αίτημα παραγγελίας') : chT('Quotation request', 'Αίτημα προσφοράς')}</b></div>
+      <ul>${rows}</ul>
+      ${who ? `<p class="ch-q-who">${who}</p>` : ''}
+      ${q.message ? `<p class="ch-q-who">${esc(q.message)}</p>` : ''}
+      ${msg.sent ? `<p class="ch-q-ok">${icon('check')}${chT('Sent. Reference', 'Στάλθηκε. Αριθμός')} <b>${esc(msg.sent)}</b></p>`
+        : miss.length ? `<p class="ch-q-miss">${chT('Still needed', 'Χρειάζεται ακόμη')}: ${esc(miss.join(', '))}. ${chT('Tell the assistant.', 'Πείτε το στον βοηθό.')}</p>`
+        : `<p class="ch-q-note">${chT('By sending, you agree we use these details to reply to you.', 'Με την αποστολή, συμφωνείτε να χρησιμοποιήσουμε τα στοιχεία για να σας απαντήσουμε.')} <a href="#privacy">${chT('Privacy notice', 'Πολιτική απορρήτου')}</a></p>
+          <button type="button" class="ch-send-q" data-chq="${k}"${msg.sending ? ' disabled' : ''}>${icon('send')}<span>${msg.sending ? chT('Sending…', 'Αποστολή…') : chT('Send request', 'Αποστολή αιτήματος')}</span></button>`}
+      ${msg.err ? `<p class="ch-q-miss">${esc(msg.err)}</p>` : ''}
+    </div>`;
+  }
+  function chMsg(m, k) {
+    if (m.role === 'user') return `<div class="ch-m me"><p>${chText(m.content)}</p></div>`;
+    const prods = (m.products || []).map((id) => { const r = alProd(id); if (!r) return ''; const im = r.p.image || ''; return `<a class="ch-p" href="#alp-${esc(id)}">${im ? `<img src="${esc(src(im))}" alt="" loading="lazy">` : ''}<span><b>${esc(r.p.model)}</b><small>${esc(t(r.p.name))}</small></span>${icon('right')}</a>`; }).join('');
+    return `<div class="ch-m ai${m.err ? ' err' : ''}"><p>${chText(m.text != null ? m.text : m.content)}</p>${prods ? `<div class="ch-ps">${prods}</div>` : ''}${m.query ? chQueryCard(m.query, k, m) : ''}</div>`;
+  }
+  function chContact() {
+    const c = S.company || {};
+    return [c.phone && `${chT('Phone', 'Τηλέφωνο')}: ${c.phone}`, c.whatsapp && `WhatsApp: +${String(c.whatsapp).replace(/\D/g, '')}`, c.email && `Email: ${c.email}`].filter(Boolean).join('\n');
+  }
+  function chRender() {
+    const box = $('#chat');
+    if (!box) return;
+    const log = $('.ch-log', box);
+    const intro = `<div class="ch-m ai"><p>${chT('Hi! I am the Alu MRK TriEdge assistant. Ask me about our aluminium windows, doors, sliding systems, glass and more, or I can prepare a quotation request for you.', 'Γεια σας! Είμαι ο βοηθός της Alu MRK TriEdge. Ρωτήστε με για τα αλουμινένια παράθυρα, πόρτες, συρόμενα, γυαλί και άλλα, ή να ετοιμάσω ένα αίτημα προσφοράς για εσάς.')}</p></div>`;
+    const chips = CH.msgs.length ? '' : `<div class="ch-chips">${[chT('Which sliding system suits my home?', 'Ποιο συρόμενο ταιριάζει στο σπίτι μου;'), chT('Thermal or non-thermal: what is the difference?', 'Θερμομονωτικό ή όχι: ποια η διαφορά;'), chT('I want a quotation', 'Θέλω προσφορά'), chT('How can I contact you?', 'Πώς επικοινωνώ μαζί σας;')].map((x) => `<button type="button" class="ch-chip" data-chs="${esc(x)}">${esc(x)}</button>`).join('')}</div>`;
+    log.innerHTML = intro + CH.msgs.map(chMsg).join('') + (CH.busy ? '<div class="ch-m ai ch-typing" aria-label="…"><i></i><i></i><i></i></div>' : '') + chips;
+    log.scrollTop = log.scrollHeight;
+    $('.ch-in', box).disabled = CH.busy;
+  }
+  function chatShell() {
+    if ($('#chat')) return;
+    const d = document.createElement('div');
+    d.className = 'chat'; d.id = 'chat'; d.setAttribute('role', 'dialog'); d.setAttribute('aria-modal', 'false'); d.setAttribute('aria-label', chT('Chat assistant', 'Βοηθός συνομιλίας'));
+    d.innerHTML = `<div class="ch-h"><span class="ch-av">${icon('chat')}</span><div><b>${chT('Alu assistant', 'Βοηθός Alu')}</b><small>${chT('AI · answers from our product information', 'AI · απαντά από τα στοιχεία των προϊόντων μας')}</small></div><button type="button" class="ch-x" data-chx aria-label="${chT('Close chat', 'Κλείσιμο')}">${icon('close')}</button></div>
+      <div class="ch-log" aria-live="polite"></div>
+      <form class="ch-f" novalidate><textarea class="ch-in" rows="1" maxlength="800" placeholder="${chT('Type your question…', 'Γράψτε την ερώτησή σας…')}" aria-label="${chT('Message', 'Μήνυμα')}"></textarea><button type="submit" class="ch-go" aria-label="${chT('Send', 'Αποστολή')}">${icon('send')}</button></form>
+      <p class="ch-fine">${chT('AI can make mistakes; our team confirms every detail in the written quotation.', 'Η AI μπορεί να κάνει λάθη· η ομάδα μας επιβεβαιώνει κάθε λεπτομέρεια στη γραπτή προσφορά.')}</p>`;
+    document.body.appendChild(d);
+    const f = $('.ch-f', d), inp = $('.ch-in', d);
+    f.addEventListener('submit', (e) => { e.preventDefault(); chAsk(inp.value); });
+    inp.addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); chAsk(inp.value); } });
+    inp.addEventListener('input', () => { inp.style.height = 'auto'; inp.style.height = Math.min(inp.scrollHeight, 120) + 'px'; });
+  }
+  function chatOpen(open) {
+    chatShell();
+    CH.open = open;
+    const d = $('#chat');
+    d.classList.toggle('open', open);
+    document.documentElement.classList.toggle('ch-lock', open && matchMedia('(max-width:640px)').matches);
+    const hb = $('.help-btn');
+    if (hb) { hb.setAttribute('aria-expanded', String(open)); $('#help').classList.toggle('open', open); }
+    if (open) { chRender(); setTimeout(() => $('.ch-in', d).focus({ preventScroll: true }), 60); }
+  }
+  async function chAsk(text) {
+    text = String(text || '').trim();
+    if (!text || CH.busy) return;
+    const inp = $('#chat .ch-in');
+    if (inp) { inp.value = ''; inp.style.height = 'auto'; }
+    CH.msgs.push({ role: 'user', content: text.slice(0, 800) });
+    CH.busy = true; chRender(); chSave();
+    let j = null;
+    try {
+      const r = await fetch('/api/chat', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ lang, messages: CH.msgs.slice(-12).map((m) => ({ role: m.role, content: m.content })) }) });
+      j = await r.json().catch(() => null);
+    } catch (e) {}
+    CH.busy = false;
+    if (j && j.ok) {
+      const content = j.reply + (j.query ? `\n<query>${JSON.stringify(j.query)}</query>` : '');
+      CH.msgs.push({ role: 'assistant', content, text: j.reply, products: j.products || [], query: j.query || null, sid: j.query ? newSid() : '' });
+    } else {
+      const why = j && j.error === 'limit' ? chT('You have sent many messages. Please wait a little.', 'Στείλατε πολλά μηνύματα. Περιμένετε λίγο.') : chT('Sorry, the assistant is not available right now.', 'Συγγνώμη, ο βοηθός δεν είναι διαθέσιμος τώρα.');
+      CH.msgs.push({ role: 'assistant', content: why, text: `${why}\n${chT('You can reach us here:', 'Μπορείτε να επικοινωνήσετε εδώ:')}\n${chContact()}`, err: true, local: true });
+    }
+    chSave(); chRender();
+  }
+  async function chSendQuery(k) {
+    const m = CH.msgs[k];
+    if (!m || !m.query || m.sent || m.sending || chMissing(m.query).length) return;
+    const q = m.query;
+    m.sending = true; m.err = ''; chRender();
+    const body = { sid: m.sid || newSid(), kind: q.kind, lang, source: 'chat',
+      customer: { name: q.name, email: q.email, phone: q.phone, location: q.location, message: q.message, privacy: true },
+      items: q.items.map((it) => ({ cat: 'custom', catName: chT('AI chat', 'Συνομιλία AI'), model: it.model, measure: it.measure, width: it.width, height: it.height, qty: it.qty, notes: it.notes })) };
+    let j = null;
+    try { const r = await fetch('/api/quote', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) }); j = await r.json().catch(() => null); } catch (e) {}
+    m.sending = false;
+    if (j && j.ok) {
+      m.sent = j.ref;
+      const done = chT(`Your request is sent. Reference ${j.ref}. Our team will contact you soon.`, `Το αίτημά σας στάλθηκε. Αριθμός ${j.ref}. Η ομάδα μας θα επικοινωνήσει σύντομα.`);
+      CH.msgs.push({ role: 'assistant', content: done, text: done, local: true });
+    } else m.err = chT('It could not be sent. Please check the details or try again.', 'Δεν στάλθηκε. Ελέγξτε τα στοιχεία ή δοκιμάστε ξανά.');
+    chSave(); chRender();
   }
 
   /* ---------- system detail page ---------- */
@@ -2413,7 +2531,13 @@
   document.addEventListener('click', (e) => {
     const lb = e.target.closest('[data-lang]');
     if (lb) { setLang(lb.dataset.lang); return; }
-    if (e.target.closest('.help-btn')) { setHelp(!$('#help').classList.contains('open')); return; }
+    if (e.target.closest('.help-btn')) { if (chatOn()) chatOpen(!CH.open); else setHelp(!$('#help').classList.contains('open')); return; }
+    if (e.target.closest('[data-chx]')) { chatOpen(false); return; }
+    const chs = e.target.closest('[data-chs]');
+    if (chs) { chAsk(chs.dataset.chs); return; }
+    const chq = e.target.closest('[data-chq]');
+    if (chq) { chSendQuery(+chq.dataset.chq); return; }
+    if (e.target.closest('.ch-p, .ch-q a') && matchMedia('(max-width:640px)').matches) chatOpen(false);
     if (!e.target.closest('.rvc-menu')) $$('.rvc-pop:not([hidden])').forEach((p) => { p.hidden = true; });
     const rate = e.target.closest('[data-rate]');
     if (rate) { openReview(+rate.dataset.rate); return; }
@@ -2437,7 +2561,7 @@
     const rvp = e.target.closest('[data-rvp]');
     if (rvp) { const r = allRevs().find((x) => x.id === rvp.dataset.rvp); if (r) openLB(r.photos, +rvp.dataset.k || 0, r.photos.map(() => r.name)); return; }
     if (sp) { const n = +sp.dataset.star; $('#rvm').dataset.rating = String(n); $$('[data-star]').forEach((b) => { const on = +b.dataset.star <= n; b.classList.toggle('on', on); b.setAttribute('aria-checked', String(+b.dataset.star === n)); }); return; }
-    if ($('#help') && $('#help').classList.contains('open')) setHelp(false);
+    if (!CH.open && $('#help') && $('#help').classList.contains('open')) setHelp(false);
     const ls = e.target.closest('.lsel-btn');
     $$('.lsel-menu').forEach((m) => { if (!ls || !ls.parentElement.contains(m)) { m.hidden = true; m.previousElementSibling.setAttribute('aria-expanded', 'false'); } });
     if (ls) { const m = ls.nextElementSibling; m.hidden = !m.hidden; ls.setAttribute('aria-expanded', String(!m.hidden)); return; }
@@ -2547,7 +2671,8 @@
       return;
     }
     if (e.key === 'Escape') {
-      if (panel) setPanel(null);
+      if (CH.open) chatOpen(false);
+      else if (panel) setPanel(null);
       else if ($('#help') && $('#help').classList.contains('open')) setHelp(false);
       else if (galOpen) location.hash = 'projects';
       else if (prodCur) location.hash = 'products';
