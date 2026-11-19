@@ -922,8 +922,7 @@ FACTS:
 - For greetings, thanks or small talk, answer briefly and do not list or tag products.
 - When you recommend or mention a product from the list, put its tag right after its name, exactly as written in the list, e.g. "MU144 [[mu144]]". At most 3 tags per reply.
 
-CONTACT: If the customer wants to talk to a person, call, email or WhatsApp, give them these details:
-${contact || '(no contact details on file: say the team will reply to their request)'}
+CONTACT: If the customer wants to talk to a person, call, email, WhatsApp or contact the company, reply with one short friendly sentence saying they can chat with the team on WhatsApp using the button below, and add the tag [[contact]] at the end. Do not write any phone number or email address.
 
 QUOTATION REQUEST: If the customer wants a price, a quotation or to order, collect, one question at a time:
 1. which product(s) (from the list, or a short description if it is something else),
@@ -974,9 +973,14 @@ async function handleChat(req, env, url) {
   await env.KV.put(rk, String(n + 1), { expirationTtl: 3600 });
   if (!(await bump(env, 'chat', 3000))) return json({ ok: false, error: 'busy' }, 429);
 
+  // asking for contact gets the WhatsApp button straight away (no AI call)
+  const lastTxt = msgs[msgs.length - 1].content;
+  if (lastTxt.split(/\s+/).length <= 8 && /(contact|whats ?app|call|phone|number|e-?mail|gmail|talk to|speak to|human|person|agent|support|επικοινων|τηλ[εέ]φων|κλ[ηή]ση|μιλ[ηή]σω)/i.test(lastTxt)) {
+    return json({ ok: true, reply: lang === 'el' ? 'Φυσικά! Πατήστε το κουμπί για να μιλήσετε με την ομάδα μας στο WhatsApp.' : 'Of course! Tap the button below to chat with our team on WhatsApp.', products: [], query: null, contact: true });
+  }
   // a plain greeting gets a greeting back (no AI call, no product list)
   if (/^\s*(hi+|hey+|hello+|hallo|hola|yo|good\s*(morning|afternoon|evening|day)|γει[αά]( σ(ου|ας))?|καλημ[εέ]ρα|καλησπ[εέ]ρα|χα[ιί]ρετε|salam|assalamu ?alaikum|নমস্কার|হাই|হ্যালো)[\s!.,?🙂😊👋]*$/i.test(msgs[msgs.length - 1].content)) {
-    return json({ ok: true, reply: lang === 'el' ? 'Γεια σας! Είμαι το TriEdge AI. Πώς μπορώ να βοηθήσω;' : 'Hi! I am TriEdge AI. How can I help you today?', products: [], query: null, boxes: true });
+    return json({ ok: true, reply: lang === 'el' ? 'Γεια σας! Είμαι το TriEdge AI. Πώς μπορώ να βοηθήσω;' : 'Hi! I am TriEdge AI. How can I help you today?', products: [], query: null });
   }
   const recent = msgs.filter((m) => m.role === 'user').slice(-3).map((m) => m.content).join(' ') + ' ' + msgs.filter((m) => m.role === 'assistant').slice(-1).map((m) => m.content).join(' ');
   const cat = chatCatalogue(site, lang, recent);
@@ -1002,9 +1006,17 @@ async function handleChat(req, env, url) {
   const qm = /<query>([\s\S]*?)<\/query>/i.exec(out);
   if (qm) { query = chatQuery(qm[1].trim()); out = out.replace(qm[0], ''); }
   out = out.replace(/<\/?query>/gi, '');
+  let contact = false;
+  out = out.replace(/\s*\[\[contact\]\]/gi, () => { contact = true; return ''; });
+  if (contact) {
+    // the button carries the contact; numbers and addresses are taken out of the text
+    const c = site.company || {};
+    for (const x of [c.phone, c.email, c.whatsapp && '+' + String(c.whatsapp).replace(/\D/g, ''), c.whatsapp]) if (x) out = out.split(String(x)).join('');
+    out = out.replace(/[ \t]*(phone|whatsapp|email|τηλέφωνο)\s*:\s*$/gim, '').replace(/\n{2,}/g, '\n').trim();
+  }
   const products = [];
   out = out.replace(/\s*\[\[([a-z0-9-]{1,40})\]\]/gi, (m, id) => { id = id.toLowerCase(); if (cat.ids.has(id) && !products.includes(id) && products.length < 3) products.push(id); return ''; });
-  return json({ ok: true, reply: clip(out, 3000), products, query });
+  return json({ ok: true, reply: clip(out, 3000), products, query, contact });
 }
 
 export default {

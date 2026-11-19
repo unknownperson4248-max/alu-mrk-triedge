@@ -2123,3 +2123,72 @@ html.ch-open .help-t{display:none}
 .ch-m:has(.ch-boxes){max-width:100%;width:100%}
 .ch-chip{color:var(--ink);text-decoration:none}
 .ch-m:has(.ch-chips){max-width:100%}
+
+/* ---------- chat v3: colourful AI theme and motion ---------- */
+.chat{--ai1:#ffb547;--ai2:#ff6b8b;--ai3:#7c5cff;--ai4:#2ec5ff;--aig:linear-gradient(135deg,var(--ai1),var(--ai2) 38%,var(--ai3) 70%,var(--ai4));border-color:color-mix(in srgb,var(--ai3) 30%,var(--line));box-shadow:0 30px 70px -30px rgba(40,20,90,.55),0 0 0 6px color-mix(in srgb,var(--ai3) 9%,transparent);transform:translateY(24px) scale(.9);transition:opacity .25s,transform .45s cubic-bezier(.2,1.25,.35,1),visibility 0s .45s}
+.chat.open{transform:none;transition:opacity .25s,transform .45s cubic-bezier(.2,1.25,.35,1),visibility 0s}
+.ch-h{background:radial-gradient(120% 140% at 0% 0%,#2a1f5c 0%,#141a24 55%,#10151d 100%)}
+.ch-h::after{height:3px;background:var(--aig);background-size:200% 100%;animation:chflow 4s linear infinite}
+@keyframes chflow{to{background-position:200% 0}}
+.ch-av{position:relative;border:0;background:var(--aig);color:#fff;box-shadow:0 6px 18px -6px rgba(124,92,255,.8)}
+.ch-av .ic{width:24px;height:24px;stroke:#fff}
+.ch-av::after{content:"";position:absolute;inset:-3px;border-radius:14px;border:2px solid transparent;background:conic-gradient(from 0deg,var(--ai1),var(--ai2),var(--ai3),var(--ai4),var(--ai1)) border-box;-webkit-mask:linear-gradient(#000 0 0) padding-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:.8;animation:chspin 6s linear infinite}
+@keyframes chspin{to{transform:rotate(360deg)}}
+.ch-h b em{background:var(--aig);-webkit-background-clip:text;background-clip:text;color:transparent}
+.ch-dot{animation:chpulse 2s ease-in-out infinite}
+@keyframes chpulse{50%{box-shadow:0 0 0 6px rgba(61,220,132,0)}}
+.ch-m.ai>p{border-left:3px solid transparent;border-image:var(--aig) 1;border-image-slice:0 0 0 1;border-radius:4px 16px 16px 16px}
+.ch-m.me p{background:linear-gradient(135deg,#3b2a8a,#5b3fd6 55%,#2a8fd6);color:#fff;box-shadow:0 8px 18px -10px rgba(91,63,214,.8)}
+.ch-go{background:var(--aig);color:#fff;transition:transform .2s}
+.ch-go:hover{transform:rotate(-12deg) scale(1.06)}
+.ch-go:active{transform:scale(.92)}
+.ch-in:focus{outline-color:var(--ai3)}
+/* new messages slide in */
+.ch-m.nw{animation:chin .42s cubic-bezier(.2,1.1,.35,1) both}
+.ch-m.me.nw{animation-name:chinr}
+@keyframes chin{from{opacity:0;transform:translate(-14px,8px) scale(.96)}}
+@keyframes chinr{from{opacity:0;transform:translate(14px,8px) scale(.96)}}
+.ch-typing{animation:chin .3s ease both}
+.ch-typing i{background:var(--ai3)}
+.ch-typing i:nth-child(2){background:var(--ai2)}.ch-typing i:nth-child(3){background:var(--ai1)}
+/* welcome + stacked options */
+.ch-hello{display:grid;justify-items:center;text-align:center;gap:4px;padding:10px 6px 4px;animation:chin .5s ease both}
+.ch-hello-ic{display:grid;place-items:center;width:56px;height:56px;border-radius:18px;background:var(--aig);color:#fff;margin-bottom:6px;box-shadow:0 12px 26px -12px rgba(124,92,255,.9);animation:chfloat 3s ease-in-out infinite}
+.ch-hello-ic .ic{width:30px;height:30px;stroke:#fff}
+@keyframes chfloat{50%{transform:translateY(-5px)}}
+.ch-hello b{font:700 17px/1.2 var(--display)}
+.ch-hello small{color:var(--muted);font-size:13px}
+.ch-opts{display:grid;gap:8px;margin-top:6px}
+.ch-opt{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:16px;background:var(--bg);border:1px solid var(--line);color:var(--ink);text-decoration:none;box-shadow:0 2px 8px -6px rgba(0,0,0,.3);animation:chin .45s cubic-bezier(.2,1.1,.35,1) both;animation-delay:calc(var(--i) * 90ms + 120ms);transition:transform .2s,border-color .2s}
+.ch-opt:hover{transform:translateX(3px);border-color:var(--ai3)}
+.ch-opt:active{transform:scale(.97)}
+.ch-opt b{flex:1;font-size:14.5px;font-weight:600}
+.ch-opt>.ic{width:16px;height:16px;color:var(--ai3)}
+.ch-opt-ic{display:grid;place-items:center;width:36px;height:36px;border-radius:11px;color:#fff;flex:none}
+.ch-opt:nth-child(1) .ch-opt-ic{background:linear-gradient(135deg,var(--ai1),var(--ai2))}
+.ch-opt:nth-child(2) .ch-opt-ic{background:linear-gradient(135deg,var(--ai2),var(--ai3))}
+.ch-opt:nth-child(3) .ch-opt-ic{background:linear-gradient(135deg,var(--ai3),var(--ai4))}
+.ch-opt-ic .ic{width:19px;height:19px;stroke:#fff}
+.ch-opt:focus-visible,.ch-wa-btn:focus-visible{outline:2px solid var(--ai3);outline-offset:2px}
+/* WhatsApp button */
+.ch-wa-btn{display:flex;align-items:center;gap:12px;padding:10px 14px 10px 10px;border-radius:16px;background:linear-gradient(135deg,#25d366,#128c4a);color:#fff;text-decoration:none;box-shadow:0 10px 22px -10px rgba(18,140,74,.9);animation:chin .45s .1s cubic-bezier(.2,1.1,.35,1) both;transition:transform .2s}
+.ch-wa-btn:active{transform:scale(.97)}
+.ch-wa-ic{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:#fff;color:#25d366;flex:none;animation:chpulsew 2s ease-in-out infinite}
+@keyframes chpulsew{50%{box-shadow:0 0 0 7px rgba(255,255,255,.18)}}
+.ch-wa-ic .ic{width:24px;height:24px}
+.ch-wa-btn span:nth-child(2){flex:1;display:grid}
+.ch-wa-btn b{font-size:15px}.ch-wa-btn small{font-size:12px;opacity:.85}
+.ch-wa-btn>.ic{width:18px;height:18px}
+.ch-p{transition:transform .2s,border-color .2s}.ch-p:active{transform:scale(.97)}
+/* floating bot button */
+.help.ai .help-btn{background:linear-gradient(135deg,#ffb547,#ff6b8b 38%,#7c5cff 70%,#2ec5ff);color:#fff;box-shadow:0 12px 28px rgba(60,30,140,.45),0 0 0 4px rgba(124,92,255,.18)}
+.help.ai .help-btn .ic{stroke:#fff}
+.help.ai:not(.open) .help-btn::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:2px solid rgba(124,92,255,.55);animation:chring 2.4s ease-out infinite}
+@keyframes chring{from{transform:scale(.9);opacity:.9}to{transform:scale(1.35);opacity:0}}
+@media (prefers-reduced-motion:reduce){.ch-h::after,.ch-av::after,.ch-dot,.ch-hello-ic,.ch-wa-ic,.help.ai .help-btn::after{animation:none}.ch-m.nw,.ch-opt,.ch-hello,.ch-wa-btn,.ch-typing{animation:none}}
+.ch-hello{padding:4px 6px 0;gap:2px}
+.ch-hello-ic{width:46px;height:46px;border-radius:15px;margin-bottom:4px}
+.ch-hello-ic .ic{width:25px;height:25px}
+.ch-opts{gap:7px}
+.ch-opt{padding:8px 12px}
+.ch-opt-ic{width:34px;height:34px}
