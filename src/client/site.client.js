@@ -1574,7 +1574,12 @@
     const live = k === CH.msgs.length - 1;
     const card = (href, im, title, sub, i) => `<a class="ch-p" href="${esc(href)}" style="--i:${i}"><b>${esc(title)}</b>${icon('right')}</a>`;
     let prods = '';
-    if (live && m.catalog) prods = sys().map((x, i) => card('#' + x.slug, x.image, t(x.name), '', i)).join('');
+    // a list the assistant asks the customer to choose from sends the choice back to the chat; the plain product list opens the page
+    // first the systems; once a system is picked, the products inside it
+    const inSys = live && m.catalog === 'pick' && m.sysPick ? sysList(m.sysPick) : [];
+    if (inSys.length) prods = inSys.map(({ p }, i) => `<button type="button" class="ch-p" data-chs="${esc(p.model)}" style="--i:${i}"><b>${esc(p.model)}</b>${icon('right')}</button>`).join('');
+    else if (live && m.catalog === 'pick') prods = sys().map((x, i) => `<button type="button" class="ch-p" data-chs="${esc(t(x.name))}" data-chsys="${esc(x.slug)}" style="--i:${i}"><b>${esc(t(x.name))}</b>${icon('right')}</button>`).join('');
+    else if (live && m.catalog) prods = sys().map((x, i) => card('#' + x.slug, x.image, t(x.name), '', i)).join('');
     else if (live) prods = (m.products || []).map((id, i) => { const r = alProd(id); return r ? card('#alp-' + id, r.p.image, r.p.model, t(r.p.name), i) : ''; }).join('');
     const wa = m.contact && waLink(u('wa_hello', { c: (S.company || {}).name }));
     return `<div class="ch-m ai${m.err ? ' err' : ''}${nw}"><p>${chText(m.text != null ? m.text : m.content)}</p>${prods ? `<div class="ch-ps" role="list">${prods}</div>` : ''}${m.query ? chQueryCard(m.query, k, m) : ''}${wa ? `<a class="ch-wa-btn" href="${esc(wa)}" target="_blank" rel="noopener"><span class="ch-wa-ic">${waIcon}</span><span><b>${chT('Chat on WhatsApp', 'Συνομιλία στο WhatsApp')}</b><small>${chT('Our team replies there', 'Η ομάδα μας απαντά εκεί')}</small></span>${icon('right')}</a>` : ''}</div>`;
@@ -1628,6 +1633,7 @@
     if (!text || CH.busy) return;
     const inp = $('#chat .ch-in');
     if (inp) { inp.value = ''; inp.style.height = 'auto'; }
+    CH.sysPick = CH.nextSys || ''; CH.nextSys = '';
     CH.msgs.push({ role: 'user', content: text.slice(0, 800) });
     CH.busy = true; chRender(); chSave();
     let j = null;
@@ -1638,7 +1644,7 @@
     CH.busy = false;
     if (j && j.ok) {
       const content = j.reply + (j.query ? `\n<query>${JSON.stringify(j.query)}</query>` : '');
-      CH.msgs.push({ role: 'assistant', content, text: j.reply, products: j.products || [], catalog: !!j.catalog, query: j.query || null, contact: !!j.contact, sid: j.query ? newSid() : '' });
+      CH.msgs.push({ role: 'assistant', content, text: j.reply, products: j.products || [], catalog: j.catalog || false, sysPick: j.catalog === 'pick' ? CH.sysPick || '' : '', query: j.query || null, contact: !!j.contact, sid: j.query ? newSid() : '' });
     } else {
       const why = j && j.error === 'limit' ? chT('You have sent many messages. Please wait a little.', 'Στείλατε πολλά μηνύματα. Περιμένετε λίγο.') : chT('Sorry, the assistant is not available right now.', 'Συγγνώμη, ο βοηθός δεν είναι διαθέσιμος τώρα.');
       CH.msgs.push({ role: 'assistant', content: why, text: `${why} ${chT('You can still reach our team on WhatsApp.', 'Μπορείτε να μιλήσετε με την ομάδα μας στο WhatsApp.')}`, err: true, local: true, contact: true });
@@ -2546,10 +2552,10 @@
     if (lb) { setLang(lb.dataset.lang); return; }
     if (e.target.closest('.help-btn')) { if (chatOn()) chatOpen(!CH.open); else setHelp(!$('#help').classList.contains('open')); return; }
     if (e.target.closest('[data-chx]')) { chatOpen(false); return; }
-    if (e.target.closest('.ch-p, [data-chnav]')) chatOpen(false);
+    if (e.target.closest('a.ch-p, [data-chnav]')) chatOpen(false);
     if (e.target.closest('[data-chcontact]')) { const txt = `${chT('You can reach our team here:', 'Μπορείτε να επικοινωνήσετε με την ομάδα μας εδώ:')}\n${chContact()}`; CH.msgs.push({ role: 'user', content: chT('Contact', 'Επικοινωνία') }, { role: 'assistant', content: txt, text: txt, local: true }); chRender(); return; }
     const chs = e.target.closest('[data-chs]');
-    if (chs) { chAsk(chs.dataset.chs); return; }
+    if (chs) { CH.nextSys = chs.dataset.chsys || ''; chAsk(chs.dataset.chs); return; }
     const chq = e.target.closest('[data-chq]');
     if (chq) { chSendQuery(+chq.dataset.chq); return; }
     if (!e.target.closest('.rvc-menu')) $$('.rvc-pop:not([hidden])').forEach((p) => { p.hidden = true; });

@@ -913,7 +913,7 @@ function chatSystemPrompt(site, lang, cat) {
 LANGUAGE: Reply in ${lang === 'el' ? 'Greek' : 'English'}. If the customer writes in Greek, reply in Greek; otherwise reply in English. Never use any other language.
 
 STYLE: Friendly and very short: one or two short sentences (under 35 words). Plain text, no lists, no markdown. Ask one question at a time.
-PRODUCT LIST: If the customer asks in general which products you have (no specific need), reply with one short line and add the tag [[catalog]].
+PRODUCT LIST: If the customer asks in general about products, or you need to ask which product they want, never write "Which product"; write exactly "Choose a product:" (in Greek "Επιλέξτε προϊόν:") and add the tag [[catalog]]. The website then shows the product names to choose from.
 RECOMMENDATIONS: When you suggest products, do not describe or explain them and do not say "I would recommend". Write one short line such as "These suit a large opening:" and add the product tags; the website shows each product as a card. At most 3 products.
 
 FACTS:
@@ -927,7 +927,7 @@ FACTS:
 CONTACT: If the customer wants to talk to a person, call, email, WhatsApp or contact the company, reply with one short friendly sentence saying they can chat with the team on WhatsApp using the button below, and add the tag [[contact]] at the end. Do not write any phone number or email address.
 
 QUOTATION REQUEST: If the customer wants a price, a quotation or to order, collect, one question at a time:
-1. which product(s) (from the list, or a short description if it is something else),
+1. which product(s): ask by writing exactly "Choose a product:" and the tag [[catalog]] (or accept a short description if it is something else),
 2. the size in millimetres (width x height) for each, or "not sure" (then the team measures on site),
 3. the quantity,
 4. their full name,
@@ -982,7 +982,7 @@ async function handleChat(req, env, url) {
   }
   // a general question about products gets the list of systems to swipe through (no AI call)
   if (/^\s*(products?|our products|your products|(which|what) (products?|systems?)( do you (have|sell|make|offer))?|show( me)? (the |your )?products?|what do you (sell|make|offer)|προϊόντα|τι προϊόντα (έχετε|πουλάτε)|ποια προϊόντα( έχετε)?)[\s?!.]*$/i.test(lastTxt)) {
-    return json({ ok: true, reply: lang === 'el' ? 'Αυτά είναι τα συστήματά μας. Σύρετε και πατήστε ένα για να το δείτε:' : 'Here are our systems. Swipe and tap one to see it:', products: [], query: null, catalog: true });
+    return json({ ok: true, reply: lang === 'el' ? 'Επιλέξτε προϊόν:' : 'Choose a product:', products: [], query: null, catalog: true });
   }
   // a plain greeting gets a greeting back (no AI call, no product list)
   if (/^\s*(hi+|hey+|hello+|hallo|hola|yo|good\s*(morning|afternoon|evening|day)|γει[αά]( σ(ου|ας))?|καλημ[εέ]ρα|καλησπ[εέ]ρα|χα[ιί]ρετε|salam|assalamu ?alaikum|নমস্কার|হাই|হ্যালো)[\s!.,?🙂😊👋]*$/i.test(msgs[msgs.length - 1].content)) {
@@ -1014,8 +1014,10 @@ async function handleChat(req, env, url) {
   out = out.replace(/<\/?query>/gi, '');
   let catalog = false;
   out = out.replace(/\s*\[\[catalog\]\]/gi, () => { catalog = true; return ''; });
+  if (/(choose a product|επιλέξτε προϊόν)\s*:?\s*$/i.test(out.replace(/<query>[\s\S]*?<\/query>/gi, '').trim())) catalog = true;
   let contact = false;
   out = out.replace(/\s*\[\[contact\]\]/gi, () => { contact = true; return ''; });
+  if (!/(contact|whats ?app|call|phone|number|e-?mail|gmail|talk|speak|human|person|agent|support|reach|επικοινων|τηλ[εέ]φων|κλ[ηή]ση|μιλ[ηή]σ)/i.test(lastTxt)) contact = false;
   if (contact) {
     // the button carries the contact; numbers and addresses are taken out of the text
     const c = site.company || {};
@@ -1024,7 +1026,7 @@ async function handleChat(req, env, url) {
   }
   const products = [];
   out = out.replace(/\s*\[\[([a-z0-9-]{1,40})\]\]/gi, (m, id) => { id = id.toLowerCase(); if (cat.ids.has(id) && !products.includes(id) && products.length < 3) products.push(id); return ''; });
-  return json({ ok: true, reply: clip(out, 3000), products, query, contact, catalog: catalog && !products.length });
+  return json({ ok: true, reply: clip(out, 3000), products, query, contact, catalog: catalog && !products.length ? 'pick' : false });
 }
 
 export default {
