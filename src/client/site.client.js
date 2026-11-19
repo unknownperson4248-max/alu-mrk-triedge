@@ -1580,7 +1580,7 @@
     const box = $('#chat');
     if (!box) return;
     const log = $('.ch-log', box);
-    const intro = `<div class="ch-m ai"><p>${chT('Hi! I am the Alu MRK TriEdge assistant. Ask me about our aluminium windows, doors, sliding systems, glass and more, or I can prepare a quotation request for you.', 'Γεια σας! Είμαι ο βοηθός της Alu MRK TriEdge. Ρωτήστε με για τα αλουμινένια παράθυρα, πόρτες, συρόμενα, γυαλί και άλλα, ή να ετοιμάσω ένα αίτημα προσφοράς για εσάς.')}</p></div>`;
+    const intro = `<div class="ch-m ai"><p>${chT('Hi! I am TriEdge AI, the assistant of Alu MRK TriEdge. Ask me about our aluminium windows, doors, sliding systems, glass and more, or I can prepare a quotation request for you.', 'Γεια σας! Είμαι το TriEdge AI, ο βοηθός της Alu MRK TriEdge. Ρωτήστε με για τα αλουμινένια παράθυρα, πόρτες, συρόμενα, γυαλί και άλλα, ή να ετοιμάσω ένα αίτημα προσφοράς για εσάς.')}</p></div>`;
     const chips = CH.msgs.length ? '' : `<div class="ch-chips">${[chT('Which sliding system suits my home?', 'Ποιο συρόμενο ταιριάζει στο σπίτι μου;'), chT('Thermal or non-thermal: what is the difference?', 'Θερμομονωτικό ή όχι: ποια η διαφορά;'), chT('I want a quotation', 'Θέλω προσφορά'), chT('How can I contact you?', 'Πώς επικοινωνώ μαζί σας;')].map((x) => `<button type="button" class="ch-chip" data-chs="${esc(x)}">${esc(x)}</button>`).join('')}</div>`;
     log.innerHTML = intro + CH.msgs.map(chMsg).join('') + (CH.busy ? '<div class="ch-m ai ch-typing" aria-label="…"><i></i><i></i><i></i></div>' : '') + chips;
     log.scrollTop = log.scrollHeight;
@@ -1589,8 +1589,8 @@
   function chatShell() {
     if ($('#chat')) return;
     const d = document.createElement('div');
-    d.className = 'chat'; d.id = 'chat'; d.setAttribute('role', 'dialog'); d.setAttribute('aria-modal', 'false'); d.setAttribute('aria-label', chT('Chat assistant', 'Βοηθός συνομιλίας'));
-    d.innerHTML = `<div class="ch-h"><span class="ch-av">${icon('chat')}</span><div><b>${chT('Alu assistant', 'Βοηθός Alu')}</b><small>${chT('AI · answers from our product information', 'AI · απαντά από τα στοιχεία των προϊόντων μας')}</small></div><button type="button" class="ch-x" data-chx aria-label="${chT('Close chat', 'Κλείσιμο')}">${icon('close')}</button></div>
+    d.className = 'chat'; d.id = 'chat'; d.setAttribute('role', 'dialog'); d.setAttribute('aria-modal', 'false'); d.setAttribute('aria-label', chT('TriEdge AI chat', 'Συνομιλία TriEdge AI'));
+    d.innerHTML = `<div class="ch-h"><span class="ch-av">${icon('chat')}</span><div><b>${chT('TriEdge AI', 'TriEdge AI')}</b><small>${chT('AI · answers from our product information', 'AI · απαντά από τα στοιχεία των προϊόντων μας')}</small></div><button type="button" class="ch-x" data-chx aria-label="${chT('Close chat', 'Κλείσιμο')}">${icon('close')}</button></div>
       <div class="ch-log" aria-live="polite"></div>
       <form class="ch-f" novalidate><textarea class="ch-in" rows="1" maxlength="800" placeholder="${chT('Type your question…', 'Γράψτε την ερώτησή σας…')}" aria-label="${chT('Message', 'Μήνυμα')}"></textarea><button type="submit" class="ch-go" aria-label="${chT('Send', 'Αποστολή')}">${icon('send')}</button></form>
       <p class="ch-fine">${chT('AI can make mistakes; our team confirms every detail in the written quotation.', 'Η AI μπορεί να κάνει λάθη· η ομάδα μας επιβεβαιώνει κάθε λεπτομέρεια στη γραπτή προσφορά.')}</p>`;

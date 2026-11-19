@@ -908,7 +908,7 @@ function chatCatalogue(site, lang, query) {
 function chatSystemPrompt(site, lang, cat) {
   const c = site.company || {};
   const contact = [c.phone && `Phone: ${c.phone}`, c.whatsapp && `WhatsApp: +${String(c.whatsapp).replace(/\D/g, '')}`, c.email && `Email: ${c.email}`, chatTxt(c.address, lang) && `Address: ${chatTxt(c.address, lang)}`, chatTxt(c.hours, lang) && `Hours: ${chatTxt(c.hours, lang)}`].filter(Boolean).join('\n');
-  return `You are the website assistant of ${c.name || 'Alu MRK TriEdge Ltd'}, an aluminium company in Cyprus (windows, doors, sliding systems, glass, facades and other aluminium products). You chat with customers on the website.
+  return `Your name is TriEdge AI. You are the website assistant of ${c.name || 'Alu MRK TriEdge Ltd'}, an aluminium company in Cyprus (windows, doors, sliding systems, glass, facades and other aluminium products). You chat with customers on the website.
 
 LANGUAGE: Reply in ${lang === 'el' ? 'Greek' : 'English'}. If the customer writes in Greek, reply in Greek; otherwise reply in English. Never use any other language.
 
@@ -988,7 +988,7 @@ async function handleChat(req, env, url) {
   if (!out) return json({ ok: false, error: 'ai' }, 502);
   // last safety net: no copy of the instructions and no prices ever reach the customer
   const bare = out.replace(/<query>[\s\S]*?<\/query>/gi, '');
-  if (/website assistant of|QUOTATION REQUEST:|STYLE:|LANGUAGE:|PRODUCTS:/i.test(bare) || /(€\s?\d|\d[\d.,]*\s?(€|eur\b|euros?\b|ευρώ))/i.test(bare)) {
+  if (/Your name is TriEdge AI|QUOTATION REQUEST:|STYLE:|LANGUAGE:|PRODUCTS:|Never use any other language|Ask one question at a time/i.test(bare) || /(€\s?\d|\d[\d.,]*\s?(€|eur\b|euros?\b|ευρώ))/i.test(bare)) {
     out = lang === 'el'
       ? 'Μπορώ να βοηθήσω με ερωτήσεις για τα προϊόντα μας ή να ετοιμάσω ένα αίτημα προσφοράς. Τις τιμές τις δίνει η ομάδα μας σε γραπτή προσφορά.'
       : 'I can help with questions about our products or prepare a quotation request for you. Prices come from our team in a written quotation.';
