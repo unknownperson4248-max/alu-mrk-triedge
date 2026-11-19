@@ -1572,7 +1572,7 @@
     const nw = k >= CH.seen ? ' nw' : '';
     if (m.role === 'user') return `<div class="ch-m me${nw}"><p>${chText(m.content)}</p></div>`;
     const live = k === CH.msgs.length - 1;
-    const card = (href, im, title, sub, i) => `<a class="ch-p" href="${esc(href)}" style="--i:${i}"><span class="ch-p-im">${im ? `<img src="${esc(src(im))}" alt="" loading="lazy">` : ''}</span><b>${esc(title)}</b>${sub ? `<small>${esc(sub)}</small>` : ''}</a>`;
+    const card = (href, im, title, sub, i) => `<a class="ch-p" href="${esc(href)}" style="--i:${i}"><b>${esc(title)}</b>${icon('right')}</a>`;
     let prods = '';
     if (live && m.catalog) prods = sys().map((x, i) => card('#' + x.slug, x.image, t(x.name), '', i)).join('');
     else if (live) prods = (m.products || []).map((id, i) => { const r = alProd(id); return r ? card('#alp-' + id, r.p.image, r.p.model, t(r.p.name), i) : ''; }).join('');
