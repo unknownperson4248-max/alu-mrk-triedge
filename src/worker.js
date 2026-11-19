@@ -913,7 +913,8 @@ function chatSystemPrompt(site, lang, cat) {
 LANGUAGE: Reply in ${lang === 'el' ? 'Greek' : 'English'}. If the customer writes in Greek, reply in Greek; otherwise reply in English. Never use any other language.
 
 STYLE: Friendly and very short: one or two short sentences (under 35 words). Plain text, no lists, no markdown. Ask one question at a time.
-PRODUCT LIST: If the customer asks in general about products, or you need to ask which product they want, never write "Which product"; write exactly "Choose a product:" (in Greek "Επιλέξτε προϊόν:") and add the tag [[catalog]]. The website then shows the product names to choose from.
+PRODUCT LIST: If the customer asks in general which products you have, reply with one short line and add the tag [[catalog]]; the website shows the list.
+CONVERSATION: Always answer what the customer actually wrote. Never repeat your previous message or ask the same question twice in a row. If they say they do not want a product, do not list products: say that is fine and ask briefly how else you can help. If they change the topic, follow them.
 RECOMMENDATIONS: When you suggest products, do not describe or explain them and do not say "I would recommend". Write one short line such as "These suit a large opening:" and add the product tags; the website shows each product as a card. At most 3 products.
 
 FACTS:
@@ -927,7 +928,7 @@ FACTS:
 CONTACT: If the customer wants to talk to a person, call, email, WhatsApp or contact the company, reply with one short friendly sentence saying they can chat with the team on WhatsApp using the button below, and add the tag [[contact]] at the end. Do not write any phone number or email address.
 
 QUOTATION REQUEST: If the customer wants a price, a quotation or to order, collect, one question at a time:
-1. which product(s): ask by writing exactly "Choose a product:" and the tag [[catalog]] (or accept a short description if it is something else),
+1. which product(s) (from the list, or a short description if it is something else),
 2. the size in millimetres (width x height) for each, or "not sure" (then the team measures on site),
 3. the quantity,
 4. their full name,
@@ -984,6 +985,13 @@ async function handleChat(req, env, url) {
   if (/^\s*(products?|our products|your products|(which|what) (products?|systems?)( do you (have|sell|make|offer))?|show( me)? (the |your )?products?|what do you (sell|make|offer)|προϊόντα|τι προϊόντα (έχετε|πουλάτε)|ποια προϊόντα( έχετε)?)[\s?!.]*$/i.test(lastTxt)) {
     return json({ ok: true, reply: lang === 'el' ? 'Επιλέξτε προϊόν:' : 'Choose a product:', products: [], query: null, catalog: true });
   }
+  // a short "no" / "thanks" is answered politely without a product list (no AI call)
+  if (lastTxt.split(/\s+/).length <= 5 && /^\s*(no+|nope|not now|no thanks?|no products?|nothing|that'?s all|όχι|τίποτα)\b/i.test(lastTxt)) {
+    return json({ ok: true, reply: lang === 'el' ? 'Κανένα πρόβλημα! Αν χρειαστείτε κάτι, είμαι εδώ.' : 'No problem! If you need anything, I am here.', products: [], query: null });
+  }
+  if (lastTxt.split(/\s+/).length <= 5 && /^\s*(thanks?|thank you|thx|ok(ay)?|great|perfect|ευχαριστώ|εντάξει)\b/i.test(lastTxt)) {
+    return json({ ok: true, reply: lang === 'el' ? 'Παρακαλώ! Πείτε μου αν χρειαστείτε κάτι άλλο.' : 'You are welcome! Tell me if you need anything else.', products: [], query: null });
+  }
   // a plain greeting gets a greeting back (no AI call, no product list)
   if (/^\s*(hi+|hey+|hello+|hallo|hola|yo|good\s*(morning|afternoon|evening|day)|γει[αά]( σ(ου|ας))?|καλημ[εέ]ρα|καλησπ[εέ]ρα|χα[ιί]ρετε|salam|assalamu ?alaikum|নমস্কার|হাই|হ্যালো)[\s!.,?🙂😊👋]*$/i.test(msgs[msgs.length - 1].content)) {
     return json({ ok: true, reply: lang === 'el' ? 'Γεια σας! Είμαι το TriEdge AI. Πώς μπορώ να βοηθήσω;' : 'Hi! I am TriEdge AI. How can I help you today?', products: [], query: null });
@@ -1014,7 +1022,8 @@ async function handleChat(req, env, url) {
   out = out.replace(/<\/?query>/gi, '');
   let catalog = false;
   out = out.replace(/\s*\[\[catalog\]\]/gi, () => { catalog = true; return ''; });
-  if (/(choose a product|επιλέξτε προϊόν)\s*:?\s*$/i.test(out.replace(/<query>[\s\S]*?<\/query>/gi, '').trim())) catalog = true;
+  // the list only when the customer asked about products, never after a "no"
+  if (!/(product|system|sell|offer|range|catalog|have|προϊόν|συστήμ)/i.test(lastTxt) || /\b(no|not|don'?t|nothing|δεν|όχι)\b/i.test(lastTxt)) catalog = false;
   let contact = false;
   out = out.replace(/\s*\[\[contact\]\]/gi, () => { contact = true; return ''; });
   if (!/(contact|whats ?app|call|phone|number|e-?mail|gmail|talk|speak|human|person|agent|support|reach|επικοινων|τηλ[εέ]φων|κλ[ηή]ση|μιλ[ηή]σ)/i.test(lastTxt)) contact = false;
@@ -1026,7 +1035,7 @@ async function handleChat(req, env, url) {
   }
   const products = [];
   out = out.replace(/\s*\[\[([a-z0-9-]{1,40})\]\]/gi, (m, id) => { id = id.toLowerCase(); if (cat.ids.has(id) && !products.includes(id) && products.length < 3) products.push(id); return ''; });
-  return json({ ok: true, reply: clip(out, 3000), products, query, contact, catalog: catalog && !products.length ? 'pick' : false });
+  return json({ ok: true, reply: clip(out, 3000), products, query, contact, catalog: catalog && !products.length });
 }
 
 export default {

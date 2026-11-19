@@ -1570,15 +1570,15 @@
   }
   function chMsg(m, k) {
     const nw = k >= CH.seen ? ' nw' : '';
-    if (m.role === 'user') return `<div class="ch-m me${nw}"><p>${chText(m.content)}</p></div>`;
+    if (m.role === 'user') return `<div class="ch-m me${nw}"><p>${chText(m.text || m.content)}</p></div>`;
     const live = k === CH.msgs.length - 1;
     const card = (href, im, title, sub, i) => `<a class="ch-p" href="${esc(href)}" style="--i:${i}"><b>${esc(title)}</b>${icon('right')}</a>`;
     let prods = '';
     // a list the assistant asks the customer to choose from sends the choice back to the chat; the plain product list opens the page
     // first the systems; once a system is picked, the products inside it
     const inSys = live && m.catalog === 'pick' && m.sysPick ? sysList(m.sysPick) : [];
-    if (inSys.length) prods = inSys.map(({ p }, i) => `<button type="button" class="ch-p" data-chs="${esc(p.model)}" style="--i:${i}"><b>${esc(p.model)}</b>${icon('right')}</button>`).join('');
-    else if (live && m.catalog === 'pick') prods = sys().map((x, i) => `<button type="button" class="ch-p" data-chs="${esc(t(x.name))}" data-chsys="${esc(x.slug)}" style="--i:${i}"><b>${esc(t(x.name))}</b>${icon('right')}</button>`).join('');
+    if (inSys.length) prods = inSys.map(({ p }, i) => `<button type="button" class="ch-p" data-chmod="${esc(p.model)}" style="--i:${i}"><b>${esc(p.model)}</b>${icon('right')}</button>`).join('');
+    else if (live && m.catalog === 'pick') prods = sys().map((x, i) => `<button type="button" class="ch-p" data-chsys="${esc(x.slug)}" style="--i:${i}"><b>${esc(t(x.name))}</b>${icon('right')}</button>`).join('');
     else if (live && m.catalog) prods = sys().map((x, i) => card('#' + x.slug, x.image, t(x.name), '', i)).join('');
     else if (live) prods = (m.products || []).map((id, i) => { const r = alProd(id); return r ? card('#alp-' + id, r.p.image, r.p.model, t(r.p.name), i) : ''; }).join('');
     const wa = m.contact && waLink(u('wa_hello', { c: (S.company || {}).name }));
@@ -1592,7 +1592,7 @@
   const chBoxes = () => `<div class="ch-opts">
       <a class="ch-opt" href="#systems" data-chnav style="--i:0"><span class="ch-opt-ic">${icon('grid')}</span><b>${chT('Products', 'Προϊόντα')}</b>${icon('right')}</a>
       <a class="ch-opt" href="#gallery" data-chnav style="--i:1"><span class="ch-opt-ic">${icon('images')}</span><b>${chT('Gallery', 'Έργα')}</b>${icon('right')}</a>
-      <button type="button" class="ch-opt" data-chs="${esc(chT('I want a quotation', 'Θέλω προσφορά'))}" style="--i:2"><span class="ch-opt-ic">${icon('file')}</span><b>${chT('Get a quote', 'Ζητήστε προσφορά')}</b>${icon('right')}</button>
+      <button type="button" class="ch-opt" data-chquote style="--i:2"><span class="ch-opt-ic">${icon('file')}</span><b>${chT('Get a quote', 'Ζητήστε προσφορά')}</b>${icon('right')}</button>
     </div>`;
   function chRender() {
     const box = $('#chat');
@@ -1628,13 +1628,12 @@
     if (hb) { hb.setAttribute('aria-expanded', String(open)); $('#help').classList.toggle('open', open); }
     if (open) { chRender(); if (matchMedia('(hover:hover) and (pointer:fine)').matches) setTimeout(() => $('.ch-in', d).focus({ preventScroll: true }), 60); else $('.ch-x', d).focus({ preventScroll: true }); }
   }
-  async function chAsk(text) {
+  async function chAsk(text, shown) {
     text = String(text || '').trim();
     if (!text || CH.busy) return;
     const inp = $('#chat .ch-in');
     if (inp) { inp.value = ''; inp.style.height = 'auto'; }
-    CH.sysPick = CH.nextSys || ''; CH.nextSys = '';
-    CH.msgs.push({ role: 'user', content: text.slice(0, 800) });
+    CH.msgs.push({ role: 'user', content: text.slice(0, 800), text: shown || '' });
     CH.busy = true; chRender(); chSave();
     let j = null;
     try {
@@ -1644,7 +1643,7 @@
     CH.busy = false;
     if (j && j.ok) {
       const content = j.reply + (j.query ? `\n<query>${JSON.stringify(j.query)}</query>` : '');
-      CH.msgs.push({ role: 'assistant', content, text: j.reply, products: j.products || [], catalog: j.catalog || false, sysPick: j.catalog === 'pick' ? CH.sysPick || '' : '', query: j.query || null, contact: !!j.contact, sid: j.query ? newSid() : '' });
+      CH.msgs.push({ role: 'assistant', content, text: j.reply, products: j.products || [], catalog: !!j.catalog, query: j.query || null, contact: !!j.contact, sid: j.query ? newSid() : '' });
     } else {
       const why = j && j.error === 'limit' ? chT('You have sent many messages. Please wait a little.', 'Στείλατε πολλά μηνύματα. Περιμένετε λίγο.') : chT('Sorry, the assistant is not available right now.', 'Συγγνώμη, ο βοηθός δεν είναι διαθέσιμος τώρα.');
       CH.msgs.push({ role: 'assistant', content: why, text: `${why} ${chT('You can still reach our team on WhatsApp.', 'Μπορείτε να μιλήσετε με την ομάδα μας στο WhatsApp.')}`, err: true, local: true, contact: true });
@@ -2555,7 +2554,14 @@
     if (e.target.closest('a.ch-p, [data-chnav]')) chatOpen(false);
     if (e.target.closest('[data-chcontact]')) { const txt = `${chT('You can reach our team here:', 'Μπορείτε να επικοινωνήσετε με την ομάδα μας εδώ:')}\n${chContact()}`; CH.msgs.push({ role: 'user', content: chT('Contact', 'Επικοινωνία') }, { role: 'assistant', content: txt, text: txt, local: true }); chRender(); return; }
     const chs = e.target.closest('[data-chs]');
-    if (chs) { CH.nextSys = chs.dataset.chsys || ''; chAsk(chs.dataset.chs); return; }
+    if (chs) { chAsk(chs.dataset.chs); return; }
+    // quotation: choose a system, then a product, then the AI asks for the size and details
+    const pickMsg = (sysPick) => ({ role: 'assistant', content: 'Choose a product:', text: chT('Choose a product:', 'Επιλέξτε προϊόν:'), catalog: 'pick', sysPick, local: true });
+    if (e.target.closest('[data-chquote]')) { if (!CH.busy) { CH.msgs.push({ role: 'user', content: 'I want a quotation', text: chT('Get a quote', 'Ζητήστε προσφορά') }, pickMsg('')); chRender(); } return; }
+    const chsy = e.target.closest('[data-chsys]');
+    if (chsy) { if (!CH.busy) { const x = sys().find((y) => y.slug === chsy.dataset.chsys); CH.msgs.push({ role: 'user', content: x ? t(x.name) : '', text: x ? t(x.name) : '' }, pickMsg(chsy.dataset.chsys)); chRender(); } return; }
+    const chmo = e.target.closest('[data-chmod]');
+    if (chmo) { chAsk(`I want a quotation for ${chmo.dataset.chmod}`, chmo.dataset.chmod); return; }
     const chq = e.target.closest('[data-chq]');
     if (chq) { chSendQuery(+chq.dataset.chq); return; }
     if (!e.target.closest('.rvc-menu')) $$('.rvc-pop:not([hidden])').forEach((p) => { p.hidden = true; });
