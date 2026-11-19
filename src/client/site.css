@@ -2192,3 +2192,4 @@ html.ch-open .help-t{display:none}
 .ch-opts{gap:7px}
 .ch-opt{padding:8px 12px}
 .ch-opt-ic{width:34px;height:34px}
+@media (max-width:640px){.chat{height:min(550px,calc(100dvh - 150px))}}
