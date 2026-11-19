@@ -913,6 +913,7 @@ function chatSystemPrompt(site, lang, cat) {
 LANGUAGE: Reply in ${lang === 'el' ? 'Greek' : 'English'}. If the customer writes in Greek, reply in Greek; otherwise reply in English. Never use any other language.
 
 STYLE: Friendly and very short: one or two short sentences (under 35 words). Plain text, no lists, no markdown. Ask one question at a time.
+PRODUCT LIST: If the customer asks in general which products you have (no specific need), reply with one short line and add the tag [[catalog]].
 RECOMMENDATIONS: When you suggest products, do not describe or explain them and do not say "I would recommend". Write one short line such as "These suit a large opening:" and add the product tags; the website shows each product as a card. At most 3 products.
 
 FACTS:
@@ -979,6 +980,10 @@ async function handleChat(req, env, url) {
   if (lastTxt.split(/\s+/).length <= 8 && /(contact|whats ?app|call|phone|number|e-?mail|gmail|talk to|speak to|human|person|agent|support|επικοινων|τηλ[εέ]φων|κλ[ηή]ση|μιλ[ηή]σω)/i.test(lastTxt)) {
     return json({ ok: true, reply: lang === 'el' ? 'Φυσικά! Πατήστε το κουμπί για να μιλήσετε με την ομάδα μας στο WhatsApp.' : 'Of course! Tap the button below to chat with our team on WhatsApp.', products: [], query: null, contact: true });
   }
+  // a general question about products gets the list of systems to swipe through (no AI call)
+  if (/^\s*(products?|our products|your products|(which|what) (products?|systems?)( do you (have|sell|make|offer))?|show( me)? (the |your )?products?|what do you (sell|make|offer)|προϊόντα|τι προϊόντα (έχετε|πουλάτε)|ποια προϊόντα( έχετε)?)[\s?!.]*$/i.test(lastTxt)) {
+    return json({ ok: true, reply: lang === 'el' ? 'Αυτά είναι τα συστήματά μας. Σύρετε και πατήστε ένα για να το δείτε:' : 'Here are our systems. Swipe and tap one to see it:', products: [], query: null, catalog: true });
+  }
   // a plain greeting gets a greeting back (no AI call, no product list)
   if (/^\s*(hi+|hey+|hello+|hallo|hola|yo|good\s*(morning|afternoon|evening|day)|γει[αά]( σ(ου|ας))?|καλημ[εέ]ρα|καλησπ[εέ]ρα|χα[ιί]ρετε|salam|assalamu ?alaikum|নমস্কার|হাই|হ্যালো)[\s!.,?🙂😊👋]*$/i.test(msgs[msgs.length - 1].content)) {
     return json({ ok: true, reply: lang === 'el' ? 'Γεια σας! Είμαι το TriEdge AI. Πώς μπορώ να βοηθήσω;' : 'Hi! I am TriEdge AI. How can I help you today?', products: [], query: null });
@@ -1007,6 +1012,8 @@ async function handleChat(req, env, url) {
   const qm = /<query>([\s\S]*?)<\/query>/i.exec(out);
   if (qm) { query = chatQuery(qm[1].trim()); out = out.replace(qm[0], ''); }
   out = out.replace(/<\/?query>/gi, '');
+  let catalog = false;
+  out = out.replace(/\s*\[\[catalog\]\]/gi, () => { catalog = true; return ''; });
   let contact = false;
   out = out.replace(/\s*\[\[contact\]\]/gi, () => { contact = true; return ''; });
   if (contact) {
@@ -1017,7 +1024,7 @@ async function handleChat(req, env, url) {
   }
   const products = [];
   out = out.replace(/\s*\[\[([a-z0-9-]{1,40})\]\]/gi, (m, id) => { id = id.toLowerCase(); if (cat.ids.has(id) && !products.includes(id) && products.length < 3) products.push(id); return ''; });
-  return json({ ok: true, reply: clip(out, 3000), products, query, contact });
+  return json({ ok: true, reply: clip(out, 3000), products, query, contact, catalog: catalog && !products.length });
 }
 
 export default {

@@ -1571,9 +1571,13 @@
   function chMsg(m, k) {
     const nw = k >= CH.seen ? ' nw' : '';
     if (m.role === 'user') return `<div class="ch-m me${nw}"><p>${chText(m.content)}</p></div>`;
-    const prods = (m.products || []).map((id) => { const r = alProd(id); if (!r) return ''; const im = r.p.image || ''; return `<a class="ch-p" href="#alp-${esc(id)}">${im ? `<img src="${esc(src(im))}" alt="" loading="lazy">` : ''}<span><b>${esc(r.p.model)}</b><small>${esc(t(r.p.name))}</small></span>${icon('right')}</a>`; }).join('');
+    const live = k === CH.msgs.length - 1;
+    const card = (href, im, title, sub, i) => `<a class="ch-p" href="${esc(href)}" style="--i:${i}"><span class="ch-p-im">${im ? `<img src="${esc(src(im))}" alt="" loading="lazy">` : ''}</span><b>${esc(title)}</b>${sub ? `<small>${esc(sub)}</small>` : ''}</a>`;
+    let prods = '';
+    if (live && m.catalog) prods = sys().map((x, i) => card('#' + x.slug, x.image, t(x.name), '', i)).join('');
+    else if (live) prods = (m.products || []).map((id, i) => { const r = alProd(id); return r ? card('#alp-' + id, r.p.image, r.p.model, t(r.p.name), i) : ''; }).join('');
     const wa = m.contact && waLink(u('wa_hello', { c: (S.company || {}).name }));
-    return `<div class="ch-m ai${m.err ? ' err' : ''}${nw}"><p>${chText(m.text != null ? m.text : m.content)}</p>${prods ? `<div class="ch-ps">${prods}</div>` : ''}${m.query ? chQueryCard(m.query, k, m) : ''}${wa ? `<a class="ch-wa-btn" href="${esc(wa)}" target="_blank" rel="noopener"><span class="ch-wa-ic">${waIcon}</span><span><b>${chT('Chat on WhatsApp', 'Συνομιλία στο WhatsApp')}</b><small>${chT('Our team replies there', 'Η ομάδα μας απαντά εκεί')}</small></span>${icon('right')}</a>` : ''}</div>`;
+    return `<div class="ch-m ai${m.err ? ' err' : ''}${nw}"><p>${chText(m.text != null ? m.text : m.content)}</p>${prods ? `<div class="ch-ps" role="list">${prods}</div>` : ''}${m.query ? chQueryCard(m.query, k, m) : ''}${wa ? `<a class="ch-wa-btn" href="${esc(wa)}" target="_blank" rel="noopener"><span class="ch-wa-ic">${waIcon}</span><span><b>${chT('Chat on WhatsApp', 'Συνομιλία στο WhatsApp')}</b><small>${chT('Our team replies there', 'Η ομάδα μας απαντά εκεί')}</small></span>${icon('right')}</a>` : ''}</div>`;
   }
   function chContact() {
     const c = S.company || {};
@@ -1634,7 +1638,7 @@
     CH.busy = false;
     if (j && j.ok) {
       const content = j.reply + (j.query ? `\n<query>${JSON.stringify(j.query)}</query>` : '');
-      CH.msgs.push({ role: 'assistant', content, text: j.reply, products: j.products || [], query: j.query || null, contact: !!j.contact, sid: j.query ? newSid() : '' });
+      CH.msgs.push({ role: 'assistant', content, text: j.reply, products: j.products || [], catalog: !!j.catalog, query: j.query || null, contact: !!j.contact, sid: j.query ? newSid() : '' });
     } else {
       const why = j && j.error === 'limit' ? chT('You have sent many messages. Please wait a little.', 'Στείλατε πολλά μηνύματα. Περιμένετε λίγο.') : chT('Sorry, the assistant is not available right now.', 'Συγγνώμη, ο βοηθός δεν είναι διαθέσιμος τώρα.');
       CH.msgs.push({ role: 'assistant', content: why, text: `${why} ${chT('You can still reach our team on WhatsApp.', 'Μπορείτε να μιλήσετε με την ομάδα μας στο WhatsApp.')}`, err: true, local: true, contact: true });
