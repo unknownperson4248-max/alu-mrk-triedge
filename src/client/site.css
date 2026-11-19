@@ -2086,3 +2086,30 @@ html.skin-glass .mx-chips button[aria-pressed="true"]{background:var(--ink);colo
 .ch-wa{background:#1fa855}.ch-ml{background:#d64535}
 .ch-sup a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .ch-fine{padding-bottom:6px}
+
+/* chat: TriEdge look (a triangle mark, a fine profile grid, the corner nearest the button kept sharp) */
+.chat{border-radius:28px 28px 8px 28px;border:1px solid color-mix(in srgb,var(--accent) 35%,var(--line));box-shadow:0 30px 70px -30px rgba(0,0,0,.5),0 0 0 6px color-mix(in srgb,var(--accent) 10%,transparent)}
+.ch-h{position:relative;background:linear-gradient(135deg,#11161d,#1d2631);color:#fff;padding:14px 12px 14px 14px}
+.ch-h::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:linear-gradient(90deg,var(--accent),transparent 80%)}
+.ch-av{width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12)}
+.ch-av svg{width:24px;height:24px}
+.ch-av path{fill:var(--accent)}.ch-av path.in{fill:#1a2129}
+.ch-h b{font:700 17px/1.15 var(--display);letter-spacing:-.01em}
+.ch-h b em{font-style:normal;color:var(--accent)}
+.ch-h small{display:flex;align-items:center;gap:6px;opacity:.75}
+.ch-dot{width:7px;height:7px;border-radius:50%;background:#3ddc84;box-shadow:0 0 0 3px rgba(61,220,132,.2)}
+.ch-log{background-color:var(--surface);background-image:linear-gradient(color-mix(in srgb,var(--ink) 5%,transparent) 1px,transparent 1px),linear-gradient(90deg,color-mix(in srgb,var(--ink) 5%,transparent) 1px,transparent 1px);background-size:22px 22px}
+.ch-m.ai>p{border-left:3px solid var(--accent);border-radius:4px 16px 16px 16px;box-shadow:0 2px 6px -4px rgba(0,0,0,.25)}
+.ch-m.me p{border-radius:16px 16px 4px 16px;background:linear-gradient(135deg,#11161d,#26303c);color:#fff}
+.ch-chip{display:inline-flex;align-items:center;gap:6px;border-color:color-mix(in srgb,var(--accent) 45%,var(--line))}
+.ch-chip::before{content:"";width:6px;height:6px;flex:none;background:var(--accent);clip-path:polygon(50% 0,100% 100%,0 100%)}
+.ch-f{padding:10px 10px 6px}
+.ch-in{border-radius:22px;padding:11px 16px}
+.ch-go{width:44px;height:44px;border-radius:50%;background:var(--accent);color:#14171a}
+@media (max-width:640px){
+  .chat{right:calc(10px + env(safe-area-inset-right,0px));width:min(330px,calc(100vw - 64px));height:min(500px,calc(100dvh - 160px))}
+  .ch-fine{font-size:10.5px}
+  .ch-sup span{display:none}
+  .ch-sup{justify-content:flex-end}
+}
+html.ch-open .help-t{display:none}

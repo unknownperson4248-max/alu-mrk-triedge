@@ -1583,14 +1583,14 @@
     const intro = `<div class="ch-m ai"><p>${chT('Hi! I am TriEdge AI, the assistant of Alu MRK TriEdge. Ask me about our aluminium windows, doors, sliding systems, glass and more, or I can prepare a quotation request for you.', 'Γεια σας! Είμαι το TriEdge AI, ο βοηθός της Alu MRK TriEdge. Ρωτήστε με για τα αλουμινένια παράθυρα, πόρτες, συρόμενα, γυαλί και άλλα, ή να ετοιμάσω ένα αίτημα προσφοράς για εσάς.')}</p></div>`;
     const chips = CH.msgs.length ? '' : `<div class="ch-chips">${[chT('Which sliding system suits my home?', 'Ποιο συρόμενο ταιριάζει στο σπίτι μου;'), chT('Thermal or non-thermal: what is the difference?', 'Θερμομονωτικό ή όχι: ποια η διαφορά;'), chT('I want a quotation', 'Θέλω προσφορά'), chT('How can I contact you?', 'Πώς επικοινωνώ μαζί σας;')].map((x) => `<button type="button" class="ch-chip" data-chs="${esc(x)}">${esc(x)}</button>`).join('')}</div>`;
     log.innerHTML = intro + CH.msgs.map(chMsg).join('') + (CH.busy ? '<div class="ch-m ai ch-typing" aria-label="…"><i></i><i></i><i></i></div>' : '') + chips;
-    log.scrollTop = log.scrollHeight;
+    log.scrollTop = CH.msgs.length || CH.busy ? log.scrollHeight : 0;
     $('.ch-in', box).disabled = CH.busy;
   }
   function chatShell() {
     if ($('#chat')) return;
     const d = document.createElement('div');
     d.className = 'chat'; d.id = 'chat'; d.setAttribute('role', 'dialog'); d.setAttribute('aria-modal', 'false'); d.setAttribute('aria-label', chT('TriEdge AI chat', 'Συνομιλία TriEdge AI'));
-    d.innerHTML = `<div class="ch-h"><span class="ch-av">${icon('chat')}</span><div><b>${chT('TriEdge AI', 'TriEdge AI')}</b><small>${chT('AI · answers from our product information', 'AI · απαντά από τα στοιχεία των προϊόντων μας')}</small></div><button type="button" class="ch-x" data-chx aria-label="${chT('Close chat', 'Κλείσιμο')}">${icon('close')}</button></div>
+    d.innerHTML = `<div class="ch-h"><span class="ch-av" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2.5 22.5 21h-21z"/><path class="in" d="M12 9.2 16.6 17.5H7.4z"/></svg></span><div><b>TriEdge <em>AI</em></b><small><i class="ch-dot"></i>${chT('Online · English & Greek', 'Online · Αγγλικά & Ελληνικά')}</small></div><button type="button" class="ch-x" data-chx aria-label="${chT('Close chat', 'Κλείσιμο')}">${icon('close')}</button></div>
       <div class="ch-log" aria-live="polite"></div>
       <form class="ch-f" novalidate><textarea class="ch-in" rows="1" maxlength="800" placeholder="${chT('Type your question…', 'Γράψτε την ερώτησή σας…')}" aria-label="${chT('Message', 'Μήνυμα')}"></textarea><button type="submit" class="ch-go" aria-label="${chT('Send', 'Αποστολή')}">${icon('send')}</button></form>
       <p class="ch-fine">${chT('AI can make mistakes; our team confirms every detail in the written quotation.', 'Η AI μπορεί να κάνει λάθη· η ομάδα μας επιβεβαιώνει κάθε λεπτομέρεια στη γραπτή προσφορά.')}</p>
@@ -1606,9 +1606,10 @@
     CH.open = open;
     const d = $('#chat');
     d.classList.toggle('open', open);
+    document.documentElement.classList.toggle('ch-open', open);
     const hb = $('.help-btn');
     if (hb) { hb.setAttribute('aria-expanded', String(open)); $('#help').classList.toggle('open', open); }
-    if (open) { chRender(); setTimeout(() => $('.ch-in', d).focus({ preventScroll: true }), 60); }
+    if (open) { chRender(); if (matchMedia('(hover:hover) and (pointer:fine)').matches) setTimeout(() => $('.ch-in', d).focus({ preventScroll: true }), 60); else $('.ch-x', d).focus({ preventScroll: true }); }
   }
   async function chAsk(text) {
     text = String(text || '').trim();
