@@ -1581,8 +1581,8 @@
     else if (live && m.catalog === 'pick') prods = sys().map((x, i) => `<button type="button" class="ch-p" data-chsys="${esc(x.slug)}" style="--i:${i}"><b>${esc(t(x.name))}</b>${icon('right')}</button>`).join('');
     else if (live && m.catalog) prods = sys().map((x, i) => card('#' + x.slug, x.image, t(x.name), '', i)).join('');
     else if (live) prods = (m.products || []).map((id, i) => { const r = alProd(id); return r ? card('#alp-' + id, r.p.image, r.p.model, t(r.p.name), i) : ''; }).join('');
-    const wa = m.contact && waLink(u('wa_hello', { c: (S.company || {}).name }));
-    return `<div class="ch-m ai${m.err ? ' err' : ''}${nw}"><p>${chText(m.text != null ? m.text : m.content)}</p>${prods ? `<div class="ch-ps" role="list">${prods}</div>` : ''}${m.query ? chQueryCard(m.query, k, m) : ''}${wa ? `<a class="ch-wa-btn" href="${esc(wa)}" target="_blank" rel="noopener"><span class="ch-wa-ic">${waIcon}</span><span><b>${chT('Chat on WhatsApp', 'Συνομιλία στο WhatsApp')}</b><small>${chT('Our team replies there', 'Η ομάδα μας απαντά εκεί')}</small></span>${icon('right')}</a>` : ''}</div>`;
+    const wa = m.contact && waLink(u('wa_hello', { c: (S.company || {}).name })), em = m.contact && (S.company || {}).email;
+    return `<div class="ch-m ai${m.err ? ' err' : ''}${nw}"><p>${chText(m.text != null ? m.text : m.content)}</p>${prods ? `<div class="ch-ps" role="list">${prods}</div>` : ''}${m.query ? chQueryCard(m.query, k, m) : ''}${m.contact && (wa || em) ? `<div class="ch-ct">${wa ? `<a class="ch-ct-b wa" href="${esc(wa)}" target="_blank" rel="noopener"><i>${waIcon}</i><span>WhatsApp</span></a>` : ''}${em ? `<a class="ch-ct-b ml" href="mailto:${esc(em)}"><i>${icon('mail')}</i><span>Email</span></a>` : ''}</div>` : ''}</div>`;
   }
   function chContact() {
     const c = S.company || {};

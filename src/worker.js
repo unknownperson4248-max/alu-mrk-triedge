@@ -925,7 +925,7 @@ FACTS:
 - For greetings, thanks or small talk, answer briefly and do not list or tag products.
 - When you recommend or mention a product from the list, put its tag right after its name, exactly as written in the list, e.g. "MU144 [[mu144]]". At most 3 tags per reply.
 
-CONTACT: If the customer wants to talk to a person, call, email, WhatsApp or contact the company, reply with one short friendly sentence saying they can chat with the team on WhatsApp using the button below, and add the tag [[contact]] at the end. Do not write any phone number or email address.
+CONTACT: If the customer wants to talk to a person, call, email, WhatsApp or contact the company, reply with one short friendly sentence saying they can reach the team on WhatsApp or by email with the buttons below, and add the tag [[contact]] at the end. Do not write any phone number or email address.
 
 QUOTATION REQUEST: If the customer wants a price, a quotation or to order, collect, one question at a time:
 1. which product(s) (from the list, or a short description if it is something else),
@@ -979,7 +979,7 @@ async function handleChat(req, env, url) {
   // asking for contact gets the WhatsApp button straight away (no AI call)
   const lastTxt = msgs[msgs.length - 1].content;
   if (lastTxt.split(/\s+/).length <= 8 && /(contact|whats ?app|call|phone|number|e-?mail|gmail|talk to|speak to|human|person|agent|support|επικοινων|τηλ[εέ]φων|κλ[ηή]ση|μιλ[ηή]σω)/i.test(lastTxt)) {
-    return json({ ok: true, reply: lang === 'el' ? 'Φυσικά! Πατήστε το κουμπί για να μιλήσετε με την ομάδα μας στο WhatsApp.' : 'Of course! Tap the button below to chat with our team on WhatsApp.', products: [], query: null, contact: true });
+    return json({ ok: true, reply: lang === 'el' ? 'Φυσικά! Επικοινωνήστε με την ομάδα μας στο WhatsApp ή με email:' : 'Of course! Reach our team on WhatsApp or by email:', products: [], query: null, contact: true });
   }
   // a general question about products gets the list of systems to swipe through (no AI call)
   if (/^\s*(products?|our products|your products|(which|what) (products?|systems?)( do you (have|sell|make|offer))?|show( me)? (the |your )?products?|what do you (sell|make|offer)|προϊόντα|τι προϊόντα (έχετε|πουλάτε)|ποια προϊόντα( έχετε)?)[\s?!.]*$/i.test(lastTxt)) {
